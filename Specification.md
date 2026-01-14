@@ -59,10 +59,16 @@ At the start of each battle, player:
 
 ### 4.2 Equipment behavior
 Each piece of equipment may define:
-- Range (long or close)
-- Damage
-- Ammo cost (if any)
-- uses_per_battle (optional)
+- id: numeric
+- name: string
+- type: “MISSILE” | “LASER” | “RAIL” | “SHIELD” | “ARMOR”
+- range: “LONG” | “MID” | “CLOSE” | “PASSIVE”
+- damage: integer (for weapons)
+- ammo_cost: integer
+- absorb: integer (for shields)
+- armor_value: integer (for armor)
+- uses_per_battle: integer or null
+- reward: boolean
 
 If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
 
@@ -97,7 +103,7 @@ Each combat follows this fixed range sequence:
 - **Turn 5:** Middle
 - **Turn 6:** Long
 
-(5 turns total per combat, unless someone is destroyed earlier)
+(6 turns total per combat, unless someone is destroyed earlier)
 
 ### 6.2 Attack Resolution Rule (VERY IMPORTANT)
 
@@ -122,13 +128,20 @@ This rule applies to ALL turns and ranges.
 
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
-Enemies always attack if alive and if they have a weapon valid for the current range.
+Enemy JSON fields:
+- id
+- category
+- hp
+- attacks: list of { range, damage, uses_per_battle }
 
 uses_per_battle means:
 The maximum number of times an attack or effect may activate during a single combat.
 - Decreases by 1 each time it triggers
 - When it reaches 0, it no longer activates
 - Large values (e.g. 999) mean “effectively unlimited”
+
+Enemies always attack if alive and if they have a weapon valid for the current range.
+
 
 -----
 
