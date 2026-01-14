@@ -19,7 +19,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Ship ID confirmed: STAR CANINE  
 > Command authority: CAPTAIN  
 
-> Incoming distress signal detected.
+> Incoming distress signal detected.  
 > Origin: Planet K9  
 > Sender ID: LAIKA  
 
