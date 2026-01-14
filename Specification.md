@@ -158,11 +158,17 @@ Equipment is randomly chosen from equipment_data.json.
 ## 9. PROGRESSION STRUCTURE (SIMPLIFIED)
 
 - Fixed linear sequence of battles
-- No events
-- No shops
-- No randomness in combat
-- No mid-range combat
-- Focus is on clarity and balance
+
+### stage layout
+1. combat enemy (id:1)
+1. combat enemy (id:2)
+1. combat enemy (from category normal, randomly chosen 1 enemy)
+1. dock (heal Hull 30% or +2 ammo)
+1. combat elite (from category elite)
+1. combat enemy (from category normal, randomly chosen 1 enemy)
+1. combat enemy (from category normal, randomly chosen 1 enemy)
+1. dock (heal Hull 30% or +2 ammo)
+1. combat boss (from category boss)
 
 -----
 
