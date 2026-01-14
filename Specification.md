@@ -31,7 +31,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 ## 3. PLAYER SHIP (BASE STATS)
 
-Starting_state.json
+https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_state.json
 
 - equipped_item_ids equals "Equipment_data.json"'s id. 
 - Ammo persists between battles and is NOT fully restored automatically.
@@ -67,7 +67,7 @@ Each piece of equipment may define:
 If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
 
 ### 4.3 Equipment list
-Equipment_data.json
+https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
 
 -----
@@ -119,7 +119,7 @@ This rule applies to ALL turns and ranges.
 
 ## 7. ENEMY DESIGN
 
-Enemy_data.json
+https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
 Enemies always attack if alive and if they have a weapon valid for the current range.
 
