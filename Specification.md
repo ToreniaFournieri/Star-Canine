@@ -27,9 +27,9 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
   - Ammo usage
   - Preventing enemy attacks by killing first
 
-### 2-1. Flow
+### 2.1 Flow
 
-1. First scene 
+#### 2.1.1 First scene 
 At the start of each stage, player:
 - Show own ship status
 - Show full equipment list
@@ -44,15 +44,15 @@ If stage is others:
 - follow the description of the stage setting 
 
 
-1. Combat log scene
+#### 2.1.2 Combat log scene
 - Display log
 - If player beats an enemy, he grant reward. Else if it is draw, skip reward and continue to a next stage. Else if player loses, it is game over. 
 
-1. Reward scene
+#### 2.1.3 Reward scene
 - If player beat an enemy, display reward list.
 - Go to the next stage
 
-1. Game over scene
+#### 2.1.4 Game over scene
 - display player's progress. 
 
 -----
