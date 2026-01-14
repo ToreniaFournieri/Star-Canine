@@ -55,7 +55,6 @@ At the start of each battle, player:
 
 (checkmarks selected, if it has UI)
 
------
 
 ### 4.2 Equipment behavior
 Each piece of equipment may define:
@@ -66,11 +65,8 @@ Each piece of equipment may define:
 
 If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
 
------
-
 ### 4.3 Equipment list
 Equipment_data.json
-
 
 
 -----
@@ -100,8 +96,6 @@ Each combat follows this fixed range sequence:
 - **Turn 5:** Long
 
 (5 turns total per combat, unless someone is destroyed earlier)
-
------
 
 ### 6.2 Attack Resolution Rule (VERY IMPORTANT)
 
