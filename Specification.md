@@ -1,4 +1,4 @@
-# SPACE EXPEDITION SPECIFICATION v0.1.0 (CODING-READY)
+# SPACE EXPEDITION SPECIFICATION v0.1.0
 
 -----
 
@@ -32,6 +32,8 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 ## 3. PLAYER SHIP (BASE STATS)
 
 Starting_state.json
+
+equipped_item_ids equals "Equipment_data.json"'s id. 
 Ammo persists between battles and is NOT fully restored automatically.
 
 -----
