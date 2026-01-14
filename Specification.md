@@ -1,4 +1,4 @@
-# SPACE EXPEDITION SPECIFICATION v0.1.2
+# SPACE EXPEDITION SPECIFICATION v0.1.3
 
 -----
 
@@ -13,6 +13,10 @@ This is a terminal-based, deterministic, text-only roguelike spaceship game.
 - Inspired by Slay the Spire, but simpler
 
 Player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
+
+### 1.1 Backstory
+
+-Story of Star Canine here. 
 
 -----
 
