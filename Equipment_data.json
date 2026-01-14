@@ -2,71 +2,80 @@
   "items": [
     {
       "id": 1,
-      "type": "MISSILE",
+      "type": "40t MISSILE",
       "range": "LONG",
       "damage": 40,
       "ammo_cost": 1,
       "uses_per_combat": null
+      "reward": false
     },
     {
       "id": 2,
-      "type": "LASER",
+      "type": "10MW LASER",
       "range": "CLOSE",
       "damage": 10,
       "ammo_cost": 0,
       "uses_per_combat": null
+      "reward": false
     },
     {
       "id": 3,
-      "type": "ARMOR",
+      "type": "60cm ARMOR",
       "range": "PASSIVE",
       "armor_value": 60
+      "reward": false
     },
     {
       "id": 4,
-      "type": "MISSILE",
+      "type": "50t MISSILE",
       "range": "LONG",
       "damage": 50,
       "ammo_cost": 1,
       "uses_per_combat": null
+      "reward": true
     },
     {
       "id": 5,
-      "type": "MISSILE",
+      "type": "Double 40cm MISSILE",
       "range": "LONG",
       "damage": 80,
       "ammo_cost": 2,
       "uses_per_combat": null
+      "reward": true
     },
     {
       "id": 6,
-      "type": "LASER",
+      "type": "15MW LASER",
       "range": "CLOSE",
       "damage": 15,
       "ammo_cost": 0,
       "uses_per_combat": null
+      "reward": true
     },
     {
       "id": 7,
-      "type": "LASER",
+      "type": "Burst LASER",
       "range": "CLOSE",
       "damage": 25,
       "ammo_cost": 0,
       "uses_per_combat": 1
+      "reward": true
     },
     {
       "id": 8,
-      "type": "SHIELD",
+      "type": "25MW SHIELD for long",
       "range": "LONG",
       "absorb": 25,
       "uses_per_combat": 1
+      "reward": true
     },
     {
       "id": 9,
-      "type": "SHIELD",
+      "type": "30MW SHIELD for close",
       "range": "CLOSE",
       "absorb": 30,
       "uses_per_combat": 1
+      "reward": true
     }
   ]
 }
