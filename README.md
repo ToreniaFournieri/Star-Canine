@@ -7,6 +7,5 @@ Text-based rouge like expedition game.
 
 -Copy and paste below, then you can play rhis game:
 
-Hello, please make this:
-Links:
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Specification.md
+'Hello, please make this:
+'https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Specification.md
