@@ -108,10 +108,10 @@ On EACH turn:
 1. Player attacks first
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
-- Enemy does NOT attack
-- Combat proceeds to next turn or ends
+  - Enemy does NOT attack
+  - Combat proceeds to next turn or ends
 1. If enemy survives:
-- Enemy attacks
+  - Enemy attacks
 
 This rule applies to ALL turns and ranges.
 
