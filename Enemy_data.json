@@ -3,12 +3,12 @@
     {
       "_comment": "First fixed tutorial enemy",
       "id": 1,
-      "category": "first",
+      "category": "weak",
       "hp": 40,
       "attacks": [
         {
           "range": "close",
-          "damage": 10,
+          "damage": 15,
           "uses_per_battle": 3
         }
       ]
@@ -17,7 +17,7 @@
     {
       "_comment": "Second fixed tutorial enemy",
       "id": 2,
-      "category": "first",
+      "category": "weak",
       "hp": 60,
       "attacks": [
         {
