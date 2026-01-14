@@ -18,9 +18,11 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 > Ship ID confirmed: STAR CANINE
 > Command authority: CAPTAIN
+
 > Incoming distress signal detected.
 > Origin: Planet K9
 > Sender ID: LAIKA
+
 > "It's me.
 > K9 has fallen.
 > Solar Bear battleships took the planet.
@@ -30,8 +32,10 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Please… don't die."
 >
 > Signal lost.
+
 > Solar Bear Empire detected in K9 orbit.
 > Occupation status: ACTIVE.
+
 > Setting course for K9.
 
  Game start. 
