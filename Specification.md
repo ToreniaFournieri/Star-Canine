@@ -26,6 +26,35 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
   - Equipment selection
   - Ammo usage
   - Preventing enemy attacks by killing first
+
+### 2-1. Flow
+
+1. First scene 
+At the start of each stage, player:
+- Show own ship status
+- Show full equipment list
+- Selects up to 6 items to equip
+(checkmarks selected, if it has UI)
+
+If stage is combat:
+- show enemy status. Enemy's HP, damage (long, mid, close) and other feature displayed)
+- Engage battle to start combat
+
+If stage is others:
+- follow the description of the stage setting 
+
+
+1. Combat log scene
+- Display log
+- If player beats an enemy, he grant reward. Else if it is draw, skip reward and continue to a next stage. Else if player loses, it is game over. 
+
+1. Reward scene
+- If player beat an enemy, display reward list.
+- Go to the next stage
+
+1. Game over scene
+- display player's progress. 
+
 -----
 
 ## 3. PLAYER SHIP (BASE STATS)
@@ -48,13 +77,6 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_sta
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
 
-At the start of each battle, player:
-
-- Sees full equipment list
-- Selects up to 6 items to equip
-- Sees next battle’s enemy Status (HP, long, close damage or other feature)
-
-(checkmarks selected, if it has UI)
 
 
 ### 4.2 Equipment behavior
