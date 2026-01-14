@@ -57,23 +57,24 @@ At the start of each battle, player:
 
 
 ### 4.2 Equipment behavior
-Each piece of equipment may define:
-- id: numeric
-- name: string
-- type: “MISSILE” | “LASER” | “RAIL” | “SHIELD” | “ARMOR”
-- range: “LONG” | “MID” | “CLOSE” | “PASSIVE”
-- damage: integer (for weapons)
-- ammo_cost: integer
-- absorb: integer (for shields)
-- armor_value: integer (for armor)
-- uses_per_battle: integer or null
-- reward: boolean
 
 If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
 
 ### 4.3 Equipment list
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
+### 4.4 Equipment Fields
+Equipment entries define the following fields:
+- id: Unique numeric identifier
+- name: Display identifier
+- type: Category such as MISSILE, LASER, RAIL, SHIELD, ARMOR
+- range: LONG, MID, CLOSE, or PASSIVE
+- damage: Damage dealt (for weapons)
+- ammo_cost: Ammo consumed when used
+- uses_per_battle: How many times the equipment can activate in one combat
+- absorb: Shield absorption amount (if applicable)
+- armor_value: Combat armor bonus (if applicable)
+- reward: Boolean indicating whether this item can appear as a reward
 
 -----
 
@@ -128,21 +129,23 @@ This rule applies to ALL turns and ranges.
 
 ## 7. ENEMY DESIGN
 
+Enemies always attack if alive and if they have a weapon valid for the current range.
+
+
+### 7.1 Enemy list
+
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
+### 7.1 Enemy Fields
 Enemy JSON fields:
-- id
-- category
-- hp
-- attacks: list of { range, damage, uses_per_battle }
+- id: Numeric identifier
+- category: first/normal/elite/boss
+- hp: Total health for this enemy
+- attacks: List of objects with fields:
+  - range: LONG/MID/CLOSE
+  - damage: Damage dealt in that phase
+  - uses_per_battle: How many times this attack can trigger in the combat
 
-uses_per_battle means:
-The maximum number of times an attack or effect may activate during a single combat.
-- Decreases by 1 each time it triggers
-- When it reaches 0, it no longer activates
-- Large values (e.g. 999) mean “effectively unlimited”
-
-Enemies always attack if alive and if they have a weapon valid for the current range.
 
 
 -----
