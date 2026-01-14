@@ -80,6 +80,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_da
 ## 5. DAMAGE RESOLUTION ORDER
 
 - Player attack resolves first:
+
   -If enemy HP <= 0, enemy does not attack this turn
   -Else enemy attack resolves
 
