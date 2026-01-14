@@ -33,8 +33,8 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 Starting_state.json
 
-equipped_item_ids equals "Equipment_data.json"'s id. 
-Ammo persists between battles and is NOT fully restored automatically.
+- equipped_item_ids equals "Equipment_data.json"'s id. 
+- Ammo persists between battles and is NOT fully restored automatically.
 
 -----
 
