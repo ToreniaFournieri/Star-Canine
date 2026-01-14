@@ -91,10 +91,11 @@ Shield and armor cannot absorb more than their current value.
 Each combat follows this fixed range sequence:
 
 - **Turn 1:** Long
-- **Turn 2:** Close
+- **Turn 2:** Middle
 - **Turn 3:** Close
 - **Turn 4:** Close
-- **Turn 5:** Long
+- **Turn 5:** Middle
+- **Turn 6:** Long
 
 (5 turns total per combat, unless someone is destroyed earlier)
 
@@ -139,7 +140,7 @@ After winning a battle, player chooses ONE:
 
 OR
 
-**B) Gain +1 Ammo**
+**B) Gain +3 Ammo**
 
 If the player draws or loses:
 
@@ -158,11 +159,11 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 1. combat enemy (id:1)
 1. combat enemy (id:2)
 1. combat enemy (from category normal)
-1. dock (heal Hull 30% or +2 ammo)
+1. dock (heal Hull 30% or +6 ammo)
 1. combat elite (from category elite)
 1. combat enemy (from category normal)
 1. combat enemy (from category normal)
-1. dock (heal Hull 30% or +2 ammo)
+1. dock (heal Hull 30% or +6 ammo)
 1. combat boss (from category boss)
 
 -----
