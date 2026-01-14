@@ -2,7 +2,7 @@
   "items": [
     {
       "id": 1,
-      "name": "Comet Lance",
+      "name": "🚀Comet Lance",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 40,
@@ -12,7 +12,7 @@
     },
     {
       "id": 2,
-      "name": "Hull Cutter",
+      "name": "⚡️Hull Cutter",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 10,
@@ -22,7 +22,7 @@
     },
     {
       "id": 3,
-      "name": "Reinforced Plating",
+      "name": "◾️Reinforced Plating",
       "type": "ARMOR",
       "range": "PASSIVE",
       "armor_value": 25,
@@ -30,7 +30,7 @@
     },
     {
       "id": 4,
-      "name": "Meteor Spear",
+      "name": "🚀Meteor Spear",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 50,
@@ -40,7 +40,7 @@
     },
     {
       "id": 5,
-      "name": "Twin Nova Rack",
+      "name": "🚀Twin Nova Rack",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 65,
@@ -50,7 +50,7 @@
     },
     {
       "id": 6,
-      "name": "Plasma Fang",
+      "name": "⚡️Plasma Fang",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 15,
@@ -60,7 +60,7 @@
     },
     {
       "id": 7,
-      "name": "Solar Overload",
+      "name": "⚡️Solar Overload",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 25,
@@ -70,7 +70,7 @@
     },
     {
       "id": 8,
-      "name": "Magnetic Veil",
+      "name": "🛡️Magnetic Veil",
       "type": "SHIELD",
       "range": "LONG",
       "absorb": 15,
@@ -79,7 +79,7 @@
     },
     {
       "id": 9,
-      "name": "Kinetic Brace",
+      "name": "🛡️Kinetic Brace",
       "type": "SHIELD",
       "range": "CLOSE",
       "absorb": 20,
@@ -88,7 +88,7 @@
     },
     {
       "id": 10,
-      "name": "Skirmish Rail",
+      "name": "🏹Skirmish Rail",
       "type": "RAIL",
       "range": "MID",
       "damage": 20,
@@ -98,7 +98,7 @@
     },
     {
       "id": 11,
-      "name": "Breaker Cannon",
+      "name": "🏹Breaker Cannon",
       "type": "RAIL",
       "range": "MID",
       "damage": 35,
@@ -108,7 +108,7 @@
     },
     {
       "id": 12,
-      "name": "Suppressor Beam",
+      "name": "⚡️Suppressor Beam",
       "type": "LASER",
       "range": "MID",
       "damage": 10,
