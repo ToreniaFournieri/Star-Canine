@@ -1,45 +1,46 @@
-SPACE EXPEDITION SPECIFICATION v0.1.0 (CODING-READY)
+SPACE EXPEDITION SPECIFICATION v0.1.0
+(CODING-READY)
 
-⸻
 
-	1.	GAME OVERVIEW
+1. GAME OVERVIEW
 
-This is a terminal-based, deterministic, text-only roguelike spaceship game.
+A terminal-based, deterministic, text-only roguelike spaceship game.
+
+Key properties:
 	•	No randomness in combat
 	•	No graphics
 	•	No real-time input during battle
 	•	Designed to be playable and solvable by LLMs
 	•	Inspired by Slay the Spire, but simpler
 
-Player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
+The player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
 
 ⸻
 
-	2.	CORE CONCEPTS
-
+2. CORE CONCEPTS
 	•	The player controls ONE ship
 	•	Battles are 1 vs 1
 	•	Damage persists between battles (hull only)
 	•	Ammo is a limited resource
-	•	Strategy is about:
+	•	Strategy focuses on:
 	•	Equipment selection
 	•	Ammo usage
 	•	Preventing enemy attacks by killing first
 
 ⸻
 
-	3.	PLAYER SHIP (BASE STATS)
+3. PLAYER SHIP (BASE STATS)
 
 Initial player ship:
 	•	Hull HP: 200
 	•	Ammo: 4
 	•	Equipment slots: 6
 
-Ammo persists between battles and is NOT fully restored automatically.
+Ammo persists between battles and is NOT automatically restored.
 
 ⸻
 
-	4.	EQUIPMENT SYSTEM
+4. EQUIPMENT SYSTEM
 
 4.1 Inventory vs Slots
 	•	Inventory: all equipment the player owns
@@ -47,12 +48,16 @@ Ammo persists between battles and is NOT fully restored automatically.
 	•	ONLY equipped items affect combat
 	•	Equipment can be freely swapped between battles
 
-At the start of each battle, player:
+At the start of each battle, the player:
 	•	Sees full equipment list
 	•	Selects up to 6 items to equip
-    	•	Sees next battle’s enemy Status (HP, long, close damage or other feature)
+	•	Sees the next enemy’s status:
+	•	HP
+	•	Long-range damage
+	•	Close-range damage
+	•	Special features (if any)
 
-(No UI required beyond text; checkmarks optional)
+(Text-only UI; checkmarks optional)
 
 ⸻
 
@@ -61,41 +66,45 @@ At the start of each battle, player:
 All equipment is passive once equipped.
 
 A. Assault Equipment
-	1.	Missile Launcher
-
+1. Missile Launcher
 	•	Type: Long range
 	•	Damage: defined per launcher
 	•	Ammo cost: defined per launcher
 	•	Uses global ammo pool
 
-	2.	Laser Weapon
-
+2. Laser Weapon
 	•	Type: Close range
 	•	Damage: defined per weapon
-	•	No ammo cost
-
-B. Defensive Equipment
-	3.	Armor
-
-	•	Grants Armor HP for ONE combat
-	•	Armor absorbs damage AFTER shield, BEFORE hull
-	•	Armor does NOT increase hull HP
-	•	Armor is fully restored at the start of each combat if equipped
-
-	4.	Shield (NOT starting equipment)
-
-Shield rules:
-	•	Shield works for ONE TURN ONLY
-	•	Shield resets every combat
-	•	Shield absorbs damage BEFORE armor
-
-Shield types:
-	•	Magnetic Shield: absorbs 25 damage, LONG range only
-	•	Kinetic Shield: absorbs 30 damage, CLOSE range only
+	•	Ammo cost: none
 
 ⸻
 
-	5.	DAMAGE RESOLUTION ORDER
+B. Defensive Equipment
+3. Armor
+	•	Grants Armor HP for ONE combat
+	•	Armor absorbs damage:
+	•	After shield
+	•	Before hull
+	•	Armor does NOT increase hull HP
+	•	Fully restored at the start of each combat if equipped
+
+4. Shield (not starting equipment)
+Shield rules:
+	•	Works for ONE TURN ONLY
+	•	Resets every combat
+	•	Absorbs damage BEFORE armor
+
+Shield types:
+	•	Magnetic Shield
+	•	Absorbs 25 damage
+	•	Long range only
+	•	Kinetic Shield
+	•	Absorbs 30 damage
+	•	Close range only
+
+⸻
+
+5. DAMAGE RESOLUTION ORDER
 
 When damage is dealt:
 	1.	Shield absorbs damage (if active this turn)
@@ -106,7 +115,7 @@ Shield and armor cannot absorb more than their current value.
 
 ⸻
 
-	6.	COMBAT STRUCTURE
+6. COMBAT STRUCTURE
 
 6.1 Turn Order
 
@@ -118,7 +127,8 @@ Turn 3: Close
 Turn 4: Close
 Turn 5: Long
 
-(5 turns total per combat, unless someone is destroyed earlier)
+	•	Maximum of 5 turns per combat
+	•	Combat ends immediately if either ship is destroyed
 
 ⸻
 
@@ -134,12 +144,11 @@ On EACH turn:
 	•	Enemy attacks
 
 This rule applies to ALL turns and ranges.
-
 There is NO simultaneous damage.
 
 ⸻
 
-	7.	STARTING EQUIPMENT
+7. STARTING EQUIPMENT
 
 Player starts with the following equipment in inventory:
 	•	40cm Missile Launcher
@@ -157,9 +166,9 @@ No shield at game start.
 
 ⸻
 
-	8.	ENEMY DESIGN (ACT 1 SAMPLE)
+8. ENEMY DESIGN (ACT 1 SAMPLE)
 
-Enemy HP is intentionally LOW to allow clean kills with good play.
+Enemy HP is intentionally LOW to reward clean kills.
 
 Enemy 1 (Small)
 	•	HP: 40
@@ -190,9 +199,9 @@ Enemies always attack if alive and if they have a weapon valid for the current r
 
 ⸻
 
-	9.	REWARDS
+9. REWARDS
 
-After winning a battle, player chooses ONE:
+After winning a battle, choose ONE:
 
 A) Choose 1 equipment from 3 options
 OR
@@ -204,7 +213,7 @@ If the player draws or loses:
 
 ⸻
 
-	10.	SAMPLE EQUIPMENT POOL (ACT 1)
+10. SAMPLE EQUIPMENT POOL (ACT 1)
 
 Possible rewards include:
 	•	50cm Missile Launcher
@@ -221,32 +230,35 @@ Possible rewards include:
 	•	25MW Burst Laser
 	•	Close
 	•	Damage: 25
-	•	Only works ONCE per combat
+	•	Works ONCE per combat
 	•	Armor (60)
-	•	Magnetic Shield (25, Long)
-	•	Kinetic Shield (30, Close)
+	•	Magnetic Shield
+	•	Absorb: 25
+	•	Long only
+	•	Kinetic Shield
+	•	Absorb: 30
+	•	Close only
 
 ⸻
 
-	11.	PROGRESSION STRUCTURE (SIMPLIFIED)
-
+11. PROGRESSION STRUCTURE (SIMPLIFIED)
 	•	Fixed linear sequence of battles
 	•	No events
 	•	No shops
 	•	No randomness in combat
 	•	No mid-range combat
-	•	Focus is on clarity and balance
+	•	Focus on clarity and balance
 
 ⸻
 
-	12.	DESIGN GOALS (FOR CODER)
-
+12. DESIGN GOALS (FOR CODER)
 	•	Deterministic output
-	•	Clear logs per turn
-	•	Easy to reason damage
+	•	Clear per-turn logs
+	•	Easy-to-reason damage flow
 	•	Minimal state tracking
 	•	No hidden rules
 
 ⸻
 
 END OF SPECIFICATION
+
