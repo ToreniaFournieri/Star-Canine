@@ -1,4 +1,4 @@
-# SPACE EXPEDITION SPECIFICATION v0.1.0
+# SPACE EXPEDITION SPECIFICATION v0.1.1
 
 -----
 
@@ -26,7 +26,6 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
   - Equipment selection
   - Ammo usage
   - Preventing enemy attacks by killing first
-
 -----
 
 ## 3. PLAYER SHIP (BASE STATS)
@@ -79,6 +78,11 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_da
 -----
 
 ## 5. DAMAGE RESOLUTION ORDER
+
+- Player attack resolves first
+  -If enemy HP <= 0, enemy does not attack this turn
+  -Else enemy attack resolves
+
 
 When damage is dealt:
 
