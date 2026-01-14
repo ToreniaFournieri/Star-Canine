@@ -1,11 +1,11 @@
 # Star-Canine
 Text-based rouge like expedition game. 
 
-## How to play
+## How to play with on the fly coding
 
--open Claude (It's free)
+-Open Claude (It's free)
 
--copy and paste below, then you can play rhis game:
+-Copy and paste below, then you can play rhis game:
 
 Hello, please make this:
 Links:
