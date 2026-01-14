@@ -31,12 +31,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 ## 3. PLAYER SHIP (BASE STATS)
 
-Initial player ship:
-
-- **Hull HP:** 200
-- **Ammo:** 4
-- **Equipment slots:** 6
-
+Starting_state.json
 Ammo persists between battles and is NOT fully restored automatically.
 
 -----
@@ -56,50 +51,25 @@ At the start of each battle, player:
 - Selects up to 6 items to equip
 - Sees next battle’s enemy Status (HP, long, close damage or other feature)
 
-(No UI required beyond text; checkmarks optional)
+(No UI required beyond text; checkmarks 3.2 Equipment Behavior
 
 -----
 
-### 4.2 Equipment Types
+### 4.2 Equipment behavior
+Each piece of equipment may define:
+- Range (long or close)
+- Damage
+- Ammo cost (if any)
+- uses_per_battle (optional)
 
-All equipment is passive once equipped.
+If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
 
-#### A. Assault Equipment
+-----
 
-**1. Missile Launcher**
+### 4.3 Equipment list
+Equipment_data.json
 
-- Type: Long range
-- Damage: defined per launcher
-- Ammo cost: defined per launcher
-- Uses global ammo pool
 
-**2. Laser Weapon**
-
-- Type: Close range
-- Damage: defined per weapon
-- No ammo cost
-
-#### B. Defensive Equipment
-
-**3. Armor**
-
-- Grants Armor HP for ONE combat
-- Armor absorbs damage AFTER shield, BEFORE hull
-- Armor does NOT increase hull HP
-- Armor is fully restored at the start of each combat if equipped
-
-**4. Shield** (NOT starting equipment)
-
-Shield rules:
-
-- Shield works for ONE TURN ONLY
-- Shield resets every combat
-- Shield absorbs damage BEFORE armor
-
-Shield types:
-
-- **Magnetic Shield:** absorbs 25 damage, LONG range only
-- **Kinetic Shield:** absorbs 30 damage, CLOSE range only
 
 -----
 
@@ -147,66 +117,18 @@ This rule applies to ALL turns and ranges.
 
 **There is NO simultaneous damage.**
 
------
-
-## 7. STARTING EQUIPMENT
-
-Player starts with the following equipment in inventory:
-
-- **40cm Missile Launcher**
-  - Long range
-  - Damage: 40
-  - Ammo cost: 1
-- **10MW Laser ×2**
-  - Close range
-  - Damage: 10 each
-  - No ammo cost
-- **Armor (60)**
-  - Grants 60 armor per combat
-
-No shield at game start.
 
 -----
 
-## 8. ENEMY DESIGN (ACT 1 SAMPLE)
+## 7. ENEMY DESIGN
 
-Enemy HP is intentionally LOW to allow clean kills with good play.
-
-**Enemy 1 (Small)**
-
-- HP: 40
-- Long: none
-- Close: 10 damage
-
-**Enemy 2 (Small)**
-
-- HP: 60
-- Long: 30 damage (once, first long turn only)
-- Close: 20 damage
-
-**Enemy 3 (Mini-Boss)**
-
-- HP: 90
-- Long: none
-- Close: 20 damage
-
-**Enemy 4 (Small)**
-
-- HP: 80
-- Long: 30 damage
-- Close: 10 damage
-
-**Elite Enemy**
-
-- HP: 130
-- Long: 40 damage
-- Close: 30 damage
+Enemy_data.json
 
 Enemies always attack if alive and if they have a weapon valid for the current range.
 
 -----
 
-## 9. REWARDS
+## 8. REWARDS
 
 After winning a battle, player chooses ONE:
 
@@ -221,34 +143,11 @@ If the player draws or loses:
 - Game ends
 - No reward
 
------
-
-## 10. SAMPLE EQUIPMENT POOL (ACT 1)
-
-Possible rewards include:
-
-- **50cm Missile Launcher**
-  - Long
-  - Damage: 50
-  - Ammo cost: 1
-- **Dual 40cm Missile Launcher**
-  - Long
-  - Damage: 80
-  - Ammo cost: 2
-- **15MW Pulse Laser**
-  - Close
-  - Damage: 15
-- **25MW Burst Laser**
-  - Close
-  - Damage: 25
-  - Only works ONCE per combat
-- **Armor (60)**
-- **Magnetic Shield (25, Long)**
-- **Kinetic Shield (30, Close)**
+Equipment is randomly chosen from equipment_data.json. 
 
 -----
 
-## 11. PROGRESSION STRUCTURE (SIMPLIFIED)
+## 9. PROGRESSION STRUCTURE (SIMPLIFIED)
 
 - Fixed linear sequence of battles
 - No events
@@ -259,7 +158,7 @@ Possible rewards include:
 
 -----
 
-## 12. DESIGN GOALS (FOR CODER)
+## 10. DESIGN GOALS (FOR CODER)
 
 - Deterministic output
 - Clear logs per turn
