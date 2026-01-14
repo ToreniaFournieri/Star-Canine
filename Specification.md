@@ -33,7 +33,8 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_state.json
 
 - equipped_item_ids equals "Equipment_data.json"'s id. 
-- Ammo persists between battles and is NOT fully restored automatically.
+- Hull and Ammo persists between battles and is NOT fully restored automatically.
+
 
 -----
 
@@ -43,7 +44,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_sta
 
 - **Inventory:** all equipment the player owns
 - **Slots:** up to 6 equipped items. you cannot assign 7 or more equipment
-- You may have multiple same id equipments. need to distinguish them
+- You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
 
