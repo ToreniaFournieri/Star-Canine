@@ -136,7 +136,7 @@ Enemies always attack if alive and if they have a weapon valid for the current r
 
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
-### 7.2 Enemy Fields
+### 6.2 Enemy Fields
 Enemy JSON fields:
 - id: Numeric identifier
 - category: first/normal/elite/boss
