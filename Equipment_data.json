@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "type": "MISSILE",
+      "range": "LONG",
+      "damage": 40,
+      "ammo_cost": 1,
+      "uses_per_combat": null
+    },
+    {
+      "id": 2,
+      "type": "LASER",
+      "range": "CLOSE",
+      "damage": 10,
+      "ammo_cost": 0,
+      "uses_per_combat": null
+    },
+    {
+      "id": 3,
+      "type": "ARMOR",
+      "range": "PASSIVE",
+      "armor_value": 60
+    },
+    {
+      "id": 4,
+      "type": "MISSILE",
+      "range": "LONG",
+      "damage": 50,
+      "ammo_cost": 1,
+      "uses_per_combat": null
+    },
+    {
+      "id": 5,
+      "type": "MISSILE",
+      "range": "LONG",
+      "damage": 80,
+      "ammo_cost": 2,
+      "uses_per_combat": null
+    },
+    {
+      "id": 6,
+      "type": "LASER",
+      "range": "CLOSE",
+      "damage": 15,
+      "ammo_cost": 0,
+      "uses_per_combat": null
+    },
+    {
+      "id": 7,
+      "type": "LASER",
+      "range": "CLOSE",
+      "damage": 25,
+      "ammo_cost": 0,
+      "uses_per_combat": 1
+    },
+    {
+      "id": 8,
+      "type": "SHIELD",
+      "range": "LONG",
+      "absorb": 25,
+      "uses_per_combat": 1
+    },
+    {
+      "id": 9,
+      "type": "SHIELD",
+      "range": "CLOSE",
+      "absorb": 30,
+      "uses_per_combat": 1
+    }
+  ]
+}
