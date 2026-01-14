@@ -126,6 +126,12 @@ Enemy_data.json
 
 Enemies always attack if alive and if they have a weapon valid for the current range.
 
+uses_per_battle means:
+The maximum number of times an attack or effect may activate during a single combat.
+- Decreases by 1 each time it triggers
+- When it reaches 0, it no longer activates
+- Large values (e.g. 999) mean “effectively unlimited”
+
 -----
 
 ## 8. REWARDS
