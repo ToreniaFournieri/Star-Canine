@@ -78,24 +78,9 @@ Equipment entries define the following fields:
 
 -----
 
-## 5. DAMAGE RESOLUTION ORDER
+## 5. COMBAT STRUCTURE
 
-- Player attack resolves first. If enemy HP <= 0, enemy does not attack this turn. Else enemy attack resolves
-
-
-When damage is dealt:
-
-1. Shield absorbs damage (if active this turn)
-1. Remaining damage goes to Armor
-1. Remaining damage goes to Hull
-
-Shield and armor cannot absorb more than their current value.
-
------
-
-## 6. COMBAT STRUCTURE
-
-### 6.1 Turn Order
+### 5.1 Turn Order
 
 Each combat follows this fixed range sequence:
 
@@ -108,7 +93,7 @@ Each combat follows this fixed range sequence:
 
 (6 turns total per combat, unless someone is destroyed earlier)
 
-### 6.2 Attack Resolution Rule (VERY IMPORTANT)
+### 5.2 Attack Resolution Rule (VERY IMPORTANT)
 
 On EACH turn:
 
@@ -124,19 +109,33 @@ This rule applies to ALL turns and ranges.
 
 **There is NO simultaneous damage.**
 
+## 5.3 DAMAGE RESOLUTION ORDER
+
+- Player attack resolves first. If enemy HP <= 0, enemy does not attack this turn. Else enemy attack resolves
+
+
+When damage is dealt:
+
+1. Shield absorbs damage (if active this turn)
+1. Remaining damage goes to Armor
+1. Remaining damage goes to Hull
+
+Shield and armor cannot absorb more than their current value.
+
+
 
 -----
 
-## 7. ENEMY DESIGN
+## 6. ENEMY DESIGN
 
 Enemies always attack if alive and if they have a weapon valid for the current range.
 
 
-### 7.1 Enemy list
+### 6.1 Enemy list
 
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
-### 7.1 Enemy Fields
+### 7.2 Enemy Fields
 Enemy JSON fields:
 - id: Numeric identifier
 - category: first/normal/elite/boss
@@ -150,7 +149,7 @@ Enemy JSON fields:
 
 -----
 
-## 8. REWARDS
+## 7. REWARDS
 
 After winning a battle, player chooses ONE:
 
@@ -169,7 +168,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 
 -----
 
-## 9. PROGRESSION STRUCTURE (SIMPLIFIED)
+## 8. PROGRESSION STRUCTURE (SIMPLIFIED)
 
 - Fixed linear sequence of battles
 
@@ -186,7 +185,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 
 -----
 
-## 10. DESIGN GOALS (FOR CODER)
+## 9. DESIGN GOALS (FOR CODER)
 
 - Deterministic output
 - Clear logs per turn
