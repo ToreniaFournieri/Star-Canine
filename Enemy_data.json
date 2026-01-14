@@ -1,132 +1,107 @@
 {
-  "act": 1,
-  "enemy_categories": {
-    "FIRST_ENEMY": "Fixed tutorial enemy for the first battle",
-    "SECOND_ENEMY": "Fixed tutorial enemy for the second battle",
-    "NORMAL_ENEMY": "Randomly selected from this pool after battle 2",
-    "ELITE_ENEMY": "Randomly selected elite enemy",
-    "ACT1_BOSS": "Fixed Act 1 boss"
-  },
   "enemies": [
     {
-      "id": "scout_drone",
-      "category": "FIRST_ENEMY",
-      "max_hp": 40,
-      "attacks": {
-        "long": {
-          "damage": 0,
-          "limit": null
-        },
-        "close": {
+      "_comment": "First fixed tutorial enemy",
+      "id": 1,
+      "category": "first",
+      "hp": 40,
+      "attacks": [
+        {
+          "range": "close",
           "damage": 10,
-          "hits": 1
+          "uses_per_battle": 3
         }
-      }
+      ]
     },
+
     {
-      "id": "light_frigate",
-      "category": "SECOND_ENEMY",
-      "max_hp": 60,
-      "attacks": {
-        "long": {
-          "damage": 30,
-          "limit": 1
+      "_comment": "Second fixed tutorial enemy",
+      "id": 2,
+      "category": "first",
+      "hp": 60,
+      "attacks": [
+        {
+          "range": "long",
+          "damage": 40,
+          "uses_per_battle": 1
         },
-        "close": {
+        {
+          "range": "close",
           "damage": 20,
-          "hits": 1
+          "uses_per_battle": 3
         }
-      }
+      ]
     },
+
     {
-      "id": "patrol_ship",
-      "category": "NORMAL_ENEMY",
-      "max_hp": 80,
-      "attacks": {
-        "long": {
+      "_comment": "Normal enemy pool (randomly chosen after first two fights)",
+      "id": 3,
+      "category": "normal",
+      "hp": 80,
+      "attacks": [
+        {
+          "range": "long",
           "damage": 30,
-          "limit": null
+          "uses_per_battle": 1
         },
-        "close": {
+        {
+          "range": "close",
           "damage": 10,
-          "hits": 1
+          "uses_per_battle": 3
         }
-      }
+      ]
     },
+
     {
-      "id": "raider",
-      "category": "NORMAL_ENEMY",
-      "max_hp": 90,
-      "attacks": {
-        "long": {
-          "damage": 0,
-          "limit": null
-        },
-        "close": {
-          "damage": 20,
-          "hits": 1
+      "_comment": "Stronger normal enemy variant",
+      "id": 4,
+      "category": "normal",
+      "hp": 90,
+      "attacks": [
+        {
+          "range": "close",
+          "damage": 25,
+          "uses_per_battle": 3
         }
-      }
+      ]
     },
+
     {
-      "id": "assault_corvette",
-      "category": "NORMAL_ENEMY",
-      "max_hp": 100,
-      "attacks": {
-        "long": {
-          "damage": 20,
-          "limit": null
-        },
-        "close": {
-          "damage": 20,
-          "hits": 1
-        }
-      }
-    },
-    {
-      "id": "heavy_destroyer",
-      "category": "ELITE_ENEMY",
-      "max_hp": 130,
-      "attacks": {
-        "long": {
+      "_comment": "Elite enemy (chosen from elite pool)",
+      "id": 5,
+      "category": "elite",
+      "hp": 150,
+      "attacks": [
+        {
+          "range": "long",
           "damage": 40,
-          "limit": null
+          "uses_per_battle": 2
         },
-        "close": {
+        {
+          "range": "close",
           "damage": 30,
-          "hits": 1
+          "uses_per_battle": 3
         }
-      }
+      ]
     },
+
     {
-      "id": "missile_cruiser",
-      "category": "ELITE_ENEMY",
-      "max_hp": 120,
-      "attacks": {
-        "long": {
-          "damage": 50,
-          "limit": null
-        },
-        "close": {
-          "damage": 20,
-          "hits": 1
-        }
-      }
-    },
-    {
-      "id": "ancient_guardian",
-      "category": "ACT1_BOSS",
-      "max_hp": 180,
-      "attacks": {
-        "long": {
+      "_comment": "Act 1 boss (fixed encounter)",
+      "id": 6,
+      "category": "boss",
+      "hp": 180,
+      "attacks": [
+        {
+          "range": "long",
           "damage": 40,
-          "limit": null
+          "uses_per_battle": 2
         },
-        "close": {
+        {
+          "range": "close",
           "damage": 30,
-          "hits": 2
+          "uses_per_battle": 4
         }
-      }
+      ]
     }
   ]
 }
