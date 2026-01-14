@@ -146,7 +146,7 @@ If the player draws or loses:
 - Game ends
 - No reward
 
-Equipment is randomly chosen from equipment_data.json. 
+Equipment is randomly chosen where "reward": true from equipment_data.json. 
 
 -----
 
