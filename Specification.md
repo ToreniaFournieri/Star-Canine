@@ -33,7 +33,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 At the start of each stage,
 - Show own ship status
 - Show full equipment list
-- Selects up to 6 items to equip
+- Selects up to 6 items to equip. Persist previous selection of equipment. 
 (checkmarks selected, if it has UI)
 
 If stage is combat:
