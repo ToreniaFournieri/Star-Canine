@@ -16,7 +16,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 ### 1.1 Story
 
-> Ship ID confirmed: STAR CANINE
+> Ship ID confirmed: STAR CANINE  
 > Command authority: CAPTAIN
 
 > Incoming distress signal detected.
