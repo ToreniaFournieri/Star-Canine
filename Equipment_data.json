@@ -2,79 +2,118 @@
   "items": [
     {
       "id": 1,
-      "type": "40t MISSILE",
+      "name": "Comet Lance",
+      "type": "MISSILE",
       "range": "LONG",
       "damage": 40,
-      "ammo_cost": 1,
-      "uses_per_combat": null
+      "ammo_cost": 3,
+      "uses_per_battle": null,
       "reward": false
     },
     {
       "id": 2,
-      "type": "10MW LASER",
+      "name": "Hull Cutter",
+      "type": "LASER",
       "range": "CLOSE",
       "damage": 10,
       "ammo_cost": 0,
-      "uses_per_combat": null
+      "uses_per_battle": null,
       "reward": false
     },
     {
       "id": 3,
-      "type": "25cm ARMOR",
+      "name": "Reinforced Plating",
+      "type": "ARMOR",
       "range": "PASSIVE",
-      "armor_value": 25
+      "armor_value": 25,
       "reward": false
     },
     {
       "id": 4,
-      "type": "50t MISSILE",
+      "name": "Meteor Spear",
+      "type": "MISSILE",
       "range": "LONG",
       "damage": 50,
-      "ammo_cost": 1,
-      "uses_per_combat": null
+      "ammo_cost": 3,
+      "uses_per_battle": null,
       "reward": true
     },
     {
       "id": 5,
-      "type": "Double MISSILE",
+      "name": "Twin Nova Rack",
+      "type": "MISSILE",
       "range": "LONG",
       "damage": 65,
-      "ammo_cost": 2,
-      "uses_per_combat": null
+      "ammo_cost": 6,
+      "uses_per_battle": null,
       "reward": true
     },
     {
       "id": 6,
-      "type": "15MW LASER",
+      "name": "Plasma Fang",
+      "type": "LASER",
       "range": "CLOSE",
       "damage": 15,
       "ammo_cost": 0,
-      "uses_per_combat": null
+      "uses_per_battle": null,
       "reward": true
     },
     {
       "id": 7,
-      "type": "Burst LASER",
+      "name": "Solar Overload",
+      "type": "LASER",
       "range": "CLOSE",
       "damage": 25,
       "ammo_cost": 0,
-      "uses_per_combat": 1
+      "uses_per_battle": 1,
       "reward": true
     },
     {
       "id": 8,
-      "type": "15MW SHIELD for long",
+      "name": "Magnetic Veil",
+      "type": "SHIELD",
       "range": "LONG",
       "absorb": 15,
-      "uses_per_combat": 1
+      "uses_per_battle": 1,
       "reward": true
     },
     {
       "id": 9,
-      "type": "20MW SHIELD for close",
+      "name": "Kinetic Brace",
+      "type": "SHIELD",
       "range": "CLOSE",
       "absorb": 20,
-      "uses_per_combat": 1
+      "uses_per_battle": 1,
+      "reward": true
+    },
+    {
+      "id": 10,
+      "name": "Skirmish Rail",
+      "type": "RAIL",
+      "range": "MID",
+      "damage": 20,
+      "ammo_cost": 1,
+      "uses_per_battle": 1,
+      "reward": true
+    },
+    {
+      "id": 11,
+      "name": "Breaker Cannon",
+      "type": "RAIL",
+      "range": "MID",
+      "damage": 35,
+      "ammo_cost": 2,
+      "uses_per_battle": 1,
+      "reward": true
+    },
+    {
+      "id": 12,
+      "name": "Suppressor Beam",
+      "type": "LASER",
+      "range": "MID",
+      "damage": 10,
+      "ammo_cost": 0,
+      "uses_per_battle": null,
       "reward": true
     }
   ]
