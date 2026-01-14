@@ -43,7 +43,8 @@ Starting_state.json
 ### 4.1 Inventory vs Slots
 
 - **Inventory:** all equipment the player owns
-- **Slots:** up to 6 equipped items
+- **Slots:** up to 6 equipped items. you cannot assign 7 or more equipment
+- You may have multiple same id equipments. need to distinguish them
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
 
