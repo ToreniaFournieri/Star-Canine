@@ -30,7 +30,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 ### 2.1 Flow
 
 #### 2.1.1 First scene 
-At the start of each stage, player:
+At the start of each stage,
 - Show own ship status
 - Show full equipment list
 - Selects up to 6 items to equip
