@@ -20,9 +20,9 @@
     },
     {
       "id": 3,
-      "type": "60cm ARMOR",
+      "type": "25cm ARMOR",
       "range": "PASSIVE",
-      "armor_value": 60
+      "armor_value": 25
       "reward": false
     },
     {
@@ -36,9 +36,9 @@
     },
     {
       "id": 5,
-      "type": "Double 40cm MISSILE",
+      "type": "Double MISSILE",
       "range": "LONG",
-      "damage": 80,
+      "damage": 65,
       "ammo_cost": 2,
       "uses_per_combat": null
       "reward": true
@@ -63,17 +63,17 @@
     },
     {
       "id": 8,
-      "type": "25MW SHIELD for long",
+      "type": "15MW SHIELD for long",
       "range": "LONG",
-      "absorb": 25,
+      "absorb": 15,
       "uses_per_combat": 1
       "reward": true
     },
     {
       "id": 9,
-      "type": "30MW SHIELD for close",
+      "type": "20MW SHIELD for close",
       "range": "CLOSE",
-      "absorb": 30,
+      "absorb": 20,
       "uses_per_combat": 1
       "reward": true
     }
