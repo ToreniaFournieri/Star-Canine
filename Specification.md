@@ -51,7 +51,7 @@ At the start of each battle, player:
 - Selects up to 6 items to equip
 - Sees next battle’s enemy Status (HP, long, close damage or other feature)
 
-(No UI required beyond text; checkmarks 3.2 Equipment Behavior
+(checkmarks selected, if it has UI)
 
 -----
 
