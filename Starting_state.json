@@ -1,6 +1,6 @@
 {
   "hull": 200,
-  "ammo": 4,
+  "ammo": 12,
   "max_slots": 6,
   "equipped_item_ids": [1, 2, 2, 3]
 }
