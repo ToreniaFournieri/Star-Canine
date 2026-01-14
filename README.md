@@ -3,7 +3,7 @@ Text-based rouge like expedition game.
 
 ## How to play
 
--open Claude (free, no need subscription)
+-open Claude (It's free)
 
 -copy and paste below, then you can play rhis game:
 
