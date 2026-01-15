@@ -172,8 +172,7 @@
       "ammo_cost": 0,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": true,
-      "multiplier": 1
+      "disposable": true
     },
     {
       "id": 102,
@@ -183,8 +182,7 @@
       "absorb": 60,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": true,
-      "multiplier": 1
+      "disposable": true
     },
     {
       "id": 103,
@@ -195,8 +193,7 @@
       "ammo_cost": 0,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": true,
-      "multiplier": 1
+      "disposable": true
     },
 
     /* --- TRASH ITEM --- */
@@ -206,8 +203,7 @@
       "type": "JUNK",
       "range": "PASSIVE",
       "reward": false,
-      "disposable": false,
-      "multiplier": 1
+      "disposable": false
     }
   ]
 }
