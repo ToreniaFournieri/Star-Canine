@@ -71,11 +71,13 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 At the start of each stage,
 - Show own ship status
 - Show full equipment list
-- Selects up to 6 items to equip. Persist previous selection of equipment. 
-(checkmarks selected, if it has UI)
+- equipment
+  - at the first stage, none of them selected
+  - Selects up to 6 items to equip. Persist previous selection of equipment
+  - If it has UI, checkmarks selected item.
 
 If stage is combat:
-- show enemy status. Enemy's HP, damage (long, mid, close) and other feature displayed)
+- show enemy status. Enemy's hull, attack damage (long, mid, close) and other feature displayed)
 - Engage battle to start combat
 
 If stage is others:
@@ -84,7 +86,9 @@ If stage is others:
 
 #### 2.1.2 Combat log scene
 - Display log
-- If player beats an enemy, he grant reward. Else if it is draw, skip reward and continue to a next stage. Else if player loses, it is game over. 
+- If player beats an enemy, he grant reward. 
+- Else if it is draw, skip reward and continue to a next stage. 
+- Else if player loses, it is game over. 
 
 #### 2.1.3 Reward scene
 - If player beat an enemy, display reward list.
