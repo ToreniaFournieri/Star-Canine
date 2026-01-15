@@ -99,7 +99,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Status: DANGER.  
 
 ### 1.1.3 Act III
-Star Canine arrives at K9. continuing fierce battles. no message exchage between Star Canine and Solar Bears. Only reverberation of explosions. 
+Star Canine arrives at K9. Continuing fierce battles. No message exchage between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
 > “Fight with cudgel.  
