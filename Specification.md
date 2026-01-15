@@ -51,6 +51,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 - Boss Encounter 
 > Ship location: K9 Outer Orbit  
 > Massive signature detected: URSA-CLASS DREADNOUGHT 
+> 
 > Sender ID: COMMODORE URSA  
 > "A stray dog is sniffing at the gate.  
 > K9 is no longer your dog house—it belongs to the Empire.  
