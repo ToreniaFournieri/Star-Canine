@@ -8,7 +8,8 @@
       "damage": 40,
       "ammo_cost": 3,
       "uses_per_battle": null,
-      "reward": false
+      "reward": false,
+      "disposable": false
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "damage": 10,
       "ammo_cost": 0,
       "uses_per_battle": null,
-      "reward": false
+      "reward": false,
+      "disposable": false
     },
     {
       "id": 3,
@@ -26,7 +28,8 @@
       "type": "ARMOR",
       "range": "PASSIVE",
       "armor_value": 25,
-      "reward": false
+      "reward": false,
+      "disposable": false
     },
     {
       "id": 4,
@@ -36,7 +39,8 @@
       "damage": 50,
       "ammo_cost": 3,
       "uses_per_battle": null,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 5,
@@ -46,7 +50,8 @@
       "damage": 65,
       "ammo_cost": 6,
       "uses_per_battle": null,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 6,
@@ -56,7 +61,8 @@
       "damage": 15,
       "ammo_cost": 0,
       "uses_per_battle": null,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 7,
@@ -66,7 +72,8 @@
       "damage": 25,
       "ammo_cost": 0,
       "uses_per_battle": 1,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 8,
@@ -75,7 +82,8 @@
       "range": "LONG",
       "absorb": 15,
       "uses_per_battle": 1,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 9,
@@ -84,7 +92,8 @@
       "range": "CLOSE",
       "absorb": 20,
       "uses_per_battle": 1,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 10,
@@ -94,7 +103,8 @@
       "damage": 20,
       "ammo_cost": 1,
       "uses_per_battle": 1,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 11,
@@ -104,7 +114,8 @@
       "damage": 35,
       "ammo_cost": 2,
       "uses_per_battle": 1,
-      "reward": true
+      "reward": true,
+      "disposable": false
     },
     {
       "id": 12,
@@ -114,7 +125,89 @@
       "damage": 10,
       "ammo_cost": 0,
       "uses_per_battle": null,
-      "reward": true
+      "reward": true,
+      "disposable": false
+    },
+    {
+      "id": 17,
+      "name": "💎Prismatic Lens",
+      "type": "MODULE",
+      "range": "PASSIVE",
+      "target_type": "LASER",
+      "multiplier": 2,
+      "reward": true,
+      "disposable": false,
+      "flavor": "Doubles all LASER damage."
+    },
+    {
+      "id": 18,
+      "name": "⚙️Autoloader Rig",
+      "type": "MODULE",
+      "range": "PASSIVE",
+      "target_type": "RAIL",
+      "multiplier": 2,
+      "reward": true,
+      "disposable": false,
+      "flavor": "Doubles all RAIL damage."
+    },
+    {
+      "id": 19,
+      "name": "🔥Warhead Optimizer",
+      "type": "MODULE",
+      "range": "PASSIVE",
+      "target_type": "MISSILE",
+      "multiplier": 2,
+      "reward": true,
+      "disposable": false,
+      "flavor": "Doubles all MISSILE damage."
+    },
+
+    /* --- DISPOSABLE ITEMS --- */
+    {
+      "id": 101,
+      "name": "💥Final Gambit",
+      "type": "MISSILE",
+      "range": "LONG",
+      "damage": 120,
+      "ammo_cost": 0,
+      "uses_per_battle": 1,
+      "reward": true,
+      "disposable": true,
+      "multiplier": 1
+    },
+    {
+      "id": 102,
+      "name": "🛡️Aegis Protocol",
+      "type": "SHIELD",
+      "range": "MID",
+      "absorb": 60,
+      "uses_per_battle": 1,
+      "reward": true,
+      "disposable": true,
+      "multiplier": 1
+    },
+    {
+      "id": 103,
+      "name": "⚡️Singularity Core",
+      "type": "LASER",
+      "range": "CLOSE",
+      "damage": 80,
+      "ammo_cost": 0,
+      "uses_per_battle": 1,
+      "reward": true,
+      "disposable": true,
+      "multiplier": 1
+    },
+
+    /* --- TRASH ITEM --- */
+    {
+      "id": 999,
+      "name": "⚠️Broken Scrap",
+      "type": "JUNK",
+      "range": "PASSIVE",
+      "reward": false,
+      "disposable": false,
+      "multiplier": 1
     }
   ]
 }
