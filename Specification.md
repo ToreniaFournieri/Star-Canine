@@ -23,7 +23,8 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 - ACT III — RECLAMATION 
   - location:Planet K9
 
-#### 1.1.1 ACT I start
+#### 1.1.1 ACT I
+- Srart
 
 > Ship ID confirmed: STAR CANINE  
 > Command authority: CAPTAIN  
@@ -47,10 +48,11 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 > Setting course for K9.
 
- Game start. 
+- Just before the boss battle
 
-#### 1.1.2 Act II start
 
+#### 1.1.2 Act II
+- Start
 > Ship location: Asteroid Belt (Inner)  
 > Unknown signal detected.  
 > Decrypting...  
@@ -70,6 +72,22 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Clear the path, Blue Wolf.  
 > I’ll secure your flank."  
 
+- Just before the boss battle
+
+> Target status: VOSTOK NEUTRALIZED.  
+> Incoming transmission...  
+> Sender ID: COMMANDER FENRIR  
+>  
+> "Vostok is gone.  
+> The Bears have a new General.  
+> Me.  
+> Thank you for your hard work, Blue Wolf.  
+> Rest in peace."  
+>  
+> Signal lost.  
+> Warning: Target lock detected.  
+> Origin: FENRIR.  
+> Status: DANGER.  
 
 -----
 
