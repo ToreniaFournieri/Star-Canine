@@ -112,7 +112,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > FENRIR: "You don't get it, right? That myth isn't a bedtime story.  
 > The Blue Wolf... the deity that conquered the Great Continent.  
 > It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
-> You got a good callsign, Blue wolf. Sleep tight.   
+> You got a good callsign, Blue Wolf. Sleep tight.   
 
 
 -----
