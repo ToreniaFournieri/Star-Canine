@@ -2,7 +2,7 @@
   "items": [
     {
       "id": 1,
-      "name": "🚀Comet Lance",
+      "name": "🚀 Comet Lance",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 40,
@@ -13,7 +13,7 @@
     },
     {
       "id": 2,
-      "name": "⚡️Hull Cutter",
+      "name": "⚡ Hull Cutter",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 10,
@@ -24,16 +24,19 @@
     },
     {
       "id": 3,
-      "name": "◾️Reinforced Plating",
+      "name": "◾ Reinforced Plating",
       "type": "ARMOR",
       "range": "PASSIVE",
       "armor_value": 25,
       "reward": false,
       "disposable": false
     },
+
+    /* --- LONG RANGE : MISSILES --- */
+
     {
       "id": 4,
-      "name": "🚀Meteor Spear",
+      "name": "🚀 Meteor Spear",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 50,
@@ -44,7 +47,7 @@
     },
     {
       "id": 5,
-      "name": "🚀Twin Nova Rack",
+      "name": "🚀 Twin Nova Rack",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 65,
@@ -53,9 +56,48 @@
       "reward": true,
       "disposable": false
     },
+
+    /* --- MID RANGE : FIGHTERS --- */
+
+    {
+      "id": 10,
+      "name": "✈️ Skirmish Wing",
+      "type": "FIGHTER",
+      "range": "MID",
+      "damage": 20,
+      "ammo_cost": 1,
+      "uses_per_battle": 1,
+      "reward": true,
+      "disposable": false
+    },
+    {
+      "id": 11,
+      "name": "✈️ Breaker Squadron",
+      "type": "FIGHTER",
+      "range": "MID",
+      "damage": 35,
+      "ammo_cost": 2,
+      "uses_per_battle": 1,
+      "reward": true,
+      "disposable": false
+    },
+    {
+      "id": 12,
+      "name": "✈️ Suppression Drones",
+      "type": "FIGHTER",
+      "range": "MID",
+      "damage": 10,
+      "ammo_cost": 0,
+      "uses_per_battle": null,
+      "reward": true,
+      "disposable": false
+    },
+
+    /* --- CLOSE RANGE : DIRECT FIRE --- */
+
     {
       "id": 6,
-      "name": "⚡️Plasma Fang",
+      "name": "⚡ Plasma Fang",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 15,
@@ -66,7 +108,7 @@
     },
     {
       "id": 7,
-      "name": "⚡️Solar Overload",
+      "name": "⚡ Solar Overload",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 25,
@@ -75,62 +117,33 @@
       "reward": true,
       "disposable": false
     },
+
+    /* --- SHIELDS (LONG ONLY) --- */
+
     {
       "id": 8,
-      "name": "🛡️Magnetic Veil",
+      "name": "🛡️ Magnetic Veil",
       "type": "SHIELD",
       "range": "LONG",
       "absorb": 15,
-      "uses_per_battle": 1,
       "reward": true,
       "disposable": false
     },
     {
       "id": 9,
-      "name": "🛡️Kinetic Brace",
+      "name": "🛡️ Aegis Field",
       "type": "SHIELD",
-      "range": "CLOSE",
-      "absorb": 20,
-      "uses_per_battle": 1,
+      "range": "LONG",
+      "absorb": 30,
       "reward": true,
       "disposable": false
     },
-    {
-      "id": 10,
-      "name": "🏹Skirmish Rail",
-      "type": "RAIL",
-      "range": "MID",
-      "damage": 20,
-      "ammo_cost": 1,
-      "uses_per_battle": 1,
-      "reward": true,
-      "disposable": false
-    },
-    {
-      "id": 11,
-      "name": "🏹Breaker Cannon",
-      "type": "RAIL",
-      "range": "MID",
-      "damage": 35,
-      "ammo_cost": 2,
-      "uses_per_battle": 1,
-      "reward": true,
-      "disposable": false
-    },
-    {
-      "id": 12,
-      "name": "⚡️Suppressor Beam",
-      "type": "LASER",
-      "range": "MID",
-      "damage": 10,
-      "ammo_cost": 0,
-      "uses_per_battle": null,
-      "reward": true,
-      "disposable": false
-    },
+
+    /* --- MODULES --- */
+
     {
       "id": 17,
-      "name": "💎Prismatic Lens",
+      "name": "💎 Prismatic Lens",
       "type": "MODULE",
       "range": "PASSIVE",
       "target_type": "LASER",
@@ -141,18 +154,18 @@
     },
     {
       "id": 18,
-      "name": "⚙️Autoloader Rig",
+      "name": "⚙️ Hangar Uplink",
       "type": "MODULE",
       "range": "PASSIVE",
-      "target_type": "RAIL",
+      "target_type": "FIGHTER",
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor": "Doubles all RAIL damage."
+      "flavor": "Doubles all FIGHTER damage."
     },
     {
       "id": 19,
-      "name": "🔥Warhead Optimizer",
+      "name": "🔥 Warhead Optimizer",
       "type": "MODULE",
       "range": "PASSIVE",
       "target_type": "MISSILE",
@@ -162,10 +175,11 @@
       "flavor": "Doubles all MISSILE damage."
     },
 
-    /* --- DISPOSABLE ITEMS --- */
+    /* --- DISPOSABLE --- */
+
     {
       "id": 101,
-      "name": "💥Final Gambit",
+      "name": "💥 Final Gambit",
       "type": "MISSILE",
       "range": "LONG",
       "damage": 120,
@@ -175,18 +189,8 @@
       "disposable": true
     },
     {
-      "id": 102,
-      "name": "🛡️Aegis Protocol",
-      "type": "SHIELD",
-      "range": "MID",
-      "absorb": 60,
-      "uses_per_battle": 1,
-      "reward": true,
-      "disposable": true
-    },
-    {
       "id": 103,
-      "name": "⚡️Singularity Core",
+      "name": "⚡ Singularity Core",
       "type": "LASER",
       "range": "CLOSE",
       "damage": 80,
@@ -196,10 +200,11 @@
       "disposable": true
     },
 
-    /* --- TRASH ITEM --- */
+    /* --- TRASH --- */
+
     {
       "id": 999,
-      "name": "⚠️Broken Scrap",
+      "name": "⚠️ Broken Scrap",
       "type": "JUNK",
       "range": "PASSIVE",
       "reward": false,
