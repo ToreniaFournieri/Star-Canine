@@ -212,10 +212,22 @@ Used for atmosphere only; no gameplay effect.
 Integer.
 Total health of the enemy ship.
 When hull reaches zero, the enemy is destroyed.
-- equipment:
-Array of strings.
-References weapon or system IDs defined in the equipment master data.
-Equipment determines available attacks and behavior.
+- attacks:
+Array of attack objects.
+Defines all damage this enemy can deal during a battle.
+Each attack object contains:
+  - range:
+String. One of:
+    - LONG
+    - MID
+    - CLOSE
+  - damage:
+Integer.
+Fixed damage dealt when this attack triggers.
+  - uses_per_battle:
+Integer.
+Maximum number of times this attack may trigger in a single combat. 
+
 - spawn:
 Object defining where and when this enemy can appear.
   - act: Integer (1–3)
