@@ -44,9 +44,12 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 #### 1.1.2 Act
 
-- ACT I   — DESOLATION location:Far orbital area
-- ACT II  — BETRAYAL location:Asteroid belt
-- ACT III — RECLAMATION location:Planet K9
+- ACT I   — DESOLATION 
+  - location:Far orbital area
+- ACT II  — BETRAYAL 
+  - location:Asteroid belt
+- ACT III — RECLAMATION 
+  - location:Planet K9
 
 
 -----
