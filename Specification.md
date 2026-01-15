@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.2.1
+# STAR CANINE SPECIFICATION v0.2.2
 
 -----
 
@@ -73,7 +73,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Let me assist."  
 >  
 > Action: VANGUARD LOGISTICS  
-> Status: Hull restored to 100%.  
+> Status: Hull restored to 100%. +12 Ammo. 
 > Target Update: MOON BEAR.  
 >  
 > "Kill MOON BEAR.  
