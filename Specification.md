@@ -2,127 +2,15 @@
 
 -----
 
-## 1. GAME OVERVIEW
+## 1. OVERVIEW
+- This is a terminal-based, deterministic, text-only roguelike spaceship game.
+  - No randomness in combat
+  - No graphics
+  - No real-time input during battle
+  - Designed to be playable and solvable by LLMs
+- Player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
 
-This is a terminal-based, deterministic, text-only roguelike spaceship game.
-
-- No randomness in combat
-- No graphics
-- No real-time input during battle
-- Designed to be playable and solvable by LLMs
-- Inspired by Slay the Spire, but simpler
-
-Player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
-
-### 1.1 Story
-
-- ACT I   — DESOLATION 
-  - location:Far orbital area
-- ACT II  — BETRAYAL 
-  - location:Asteroid belt
-- ACT III — RECLAMATION 
-  - location:Planet K9
-
-#### 1.1.1 ACT I
-- Start
-
-> Ship ID confirmed: STAR CANINE  
-> Command authority: CAPTAIN  
-
-> Incoming distress signal detected.  
-> Origin: Planet K9  
-> Sender ID: LAIKA  
-
-> "It's me.  
-> K9 has fallen.  
-> Solar Bear battleships took the planet.  
-> They took me too.  
-> I know you weren't here.  
-> I know you'll come back.  
-> Please… don't die."
->
-> Signal lost.
-
-> Solar Bear Empire detected in K9 orbit.  
-> Occupation status: ACTIVE.
-
-> Setting course for K9.
-
-- Boss Encounter 
-> Ship location: K9 Outer Orbit  
-> Massive signature detected: URSA-CLASS DREADNOUGHT  
-> Sender ID: COMMODORE URSA  
-> 
-> "A stray dog is sniffing at the gate.  
-> K9 is no longer your dog house—it belongs to the Empire.  
-> No bone for you, underdog.”  
->
-> Warning: Imperial Railguns charging.  
-> Status: EXTERMINATION  
-
-#### 1.1.2 Act II
-- Start
-> Ship location: Asteroid Belt (Inner)  
-> Unknown signal detected.  
-> Decrypting...  
-> Sender ID: COMMANDER FENRIR  
->  
-> "Signal confirmed.  
-> Star Canine, is that you, 'Blue Wolf'?  
-> I've been fighting the Bears from the shadows.  
-> Let me assist."  
->  
-> Action: VANGUARD LOGISTICS  
-> Status: Hull restored to 100%. +12 Ammo. 
-> Target Update: MOON BEAR.  
->  
-> "Kill MOON BEAR.  
-> If he falls, the Empire's grip on K9 breaks.  
-> Clear the path, Blue Wolf.  
-> I’ll secure your flank."  
-
-- Boss Encounter 
-
-> Target status: MOON BEAR NEUTRALIZED.  
-> Incoming transmission...  
-> Sender ID: COMMANDER FENRIR  
->  
-> "Moon bear is gone.  
-> The Bears have a new General.  
-> Me.  
-> Thank you for your hard work, Blue Wolf.  
-> Rest in peace."  
->  
-> Signal lost.  
-> Warning: Target lock detected.  
-> Origin: FENRIR.  
-> Status: DANGER.  
-
-#### 1.1.3 Act III
-Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
-
-- Start
-> “Fight with cudgel.  
-> No cudgel, use your claw.  
-> No claw, use your fang.  
-> No fang, use your soul.   
-> Fight until nothing left."   
-> — DEITY OF BLUE WOLF (Canto IV, Line 12)  
-- Boss encounter  
-Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
-
-> Reminiscence of academy five years ago  
-> FENRIR: "You don't get it, right? My granma told me the story.  
-> The Blue Wolf... the deity that conquered the Great Continent.  
-> It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
-> 
-> You got a good callsign, Blue Wolf. Sleep tight.   
-
-
------
-
-## 2. CORE CONCEPTS
-
+### 1.1 CORE CONCEPTS
 - The player controls ONE ship
 - Battles are 1 vs 1
 - Damage persists between battles (hull only)
@@ -131,6 +19,17 @@ Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth.
   - Equipment selection
   - Ammo usage
   - Preventing enemy attacks by killing first
+
+### 1.2 DESIGN GOALS (FOR CODER)
+- Deterministic output
+- Clear logs per turn
+- Easy to reason damage
+- Minimal state tracking
+- No hidden rules
+
+-----
+
+
 
 ### 2.1 Flow
 
@@ -389,14 +288,113 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 
 -----
 
-## 9. DESIGN GOALS (FOR CODER)
-
-- Deterministic output
-- Clear logs per turn
-- Easy to reason damage
-- Minimal state tracking
-- No hidden rules
+## 9. 
 
 -----
+
+## 7. Story
+
+- ACT I   — DESOLATION 
+  - location:Far orbital area
+- ACT II  — BETRAYAL 
+  - location:Asteroid belt
+- ACT III — RECLAMATION 
+  - location:Planet K9
+
+### 7.1 ACT I - DESOLATION
+- Start
+
+> Ship ID confirmed: STAR CANINE  
+> Command authority: CAPTAIN  
+
+> Incoming distress signal detected.  
+> Origin: Planet K9  
+> Sender ID: LAIKA  
+
+> "It's me.  
+> K9 has fallen.  
+> Solar Bear battleships took the planet.  
+> They took me too.  
+> I know you weren't here.  
+> I know you'll come back.  
+> Please… don't die."
+>
+> Signal lost.
+
+> Solar Bear Empire detected in K9 orbit.  
+> Occupation status: ACTIVE.
+
+> Setting course for K9.
+
+- Boss Encounter 
+> Ship location: K9 Outer Orbit  
+> Massive signature detected: URSA-CLASS DREADNOUGHT  
+> Sender ID: COMMODORE URSA  
+> 
+> "A stray dog is sniffing at the gate.  
+> K9 is no longer your dog house—it belongs to the Empire.  
+> No bone for you, underdog.”  
+>
+> Warning: Imperial Railguns charging.  
+> Status: EXTERMINATION  
+
+### 7.2 Act II  — BETRAYAL 
+- Start
+> Ship location: Asteroid Belt (Inner)  
+> Unknown signal detected.  
+> Decrypting...  
+> Sender ID: COMMANDER FENRIR  
+>  
+> "Signal confirmed.  
+> Star Canine, is that you, 'Blue Wolf'?  
+> I've been fighting the Bears from the shadows.  
+> Let me assist."  
+>  
+> Action: VANGUARD LOGISTICS  
+> Status: Hull restored to 100%. +12 Ammo. 
+> Target Update: MOON BEAR.  
+>  
+> "Kill MOON BEAR.  
+> If he falls, the Empire's grip on K9 breaks.  
+> Clear the path, Blue Wolf.  
+> I’ll secure your flank."  
+
+- Boss Encounter 
+
+> Target status: MOON BEAR NEUTRALIZED.  
+> Incoming transmission...  
+> Sender ID: COMMANDER FENRIR  
+>  
+> "Moon bear is gone.  
+> The Bears have a new General.  
+> Me.  
+> Thank you for your hard work, Blue Wolf.  
+> Rest in peace."  
+>  
+> Signal lost.  
+> Warning: Target lock detected.  
+> Origin: FENRIR.  
+> Status: DANGER.  
+
+### 7.3 Act III — RECLAMATION 
+Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
+
+- Start
+> “Fight with cudgel.  
+> No cudgel, use your claw.  
+> No claw, use your fang.  
+> No fang, use your soul.   
+> Fight until nothing left."   
+> — DEITY OF BLUE WOLF (Canto IV, Line 12)  
+- Boss encounter  
+Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
+
+> Reminiscence of academy five years ago  
+> FENRIR: "You don't get it, right? My granma told me the story.  
+> The Blue Wolf... the deity that conquered the Great Continent.  
+> It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
+> 
+> You got a good callsign, Blue Wolf. Sleep tight.   
+
 
 **END OF SPECIFICATION**
