@@ -278,6 +278,9 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 1. dock (heal Hull 30% or +6 ammo)
 1. combat boss (from act:1, type:boss)
 
+### 8.2 ACT II stage setting
+ not defined yet for this early version. 
+
 -----
 
 ## 9. DESIGN GOALS (FOR CODER)
