@@ -181,6 +181,7 @@ On EACH turn:
     - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
     - Every vailed equipment used at once. Even it is overkill
     - Multiplier damage if there is multiplier equipment and matched its type.  
+      - Effect stackable: If you equip two same multiplier (x2), total mutiplied damage is x4 
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
