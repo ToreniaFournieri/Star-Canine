@@ -16,6 +16,8 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 ### 1.1 Story
 
+#### 1.1.1 Opening
+
 > Ship ID confirmed: STAR CANINE  
 > Command authority: CAPTAIN  
 
@@ -39,6 +41,13 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Setting course for K9.
 
  Game start. 
+
+#### 1.1.2 Act
+
+- ACT I   — DESOLATION location:Far orbital area
+- ACT II  — BETRAYAL location:Asteroid belt
+- ACT III — RECLAMATION location:Planet K9
+
 
 -----
 
