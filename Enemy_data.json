@@ -8,151 +8,181 @@
       "attacks": [
         { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 1, "difficulty": 1, "type": "Normal" }
+      "spawn": { "difficulty": 1, "type": "Normal" }
     },
+
     {
       "enemy_id": "Scout Cutter",
       "faction": "SolarBear",
       "flavor_text": "Assigned to a quiet system.",
-      "hull": 60,
+      "hull": 40,
+      "shield": 20,
       "attacks": [
         { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 10, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 1, "difficulty": 2, "type": "Normal" }
+      "spawn": { "difficulty": 2, "type": "Normal" }
     },
+
     {
       "enemy_id": "Strike Runner",
       "faction": "SolarBear",
       "flavor_text": "Designed for quick response.",
-      "hull": 80,
+      "hull": 40,
+      "shield": 25,
+      "armor": 15,
       "attacks": [
         { "range": "LONG", "damage": 30, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 1, "difficulty": 3, "type": "Normal" }
+      "spawn": { "difficulty": 3, "type": "Normal" }
     },
+
     {
       "enemy_id": "Frigate",
       "faction": "SolarBear",
       "flavor_text": "Designed for quick response.",
-      "hull": 120,
+      "hull": 80,
+      "armor": 40,
       "attacks": [
         { "range": "LONG", "damage": 20, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 1, "difficulty": 4, "type": "Normal" }
+      "spawn": { "difficulty": 4, "type": "Normal" }
     },
+
     {
       "enemy_id": "Defender",
       "faction": "SolarBear",
       "flavor_text": "Stay away.",
-      "hull": 160,
+      "hull": 70,
+      "shield": 45,
+      "armor": 45,
       "attacks": [
         { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 4 }
       ],
-      "spawn": { "act": 1, "difficulty": 1, "type": "elite" }
+      "spawn": { "difficulty": 5, "type": "Elite" }
     },
 
     {
       "enemy_id": "Patrol Commander",
       "faction": "SolarBear",
       "flavor_text": "Local control established.",
-      "hull": 220,
+      "hull": 100,
+      "shield": 60,
+      "armor": 60,
       "attacks": [
         { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
       ],
-      "spawn": { "act": 1, "difficulty": 1, "type": "boss" }
+      "spawn": { "difficulty": 10, "type": "Boss" }
     },
 
     {
       "enemy_id": "Solar Bear Asteroid Watch",
       "faction": "SolarBear",
       "flavor_text": "Area under inspection.",
-      "hull": 55,
+      "hull": 135,
+      "shield": 20,
       "attacks": [
         { "range": "MID", "damage": 25, "uses_per_battle": 2 }
       ],
-      "spawn": { "act": 2, "difficulty": 1, "type": "Normal" }
+      "spawn": { "difficulty": 7, "type": "Normal" }
     },
+
     {
       "enemy_id": "Solar Bear Boarding Corvette",
       "faction": "SolarBear",
       "flavor_text": "Escalation authorized.",
-      "hull": 75,
+      "hull": 135,
+      "armor": 40,
       "attacks": [
         { "range": "LONG", "damage": 35, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 2, "difficulty": 1, "type": "Elite" }
+      "spawn": { "difficulty": 7, "type": "Elite" }
     },
+
     {
       "enemy_id": "K9 Auxiliary Raider",
       "faction": "K9",
       "flavor_text": "Operating under foreign command.",
-      "hull": 70,
+      "hull": 145,
+      "armor": 25,
       "attacks": [
         { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 2, "difficulty": 2, "type": "Normal" }
+      "spawn": { "difficulty": 7, "type": "Normal" }
     },
+
     {
       "enemy_id": "K9 Compliance Frigate",
       "faction": "K9",
       "flavor_text": "Orders come from orbit.",
-      "hull": 95,
+      "hull": 70,
+      "shield": 25,
+      "armor": 25,
       "attacks": [
         { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 2, "difficulty": 2, "type": "Elite" }
+      "spawn": { "difficulty": 8, "type": "Elite" }
     },
+
     {
       "enemy_id": "K9 Liaison Commander",
       "faction": "K9",
       "flavor_text": "Cooperation ensures survival.",
-      "hull": 140,
+      "hull": 120,
+      "shield": 40,
+      "armor": 40,
       "attacks": [
         { "range": "LONG", "damage": 45, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 2, "difficulty": 1, "type": "Boss" }
+      "spawn": { "difficulty": 20, "type": "Boss" }
     },
 
     {
       "enemy_id": "Solar Bear Planetary Guard",
       "faction": "SolarBear",
       "flavor_text": "Orbital dominance confirmed.",
-      "hull": 85,
+      "hull": 80,
+      "armor": 30,
       "attacks": [
         { "range": "MID", "damage": 30, "uses_per_battle": 2 }
       ],
-      "spawn": { "act": 3, "difficulty": 1, "type": "Normal" }
+      "spawn": { "difficulty": 9, "type": "Normal" }
     },
+
     {
       "enemy_id": "Solar Bear Suppression Destroyer",
       "faction": "SolarBear",
       "flavor_text": "Final resistance anticipated.",
-      "hull": 120,
+      "hull": 55,
+      "shield": 35,
+      "armor": 30,
       "attacks": [
         { "range": "LONG", "damage": 50, "uses_per_battle": 1 },
         { "range": "MID", "damage": 30, "uses_per_battle": 3 }
       ],
-      "spawn": { "act": 3, "difficulty": 1, "type": "Elite" }
+      "spawn": { "difficulty": 9, "type": "Elite" }
     },
+
     {
       "enemy_id": "Celestial Reaper",
       "faction": "SolarBear",
       "flavor_text": "This world will be purified.",
-      "hull": 220,
+      "hull": 100,
+      "shield": 60,
+      "armor": 60,
       "attacks": [
         { "range": "LONG", "damage": 60, "uses_per_battle": 2 },
         { "range": "MID", "damage": 40, "uses_per_battle": 3 },
         { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
       ],
-      "spawn": { "act": 3, "difficulty": 1, "type": "Boss" }
+      "spawn": { "difficulty": 30, "type": "Boss" }
     }
   ]
 }
