@@ -98,6 +98,18 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Origin: FENRIR.  
 > Status: DANGER.  
 
+### 1.1.3 Act III
+
+- Start
+> “Fight with cudgel. 
+> No cudgel, use your claw. 
+> No claw, use your fang. 
+> No fang, use your soul.  
+> Fight until nothing left."  
+> — DEITY OF BLUE WOLF (Canto IV, Line 12)  
+- Boss encounter 
+
+
 -----
 
 ## 2. CORE CONCEPTS
