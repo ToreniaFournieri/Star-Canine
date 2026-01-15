@@ -218,16 +218,16 @@ References weapon or system IDs defined in the equipment master data.
 Equipment determines available attacks and behavior.
 - spawn:
 Object defining where and when this enemy can appear.
-- act: Integer (1–3)
+  - act: Integer (1–3)
 The ACT in which this enemy is valid.
-- difficulty: Integer (relative within the ACT)
+  - difficulty: Integer (relative within the ACT)
 Represents progression inside the ACT.
 Difficulty resets at the start of each ACT.
-- type: String
+  - type: String
 One of:
-  - Normal
-  - Elite
-  - Boss
+    - Normal
+    - Elite
+    - Boss
 
 
 -----
