@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.2.2
+# STAR CANINE SPECIFICATION v0.2.3
 
 -----
 
@@ -262,17 +262,18 @@ This rule applies to ALL turns and ranges.
 
 ## 5.3 DAMAGE RESOLUTION ORDER
 
-- Player attack resolves first. If enemy HP <= 0, enemy does not attack this turn. Else enemy attack resolves
+- Damage resolution depends entirely on the current combat range.
+- There are three independent damage models, one per range.
 
-
-When damage is dealt:
-
-1. Shield absorbs damage (if active this turn)
-1. Remaining damage goes to Armor
-1. Remaining damage goes to Hull
-
-Shield and armor cannot absorb more than their current value.
-
+- Damage Resolution by Range:
+  - LONG range
+    - Damage is applied to Shield first
+    - Remaining damage is applied to Hull
+  - MID range
+    - Damage is applied directly to Hull
+  - CLOSE range
+    - Damage is applied to Armor first
+    - Remaining damage is applied to Hull
 
 
 -----
