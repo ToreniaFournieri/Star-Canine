@@ -328,6 +328,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 - Fixed linear sequence of battles
 
 ### 8.1 ACT I stage setting
+1. story: Act I start
 1. combat enemy (from act:1, difficulty:1, type:normal)
 1. combat enemy (from act:1, difficulty:2, type:normal) 
 1. combat enemy (from act:1, difficulty:3, type:normal) 
@@ -336,6 +337,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
+1. story: Act II Just before the boss battle
 1. combat boss (from act:1, type:boss)
 
 ### 8.2 ACT II stage setting
