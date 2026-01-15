@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.1.3
+# STAR CANINE SPECIFICATION v0.1.4
 
 -----
 
@@ -163,6 +163,10 @@ Each combat follows this fixed range sequence:
 On EACH turn:
 
 1. Player attacks first
+  - Equipment valid check:
+    - Match equipment range and current combat trun range  (LONG, MID, CLOSE)
+    - Cutrent amount of ammo is enough to cover the ammo_cost 
+  - Every vailed equipment used at once. Even it is overkill
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
