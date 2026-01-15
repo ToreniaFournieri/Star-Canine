@@ -51,21 +51,21 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 #### 1.1.2 Act II start
 
-> Ship location: Asteroid Belt (Inner)
-> Unknown signal detected.
-> Decrypting...
-> Sender ID: COMMANDER FENRIR
-> "Signal confirmed.
-> Star Canine, is that you, 'Blue Wolf'?
-> I've been fighting the Bears from the shadows.
-> Let me assist."
-> Action: VANGUARD LOGISTICS
-> Status: Hull restored to 100%.
-> Target Update: GENERAL VOSTOK.
-> "Kill Vostok.
-> If he falls, the Empire's grip on K9 breaks.
-> Clear the path, Blue Wolf.
-> I’ll secure your flank."
+> Ship location: Asteroid Belt (Inner)  
+> Unknown signal detected.  
+> Decrypting...  
+> Sender ID: COMMANDER FENRIR  
+> "Signal confirmed.  
+> Star Canine, is that you, 'Blue Wolf'?  
+> I've been fighting the Bears from the shadows.  
+> Let me assist."  
+> Action: VANGUARD LOGISTICS  
+> Status: Hull restored to 100%.  
+> Target Update: GENERAL VOSTOK.  
+> "Kill Vostok.  
+> If he falls, the Empire's grip on K9 breaks.  
+> Clear the path, Blue Wolf.  
+> I’ll secure your flank."  
 
 
 -----
