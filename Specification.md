@@ -120,15 +120,10 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_sta
 - Equipment can be freely swapped between battles
 
 
-
-### 4.2 Equipment behavior
-
-If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
-
-### 4.3 Equipment list
+### 4.2 Equipment list
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
-### 4.4 Equipment Fields
+### 4.3 Equipment Fields
 Equipment entries define the following fields:
 - id: Unique numeric identifier
 - name: Display identifier
@@ -164,9 +159,9 @@ On EACH turn:
 
 1. Player attacks first
   - Equipment valid check:
-    - Match equipment range and current combat trun range  (LONG, MID, CLOSE)
-    - Cutrent amount of ammo is enough to cover the ammo_cost 
-  - Every vailed equipment used at once. Even it is overkill
+
+    - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
+    - Every vailed equipment used at once. Even it is overkill
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
