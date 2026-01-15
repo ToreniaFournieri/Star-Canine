@@ -74,16 +74,16 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 >  
 > Action: VANGUARD LOGISTICS  
 > Status: Hull restored to 100%.  
-> Target Update: GENERAL VOSTOK.  
+> Target Update: MOON BEAR.  
 >  
-> "Kill Vostok.  
+> "Kill MOON BEAR.  
 > If he falls, the Empire's grip on K9 breaks.  
 > Clear the path, Blue Wolf.  
 > I’ll secure your flank."  
 
 - Boss Encounter 
 
-> Target status: VOSTOK NEUTRALIZED.  
+> Target status: MOON BEAR NEUTRALIZED.  
 > Incoming transmission...  
 > Sender ID: COMMANDER FENRIR  
 >  
