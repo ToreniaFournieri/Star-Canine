@@ -135,8 +135,8 @@ Encountering Celestial Reaper. the boss of Solar Bear. overlapping the myth.
 ### 2.1 Flow
 
 #### 2.1.1 First scene 
-At the start of each stage,
-- Show own ship status
+At the start of each stage, Hull, Shield(for long), Armor(for Close), Ammo. 
+- Show own ship status. 
 - Show full equipment list
 - equipment
   - at the first stage, none of them selected
@@ -144,7 +144,8 @@ At the start of each stage,
   - If it has UI, checkmarks selected item.
 
 If stage is combat:
-- show enemy status. Enemy's hull, attack damage (long, mid, close) and other feature displayed)
+- show own ship status. Hull, Shield(for long), Armor(for Close), Ammo. 
+- show enemy status. Enemy's hull, Shield, Armor, attack damage (long, mid, close) and other feature displayed)
 - Engage battle to start combat
 
 If stage is others:
