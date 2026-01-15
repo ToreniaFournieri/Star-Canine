@@ -1,7 +1,7 @@
 {
   "enemies": [
     {
-      "enemy_id": "Solar Bear Patrol Drone",
+      "enemy_id": "Patrol Drone",
       "faction": "SolarBear",
       "flavor_text": "No resistance expected.",
       "hull": 40,
@@ -11,18 +11,18 @@
       "spawn": { "act": 1, "difficulty": 1, "type": "Normal" }
     },
     {
-      "enemy_id": "Solar Bear Scout Cutter",
+      "enemy_id": "Scout Cutter",
       "faction": "SolarBear",
       "flavor_text": "Assigned to a quiet system.",
       "hull": 60,
       "attacks": [
         { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 20, "uses_per_battle": 3 }
+        { "range": "CLOSE", "damage": 10, "uses_per_battle": 3 }
       ],
       "spawn": { "act": 1, "difficulty": 2, "type": "Normal" }
     },
     {
-      "enemy_id": "Solar Bear Strike Runner",
+      "enemy_id": "Strike Runner",
       "faction": "SolarBear",
       "flavor_text": "Designed for quick response.",
       "hull": 80,
@@ -33,7 +33,19 @@
       "spawn": { "act": 1, "difficulty": 3, "type": "Normal" }
     },
     {
-      "enemy_id": "Solar Bear Patrol Commander",
+      "enemy_id": "Defender",
+      "faction": "SolarBear",
+      "flavor_text": "Stay away.",
+      "hull": 160,
+      "attacks": [
+        { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
+        { "range": "CLOSE", "damage": 25, "uses_per_battle": 4 }
+      ],
+      "spawn": { "act": 1, "difficulty": 1, "type": "elite" }
+    },
+
+    {
+      "enemy_id": "Patrol Commander",
       "faction": "SolarBear",
       "flavor_text": "Local control established.",
       "hull": 220,
@@ -41,7 +53,7 @@
         { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
       ],
-      "spawn": { "act": 1, "difficulty": 3, "type": "Boss" }
+      "spawn": { "act": 1, "difficulty": 1, "type": "boss" }
     },
 
     {
