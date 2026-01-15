@@ -55,6 +55,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Unknown signal detected.  
 > Decrypting...  
 > Sender ID: COMMANDER FENRIR  
+>  
 > "Signal confirmed.  
 > Star Canine, is that you, 'Blue Wolf'?  
 > I've been fighting the Bears from the shadows.  
