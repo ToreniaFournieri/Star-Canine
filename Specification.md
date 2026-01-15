@@ -99,7 +99,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Status: DANGER.  
 
 #### 1.1.3 Act III
-Star Canine arrives at K9. Continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
+Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
 > “Fight with cudgel.  
@@ -109,7 +109,7 @@ Star Canine arrives at K9. Continuing fierce battles. No message exchange betwee
 > Fight until nothing left."   
 > — DEITY OF BLUE WOLF (Canto IV, Line 12)  
 - Boss encounter  
-Encountering Celestial Reaper. the boss of Solar Bear. overlapping the myth. 
+Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
 > Reminiscence of academy five years ago  
 > FENRIR: "You don't get it, right? That myth isn't a bedtime story.  
