@@ -108,7 +108,7 @@ Star Canine arrives at K9. continuing fierce battles. no message exchage between
 > No fang, use your soul.   
 > Fight until nothing left."   
 > — DEITY OF BLUE WOLF (Canto IV, Line 12)  
-- Boss encounter 
+- Boss encounter  
 Encountering Celestial Reaper. the boss of Solar Bear. overlapping the myth. 
 
 > Reminiscence of academy five years ago  
