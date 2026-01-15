@@ -98,7 +98,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Origin: FENRIR.  
 > Status: DANGER.  
 
-### 1.1.3 Act III
+#### 1.1.3 Act III
 Star Canine arrives at K9. Continuing fierce battles. No message exchage between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
