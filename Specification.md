@@ -143,6 +143,9 @@ Equipment entries define the following fields:
 - armor_value: Combat armor bonus (if applicable)
 - reward: Boolean indicating whether this item can appear as a reward
 - disposable: Boolean indicating wether this item is disposable equipment
+- multiplier: If a PASSIVE module’s target_type matches an equipped weapon’s type, that weapon's damage is multiplier's amount (ex. 2 is double) during combat resolution.
+
+
 
 ### 4.4 Disposable Equipment
 Some high-power equipment is single-use across the entire campaign.
@@ -175,9 +178,9 @@ On EACH turn:
 
 1. Player attacks first
   - Equipment valid check:
-
     - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
     - Every vailed equipment used at once. Even it is overkill
+    - Multiplier damage if there is multiplier equipment and matched its type.  
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
