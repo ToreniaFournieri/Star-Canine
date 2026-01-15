@@ -288,50 +288,65 @@ Enemies always attack if alive and if they have a weapon valid for the current r
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
 ### 6.2 Enemy Fields
-Enemy JSON fields
-- enemy_id:
-String identifier.
-Used as the unique key for logic, logs, and references.
-- faction:
-String.
-Defines narrative and alignment.
-Example values: SolarBear, K9
-- flavor_text:
-One-line descriptive text shown in logs.
-Used for atmosphere only; no gameplay effect.
-- hull:
-Integer.
-Total health of the enemy ship.
+Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
+
+- Core Fields
+  - enemy_id: String
+Unique identifier for the enemy. Used as the primary key for logic, logs, and references.
+  - faction: String
+Narrative alignment and affiliation.
+Example values: SolarBear, K9.
+  - flavor_text: String
+One-line descriptive text shown in combat logs.
+Has no gameplay effect.
+  - hull: Integer
+Base structural health of the enemy ship.
 When hull reaches zero, the enemy is destroyed.
-- attacks:
-Array of attack objects.
-Defines all damage this enemy can deal during a battle.
-Each attack object contains:
-  - range:
-String. One of:
-    - LONG
-    - MID
-    - CLOSE
-  - damage:
-Integer.
-Fixed damage dealt when this attack triggers.
-  - uses_per_battle:
-Integer.
-Maximum number of times this attack may trigger in a single combat. 
+Hull can be damaged at all combat ranges.
 
-- spawn:
-Object defining where and when this enemy can appear.
-  - act: Integer (1–3)
-The ACT in which this enemy is valid.
-  - difficulty: Integer (relative within the ACT)
-Represents progression inside the ACT.
-Difficulty resets at the start of each ACT.
-  - type: String
+⸻
+
+- Defensive Fields (Optional)
+  - shield: Integer (optional)
+Shield value protecting the enemy at LONG range only.
+Damage at LONG range is applied to Shield first, then Hull.
+  - armor: Integer (optional)
+Armor value protecting the enemy at CLOSE range only.
+Damage at CLOSE range is applied to Armor first, then Hull.
+
+If a defensive field is omitted, its value is treated as 0.
+
+⸻
+
+- Attacks
+  - attacks: Array
+Defines all attacks this enemy can perform during a single combat.
+
+  - Each attack object contains:
+    - range: String
 One of:
-    - Normal
-    - Elite
-    - Boss
+      - LONG
+      - MID
+      - CLOSE
+  - damage: Integer
+Fixed damage dealt when the attack triggers.
+  - uses_per_battle: Integer
+Maximum number of times this attack may trigger during the combat.
 
+⸻
+
+- Spawn Data
+    - spawn: Object
+Defines encounter classification and threat level.
+Does not restrict when or where the enemy may appear.
+    - difficulty: Integer
+Global relative threat rating.
+Higher values indicate stronger enemies regardless of story progression.
+    - type: String
+Encounter category. One of:
+      - Normal
+      - Elite
+      - Boss
 
 -----
 
