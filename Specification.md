@@ -112,7 +112,7 @@ Star Canine arrives at K9, continuing fierce battles. No message exchange betwee
 Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
 > Reminiscence of academy five years ago  
-> FENRIR: "You don't get it, right? That myth isn't a bedtime story.  
+> FENRIR: "You don't get it, right? My granma told me the story.  
 > The Blue Wolf... the deity that conquered the Great Continent.  
 > It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
 > 
