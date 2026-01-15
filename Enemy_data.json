@@ -33,6 +33,17 @@
       "spawn": { "act": 1, "difficulty": 3, "type": "Normal" }
     },
     {
+      "enemy_id": "Frigate",
+      "faction": "SolarBear",
+      "flavor_text": "Designed for quick response.",
+      "hull": 120,
+      "attacks": [
+        { "range": "LONG", "damage": 20, "uses_per_battle": 1 },
+        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
+      ],
+      "spawn": { "act": 1, "difficulty": 4, "type": "Normal" }
+    },
+    {
       "enemy_id": "Defender",
       "faction": "SolarBear",
       "flavor_text": "Stay away.",
