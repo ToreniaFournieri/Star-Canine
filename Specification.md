@@ -307,7 +307,7 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 
 - Core Fields
   - enemy_id: String
-Unique identifier for the enemy. Used as the primary key for logic, logs, and references.
+Unique identifier for the enemy.
   - faction: String
 Narrative alignment and affiliation.
 Example values: SolarBear, K9.
@@ -315,28 +315,15 @@ Example values: SolarBear, K9.
 One-line descriptive text shown in combat logs.
 Has no gameplay effect.
   - hull: Integer
-Base structural health of the enemy ship.
-When hull reaches zero, the enemy is destroyed.
-Hull can be damaged at all combat ranges.
-
-⸻
 
 - Defensive Fields (Optional)
   - shield: Integer (optional)
-Shield value protecting the enemy at LONG range only.
-Damage at LONG range is applied to Shield first, then Hull.
   - armor: Integer (optional)
-Armor value protecting the enemy at CLOSE range only.
-Damage at CLOSE range is applied to Armor first, then Hull.
-
 If a defensive field is omitted, its value is treated as 0.
-
-⸻
 
 - Attacks
   - attacks: Array
 Defines all attacks this enemy can perform during a single combat.
-
   - Each attack object contains:
     - range: String
 One of:
@@ -348,15 +335,11 @@ Fixed damage dealt when the attack triggers.
   - uses_per_battle: Integer
 Maximum number of times this attack may trigger during the combat.
 
-⸻
-
 - Spawn Data
     - spawn: Object
 Defines encounter classification and threat level.
-Does not restrict when or where the enemy may appear.
     - difficulty: Integer
 Global relative threat rating.
-Higher values indicate stronger enemies regardless of story progression.
     - type: String
 Encounter category. One of:
       - Normal
