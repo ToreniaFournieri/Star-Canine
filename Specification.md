@@ -101,7 +101,12 @@ If stage is others:
 
 ## 3. PLAYER SHIP (BASE STATS)
 
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Starting_state.json
+- Starting state:
+  "hull": 200,
+  "ammo": 12,
+  "max_slots": 6,
+  "equipped_item_ids": [1, 2, 2, 3]
+
 
 - equipped_item_ids equals "Equipment_data.json"'s id. 
 - Hull and Ammo persists between battles and is NOT fully restored automatically.
