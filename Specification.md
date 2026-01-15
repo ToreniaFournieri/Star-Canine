@@ -59,9 +59,11 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Star Canine, is that you, 'Blue Wolf'?  
 > I've been fighting the Bears from the shadows.  
 > Let me assist."  
+>  
 > Action: VANGUARD LOGISTICS  
 > Status: Hull restored to 100%.  
 > Target Update: GENERAL VOSTOK.  
+>  
 > "Kill Vostok.  
 > If he falls, the Empire's grip on K9 breaks.  
 > Clear the path, Blue Wolf.  
