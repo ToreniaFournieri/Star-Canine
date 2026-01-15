@@ -89,6 +89,8 @@ If stage is others:
 - If player beats an enemy, he grant reward. 
 - Else if it is draw, skip reward and continue to a next stage. 
 - Else if player loses, it is game over. 
+- Post-Combat Cleanup: Check equipped slots. If disposable: true, log: [SYSTEM] <Item Name> has burned out. Replaced with Broken Scrap.
+
 
 #### 2.1.3 Reward scene
 - If player beat an enemy, display reward list.
@@ -140,6 +142,15 @@ Equipment entries define the following fields:
 - absorb: Shield absorption amount (if applicable)
 - armor_value: Combat armor bonus (if applicable)
 - reward: Boolean indicating whether this item can appear as a reward
+- disposable: Boolean indicating wether this item is disposable equipment
+
+### 4.4 Disposable Equipment
+Some high-power equipment is single-use across the entire campaign.
+- Property: If an item has "disposable": true, it is destroyed after combat.
+- Trigger: At the end of any battle, all equipped disposable items are replaced in the inventory with Broken Scrap (ID: 999).
+- Condition: The item is destroyed regardless of whether it was actually fired or activated during the battle.
+- Broken Scrap: Has no stats, no range, and provides no combat benefit. It must be manually unequipped to free a slot.
+
 
 -----
 
