@@ -337,7 +337,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
-1. story: Act II Just before the boss battle
+1. story: Act I Just before the boss battle
 1. combat boss (from act:1, type:boss)
 
 ### 8.2 ACT II stage setting
