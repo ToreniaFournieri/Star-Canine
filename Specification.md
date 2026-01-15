@@ -87,7 +87,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Incoming transmission...  
 > Sender ID: COMMANDER FENRIR  
 >  
-> "Vostok is gone.  
+> "Moon bear is gone.  
 > The Bears have a new General.  
 > Me.  
 > Thank you for your hard work, Blue Wolf.  
