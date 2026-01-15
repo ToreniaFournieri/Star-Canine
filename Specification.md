@@ -375,16 +375,16 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 
 ### 8.1 ACT I stage setting
 1. story: Act I start
-1. combat enemy (from act:1, difficulty:1, type:normal)
-1. combat enemy (from act:1, difficulty:2, type:normal) 
-1. combat enemy (from act:1, difficulty:3, type:normal) 
+1. combat enemy (from difficulty:1, type:normal)
+1. combat enemy (from difficulty:2, type:normal) 
+1. combat enemy (from difficulty:3, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
-1. combat elite (from act:1, type:elite)
-1. combat enemy (from act:1, difficulty:4, type:normal) 
-1. combat enemy (from act:1, difficulty:4, type:normal) 
+1. combat elite (from difficulty:5, type:elite)
+1. combat enemy (from difficulty:4, type:normal) 
+1. combat enemy (from difficulty:4, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
 1. story: Act I Boss Encounter 
-1. combat boss (from act:1, type:boss)
+1. combat boss (from difficulty:10, type:boss)
 
 ### 8.2 ACT II stage setting
  not defined yet for this early version. 
