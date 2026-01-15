@@ -109,6 +109,7 @@ Star Canine arrives at K9. continuing fierce battles. no message exchage between
 > Fight until nothing left."   
 > — DEITY OF BLUE WOLF (Canto IV, Line 12)  
 - Boss encounter 
+Encountering Celestial Reaper. the boss of Solar Bear. overlapping the myth. 
 
 > Reminiscence of academy five years ago  
 > FENRIR: "You don't get it, right? That myth isn't a bedtime story.  
