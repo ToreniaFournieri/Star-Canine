@@ -109,6 +109,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > — DEITY OF BLUE WOLF (Canto IV, Line 12)  
 - Boss encounter 
 
+> Reminiscence of academy five years ago  
 > FENRIR: "You don't get it, right? That myth isn't a bedtime story.  
 > The Blue Wolf... the deity that conquered the Great Continent.  
 > It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
