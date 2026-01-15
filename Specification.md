@@ -48,8 +48,16 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 
 > Setting course for K9.
 
-- Just before the boss battle
-
+- Boss Encounter 
+> Ship location: K9 Outer Orbit  
+> Massive signature detected: URSA-CLASS DREADNOUGHT 
+> Sender ID: COMMODORE URSA  
+> "A stray dog is sniffing at the gate.  
+> K9 is no longer your dog house—it belongs to the Empire.  
+> No bone for you, underdog.”  
+>
+> Warning: Imperial Railguns charging.  
+> Status: EXTERMINATION  
 
 #### 1.1.2 Act II
 - Start
@@ -72,7 +80,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Clear the path, Blue Wolf.  
 > I’ll secure your flank."  
 
-- Just before the boss battle
+- Boss Encounter 
 
 > Target status: VOSTOK NEUTRALIZED.  
 > Incoming transmission...  
@@ -337,7 +345,7 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. combat enemy (from act:1, difficulty:4, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
-1. story: Act I Just before the boss battle
+1. story: Act I Boss Encounter 
 1. combat boss (from act:1, type:boss)
 
 ### 8.2 ACT II stage setting
