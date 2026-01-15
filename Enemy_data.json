@@ -1,101 +1,134 @@
 {
   "enemies": [
     {
-      "enemy_id": "sb_patrol_drone",
+      "enemy_id": "Solar Bear Patrol Drone",
       "faction": "SolarBear",
       "flavor_text": "No resistance expected.",
-      "hull": 30,
-      "equipment": ["sb_light_laser"],
+      "hull": 40,
+      "attacks": [
+        { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 1, "difficulty": 1, "type": "Normal" }
     },
     {
-      "enemy_id": "sb_orbital_escort",
+      "enemy_id": "Solar Bear Scout Cutter",
       "faction": "SolarBear",
       "flavor_text": "Assigned to a quiet system.",
-      "hull": 45,
-      "equipment": ["sb_long_laser"],
+      "hull": 60,
+      "attacks": [
+        { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
+        { "range": "CLOSE", "damage": 20, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 1, "difficulty": 2, "type": "Normal" }
     },
     {
-      "enemy_id": "sb_orbital_elite",
+      "enemy_id": "Solar Bear Strike Runner",
       "faction": "SolarBear",
-      "flavor_text": "Unexpected resistance detected.",
-      "hull": 65,
-      "equipment": ["sb_long_laser", "sb_close_burst"],
-      "spawn": { "act": 1, "difficulty": 1, "type": "Elite" }
+      "flavor_text": "Designed for quick response.",
+      "hull": 80,
+      "attacks": [
+        { "range": "LONG", "damage": 30, "uses_per_battle": 1 },
+        { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
+      ],
+      "spawn": { "act": 1, "difficulty": 3, "type": "Normal" }
     },
     {
-      "enemy_id": "sb_orbital_commander",
+      "enemy_id": "Solar Bear Patrol Commander",
       "faction": "SolarBear",
       "flavor_text": "Local control established.",
-      "hull": 120,
-      "equipment": ["sb_long_pulse", "sb_close_burst"],
+      "hull": 220,
+      "attacks": [
+        { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
+        { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
+      ],
       "spawn": { "act": 1, "difficulty": 3, "type": "Boss" }
     },
 
     {
-      "enemy_id": "sb_asteroid_patrol",
+      "enemy_id": "Solar Bear Asteroid Watch",
       "faction": "SolarBear",
       "flavor_text": "Area under inspection.",
       "hull": 55,
-      "equipment": ["sb_long_laser"],
+      "attacks": [
+        { "range": "MID", "damage": 25, "uses_per_battle": 2 }
+      ],
       "spawn": { "act": 2, "difficulty": 1, "type": "Normal" }
     },
     {
-      "enemy_id": "sb_boarding_corvette",
+      "enemy_id": "Solar Bear Boarding Corvette",
       "faction": "SolarBear",
       "flavor_text": "Escalation authorized.",
       "hull": 75,
-      "equipment": ["sb_long_laser", "sb_close_burst"],
+      "attacks": [
+        { "range": "LONG", "damage": 35, "uses_per_battle": 1 },
+        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 2, "difficulty": 1, "type": "Elite" }
     },
     {
-      "enemy_id": "k9_auxiliary_ship",
+      "enemy_id": "K9 Auxiliary Raider",
       "faction": "K9",
       "flavor_text": "Operating under foreign command.",
       "hull": 70,
-      "equipment": ["k9_close_burst"],
+      "attacks": [
+        { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 2, "difficulty": 2, "type": "Normal" }
     },
     {
-      "enemy_id": "k9_compliance_frigate",
+      "enemy_id": "K9 Compliance Frigate",
       "faction": "K9",
       "flavor_text": "Orders come from orbit.",
       "hull": 95,
-      "equipment": ["k9_long_laser", "k9_close_burst"],
+      "attacks": [
+        { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
+        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 2, "difficulty": 2, "type": "Elite" }
     },
     {
-      "enemy_id": "k9_traitor_commander",
+      "enemy_id": "K9 Liaison Commander",
       "faction": "K9",
       "flavor_text": "Cooperation ensures survival.",
       "hull": 140,
-      "equipment": ["k9_long_pulse", "k9_close_burst"],
-      "spawn": { "act": 2, "difficulty": 3, "type": "Boss" }
+      "attacks": [
+        { "range": "LONG", "damage": 45, "uses_per_battle": 2 },
+        { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
+      ],
+      "spawn": { "act": 2, "difficulty": 1, "type": "Boss" }
     },
 
     {
-      "enemy_id": "sb_planetary_guard",
+      "enemy_id": "Solar Bear Planetary Guard",
       "faction": "SolarBear",
       "flavor_text": "Orbital dominance confirmed.",
       "hull": 85,
-      "equipment": ["sb_long_pulse"],
+      "attacks": [
+        { "range": "MID", "damage": 30, "uses_per_battle": 2 }
+      ],
       "spawn": { "act": 3, "difficulty": 1, "type": "Normal" }
     },
     {
-      "enemy_id": "sb_planetary_elite",
+      "enemy_id": "Solar Bear Suppression Destroyer",
       "faction": "SolarBear",
       "flavor_text": "Final resistance anticipated.",
       "hull": 120,
-      "equipment": ["sb_long_beam", "sb_close_ion"],
+      "attacks": [
+        { "range": "LONG", "damage": 50, "uses_per_battle": 1 },
+        { "range": "MID", "damage": 30, "uses_per_battle": 3 }
+      ],
       "spawn": { "act": 3, "difficulty": 1, "type": "Elite" }
     },
     {
-      "enemy_id": "sb_flagship_celestial_reaper",
+      "enemy_id": "Celestial Reaper",
       "faction": "SolarBear",
       "flavor_text": "This world will be purified.",
       "hull": 220,
-      "equipment": ["sb_long_beam", "sb_close_burst", "sb_support_drone"],
+      "attacks": [
+        { "range": "LONG", "damage": 60, "uses_per_battle": 2 },
+        { "range": "MID", "damage": 40, "uses_per_battle": 3 },
+        { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
+      ],
       "spawn": { "act": 3, "difficulty": 1, "type": "Boss" }
     }
   ]
