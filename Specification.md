@@ -24,7 +24,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
   - location:Planet K9
 
 #### 1.1.1 ACT I
-- Srart
+- Start
 
 > Ship ID confirmed: STAR CANINE  
 > Command authority: CAPTAIN  
@@ -99,7 +99,7 @@ Player progresses through fixed stages, fighting enemies, managing hull HP and a
 > Status: DANGER.  
 
 #### 1.1.3 Act III
-Star Canine arrives at K9. Continuing fierce battles. No message exchage between Star Canine and Solar Bears. Only reverberation of explosions. 
+Star Canine arrives at K9. Continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
 > “Fight with cudgel.  
@@ -180,7 +180,8 @@ If stage is others:
 
 - equipped_item_ids equals "Equipment_data.json"'s id. 
 - Hull and Ammo persists between battles and is NOT fully restored automatically.
-
+- The player ship has no base Shield or Armor.
+- Shield and Armor values are derived entirely from equipped items.
 
 -----
 
@@ -232,10 +233,10 @@ Some high-power equipment is single-use across the entire campaign.
 Each combat follows this fixed range sequence:
 
 - **Turn 1:** Long
-- **Turn 2:** Middle
+- **Turn 2:** Mid
 - **Turn 3:** Close
 - **Turn 4:** Close
-- **Turn 5:** Middle
+- **Turn 5:** Mid
 - **Turn 6:** Long
 
 (6 turns total per combat, unless someone is destroyed earlier)
@@ -247,9 +248,9 @@ On EACH turn:
 1. Player attacks first
   - Equipment valid check:
     - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
-    - Every vailed equipment used at once. Even it is overkill
+    - Every valid equipment used at once. Even it is overkill
     - Multiplier damage if there is multiplier equipment and matched its type.  
-      - Effect stackable: If you equip two same multiplier (x2), total mutiplied damage is x4 
+      - Effect stackable: If you equip two same multiplier (x2), total multiplied damage is x4 
 1. Enemy HP is reduced
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
@@ -276,6 +277,19 @@ This rule applies to ALL turns and ranges.
     - Damage is applied to Armor first
     - Remaining damage is applied to Hull
 
+- Shield and Armor values are recalculated at the start of each combat.
+- Shield and Armor do NOT persist between battles.
+- Hull damage persists between battles.
+
+## 5.4 Draw Condition
+
+A combat is considered a draw if:
+- Both player and enemy are still alive after Turn 6.
+
+In a draw:
+- Combat ends immediately
+- No rewards are granted
+- The game proceeds to the next stage
 
 -----
 
