@@ -274,7 +274,7 @@ OR
 Dock is a repair station that provides restoration services in exchange for payment.
 
 - Player can skip this event.
-- Player must discard X item(s) from inventory to use the dock. The amount of X is equal to ACT X. (X is 2 in ACT II)
+- Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
   - Player selects X item(s) from inventory to discard permanently
   - Item is removed from the game (cannot be recovered)
   - After payment, player chooses ONE option:
