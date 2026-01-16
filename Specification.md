@@ -169,7 +169,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Each Boss Upgrade can be obtained **at most once per run**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
-### 2.5.2 Boss Rewards List
+### 2.5.2 Boss Upgrade List
 
 #### Regenerative Hull Plating
 - Increase maximum hull by **+40**.
