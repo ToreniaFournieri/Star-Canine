@@ -98,13 +98,22 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ### 2.3 Player ship initial state
 - Player ship initial state
-  - "hull": 200,
-  - "shield": 0,
-  - "armor": 0,
-  - "ammo": 12,
-  - "max_slots": 6,
-  - "initial_inventory_item_ids": [1, 2, 2, 3]
+  - hull: 200,
+  - shield: 0,
+  - armor: 0,
+  - ammo: 12,
+  - max_slots: 6,
+  - initial inventory item: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
+
+- Player upgraded initial state
+  - regenerative_hull_plating: false
+  - automated_ammo_synthesizer: false
+  - forward_shield_projector: false
+  - reinforced_hangar: false
+  - expanded_hardpoint_array: false
+  - overloaded_logistics_core: false
+
 
 ### 2.4 Stage layout 
 - There are three type of stages
