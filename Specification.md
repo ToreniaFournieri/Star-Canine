@@ -348,7 +348,7 @@ Display equipment name and status.
 
 
 - Boss Reward Resolution:
-    -The player selects exactly one Boss Upgrade.
+    - The player selects exactly one Boss Upgrade.
     - For the selected upgrade, set state = owned.
     - For all other offered upgrades, set state = skipped.
     - Immediately apply the selected upgrade’s equipment slot bonus.
