@@ -1,6 +1,5 @@
-# STAR CANINE SPECIFICATION v0.3.0
+# STAR CANINE SPECIFICATION v0.3.1
 
------
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -348,7 +347,13 @@ Display equipment name and status.
 - Boss Upgrade are **permanent** and cannot be removed.
 - Each Boss Upgrade can be obtained **at most once per run**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
-
+- Apply +X Equipment slot(s) effects of all owned Boss Upgrades:
+  - +1 Equipment Slot:
+    - Forward Shield Projector
+    -Reinforced Hangar
+  - +2 Equipment Slots:
+    - Expanded Hardpoint Array
+    - Overloaded Logistics Core
 -----
 
 ## 5. Event
