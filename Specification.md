@@ -103,11 +103,11 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - armor: 0,
   - ammo: 12,
   - max_slots: 6,
-  - dock_paid: false,
-  - initial inventory item: [1, 2, 2, 3]
+  - initial_items_in_inventory: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
 
-
+- Player event state
+  - paid_at_dock: false,
 
 - Player upgrade initial state
   - regenerative_hull_plating: false
@@ -161,30 +161,23 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ## 2.5 Boss Reward (Boss Upgrade)
 
-### 2.5.1 Boss Rewards
-- Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
-- Each boss reward presents the player with **3 Boss Upgrade**.
-- The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
-- Boss Upgrade are **permanent** and cannot be removed.
-- Each Boss Upgrade can be obtained **at most once per run**.
-- No boss reward is granted after the **ACT III boss**, which ends the game.
 
-### 2.5.2 Boss Upgrade List
+### 2.5.1 Boss Upgrade List
 
 #### Regenerative Hull Plating
 - Increase maximum hull by **+40**.
-- At the beginning of each stage, **repair 20 hull** (cannot exceed maximum hull).
+- At the beginning of each combat, **repair 20 hull** (cannot exceed maximum hull).
 
 #### Automated Ammo Synthesizer
-- At the end of each combat, **gain +1 ammo**.
+- At the beginning of each combat, **gain +1 ammo**.
 
 #### Forward Shield Projector
 - **+1 Equipment Slot**.
-- Start each combat with **+15 shield**.
+- At the beginning of each combat, **+15 shield**.
 
 #### Reinforced Hangar
 - **+1 Equipment Slot**.
-- For each **FIGHTER-type attack instance**, add **+5 base damage**.
+- At the beginning of each combat, For each **FIGHTER-type attack instance**, add **+5 base damage**.
 - This bonus is applied **before module multipliers**.
 
 #### Expanded Hardpoint Array
@@ -232,6 +225,14 @@ Each combat follows this fixed range sequence:
   - These counters exist only during this combat
   - Counters do NOT modify Equipment_data.json or Enemy_data.json
   - All counters reset for the next battle
+
+- Boss Upgrade caluclation :
+  - Check Player upgrade state which works at the beginning of combat. Then calculate the Boss Upgrade effects.
+    - regenerative_hull_plating
+    - automated_ammo_synthesizer
+    - forward_shield_projector
+    - reinforced_hangar
+
 - Multiplier calculation:
   - For each equipped MODULE with a "multiplier" and "target_type":
     - All weapons with matching "type" have their damage multiplied
@@ -327,18 +328,30 @@ Player loses when:
 ### 4.6 Reward
 
 #### 4.6.1 Normal reward
-- After winning a battle, player chooses ONE:
-**A) Choose 1 equipment from 3 options**
-OR
-**B) Gain +5 Ammo**
+
+- If expanded_hardpoint_array: false
+  - After winning a battle, player chooses ONE:
+  **A) Choose 1 equipment from 3 options**
+  OR
+  **B) Gain +5 Ammo**
+
+- Else if expanded_hardpoint_array: true (as a Boss Upgrade penalty)
+   - After winning a battle, player chooses ONE:
+  **A) Choose 1 equipment from only 1 option**
+  OR
+  **B) Gain +5 Ammo**
 
 - Equipment is randomly chosen where "reward": true from equipment_data.json. 
 - show equipment name and status
 
 #### 4.6.2 Boss reward 
 
- see 2.5 Boss Reward (Boss Upgrade)
-
+- Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
+- Each boss reward presents the player with **3 Boss Upgrade**.
+- The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
+- Boss Upgrade are **permanent** and cannot be removed.
+- Each Boss Upgrade can be obtained **at most once per run**.
+- No boss reward is granted after the **ACT III boss**, which ends the game.
 
 -----
 
@@ -349,12 +362,13 @@ Dock is a repair station that provides restoration services in exchange for paym
 
 - Player can skip this event.
 - Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
+  - If overloaded_logistics_core: true, X is doubled. (as a Boss Upgrade penalty)
   - Player selects X item(s) from inventory to discard permanently
-  - Item is removed from the game. (cannot be recovered) and set dock_paid:true
-  - After payment (dock_paid:true) , player chooses ONE option:
+  - Item is removed from the game. (cannot be recovered) and set paid_at_dock:true
+  - After payment (paid_at_dock:true) , player chooses ONE option:
     - **Repair:** Heal Hull by 30% (rounded down)
     - **Resupply:** Gain +7 Ammo
-  - Reset to dock_paid:false
+  - Reset to paid_at_dock:false
 
 -----
 
