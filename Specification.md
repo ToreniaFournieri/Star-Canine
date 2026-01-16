@@ -97,7 +97,7 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
 ### 2.3 Player ship initial state
-- Player ship initial state
+- Player ship state
   - hull: 200,
   - shield: 0,
   - armor: 0,
@@ -109,13 +109,13 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Player event state
   - paid_at_dock: false,
 
-- Player upgrade initial state
-  - regenerative_hull_plating: false
-  - automated_ammo_synthesizer: false
-  - forward_shield_projector: false
-  - reinforced_hangar: false
-  - expanded_hardpoint_array: false
-  - overloaded_logistics_core: false
+- Player upgrade state. (not_seen, owned, skipped)
+  - regenerative_hull_plating: not_seen
+  - automated_ammo_synthesizer: not_seen
+  - forward_shield_projector: not_seen
+  - reinforced_hangar: not_seen
+  - expanded_hardpoint_array: not_seen
+  - overloaded_logistics_core: not_seen
 
 
 ### 2.4 Stage layout 
@@ -335,7 +335,7 @@ Player loses when:
   OR
   **B) Gain +5 Ammo**
 
-- Else if expanded_hardpoint_array: true (as a Boss Upgrade penalty)
+- Else if expanded_hardpoint_array is owned (as a Boss Upgrade penalty)
    - After winning a battle, player chooses ONE:
   **A) Choose 1 equipment from only 1 option**
   OR
@@ -362,7 +362,7 @@ Dock is a repair station that provides restoration services in exchange for paym
 
 - Player can skip this event.
 - Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
-  - If overloaded_logistics_core: true, X is doubled. (as a Boss Upgrade penalty)
+  - If overloaded_logistics_core is owned, the X is doubled. (as a Boss Upgrade penalty)
   - Player selects X item(s) from inventory to discard permanently
   - Item is removed from the game. (cannot be recovered) and set paid_at_dock:true
   - After payment (paid_at_dock:true) , player chooses ONE option:
