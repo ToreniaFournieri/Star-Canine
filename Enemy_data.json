@@ -5,10 +5,14 @@
       "faction": "SolarBear",
       "flavor_text": "No resistance expected.",
       "hull": 40,
-      "attacks": [
-        { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 1, "type": "Normal" }
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 15,
+      "uses_LONG": null,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 1,
+      "type": "Normal"
     },
 
     {
@@ -17,38 +21,47 @@
       "flavor_text": "Assigned to a quiet system.",
       "hull": 40,
       "shield": 10,
-      "attacks": [
-        { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 10, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 2, "type": "Normal" }
+      "damage_LONG": 40,
+      "damage_MID": null,
+      "damage_CLOSE": 10,
+      "uses_LONG": 1,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 2,
+      "type": "Normal"
     },
 
     {
       "enemy_id": "Strike Runner",
       "faction": "SolarBear",
-      "flavor_text": "Designed for quick response.",
+      "flavor_text": "Fast response interceptor.",
       "hull": 40,
       "shield": 15,
       "armor": 15,
-      "attacks": [
-        { "range": "LONG", "damage": 30, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 15, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 3, "type": "Normal" }
+      "damage_LONG": 30,
+      "damage_MID": null,
+      "damage_CLOSE": 15,
+      "uses_LONG": 1,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 3,
+      "type": "Normal"
     },
 
     {
       "enemy_id": "Frigate",
       "faction": "SolarBear",
-      "flavor_text": "Designed for quick response.",
+      "flavor_text": "Standard patrol vessel.",
       "hull": 80,
       "armor": 20,
-      "attacks": [
-        { "range": "LONG", "damage": 20, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 4, "type": "Normal" }
+      "damage_LONG": 20,
+      "damage_MID": null,
+      "damage_CLOSE": 25,
+      "uses_LONG": 1,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 4,
+      "type": "Normal"
     },
 
     {
@@ -58,11 +71,14 @@
       "hull": 70,
       "shield": 25,
       "armor": 15,
-      "attacks": [
-        { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
-        { "range": "CLOSE", "damage": 25, "uses_per_battle": 4 }
-      ],
-      "spawn": { "difficulty": 5, "type": "Elite" }
+      "damage_LONG": 50,
+      "damage_MID": null,
+      "damage_CLOSE": 25,
+      "uses_LONG": 2,
+      "uses_MID": null,
+      "uses_CLOSE": 4,
+      "difficulty": 5,
+      "type": "Elite"
     },
 
     {
@@ -72,11 +88,14 @@
       "hull": 100,
       "shield": 30,
       "armor": 40,
-      "attacks": [
-        { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
-        { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
-      ],
-      "spawn": { "difficulty": 10, "type": "Boss" }
+      "damage_LONG": 50,
+      "damage_MID": null,
+      "damage_CLOSE": 35,
+      "uses_LONG": 2,
+      "uses_MID": null,
+      "uses_CLOSE": 4,
+      "difficulty": 10,
+      "type": "Boss"
     },
 
     {
@@ -85,10 +104,14 @@
       "flavor_text": "Area under inspection.",
       "hull": 135,
       "shield": 20,
-      "attacks": [
-        { "range": "MID", "damage": 25, "uses_per_battle": 2 }
-      ],
-      "spawn": { "difficulty": 7, "type": "Normal" }
+      "damage_LONG": null,
+      "damage_MID": 25,
+      "damage_CLOSE": null,
+      "uses_LONG": null,
+      "uses_MID": 2,
+      "uses_CLOSE": null,
+      "difficulty": 7,
+      "type": "Normal"
     },
 
     {
@@ -97,11 +120,14 @@
       "flavor_text": "Escalation authorized.",
       "hull": 135,
       "armor": 40,
-      "attacks": [
-        { "range": "LONG", "damage": 35, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 7, "type": "Elite" }
+      "damage_LONG": 35,
+      "damage_MID": null,
+      "damage_CLOSE": 25,
+      "uses_LONG": 1,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 7,
+      "type": "Elite"
     },
 
     {
@@ -110,10 +136,14 @@
       "flavor_text": "Operating under foreign command.",
       "hull": 145,
       "armor": 25,
-      "attacks": [
-        { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 7, "type": "Normal" }
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 30,
+      "uses_LONG": null,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 7,
+      "type": "Normal"
     },
 
     {
@@ -123,11 +153,14 @@
       "hull": 70,
       "shield": 25,
       "armor": 25,
-      "attacks": [
-        { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
-        { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 8, "type": "Elite" }
+      "damage_LONG": 40,
+      "damage_MID": null,
+      "damage_CLOSE": 25,
+      "uses_LONG": 1,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 8,
+      "type": "Elite"
     },
 
     {
@@ -137,11 +170,14 @@
       "hull": 120,
       "shield": 40,
       "armor": 40,
-      "attacks": [
-        { "range": "LONG", "damage": 45, "uses_per_battle": 2 },
-        { "range": "CLOSE", "damage": 30, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 20, "type": "Boss" }
+      "damage_LONG": 45,
+      "damage_MID": null,
+      "damage_CLOSE": 30,
+      "uses_LONG": 2,
+      "uses_MID": null,
+      "uses_CLOSE": 3,
+      "difficulty": 20,
+      "type": "Boss"
     },
 
     {
@@ -150,10 +186,14 @@
       "flavor_text": "Orbital dominance confirmed.",
       "hull": 80,
       "armor": 30,
-      "attacks": [
-        { "range": "MID", "damage": 30, "uses_per_battle": 2 }
-      ],
-      "spawn": { "difficulty": 9, "type": "Normal" }
+      "damage_LONG": null,
+      "damage_MID": 30,
+      "damage_CLOSE": null,
+      "uses_LONG": null,
+      "uses_MID": 2,
+      "uses_CLOSE": null,
+      "difficulty": 9,
+      "type": "Normal"
     },
 
     {
@@ -163,11 +203,14 @@
       "hull": 55,
       "shield": 35,
       "armor": 30,
-      "attacks": [
-        { "range": "LONG", "damage": 50, "uses_per_battle": 1 },
-        { "range": "MID", "damage": 30, "uses_per_battle": 3 }
-      ],
-      "spawn": { "difficulty": 9, "type": "Elite" }
+      "damage_LONG": 50,
+      "damage_MID": 30,
+      "damage_CLOSE": null,
+      "uses_LONG": 1,
+      "uses_MID": 3,
+      "uses_CLOSE": null,
+      "difficulty": 9,
+      "type": "Elite"
     },
 
     {
@@ -177,12 +220,14 @@
       "hull": 100,
       "shield": 60,
       "armor": 60,
-      "attacks": [
-        { "range": "LONG", "damage": 60, "uses_per_battle": 2 },
-        { "range": "MID", "damage": 40, "uses_per_battle": 3 },
-        { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
-      ],
-      "spawn": { "difficulty": 30, "type": "Boss" }
+      "damage_LONG": 60,
+      "damage_MID": 40,
+      "damage_CLOSE": 35,
+      "uses_LONG": 2,
+      "uses_MID": 3,
+      "uses_CLOSE": 4,
+      "difficulty": 30,
+      "type": "Boss"
     }
   ]
 }
