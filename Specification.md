@@ -262,7 +262,7 @@ Player loses when:
 - After winning a battle, player chooses ONE:
 **A) Choose 1 equipment from 3 options**
 OR
-**B) Gain +3 Ammo**
+**B) Gain +5 Ammo**
 
 - Equipment is randomly chosen where "reward": true from equipment_data.json. 
 
@@ -273,7 +273,7 @@ OR
 ### 5.1 Dock
 - Dock gives two options
   - heal Hull 30%
-  - +6 ammo
+  - +9 ammo
 
 -----
 
