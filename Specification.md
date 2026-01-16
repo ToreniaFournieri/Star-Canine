@@ -329,20 +329,16 @@ Player loses when:
 
 #### 4.6.1 Normal reward
 
-- If expanded_hardpoint_array: false
-  - After winning a battle, player chooses ONE:
-  **A) Choose 1 equipment from 3 options**
-  OR
-  **B) Gain +5 Ammo**
+After winning a battle, the player chooses ONE:
+    - Gain +5 Ammo
+    - Choose 1 equipment
 
-- Else if expanded_hardpoint_array is owned (as a Boss Upgrade penalty)
-   - After winning a battle, player chooses ONE:
-  **A) Choose 1 equipment from only 1 option**
-  OR
-  **B) Gain +5 Ammo**
+Equipment options:
+    - 3 options if expanded_hardpoint_array is not owned
+    - 1 option if expanded_hardpoint_array is owned (Boss Upgrade penalty)
 
-- Equipment is randomly chosen where "reward": true from equipment_data.json. 
-- show equipment name and status
+Equipment is selected from equipment_data.json where "reward": true.
+Display equipment name and status.
 
 #### 4.6.2 Boss reward 
 
