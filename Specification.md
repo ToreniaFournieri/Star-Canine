@@ -129,6 +129,42 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.4.3 ACT III — RECLAMATION  
  not defined yet for this version. 
 
+# 2.5 Boss Reward (Upgrade)
+
+## 2.5.1 Boss Rewards
+- Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
+- Each boss reward presents the player with **3 Boss Relics**.
+- The player must choose **1** relic; the remaining relics are discarded.
+- Boss Relics are **permanent** and cannot be removed.
+- Each Boss Relic can be obtained **at most once per run**.
+- No boss reward is granted after the **ACT III boss**, which ends the game.
+
+## 2.5.2 Boss Rewards List
+
+### Regenerative Hull Plating
+- Increase maximum hull by **+40**.
+- At the beginning of each stage, **repair 20 hull** (cannot exceed maximum hull).
+
+### Automated Ammo Synthesizer
+- At the end of each combat, **gain +1 ammo**.
+
+### Forward Shield Projector
+- **+1 Equipment Slot**.
+- Start each combat with **+15 shield**.
+
+### Reinforced Hangar
+- **+1 Equipment Slot**.
+- For each **FIGHTER-type attack instance**, add **+5 base damage**.
+- This bonus is applied **before module multipliers**.
+
+### Expanded Hardpoint Array
+- **+2 Equipment Slots**.
+- Equipment rewards provide **only 1 choice** instead of 3.
+
+### Overloaded Logistics Core
+- **+2 Equipment Slots**.
+- All **dock payments cost double** (healing and ammo).
+
 -----
 
 ## 3. EQUIPMENT SYSTEM
@@ -259,12 +295,18 @@ Player loses when:
 - Draw occurs against a Boss enemy
 
 ### 4.6 Reward
+
+#### 4.6.1 Normal reward
 - After winning a battle, player chooses ONE:
 **A) Choose 1 equipment from 3 options**
 OR
 **B) Gain +5 Ammo**
 
 - Equipment is randomly chosen where "reward": true from equipment_data.json. 
+
+#### 4.6.2 Boss reward 
+
+
 
 -----
 
