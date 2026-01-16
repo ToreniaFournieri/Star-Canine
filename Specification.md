@@ -133,10 +133,28 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 1. combat: boss (difficulty:10, type:boss)
 
 ### 2.4.2 ACT II — BETRAYAL 
- not defined yet for this version. 
+1. combat: a random enemy (difficulty:11, type:normal)
+1. combat: a random enemy (difficulty:12, type:normal) 
+1. combat: a random enemy (where difficulty:13, type:normal) 
+1. event: Dock 
+1. combat: an elite (difficulty:16, type:elite)
+1. combat: a random enemy (difficulty:14, type:normal)
+1. combat: a random enemy (difficulty:14, type:normal) 
+1. event: Dock
+1. combat: boss (difficulty:20, type:boss)
+
 
 ### 2.4.3 ACT III — RECLAMATION  
- not defined yet for this version. 
+1. combat: a random enemy (difficulty:21, type:normal)
+1. combat: a random enemy (difficulty:22, type:normal) 
+1. combat: a random enemy (where difficulty:23, type:normal) 
+1. event: Dock 
+1. combat: an elite (difficulty:26, type:elite)
+1. combat: a random enemy (difficulty:24, type:normal)
+1. combat: a random enemy (difficulty:24, type:normal) 
+1. event: Dock
+1. combat: boss (difficulty:30, type:boss)
+
 
 ## 2.5 Boss Reward (Boss Upgrade)
 
