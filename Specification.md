@@ -440,7 +440,7 @@ Main Loop:
   │   │    └─ Lose
   │   │         → Game Over Scene
   │   │         → END / RESTART
-  │
+  │   │ 
   │   └─ If type = Dock
   │        → Event Scene (Dock)
   │        → advance stage
