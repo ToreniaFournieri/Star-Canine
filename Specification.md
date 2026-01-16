@@ -57,9 +57,6 @@ Equipment entries define the following fields:
 - target_type: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
 - multiplier: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
 
-##### Optional Fields:
-- flavor_text: String. Descriptive text with no gameplay effect
-
 ##### Design Notes:
   - A weapon can fire at multiple ranges with different damage values
   - Example: A laser might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
@@ -78,7 +75,6 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 ##### Core Fields:
 - enemy_id: String. Unique identifier for the enemy.
 - faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
-- flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
 - hull: Integer. Enemy hit points.
 
 ##### Defensive Fields (Optional):
