@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.2.4
+# STAR CANINE SPECIFICATION v0.2.5
 
 -----
 
@@ -28,6 +28,7 @@
 - No hidden rules
 
 -----
+
 ## 2. DEFINITIONS
 
 ### 2.1 Equipment Data
@@ -52,6 +53,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_da
 
 ### 2.2 Enemy Data
 Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
+
 
 #### 2.2.1 Enemy Fields
 - Core Fields
@@ -95,16 +97,14 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
   
 ### 2.4.1 ACT I - DESOLATION
-1. narattive: ACT I start 
 1. combat a random enemy (difficulty:1, type:normal)
 1. combat a random enemy (difficulty:2, type:normal) 
 1. combat a random enemy (where difficulty:3, type:normal) 
-1. dock (heal Hull 30% or +6 ammo)
+1. dock 
 1. combat an elite (difficulty:5, type:elite)
 1. combat a random enemy (difficulty:4, type:normal)
 1. combat a random enemy (difficulty:4, type:normal) 
 1. dock (heal Hull 30% or +6 ammo)
-1. narative: ACT I Boss Encounter
 1. combat boss (difficulty:10, type:boss)
 
 ### 2.4.2 ACT II — BETRAYAL 
@@ -124,19 +124,12 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
 
-### 3.2 Disposable Equipment
-Some high-power equipment is single-use across the entire campaign.
-- Property: If an item has "disposable": true, it is destroyed after combat.
-- Trigger: At the end of any battle, all equipped disposable items are replaced in the inventory with Broken Scrap (ID: 999).
-- Condition: The item is destroyed regardless of whether it was actually fired or activated during the battle.
-- Broken Scrap: Has no stats, no range, and provides no combat benefit. It must be manually unequipped to free a slot.
 
 -----
 
 ## 4. COMBAT SYSTEM
 
-### 5.1 Turn Order
-
+### 4.1 Turn Order
 Each combat follows this fixed range sequence:
 
 - **Turn 1:** Long
@@ -145,51 +138,35 @@ Each combat follows this fixed range sequence:
 - **Turn 4:** Close
 - **Turn 5:** Mid
 - **Turn 6:** Long
-
 (6 turns total per combat, unless someone is destroyed earlier)
 
+### 4.2 Start of combat
+- Shield and Armor values are recalculated at the start of each combat.
+- Shield and Armor do NOT persist between battles.
+- Hull damage persists between battles.
 
 
-#### 2.1.2 Combat log scene
-- Display log
-- If player beats an enemy, he grant reward. 
-- Else if it is draw, skip reward and continue to a next stage. 
-- Else if player loses, it is game over. 
-- Post-Combat Cleanup: Check equipped slots. If disposable: true, log: [SYSTEM] <Item Name> has burned out. Replaced with Broken Scrap.
-
-
-#### 2.1.3 Reward scene
-- If player beat an enemy, display reward list.
-- Go to the next stage
-
-#### 2.1.4 Game over scene
-- display player's progress. 
-
------
-
-### 5.2 Attack Resolution Rule (VERY IMPORTANT)
+### 4.3 Attack Resolution Rule
 
 On EACH turn:
-
 1. Player attacks first
   - Equipment valid check:
     - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
     - Every valid equipment used at once. Even it is overkill
     - Multiplier damage if there is multiplier equipment and matched its type.  
       - Effect stackable: If you equip two same multiplier (x2), total multiplied damage is x4 
-1. Enemy HP is reduced
+1. Enemy takes damage following damage resolution order.
 1. If enemy HP ≤ 0:
   - Enemy does NOT attack
   - Combat proceeds to next turn or ends
 1. If enemy survives:
-  - Enemy attacks
-
+  - Enemies always attack if alive and if they have a valid damage value for the current range.
+  - Player takes damage following damage resolution order.
 This rule applies to ALL turns and ranges.
 
 **There is NO simultaneous damage.**
 
-## 5.3 DAMAGE RESOLUTION ORDER
-
+### 4.4 Damage Resolution rule
 - Damage resolution depends entirely on the current combat range.
 - There are three independent damage models, one per range.
 
@@ -203,80 +180,102 @@ This rule applies to ALL turns and ranges.
     - Damage is applied to Armor first
     - Remaining damage is applied to Hull
 
-- Shield and Armor values are recalculated at the start of each combat.
-- Shield and Armor do NOT persist between battles.
-- Hull damage persists between battles.
+### 4.5 End of Combat
+#### 4.5.1 Disposable item clean up
+  - All equipped disposable items ("disposable": True) are replaced in the inventory with Broken Scrap (ID: 999).
+  - The item is destroyed regardless of whether it was actually fired or activated during the battle.
+  - Log: <Item Name> has burned out. Replaced with Broken Scrap.
 
-## 5.4 Draw Condition
-
+#### 4.5.2 Draw Condition
 A combat is considered a draw if:
 - Both player and enemy are still alive after Turn 6.
 
 In a draw:
 - Combat ends immediately
 - No rewards are granted
-- The game proceeds to the next stage
+- IF the enemy type is boss, it is game over. Else, the game proceeds to the next stage
 
------
-
-## 6. ENEMY DESIGN
-
-Enemies always attack if alive and if they have a weapon valid for the current range.
-
-
-
------
-
-## 7. REWARDS
-
-After winning a battle, player chooses ONE:
-
+### 4.6 Reward
+- After winning a battle, player chooses ONE:
 **A) Choose 1 equipment from 3 options**
-
 OR
-
 **B) Gain +3 Ammo**
 
-If the player draws or loses:
-
-- Game ends
-- No reward
-
-Equipment is randomly chosen where "reward": true from equipment_data.json. 
+- Equipment is randomly chosen where "reward": true from equipment_data.json. 
 
 -----
 
+## 5. Event
 
-
-## 8. PROGRESSION STRUCTURE (SIMPLIFIED)
-
-- Fixed linear sequence of battles
-
-4.
-### 2.1 Flow
-
-#### 2.1.1 First scene 
-At the start of each stage, Hull, Shield(for long), Armor(for Close), Ammo. 
-- Show own ship status. 
-- Show full equipment list
-- equipment
-  - at the first stage, none of them selected
-  - Selects up to 6 items to equip. Persist previous selection of equipment
-  - If it has UI, checkmarks selected item.
-
-If stage is combat:
-- show own ship status. Hull, Shield(for long), Armor(for Close), Ammo. 
-- show enemy status. Enemy's hull, Shield, Armor, attack damage (long, mid, close) and other feature displayed)
-- Engage battle to start combat
-
-If stage is others:
-- follow the description of the stage setting 
-
-
+### 5.1 Dock
+- Dock gives two options
+  - heal Hull 30%
+  - +6 ammo
 
 -----
 
-## 9. 
+## 6. Scene and Flow
+
+### 6.1 Scene list
+- Opening scene
+  - Input: Start button/ Enter to start
+- Narrative scene
+  - Display narattive 
+  - Input: Continue button/ Enter to continue
+- Pre combat scene
+  - Display own ship's Hull, Shield, Armor, Ammo.
+  - Display next enemy's Hull, Shield, Armor, Ammo.
+  - Display full inventory list. Euipment item is checkmarked.
+  - Input: select item of inventory to equip, unequip item/ Command to equip/unequip.
+  - Input: Engage combat button/ Engage to proceed to combat log scene
+  - Note
+    - at the first stage, none of them selected
+    - Selects up to 6 items to equip. Persist previous selection of equipment
+- Combat log scene
+  - Display current own ship's Hull, Shield, Armor, Ammo.
+  - Display current enemy's Hull, Shield, Armor, Ammo.
+  - Display combat log. Step by step
+  - Input: Continue button/ Enter to continue
+- Reward scene
+  - Display reward list
+  - Input: Select reward and continue to the next scene
+- Event scene
+  - dock event
+    - Display own ship's Hull, Shield, Armor, Ammo.
+    - Input: Select options and continue to the next scene
+- Game Clear scene
+  - Display current own ship's Hull, Shield, Armor, Ammo.
+  - display player's progress. 
+  - Input: Restart button/ Enter to restart
+- Game over scene
+  - Display current own ship's Hull, Shield, Armor, Ammo.
+  - display player's progress. 
+  - Input: Restart button/ Enter to restart
+
+### 6.2 Flow
+
+- Flow:
+  Opening -> [Check next Stage]
+
+- [Check next Stage] Flow:
+  IF [Check next Stage] is 1st stage of each ACT:
+    -> Narrative (ACT X start)
+  Else if [Check next Stage] is the last stage of each ACT:
+    -> Narrative (ACT X Boss Encounter)
+  Else if [Check next Stage] is null:
+    -> Game Clear
+
+  If [Check next Stage] is combat:
+   -> Pre combat -> Combat log
+    If Combat.Result is Win:
+     -> Reward -> [Check next Stage]
+    Else if Combat.Result is Draw:
+     -> [Check next Stage]
+    Else if Combat.Result is Lose:
+     -> Game over
+  Else If [Check_Stage] is event:
+    -> Event -> [Check next Stage]
+
 
 -----
 
