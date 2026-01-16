@@ -106,7 +106,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - initial inventory item: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
 
-- Player upgraded initial state
+- Player upgrade initial state
   - regenerative_hull_plating: false
   - automated_ammo_synthesizer: false
   - forward_shield_projector: false
