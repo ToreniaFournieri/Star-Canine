@@ -161,9 +161,15 @@ Each combat follows this fixed range sequence:
 (6 turns total per combat, unless someone is destroyed earlier)
 
 ### 4.2 Start of combat
-- Shield and Armor values are recalculated at the start of each combat.
-- Shield and Armor do NOT persist between battles.
-- Hull damage persists between battles.
+- Shield and Armor values are recalculated based on equipped SHIELD and ARMOR items
+- Shield and Armor do NOT persist between battles
+- Hull damage persists between battles
+- **Temporary use counters are initialized:**
+  - Each equipped weapon's remaining uses = its `uses_per_battle` value (null = unlimited)
+  - Each enemy attack's remaining uses = its `uses_LONG`, `uses_MID`, `uses_CLOSE` value (null = unlimited)
+  - These counters exist only during this combat
+  - Counters do NOT modify Equipment_data.json or Enemy_data.json
+  - All counters reset for the next battle
 - Multiplier calculation:
   - For each equipped MODULE with a "multiplier" and "target_type":
     - All weapons with matching "type" have their damage multiplied
@@ -176,14 +182,17 @@ Each combat follows this fixed range sequence:
 On EACH turn:
 1. **Player attacks first**
    - For each equipped weapon:
-     - Check if weapon has non-null damage value for current range (damage_LONG for LONG turn, damage_MID for MID turn, damage_CLOSE for CLOSE turn)
-     - Check if weapon has remaining uses_per_battle (if not null)
-     - Check if player has sufficient ammo for ammo_cost
+     - Check if weapon has non-null damage value for current range:
+       - LONG turn: check `damage_LONG`
+       - MID turn: check `damage_MID`
+       - CLOSE turn: check `damage_CLOSE`
+     - Check if weapon has remaining `uses_per_battle` (if not null)
+     - Check if player has sufficient ammo for `ammo_cost`
      - If all checks pass, weapon activates automatically
    - All valid weapons fire simultaneously in the same turn
    - Apply multiplier bonuses from equipped MODULEs to matching weapon types
    - Total damage = sum of all activated weapons (after multipliers)
-   - Total consumption of ammo = sum of all activated weapons
+   - Total ammo consumed = sum of `ammo_cost` from all activated weapons
    - Weapons fire even if damage is overkill
 
 2. **Enemy takes damage**
@@ -196,8 +205,14 @@ On EACH turn:
      - Combat ends (victory)
    
 4. **Enemy attacks** (only if still alive)
-   - Check if enemy has an attack with matching range for current turn
-   - Check if that attack has remaining uses_per_battle (if not null)
+   - Check if enemy has non-null damage value for current range:
+     - LONG turn: check `damage_LONG`
+     - MID turn: check `damage_MID`
+     - CLOSE turn: check `damage_CLOSE`
+   - Check if enemy has remaining uses for that range:
+     - LONG turn: check `uses_LONG`
+     - MID turn: check `uses_MID`
+     - CLOSE turn: check `uses_CLOSE`
    - If both checks pass, enemy attacks automatically
    - Player takes damage following damage resolution rules (section 4.4)
 
@@ -222,10 +237,11 @@ Damage resolution depends entirely on the current combat range. There are three 
 2. Remaining damage (if any) is applied to Hull
 
 ### 4.5 End of Combat
-#### 4.5.1 Disposable item clean up
-  - All equipped disposable items ("disposable": True) are replaced in the inventory with Broken Scrap (ID: 999).
-  - The item is destroyed regardless of whether it was actually fired or activated during the battle.
-  - Log: <Item Name> has burned out. Replaced with Broken Scrap.
+#### 4.5.1 Disposable Item Cleanup
+- All equipped disposable items (`"disposable": true`) are removed from equipped slots
+- Each disposable item is replaced in inventory with one Broken Scrap (ID: 999)
+- This happens regardless of whether the item was activated during combat
+- Combat log displays: "[Item Name] has burned out. Replaced with Broken Scrap."
 
 #### 4.5.2 Draw Condition
 A combat is considered a draw if:
