@@ -289,6 +289,7 @@ OR
   - Display own ship's Hull, Shield, Armor, Ammo.
   - Display next enemy's Hull, Shield, Armor, Ammo.
   - Display full inventory list. Equipment item is checkmarked.
+    - Equipment item shows status
   - Input: select item of inventory to equip, unequip item/ Command to equip/unequip.
   - Input: Engage combat button/ Engage to proceed to combat log scene
   - Note
