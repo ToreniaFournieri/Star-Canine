@@ -16,7 +16,7 @@
       "faction": "SolarBear",
       "flavor_text": "Assigned to a quiet system.",
       "hull": 40,
-      "shield": 20,
+      "shield": 10,
       "attacks": [
         { "range": "LONG", "damage": 40, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 10, "uses_per_battle": 3 }
@@ -29,7 +29,7 @@
       "faction": "SolarBear",
       "flavor_text": "Designed for quick response.",
       "hull": 40,
-      "shield": 25,
+      "shield": 15,
       "armor": 15,
       "attacks": [
         { "range": "LONG", "damage": 30, "uses_per_battle": 1 },
@@ -43,7 +43,7 @@
       "faction": "SolarBear",
       "flavor_text": "Designed for quick response.",
       "hull": 80,
-      "armor": 40,
+      "armor": 20,
       "attacks": [
         { "range": "LONG", "damage": 20, "uses_per_battle": 1 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 3 }
@@ -56,8 +56,8 @@
       "faction": "SolarBear",
       "flavor_text": "Stay away.",
       "hull": 70,
-      "shield": 45,
-      "armor": 45,
+      "shield": 25,
+      "armor": 15,
       "attacks": [
         { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 25, "uses_per_battle": 4 }
@@ -70,8 +70,8 @@
       "faction": "SolarBear",
       "flavor_text": "Local control established.",
       "hull": 100,
-      "shield": 60,
-      "armor": 60,
+      "shield": 30,
+      "armor": 40,
       "attacks": [
         { "range": "LONG", "damage": 50, "uses_per_battle": 2 },
         { "range": "CLOSE", "damage": 35, "uses_per_battle": 4 }
