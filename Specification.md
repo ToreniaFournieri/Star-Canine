@@ -109,7 +109,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Player event state
   - paid_at_dock: false,
 
-- Player upgrade state. (not_seen, owned, skipped)
+- Boss Upgrade state. (not_seen, owned, skipped)
   - regenerative_hull_plating: not_seen
   - automated_ammo_synthesizer: not_seen
   - forward_shield_projector: not_seen
@@ -349,6 +349,7 @@ Player loses when:
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - Each boss reward presents the player with **3 Boss Upgrade**.
 - The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
+  - State update: set The chosen Boss Upgrade state to owned, set the remaining Boss Upgrade states to skipped.
 - Boss Upgrade are **permanent** and cannot be removed.
 - Each Boss Upgrade can be obtained **at most once per run**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
