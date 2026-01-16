@@ -345,16 +345,14 @@ Display equipment name and status.
 - Boss Upgrade are **permanent** and cannot be removed.
 - Each Boss Upgrade can be obtained **at most once per run**.
 - Each boss reward presents the player with **3 Boss Upgrade**.
-- The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
-  - State update: set The chosen Boss Upgrade state to owned, set the remaining Boss Upgrade states to skipped.
 
-  - Applying +X Equipment slot(s) effects of the chosen Boss Upgrade:
-    - +1 Equipment Slot:
-      - Forward Shield Projector
-      - Reinforced Hangar
-    - +2 Equipment Slots:
-      - Expanded Hardpoint Array
-      - Overloaded Logistics Core
+
+- Boss Reward Resolution:
+    -The player selects exactly one Boss Upgrade.
+    - For the selected upgrade, set state = owned.
+    - For all other offered upgrades, set state = skipped.
+    - Immediately apply the selected upgrade’s equipment slot bonus.
+
 -----
 
 ## 5. Event
