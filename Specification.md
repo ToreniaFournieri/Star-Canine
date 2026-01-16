@@ -227,7 +227,7 @@ Each combat follows this fixed range sequence:
   - All counters reset for the next battle
 
 - Boss Upgrade caluclation :
-  - Check Player upgrade state which works at the beginning of combat. Then calculate the Boss Upgrade effects.
+  - Check Boss Upgrade state which works at the beginning of combat. Then calculate the Boss Upgrade effects.
     - regenerative_hull_plating
     - automated_ammo_synthesizer
     - forward_shield_projector
