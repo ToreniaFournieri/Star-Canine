@@ -255,28 +255,36 @@ OR
 
 ### 6.2 Flow
 
-- Flow:  
-  Opening -> [Check next Stage]  
- 
-- [Check next Stage] Flow:  
-  IF [Check next Stage] is 1st stage of each ACT:  
-    -> Narrative (ACT X start)  
-  Else if [Check next Stage] is the last stage of each ACT:  
-    -> Narrative (ACT X Boss Encounter)  
-  Else if [Check next Stage] is null:  
-    -> Game Clear  
-  
-  If [Check next Stage] is combat:  
-   -> Pre-combat -> Combat log  
-    If Combat.Result is Win:  
-     -> Reward -> [Check next Stage]  
-    Else if Combat.Result is Draw:  
-     -> [Check next Stage]  
-    Else if Combat.Result is Lose:  
-     -> Game over  
-  Else If [Check_Stage] is event:  
-    -> Event -> [Check next Stage]  
-  
+### 6.2 Flow
+```
+START
+  ↓
+Opening Scene
+  ↓
+┌─────────────────────┐
+│ Check Next Stage    │
+└─────────────────────┘
+  │
+  ├─ If null → Game Clear Scene → END/RESTART
+  │
+  ├─ If 1st stage of ACT → Narrative Scene (ACT Start) → [loop to Check Next Stage]
+  │
+  ├─ If last stage of ACT → Narrative Scene (Boss Encounter) → [loop to Check Next Stage]
+  │
+  ├─ If type: combat
+  │    ↓
+  │  Pre-Combat Scene
+  │    ↓
+  │  Combat Log Scene
+  │    ├─ Win → Reward Scene → [loop to Check Next Stage]
+  │    ├─ Draw + Boss → Game Over Scene → END/RESTART
+  │    ├─ Draw + Not Boss → [loop to Check Next Stage]
+  │    └─ Lose → Game Over Scene → END/RESTART
+  │
+  └─ If type: dock
+       ↓
+     Event Scene (Dock) → [loop to Check Next Stage]
+```
  
 -----
 
