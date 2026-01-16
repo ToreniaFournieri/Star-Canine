@@ -332,12 +332,12 @@ After winning a battle, the player chooses ONE:
     - Gain +5 Ammo
     - Choose 1 equipment
 
-Equipment options:
-    - 3 options if expanded_hardpoint_array is not owned
-    - 1 option if expanded_hardpoint_array is owned (Boss Upgrade penalty)
+Equipment options:  
+    - 3 options if expanded_hardpoint_array is not owned  
+    - 1 option if expanded_hardpoint_array is owned (Boss Upgrade penalty)  
 
-Equipment is selected from equipment_data.json where "reward": true.
-Display equipment name and status.
+Equipment is selected from equipment_data.json where "reward": true.  
+Display equipment name and status.  
 
 #### 4.6.2 Boss reward 
 
