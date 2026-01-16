@@ -37,6 +37,8 @@ Equipment entries define the following fields:
 - id: Unique numeric identifier
 - name: Display identifier
 - type: Category such as MISSILE, LASER, RAIL, SHIELD, ARMOR
+  - Shield equipment gives Shield, which only functions at LONG range
+  - Armor equipment gives Armor, which only functions at CLOSE range
 - range: LONG, MID, CLOSE, or PASSIVE
 - damage: Damage dealt (for weapons)
 - ammo_cost: Ammo consumed when used
@@ -47,6 +49,7 @@ Equipment entries define the following fields:
 - disposable: Boolean indicating whether this item is disposable equipment
 - multiplier: Integer (Optional). Multiplies damage of weapons matching target_type. Effects stack multiplicatively.
 - target_type: String (Optional). Used with multiplier to specify which weapon type gets boosted (e.g., MISSILE, LASER, RAIL)
+- flavor_text: String. One-line descriptive text shown in equipment. Has no gameplay effect.
 
 #### 2.1.2 Equipment JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
