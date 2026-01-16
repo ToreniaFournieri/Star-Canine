@@ -164,42 +164,62 @@ Each combat follows this fixed range sequence:
 - Shield and Armor values are recalculated at the start of each combat.
 - Shield and Armor do NOT persist between battles.
 - Hull damage persists between battles.
-- If ship equipped an item which has "multiplier" and "target_type". All damage of other items which "type" are same "target_type" is multiplier's amount. If there are two "multiplier":3 items equiped, damage is x9.
+- Multiplier calculation:
+  - For each equipped MODULE with a "multiplier" and "target_type":
+    - All weapons with matching "type" have their damage multiplied
+    - Multiple multipliers stack multiplicatively (two x2 modules = x4 total, two x3 modules = x9 total)
+    - Example: If you equip "Prismatic Lens" (multiplier: 2, target_type: LASER), all LASER weapons deal double damage
 
 
 ### 4.3 Attack Resolution Rule
 
 On EACH turn:
-1. Player attacks first
-  - Equipment valid check:
-    - If an equipment’s range matches the current combat phase, and it still has remaining uses and ammo, it activates automatically.
-    - Every valid equipment used at once. Even it is overkill
-    - Multiplier damage if there is multiplier equipment and matched its type.  
-      - Effect stackable: If you equip two same multiplier (x2), total multiplied damage is x4 
-1. Enemy takes damage following damage resolution order.
-1. If enemy HP ≤ 0:
-  - Enemy does NOT attack
-  - Combat proceeds to next turn or ends
-1. If enemy survives:
-  - Enemies always attack if alive and if they have a valid damage value for the current range.
-  - Player takes damage following damage resolution order.
-This rule applies to ALL turns and ranges.
+1. **Player attacks first**
+   - For each equipped weapon:
+     - Check if weapon has non-null damage value for current range (damage_LONG for LONG turn, damage_MID for MID turn, damage_CLOSE for CLOSE turn)
+     - Check if weapon has remaining uses_per_battle (if not null)
+     - Check if player has sufficient ammo for ammo_cost
+     - If all checks pass, weapon activates automatically
+   - All valid weapons fire simultaneously in the same turn
+   - Apply multiplier bonuses from equipped MODULEs to matching weapon types
+   - Total damage = sum of all activated weapons (after multipliers)
+   - Total consumption of ammo = sum of all activated weapons
+   - Weapons fire even if damage is overkill
 
-**There is NO simultaneous damage.**
+2. **Enemy takes damage**
+   - Apply damage following damage resolution rules (section 4.4)
+
+3. **Check enemy status**
+   - If enemy Hull ≤ 0:
+     - Enemy is destroyed
+     - Enemy does NOT attack this turn
+     - Combat ends (victory)
+   
+4. **Enemy attacks** (only if still alive)
+   - Check if enemy has an attack with matching range for current turn
+   - Check if that attack has remaining uses_per_battle (if not null)
+   - If both checks pass, enemy attacks automatically
+   - Player takes damage following damage resolution rules (section 4.4)
+
+5. **Check player status**
+   - If player Hull ≤ 0:
+     - Player is destroyed
+     - Combat ends (defeat)
 
 ### 4.4 Damage Resolution rule
-- Damage resolution depends entirely on the current combat range.
-- There are three independent damage models, one per range.
+Damage resolution depends entirely on the current combat range. There are three independent damage models:
 
-- Damage Resolution by Range:
-  - LONG range
-    - Damage is applied to Shield first
-    - Remaining damage is applied to Hull
-  - MID range
-    - Damage is applied directly to Hull
-  - CLOSE range
-    - Damage is applied to Armor first
-    - Remaining damage is applied to Hull
+#### LONG Range Damage Resolution:
+1. Damage is applied to Shield first
+2. Remaining damage (if any) is applied to Hull
+
+#### MID Range Damage Resolution:
+1. Damage is applied directly to Hull
+2. Shield and Armor are ignored
+
+#### CLOSE Range Damage Resolution:
+1. Damage is applied to Armor first
+2. Remaining damage (if any) is applied to Hull
 
 ### 4.5 End of Combat
 #### 4.5.1 Disposable item clean up
@@ -214,7 +234,17 @@ A combat is considered a draw if:
 In a draw:
 - Combat ends immediately
 - No rewards are granted
-- IF the enemy type is boss, it is game over. Else, the game proceeds to the next stage
+- If enemy type is "Boss": Game Over
+- If enemy type is not "Boss": Proceed to next stage
+
+#### 4.5.3 Victory Condition
+Player wins when:
+- Enemy Hull ≤ 0 before Turn 6 ends
+
+#### 4.5.4 Defeat Condition
+Player loses when:
+- Player Hull ≤ 0 at any point
+- Draw occurs against a Boss enemy
 
 ### 4.6 Reward
 - After winning a battle, player chooses ONE:
