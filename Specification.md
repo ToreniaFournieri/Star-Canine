@@ -129,9 +129,9 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.4.3 ACT III — RECLAMATION  
  not defined yet for this version. 
 
-# 2.5 Boss Reward (Upgrade)
+## 2.5 Boss Reward (Upgrade)
 
-## 2.5.1 Boss Rewards
+### 2.5.1 Boss Rewards
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - Each boss reward presents the player with **3 Boss Relics**.
 - The player must choose **1** relic; the remaining relics are discarded.
@@ -139,29 +139,29 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Each Boss Relic can be obtained **at most once per run**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
-## 2.5.2 Boss Rewards List
+### 2.5.2 Boss Rewards List
 
-### Regenerative Hull Plating
+#### Regenerative Hull Plating
 - Increase maximum hull by **+40**.
 - At the beginning of each stage, **repair 20 hull** (cannot exceed maximum hull).
 
-### Automated Ammo Synthesizer
+#### Automated Ammo Synthesizer
 - At the end of each combat, **gain +1 ammo**.
 
-### Forward Shield Projector
+#### Forward Shield Projector
 - **+1 Equipment Slot**.
 - Start each combat with **+15 shield**.
 
-### Reinforced Hangar
+#### Reinforced Hangar
 - **+1 Equipment Slot**.
 - For each **FIGHTER-type attack instance**, add **+5 base damage**.
 - This bonus is applied **before module multipliers**.
 
-### Expanded Hardpoint Array
+#### Expanded Hardpoint Array
 - **+2 Equipment Slots**.
 - Equipment rewards provide **only 1 choice** instead of 3.
 
-### Overloaded Logistics Core
+#### Overloaded Logistics Core
 - **+2 Equipment Slots**.
 - All **dock payments cost double** (healing and ammo).
 
