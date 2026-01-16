@@ -350,7 +350,7 @@ Display equipment name and status.
 - Apply +X Equipment slot(s) effects of all owned Boss Upgrades:
   - +1 Equipment Slot:
     - Forward Shield Projector
-    -Reinforced Hangar
+    - Reinforced Hangar
   - +2 Equipment Slots:
     - Expanded Hardpoint Array
     - Overloaded Logistics Core
