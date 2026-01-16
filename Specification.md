@@ -341,12 +341,13 @@ Display equipment name and status.
 #### 4.6.2 Boss reward 
 
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
+- No boss reward is granted after the **ACT III boss**, which ends the game.
+- Boss Upgrade are **permanent** and cannot be removed.
+- Each Boss Upgrade can be obtained **at most once per run**.
 - Each boss reward presents the player with **3 Boss Upgrade**.
 - The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
   - State update: set The chosen Boss Upgrade state to owned, set the remaining Boss Upgrade states to skipped.
-- Boss Upgrade are **permanent** and cannot be removed.
-- Each Boss Upgrade can be obtained **at most once per run**.
-- No boss reward is granted after the **ACT III boss**, which ends the game.
+
 - Apply +X Equipment slot(s) effects of all owned Boss Upgrades:
   - +1 Equipment Slot:
     - Forward Shield Projector
