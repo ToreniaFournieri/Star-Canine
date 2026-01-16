@@ -75,17 +75,17 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 
 #### 2.2.1 Enemy Fields
 
-**Core Fields:**
+##### Core Fields:
 - enemy_id: String. Unique identifier for the enemy.
 - faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
 - flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
 - hull: Integer. Enemy hit points.
 
-**Defensive Fields (Optional):**
+##### Defensive Fields (Optional):
 - shield: Integer (optional). Shield value. If omitted, treated as 0.
 - armor: Integer (optional). Armor value. If omitted, treated as 0.
 
-**Attack Fields:**
+##### Attack Fields:
 - damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
 - damage_MID: Integer or null. Damage dealt at MID range. null = cannot attack at this range
 - damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
@@ -93,10 +93,9 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 - uses_MID: Integer or null. Max uses at MID range. null = unlimited
 - uses_CLOSE: Integer or null. Max uses at CLOSE range. null = unlimited
 
-**Spawn Data:**
-- spawn: Object. Defines encounter classification and threat level.
-  - difficulty: Integer. Global relative threat rating.
-  - type: String. Encounter category. One of: Normal, Elite, Boss
+##### Spawn Fields:
+- difficulty: Integer. Global relative threat rating.
+- type: String. Encounter category. One of: Normal, Elite, Boss
      
 #### 2.2.2 Enemy JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
