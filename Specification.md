@@ -35,36 +35,36 @@
 #### 2.1.1 Equipment Fields
 Equipment entries define the following fields:
 
-**Core Fields (all equipment):**
+##### Core Fields (all equipment):
 - id: Unique numeric identifier
 - name: Display name with emoji identifier
 - type: Equipment category. Valid types: MISSILE, LASER, FIGHTER, SHIELD, ARMOR, MODULE, JUNK
 - reward: Boolean. Whether this item can appear as a post-battle reward
 - disposable: Boolean. Whether this item is destroyed after combat (replaced with Broken Scrap)
 
-**Weapon Fields (MISSILE, LASER, FIGHTER):**
+##### Weapon Fields (MISSILE, LASER, FIGHTER):
 - damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot fire at this range
 - damage_MID: Integer or null. Damage dealt at MID range. null = cannot fire at this range
 - damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
 - ammo_cost: Integer. Ammo consumed per activation (regardless of range)
 - uses_per_battle: Integer or null. Maximum total activations per combat across all ranges. null = unlimited
 
-**Defensive Fields:**
+##### Defensive Fields:
 - shield: Integer (SHIELD type only). Damage absorbed at LONG range only
 - armor: Integer (ARMOR type only). Damage absorbed at CLOSE range only
 
-**Module Fields (MODULE type only):**
+##### Module Fields (MODULE type only):
 - target_type: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
 - multiplier: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
 
-**Optional Fields:**
+##### Optional Fields:
 - flavor_text: String. Descriptive text with no gameplay effect
 
-**Design Notes:**
-- A weapon can fire at multiple ranges with different damage values
-- Example: A laser might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
-- Set damage to null for ranges where the weapon cannot fire
-- uses_per_battle counts total activations, not per-range (e.g., uses_per_battle: 2 means 2 shots total, not 2 per range)
+-Design Notes:
+  - A weapon can fire at multiple ranges with different damage values
+  - Example: A laser might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
+  - Set damage to null for ranges where the weapon cannot fire
+  - uses_per_battle counts total activations, not per-range (e.g., uses_per_battle: 2 means 2 shots total, not 2 per range)
 
 
 #### 2.1.2 Equipment JSON file
