@@ -403,29 +403,48 @@ START
   ↓
 Opening Scene
   ↓
-┌─────────────────────┐
-│ Check Next Stage    │
-└─────────────────────┘
+Main Loop:
+┌────────────────────────┐
+│ Check Next Stage       │
+└────────────────────────┘
   │
-  ├─ If null → Game Clear Scene → END/RESTART
+  ├─ If Next Stage is null
+  │    → Game Clear Scene
+  │    → END / RESTART
   │
-  ├─ If 1st stage of ACT → Narrative Scene (ACT Start) → [loop to Check Next Stage]
+  ├─ If Stage is 1st of ACT
+  │    → Narrative Scene (ACT Start)
+  │    → continue Main Loop (same stage)
   │
-  ├─ If last stage of ACT → Narrative Scene (Boss Encounter) → [loop to Check Next Stage]
+  ├─ If Stage is last of ACT
+  │    → Narrative Scene (Boss Encounter)
+  │    → continue Main Loop (same stage)
   │
-  ├─ If type: combat
-  │    ↓
-  │  Pre-Combat Scene
-  │    ↓
-  │  Combat Log Scene
-  │    ├─ Win → Reward Scene → [loop to Check Next Stage]
-  │    ├─ Draw + Boss → Game Over Scene → END/RESTART
-  │    ├─ Draw + Not Boss → [loop to Check Next Stage]
-  │    └─ Lose → Game Over Scene → END/RESTART
+  ├─ Resolve Stage Type
   │
-  └─ If type: Dock
-       ↓
-     Event Scene (Dock) → [loop to Check Next Stage]
+  │   ├─ If type = Combat
+  │   │    ↓
+  │   │  Pre-Combat Scene
+  │   │    ↓
+  │   │  Combat Log Scene
+  │   │    ├─ Win
+  │   │    │    → Reward Scene
+  │   │    │    → advance stage
+  │   │    │    → continue Main Loop
+  │   │    ├─ Draw AND Boss
+  │   │    │    → Game Over Scene
+  │   │    │    → END / RESTART
+  │   │    ├─ Draw AND Not Boss
+  │   │    │    → advance stage (no reward)
+  │   │    │    → continue Main Loop
+  │   │    └─ Lose
+  │   │         → Game Over Scene
+  │   │         → END / RESTART
+  │
+  │   └─ If type = Dock
+  │        → Event Scene (Dock)
+  │        → advance stage
+  │        → continue Main Loop
 ```
  
 -----
