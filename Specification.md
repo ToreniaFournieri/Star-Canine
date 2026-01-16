@@ -45,7 +45,8 @@ Equipment entries define the following fields:
 - armor_value: Combat armor bonus (if applicable)
 - reward: Boolean indicating whether this item can appear as a reward
 - disposable: Boolean indicating whether this item is disposable equipment
-- multiplier: Integer (Optional)
+- multiplier: Integer (Optional). Multiplies damage of weapons matching target_type. Effects stack multiplicatively.
+- target_type: String (Optional). Used with multiplier to specify which weapon type gets boosted (e.g., MISSILE, LASER, RAIL)
 
 #### 2.1.2 Equipment JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
@@ -92,19 +93,19 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ### 2.4 Stage layout 
 - There are three type of stages
-  - narrative: story telling scene. display test from Story.
+  - narrative: story telling scene. display text from Story.
   - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
   - event: Special stage.
  
-### 2.4.1 ACT I - DESOLATION
+### 2.4.1 ACT I — DESOLATION
 1. combat: a random enemy (difficulty:1, type:normal)
 1. combat: a random enemy (difficulty:2, type:normal) 
 1. combat: a random enemy (where difficulty:3, type:normal) 
-1. event: dock 
+1. event: Dock 
 1. combat: an elite (difficulty:5, type:elite)
 1. combat: a random enemy (difficulty:4, type:normal)
 1. combat: a random enemy (difficulty:4, type:normal) 
-1. event: dock
+1. event: Dock
 1. combat: boss (difficulty:10, type:boss)
 
 ### 2.4.2 ACT II — BETRAYAL 
@@ -144,7 +145,7 @@ Each combat follows this fixed range sequence:
 - Shield and Armor values are recalculated at the start of each combat.
 - Shield and Armor do NOT persist between battles.
 - Hull damage persists between battles.
-- If ship equipped an item which has "multiplier" and "target_type". All damage of other items which are same "target type" is multiplier's amount. If there are two "multiplier":3 items equiped, damage is x9.
+- If ship equipped an item which has "multiplier" and "target_type". All damage of other items which "type" are same "target_type" is multiplier's amount. If there are two "multiplier":3 items equiped, damage is x9.
 
 
 ### 4.3 Attack Resolution Rule
@@ -221,7 +222,7 @@ OR
 - Opening scene
   - Input: Start button/ Enter to start
 - Narrative scene
-  - Display narattive 
+  - Display  
   - Input: Continue button/ Enter to continue
 - Pre-combat scene
   - Display own ship's Hull, Shield, Armor, Ammo.
@@ -241,7 +242,7 @@ OR
   - Display reward list
   - Input: Select reward and continue to the next scene
 - Event scene
-  - dock event
+  - Dock event
     - Display own ship's Hull, Shield, Armor, Ammo.
     - Input: Select options and continue to the next scene
 - Game Clear scene
@@ -252,8 +253,6 @@ OR
   - Display current own ship's Hull, Shield, Armor, Ammo.
   - display player's progress. 
   - Input: Restart button/ Enter to restart
-
-### 6.2 Flow
 
 ### 6.2 Flow
 ```
@@ -281,7 +280,7 @@ Opening Scene
   │    ├─ Draw + Not Boss → [loop to Check Next Stage]
   │    └─ Lose → Game Over Scene → END/RESTART
   │
-  └─ If type: dock
+  └─ If type: Dock
        ↓
      Event Scene (Dock) → [loop to Check Next Stage]
 ```
@@ -297,7 +296,7 @@ Opening Scene
 - ACT III — RECLAMATION 
   - location:Planet K9
 
-### 7.1 ACT I - DESOLATION
+### 7.1 ACT I — DESOLATION
 - Start
 
 > Ship ID confirmed: STAR CANINE  
@@ -386,7 +385,7 @@ Star Canine arrives at K9, continuing fierce battles. No message exchange betwee
 Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
 > Reminiscence of academy five years ago  
-> FENRIR: "You don't get it, right? My granma told me the story.  
+> FENRIR: "You don't get it, right? My grandma told me the story.  
 > The Blue Wolf... the deity that conquered the Great Continent.  
 > It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
 > 
