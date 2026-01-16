@@ -44,8 +44,8 @@ Equipment entries define the following fields:
 - absorb: Shield absorption amount (if applicable)
 - armor_value: Combat armor bonus (if applicable)
 - reward: Boolean indicating whether this item can appear as a reward
-- disposable: Boolean indicating wether this item is disposable equipment
-- multiplier: If a PASSIVE module’s target_type matches an equipped weapon’s type, that weapon's damage is multiplier's amount (ex. 2 is double) during combat resolution.
+- disposable: Boolean indicating whether this item is disposable equipment
+- multiplier: Integer (Optional)
 
 #### 2.1.2 Equipment JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
@@ -56,27 +56,26 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 
 
 #### 2.2.1 Enemy Fields
-- Core Fields
+
   - enemy_id: String. Unique identifier for the enemy.
   - faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
   - flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
   - hull: Integer
-- Defensive Fields (Optional)
   - shield: Integer (optional)
   - armor: Integer (optional)
 If a defensive field is omitted, its value is treated as 0.
 
-- Attacks
-  - attacks: Array. Defines all attacks this enemy can perform during a single combat.
-  - Each attack object contains:
-    - range: String. One of: LONG, MID, CLOSE
-  - damage: Integer. Fixed damage dealt when the attack triggers.
-  - uses_per_battle: Integer. Maximum number of times this attack may trigger during the combat.
-        
-- Spawn Data
-    - spawn: Object. Defines encounter classification and threat level.
-    - difficulty: Integer. Global relative threat rating.
-    - type: String. Encounter category. One of: Normal, Elite, Boss
+  - Attacks
+    - attacks: Array. Defines all attacks this enemy can perform during a single combat.
+    - Each attack object contains:
+      - range: String. One of: LONG, MID, CLOSE
+    - damage: Integer. Fixed damage dealt when the attack triggers.
+    - uses_per_battle: Integer. Maximum number of times this attack may trigger during the combat.
+          
+  - Spawn Data
+      - spawn: Object. Defines encounter classification and threat level.
+      - difficulty: Integer. Global relative threat rating.
+      - type: String. Encounter category. One of: Normal, Elite, Boss
      
 #### 2.2.2 Enemy JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
@@ -92,25 +91,26 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
     - equipped_item_ids equals "Equipment_data.json"'s id. 
 
 ### 2.4 Stage layout 
-- There are four type of stages
-  - narattive: story telling scene. display test from Story.
+- There are three type of stages
+  - narrative: story telling scene. display test from Story.
   - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
-  
+  - event: Special stage.
+ 
 ### 2.4.1 ACT I - DESOLATION
-1. combat a random enemy (difficulty:1, type:normal)
-1. combat a random enemy (difficulty:2, type:normal) 
-1. combat a random enemy (where difficulty:3, type:normal) 
-1. dock 
-1. combat an elite (difficulty:5, type:elite)
-1. combat a random enemy (difficulty:4, type:normal)
-1. combat a random enemy (difficulty:4, type:normal) 
-1. dock (heal Hull 30% or +6 ammo)
-1. combat boss (difficulty:10, type:boss)
+1. combat: a random enemy (difficulty:1, type:normal)
+1. combat: a random enemy (difficulty:2, type:normal) 
+1. combat: a random enemy (where difficulty:3, type:normal) 
+1. event: dock 
+1. combat: an elite (difficulty:5, type:elite)
+1. combat: a random enemy (difficulty:4, type:normal)
+1. combat: a random enemy (difficulty:4, type:normal) 
+1. event: dock
+1. combat: boss (difficulty:10, type:boss)
 
 ### 2.4.2 ACT II — BETRAYAL 
  not defined yet for this version. 
 
-### 2.4.3 ACT III —— RECLAMATION  
+### 2.4.3 ACT III — RECLAMATION  
  not defined yet for this version. 
 
 -----
@@ -144,6 +144,7 @@ Each combat follows this fixed range sequence:
 - Shield and Armor values are recalculated at the start of each combat.
 - Shield and Armor do NOT persist between battles.
 - Hull damage persists between battles.
+- If ship equipped an item which has "multiplier" and "target_type". All damage of other items which are same "target type" is multiplier's amount. If there are two "multiplier":3 items equiped, damage is x9.
 
 
 ### 4.3 Attack Resolution Rule
@@ -222,10 +223,10 @@ OR
 - Narrative scene
   - Display narattive 
   - Input: Continue button/ Enter to continue
-- Pre combat scene
+- Pre-combat scene
   - Display own ship's Hull, Shield, Armor, Ammo.
   - Display next enemy's Hull, Shield, Armor, Ammo.
-  - Display full inventory list. Euipment item is checkmarked.
+  - Display full inventory list. Equipment item is checkmarked.
   - Input: select item of inventory to equip, unequip item/ Command to equip/unequip.
   - Input: Engage combat button/ Engage to proceed to combat log scene
   - Note
@@ -234,7 +235,7 @@ OR
 - Combat log scene
   - Display current own ship's Hull, Shield, Armor, Ammo.
   - Display current enemy's Hull, Shield, Armor, Ammo.
-  - Display combat log. Step by step
+  - Display combat log. Step-by-step
   - Input: Continue button/ Enter to continue
 - Reward scene
   - Display reward list
@@ -266,7 +267,7 @@ OR
     -> Game Clear  
   
   If [Check next Stage] is combat:  
-   -> Pre combat -> Combat log  
+   -> Pre-combat -> Combat log  
     If Combat.Result is Win:  
      -> Reward -> [Check next Stage]  
     Else if Combat.Result is Draw:  
@@ -325,7 +326,7 @@ OR
 > Warning: Imperial Railguns charging.  
 > Status: EXTERMINATION  
 
-### 7.2 Act II  — BETRAYAL 
+### 7.2 ACT II  — BETRAYAL 
 - Start
 > Ship location: Asteroid Belt (Inner)  
 > Unknown signal detected.  
@@ -363,7 +364,7 @@ OR
 > Origin: FENRIR.  
 > Status: DANGER.  
 
-### 7.3 Act III — RECLAMATION 
+### 7.3 ACT III — RECLAMATION 
 Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
@@ -373,7 +374,7 @@ Star Canine arrives at K9, continuing fierce battles. No message exchange betwee
 > No fang, use your soul.   
 > Fight until nothing left."   
 > — DEITY OF BLUE WOLF (Canto IV, Line 12)  
-- Boss encounter  
+- Boss Encounter  
 Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
 > Reminiscence of academy five years ago  
