@@ -60,7 +60,7 @@ Equipment entries define the following fields:
 ##### Optional Fields:
 - flavor_text: String. Descriptive text with no gameplay effect
 
--Design Notes:
+##### Design Notes:
   - A weapon can fire at multiple ranges with different damage values
   - Example: A laser might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
   - Set damage to null for ranges where the weapon cannot fire
