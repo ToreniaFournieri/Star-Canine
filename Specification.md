@@ -70,11 +70,6 @@ Equipment entries define the following fields:
 #### 2.1.2 Equipment JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
-
-### 2.2 Enemy Data
-Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
-
-
 ### 2.2 Enemy Data
 Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
 
