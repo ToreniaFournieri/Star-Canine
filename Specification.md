@@ -412,17 +412,17 @@ Main Loop:
   │    → Game Clear Scene
   │    → END / RESTART
   │
-  ├─ If Stage is 1st of ACT
+  ├─ If Next Stage is 1st of ACT
   │    → Narrative Scene (ACT Start)
   │    → continue Main Loop (same stage)
   │
-  ├─ If Stage is last of ACT
+  ├─ If Next Stage is last of ACT
   │    → Narrative Scene (Boss Encounter)
   │    → continue Main Loop (same stage)
   │
   ├─ Resolve Stage Type
-  │
-  │   ├─ If type = Combat
+  │   │ 
+  │   ├─ If type is Combat
   │   │    ↓
   │   │  Pre-Combat Scene
   │   │    ↓
@@ -441,7 +441,7 @@ Main Loop:
   │   │         → Game Over Scene
   │   │         → END / RESTART
   │   │ 
-  │   └─ If type = Dock
+  │   └─ If type is Dock
   │        → Event Scene (Dock)
   │        → advance stage
   │        → continue Main Loop
