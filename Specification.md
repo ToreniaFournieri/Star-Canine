@@ -348,7 +348,7 @@ Display equipment name and status.
 - The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
   - State update: set The chosen Boss Upgrade state to owned, set the remaining Boss Upgrade states to skipped.
 
-- Apply +X Equipment slot(s) effects of all owned Boss Upgrades:
+- Recalculated max_slots (initial:6), applying +X Equipment slot(s) effects of all owned Boss Upgrades:
   - +1 Equipment Slot:
     - Forward Shield Projector
     - Reinforced Hangar
