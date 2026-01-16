@@ -28,27 +28,126 @@
 - No hidden rules
 
 -----
+## 2. DEFINITIONS
+
+### 2.1 Equipment Data
+#### 2.1.1 Equipment Fields
+Equipment entries define the following fields:
+- id: Unique numeric identifier
+- name: Display identifier
+- type: Category such as MISSILE, LASER, RAIL, SHIELD, ARMOR
+- range: LONG, MID, CLOSE, or PASSIVE
+- damage: Damage dealt (for weapons)
+- ammo_cost: Ammo consumed when used
+- uses_per_battle: How many times the equipment can activate in one combat
+- absorb: Shield absorption amount (if applicable)
+- armor_value: Combat armor bonus (if applicable)
+- reward: Boolean indicating whether this item can appear as a reward
+- disposable: Boolean indicating wether this item is disposable equipment
+- multiplier: If a PASSIVE module’s target_type matches an equipped weapon’s type, that weapon's damage is multiplier's amount (ex. 2 is double) during combat resolution.
+
+#### 2.1.2 Equipment JSON file
+https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
 
+### 2.2 Enemy Data
+Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
 
-### 2.1 Flow
+#### 2.2.1 Enemy Fields
+- Core Fields
+  - enemy_id: String. Unique identifier for the enemy.
+  - faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
+  - flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
+  - hull: Integer
+- Defensive Fields (Optional)
+  - shield: Integer (optional)
+  - armor: Integer (optional)
+If a defensive field is omitted, its value is treated as 0.
 
-#### 2.1.1 First scene 
-At the start of each stage, Hull, Shield(for long), Armor(for Close), Ammo. 
-- Show own ship status. 
-- Show full equipment list
-- equipment
-  - at the first stage, none of them selected
-  - Selects up to 6 items to equip. Persist previous selection of equipment
-  - If it has UI, checkmarks selected item.
+- Attacks
+  - attacks: Array. Defines all attacks this enemy can perform during a single combat.
+  - Each attack object contains:
+    - range: String. One of: LONG, MID, CLOSE
+  - damage: Integer. Fixed damage dealt when the attack triggers.
+  - uses_per_battle: Integer. Maximum number of times this attack may trigger during the combat.
+        
+- Spawn Data
+    - spawn: Object. Defines encounter classification and threat level.
+    - difficulty: Integer. Global relative threat rating.
+    - type: String. Encounter category. One of: Normal, Elite, Boss
+     
+#### 2.2.2 Enemy JSON file
+https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
-If stage is combat:
-- show own ship status. Hull, Shield(for long), Armor(for Close), Ammo. 
-- show enemy status. Enemy's hull, Shield, Armor, attack damage (long, mid, close) and other feature displayed)
-- Engage battle to start combat
+### 2.3 Player ship initial state
+- Player ship initial state
+  - "hull": 200,
+  - "shield": 0,
+  - "armor": 0,
+  - "ammo": 12,
+  - "max_slots": 6,
+  - "equipped_item_ids": [1, 2, 2, 3]
+    - equipped_item_ids equals "Equipment_data.json"'s id. 
 
-If stage is others:
-- follow the description of the stage setting 
+### 2.4 Stage layout 
+- There are four type of stages
+  - narattive: story telling scene. display test from Story.
+  - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
+  
+### 2.4.1 ACT I - DESOLATION
+1. narattive: ACT I start 
+1. combat a random enemy (difficulty:1, type:normal)
+1. combat a random enemy (difficulty:2, type:normal) 
+1. combat a random enemy (where difficulty:3, type:normal) 
+1. dock (heal Hull 30% or +6 ammo)
+1. combat an elite (difficulty:5, type:elite)
+1. combat a random enemy (difficulty:4, type:normal)
+1. combat a random enemy (difficulty:4, type:normal) 
+1. dock (heal Hull 30% or +6 ammo)
+1. narative: ACT I Boss Encounter
+1. combat boss (difficulty:10, type:boss)
+
+### 2.4.2 ACT II — BETRAYAL 
+ not defined yet for this version. 
+
+### 2.4.3 ACT III —— RECLAMATION  
+ not defined yet for this version. 
+
+-----
+
+## 3. EQUIPMENT SYSTEM
+
+### 3.1 Inventory vs Slots
+- **Inventory:** all equipment the player owns
+- **Slots:** up to 6 equipped items. you cannot assign 7 or more equipment
+- You may have multiple same id equipments. Need to distinguish them
+- ONLY equipped items affect combat
+- Equipment can be freely swapped between battles
+
+### 3.2 Disposable Equipment
+Some high-power equipment is single-use across the entire campaign.
+- Property: If an item has "disposable": true, it is destroyed after combat.
+- Trigger: At the end of any battle, all equipped disposable items are replaced in the inventory with Broken Scrap (ID: 999).
+- Condition: The item is destroyed regardless of whether it was actually fired or activated during the battle.
+- Broken Scrap: Has no stats, no range, and provides no combat benefit. It must be manually unequipped to free a slot.
+
+-----
+
+## 4. COMBAT SYSTEM
+
+### 5.1 Turn Order
+
+Each combat follows this fixed range sequence:
+
+- **Turn 1:** Long
+- **Turn 2:** Mid
+- **Turn 3:** Close
+- **Turn 4:** Close
+- **Turn 5:** Mid
+- **Turn 6:** Long
+
+(6 turns total per combat, unless someone is destroyed earlier)
+
 
 
 #### 2.1.2 Combat log scene
@@ -67,78 +166,6 @@ If stage is others:
 - display player's progress. 
 
 -----
-
-## 3. PLAYER SHIP (BASE STATS)
-
-- Starting state:
-  "hull": 200,
-  "ammo": 12,
-  "max_slots": 6,
-  "equipped_item_ids": [1, 2, 2, 3]
-
-
-- equipped_item_ids equals "Equipment_data.json"'s id. 
-- Hull and Ammo persists between battles and is NOT fully restored automatically.
-- The player ship has no base Shield or Armor.
-- Shield and Armor values are derived entirely from equipped items.
-
------
-
-## 4. EQUIPMENT SYSTEM
-
-### 4.1 Inventory vs Slots
-
-- **Inventory:** all equipment the player owns
-- **Slots:** up to 6 equipped items. you cannot assign 7 or more equipment
-- You may have multiple same id equipments. Need to distinguish them
-- ONLY equipped items affect combat
-- Equipment can be freely swapped between battles
-
-
-### 4.2 Equipment list
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
-
-### 4.3 Equipment Fields
-Equipment entries define the following fields:
-- id: Unique numeric identifier
-- name: Display identifier
-- type: Category such as MISSILE, LASER, RAIL, SHIELD, ARMOR
-- range: LONG, MID, CLOSE, or PASSIVE
-- damage: Damage dealt (for weapons)
-- ammo_cost: Ammo consumed when used
-- uses_per_battle: How many times the equipment can activate in one combat
-- absorb: Shield absorption amount (if applicable)
-- armor_value: Combat armor bonus (if applicable)
-- reward: Boolean indicating whether this item can appear as a reward
-- disposable: Boolean indicating wether this item is disposable equipment
-- multiplier: If a PASSIVE module’s target_type matches an equipped weapon’s type, that weapon's damage is multiplier's amount (ex. 2 is double) during combat resolution.
-
-
-
-### 4.4 Disposable Equipment
-Some high-power equipment is single-use across the entire campaign.
-- Property: If an item has "disposable": true, it is destroyed after combat.
-- Trigger: At the end of any battle, all equipped disposable items are replaced in the inventory with Broken Scrap (ID: 999).
-- Condition: The item is destroyed regardless of whether it was actually fired or activated during the battle.
-- Broken Scrap: Has no stats, no range, and provides no combat benefit. It must be manually unequipped to free a slot.
-
-
------
-
-## 5. COMBAT STRUCTURE
-
-### 5.1 Turn Order
-
-Each combat follows this fixed range sequence:
-
-- **Turn 1:** Long
-- **Turn 2:** Mid
-- **Turn 3:** Close
-- **Turn 4:** Close
-- **Turn 5:** Mid
-- **Turn 6:** Long
-
-(6 turns total per combat, unless someone is destroyed earlier)
 
 ### 5.2 Attack Resolution Rule (VERY IMPORTANT)
 
@@ -197,53 +224,6 @@ In a draw:
 Enemies always attack if alive and if they have a weapon valid for the current range.
 
 
-### 6.1 Enemy list
-
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
-
-### 6.2 Enemy Fields
-Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
-
-- Core Fields
-  - enemy_id: String
-Unique identifier for the enemy.
-  - faction: String
-Narrative alignment and affiliation.
-Example values: SolarBear, K9.
-  - flavor_text: String
-One-line descriptive text shown in combat logs.
-Has no gameplay effect.
-  - hull: Integer
-
-- Defensive Fields (Optional)
-  - shield: Integer (optional)
-  - armor: Integer (optional)
-If a defensive field is omitted, its value is treated as 0.
-
-- Attacks
-  - attacks: Array
-Defines all attacks this enemy can perform during a single combat.
-  - Each attack object contains:
-    - range: String
-One of:
-      - LONG
-      - MID
-      - CLOSE
-  - damage: Integer
-Fixed damage dealt when the attack triggers.
-  - uses_per_battle: Integer
-Maximum number of times this attack may trigger during the combat.
-
-- Spawn Data
-    - spawn: Object
-Defines encounter classification and threat level.
-    - difficulty: Integer
-Global relative threat rating.
-    - type: String
-Encounter category. One of:
-      - Normal
-      - Elite
-      - Boss
 
 -----
 
@@ -266,25 +246,33 @@ Equipment is randomly chosen where "reward": true from equipment_data.json.
 
 -----
 
+
+
 ## 8. PROGRESSION STRUCTURE (SIMPLIFIED)
 
 - Fixed linear sequence of battles
 
-### 8.1 ACT I stage setting
-1. story: Act I start
-1. combat enemy (from difficulty:1, type:normal)
-1. combat enemy (from difficulty:2, type:normal) 
-1. combat enemy (from difficulty:3, type:normal) 
-1. dock (heal Hull 30% or +6 ammo)
-1. combat elite (from difficulty:5, type:elite)
-1. combat enemy (from difficulty:4, type:normal) 
-1. combat enemy (from difficulty:4, type:normal) 
-1. dock (heal Hull 30% or +6 ammo)
-1. story: Act I Boss Encounter 
-1. combat boss (from difficulty:10, type:boss)
+4.
+### 2.1 Flow
 
-### 8.2 ACT II stage setting
- not defined yet for this early version. 
+#### 2.1.1 First scene 
+At the start of each stage, Hull, Shield(for long), Armor(for Close), Ammo. 
+- Show own ship status. 
+- Show full equipment list
+- equipment
+  - at the first stage, none of them selected
+  - Selects up to 6 items to equip. Persist previous selection of equipment
+  - If it has UI, checkmarks selected item.
+
+If stage is combat:
+- show own ship status. Hull, Shield(for long), Armor(for Close), Ammo. 
+- show enemy status. Enemy's hull, Shield, Armor, attack damage (long, mid, close) and other feature displayed)
+- Engage battle to start combat
+
+If stage is others:
+- follow the description of the stage setting 
+
+
 
 -----
 
