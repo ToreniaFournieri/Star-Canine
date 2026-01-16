@@ -226,12 +226,11 @@ Each combat follows this fixed range sequence:
   - Counters do NOT modify Equipment_data.json or Enemy_data.json
   - All counters reset for the next battle
 
-- Boss Upgrade caluclation :
-  - Check Boss Upgrade state which works at the beginning of combat. Then calculate the Boss Upgrade effects.
-    - regenerative_hull_plating
-    - automated_ammo_synthesizer
-    - forward_shield_projector
-    - reinforced_hangar
+- Apply combat-start effects of all owned Boss Upgrades:
+    regenerative_hull_plating
+    automated_ammo_synthesizer
+    forward_shield_projector
+    reinforced_hangar
 
 - Multiplier calculation:
   - For each equipped MODULE with a "multiplier" and "target_type":
