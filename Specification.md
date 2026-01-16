@@ -271,12 +271,21 @@ OR
 ## 5. Event
 
 ### 5.1 Dock
-- ACT I: Dock gives two options.
-  - heal Hull 30%
-  - +7 ammo
-- ACT II and ACT III: Player needs to give one item, in return, Dock gives two options.
-  - heal Hull 30%
-  - +7 ammo
+Dock is a repair station that provides restoration services in exchange for payment.
+
+#### ACT I Dock (Free Service)
+Player chooses ONE option:
+- **Repair:** Heal Hull by 30% (rounded down)
+- **Resupply:** Gain +7 Ammo
+
+#### ACT II & ACT III Dock (Requires Payment)
+- Player can skip this event.
+- Player must discard one item from inventory to use the dock.
+  - Player selects one item from inventory to discard permanently
+  - Item is removed from the game (cannot be recovered)
+  - After payment, player chooses ONE option:
+    - **Repair:** Heal Hull by 30% (rounded down)
+    - **Resupply:** Gain +7 Ammo
 
 -----
 
