@@ -273,7 +273,9 @@ OR
 ### 5.1 Dock
 - Dock gives two options
   - heal Hull 30%
-  - +9 ammo
+  - +7 ammo
+
+
 
 -----
 
