@@ -75,27 +75,33 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_da
 Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
 
 
+### 2.2 Enemy Data
+Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
+
 #### 2.2.1 Enemy Fields
 
-  - enemy_id: String. Unique identifier for the enemy.
-  - faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
-  - flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
-  - hull: Integer
-  - shield: Integer (optional)
-  - armor: Integer (optional)
-If a defensive field is omitted, its value is treated as 0.
+**Core Fields:**
+- enemy_id: String. Unique identifier for the enemy.
+- faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
+- flavor_text: String. One-line descriptive text shown in combat logs. Has no gameplay effect.
+- hull: Integer. Enemy hit points.
 
-  - Attacks
-    - attacks: Array. Defines all attacks this enemy can perform during a single combat.
-    - Each attack object contains:
-      - range: String. One of: LONG, MID, CLOSE
-    - damage: Integer. Fixed damage dealt when the attack triggers.
-    - uses_per_battle: Integer. Maximum number of times this attack may trigger during the combat.
-          
-  - Spawn Data
-      - spawn: Object. Defines encounter classification and threat level.
-      - difficulty: Integer. Global relative threat rating.
-      - type: String. Encounter category. One of: Normal, Elite, Boss
+**Defensive Fields (Optional):**
+- shield: Integer (optional). Shield value. If omitted, treated as 0.
+- armor: Integer (optional). Armor value. If omitted, treated as 0.
+
+**Attack Fields:**
+- damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
+- damage_MID: Integer or null. Damage dealt at MID range. null = cannot attack at this range
+- damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
+- uses_LONG: Integer or null. Max uses at LONG range. null = unlimited
+- uses_MID: Integer or null. Max uses at MID range. null = unlimited
+- uses_CLOSE: Integer or null. Max uses at CLOSE range. null = unlimited
+
+**Spawn Data:**
+- spawn: Object. Defines encounter classification and threat level.
+  - difficulty: Integer. Global relative threat rating.
+  - type: String. Encounter category. One of: Normal, Elite, Boss
      
 #### 2.2.2 Enemy JSON file
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
