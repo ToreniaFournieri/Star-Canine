@@ -103,8 +103,8 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - "armor": 0,
   - "ammo": 12,
   - "max_slots": 6,
-  - "equipped_item_ids": [1, 2, 2, 3]
-    - equipped_item_ids equals "Equipment_data.json"'s id. 
+  - "initial_inventory_item_ids": [1, 2, 2, 3]
+    - These number aee "Equipment_data.json"'s id. 
 
 ### 2.4 Stage layout 
 - There are three type of stages
