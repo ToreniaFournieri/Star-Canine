@@ -271,11 +271,12 @@ OR
 ## 5. Event
 
 ### 5.1 Dock
-- Dock gives two options
+- ACT I: Dock gives two options.
   - heal Hull 30%
   - +7 ammo
-
-
+- ACT II and ACT III: Player needs to give one item, in return, Dock gives two options.
+  - heal Hull 30%
+  - +7 ammo
 
 -----
 
