@@ -3,7 +3,7 @@
 -----
 
 ## 1. OVERVIEW
-- This is a terminal-based, deterministic, text-only roguelike spaceship game.
+- This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
   - No randomness in combat
   - No graphics
   - No real-time input during battle
@@ -254,29 +254,29 @@ OR
 
 ### 6.2 Flow
 
-- Flow:
-  Opening -> [Check next Stage]
-
-- [Check next Stage] Flow:
-  IF [Check next Stage] is 1st stage of each ACT:
-    -> Narrative (ACT X start)
-  Else if [Check next Stage] is the last stage of each ACT:
-    -> Narrative (ACT X Boss Encounter)
-  Else if [Check next Stage] is null:
-    -> Game Clear
-
-  If [Check next Stage] is combat:
-   -> Pre combat -> Combat log
-    If Combat.Result is Win:
-     -> Reward -> [Check next Stage]
-    Else if Combat.Result is Draw:
-     -> [Check next Stage]
-    Else if Combat.Result is Lose:
-     -> Game over
-  Else If [Check_Stage] is event:
-    -> Event -> [Check next Stage]
-
-
+- Flow:  
+  Opening -> [Check next Stage]  
+ 
+- [Check next Stage] Flow:  
+  IF [Check next Stage] is 1st stage of each ACT:  
+    -> Narrative (ACT X start)  
+  Else if [Check next Stage] is the last stage of each ACT:  
+    -> Narrative (ACT X Boss Encounter)  
+  Else if [Check next Stage] is null:  
+    -> Game Clear  
+  
+  If [Check next Stage] is combat:  
+   -> Pre combat -> Combat log  
+    If Combat.Result is Win:  
+     -> Reward -> [Check next Stage]  
+    Else if Combat.Result is Draw:  
+     -> [Check next Stage]  
+    Else if Combat.Result is Lose:  
+     -> Game over  
+  Else If [Check_Stage] is event:  
+    -> Event -> [Check next Stage]  
+  
+ 
 -----
 
 ## 7. Story
