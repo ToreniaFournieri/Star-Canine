@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.2.7
+# STAR CANINE SPECIFICATION v0.3.0
 
 -----
 
@@ -103,8 +103,11 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - armor: 0,
   - ammo: 12,
   - max_slots: 6,
+  - dock_paid: false,
   - initial inventory item: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
+
+
 
 - Player upgrade initial state
   - regenerative_hull_plating: false
@@ -330,9 +333,11 @@ OR
 **B) Gain +5 Ammo**
 
 - Equipment is randomly chosen where "reward": true from equipment_data.json. 
+- show equipment name and status
 
 #### 4.6.2 Boss reward 
 
+ see 2.5 Boss Reward (Boss Upgrade)
 
 
 -----
@@ -345,10 +350,11 @@ Dock is a repair station that provides restoration services in exchange for paym
 - Player can skip this event.
 - Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
   - Player selects X item(s) from inventory to discard permanently
-  - Item is removed from the game (cannot be recovered)
-  - After payment, player chooses ONE option:
+  - Item is removed from the game. (cannot be recovered) and set dock_paid:true
+  - After payment (dock_paid:true) , player chooses ONE option:
     - **Repair:** Heal Hull by 30% (rounded down)
     - **Resupply:** Gain +7 Ammo
+  - Reset to dock_paid:false
 
 -----
 
