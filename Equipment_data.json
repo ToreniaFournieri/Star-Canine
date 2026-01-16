@@ -11,7 +11,6 @@
       "uses_per_battle": null,
       "reward": false,
       "disposable": false,
-      "flavor_text": "Long-range guided missile"
     },
     {
       "id": 2,
@@ -24,7 +23,6 @@
       "uses_per_battle": null,
       "reward": false,
       "disposable": false,
-      "flavor_text": "Close-range cutting beam"
     },
     {
       "id": 3,
@@ -33,7 +31,6 @@
       "armor": 25,
       "reward": false,
       "disposable": false,
-      "flavor_text": "Ablative armor plating"
     },
 
     {
@@ -47,7 +44,6 @@
       "uses_per_battle": null,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Heavy kinetic warhead"
     },
     {
       "id": 5,
@@ -60,7 +56,6 @@
       "uses_per_battle": null,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Dual-launch missile system"
     },
 
     {
@@ -74,7 +69,6 @@
       "uses_per_battle": 1,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Light interceptor squadron"
     },
     {
       "id": 11,
@@ -87,7 +81,6 @@
       "uses_per_battle": 1,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Heavy bomber wing"
     },
     {
       "id": 12,
@@ -100,7 +93,6 @@
       "uses_per_battle": null,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Autonomous attack drones"
     },
 
     {
@@ -114,7 +106,6 @@
       "uses_per_battle": null,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Energized plasma beam"
     },
     {
       "id": 7,
@@ -127,7 +118,6 @@
       "uses_per_battle": 1,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Concentrated energy burst"
     },
 
     {
@@ -137,7 +127,6 @@
       "shield": 15,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Deflects incoming fire at long range"
     },
     {
       "id": 9,
@@ -146,7 +135,6 @@
       "shield": 30,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Heavy electromagnetic barrier"
     },
 
     {
@@ -157,7 +145,6 @@
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Doubles all LASER damage"
     },
     {
       "id": 18,
@@ -167,7 +154,6 @@
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Doubles all FIGHTER damage"
     },
     {
       "id": 19,
@@ -177,7 +163,6 @@
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor_text": "Doubles all MISSILE damage"
     },
 
     {
@@ -191,7 +176,6 @@
       "uses_per_battle": 1,
       "reward": true,
       "disposable": true,
-      "flavor_text": "One-shot ultimate weapon"
     },
     {
       "id": 103,
@@ -204,7 +188,6 @@
       "uses_per_battle": 1,
       "reward": true,
       "disposable": true,
-      "flavor_text": "Overcharged reactor discharge"
     },
 
     {
@@ -213,7 +196,6 @@
       "type": "JUNK",
       "reward": false,
       "disposable": false,
-      "flavor_text": "Destroyed equipment remains"
     }
   ]
 }
