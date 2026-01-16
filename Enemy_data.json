@@ -3,7 +3,6 @@
     {
       "enemy_id": "Patrol Drone",
       "faction": "SolarBear",
-      "flavor_text": "No resistance expected.",
       "hull": 40,
       "damage_LONG": null,
       "damage_MID": null,
@@ -18,7 +17,6 @@
     {
       "enemy_id": "Scout Cutter",
       "faction": "SolarBear",
-      "flavor_text": "Assigned to a quiet system.",
       "hull": 40,
       "shield": 10,
       "damage_LONG": 40,
@@ -34,7 +32,6 @@
     {
       "enemy_id": "Strike Runner",
       "faction": "SolarBear",
-      "flavor_text": "Fast response interceptor.",
       "hull": 40,
       "shield": 15,
       "armor": 15,
@@ -51,7 +48,6 @@
     {
       "enemy_id": "Frigate",
       "faction": "SolarBear",
-      "flavor_text": "Standard patrol vessel.",
       "hull": 80,
       "armor": 20,
       "damage_LONG": 20,
@@ -67,7 +63,6 @@
     {
       "enemy_id": "Defender",
       "faction": "SolarBear",
-      "flavor_text": "Stay away.",
       "hull": 70,
       "shield": 25,
       "armor": 15,
@@ -84,7 +79,6 @@
     {
       "enemy_id": "Patrol Commander",
       "faction": "SolarBear",
-      "flavor_text": "Local control established.",
       "hull": 100,
       "shield": 30,
       "armor": 40,
@@ -101,7 +95,6 @@
     {
       "enemy_id": "Solar Bear Asteroid Watch",
       "faction": "SolarBear",
-      "flavor_text": "Area under inspection.",
       "hull": 135,
       "shield": 20,
       "damage_LONG": null,
@@ -117,7 +110,6 @@
     {
       "enemy_id": "Solar Bear Boarding Corvette",
       "faction": "SolarBear",
-      "flavor_text": "Escalation authorized.",
       "hull": 135,
       "armor": 40,
       "damage_LONG": 35,
@@ -133,7 +125,6 @@
     {
       "enemy_id": "K9 Auxiliary Raider",
       "faction": "K9",
-      "flavor_text": "Operating under foreign command.",
       "hull": 145,
       "armor": 25,
       "damage_LONG": null,
@@ -149,7 +140,6 @@
     {
       "enemy_id": "K9 Compliance Frigate",
       "faction": "K9",
-      "flavor_text": "Orders come from orbit.",
       "hull": 70,
       "shield": 25,
       "armor": 25,
@@ -166,7 +156,6 @@
     {
       "enemy_id": "K9 Liaison Commander",
       "faction": "K9",
-      "flavor_text": "Cooperation ensures survival.",
       "hull": 120,
       "shield": 40,
       "armor": 40,
@@ -183,7 +172,6 @@
     {
       "enemy_id": "Solar Bear Planetary Guard",
       "faction": "SolarBear",
-      "flavor_text": "Orbital dominance confirmed.",
       "hull": 80,
       "armor": 30,
       "damage_LONG": null,
@@ -199,7 +187,6 @@
     {
       "enemy_id": "Solar Bear Suppression Destroyer",
       "faction": "SolarBear",
-      "flavor_text": "Final resistance anticipated.",
       "hull": 55,
       "shield": 35,
       "armor": 30,
@@ -216,7 +203,6 @@
     {
       "enemy_id": "Celestial Reaper",
       "faction": "SolarBear",
-      "flavor_text": "This world will be purified.",
       "hull": 100,
       "shield": 60,
       "armor": 60,
