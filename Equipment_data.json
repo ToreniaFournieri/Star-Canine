@@ -4,211 +4,216 @@
       "id": 1,
       "name": "🚀 Comet Lance",
       "type": "MISSILE",
-      "range": "LONG",
-      "damage": 40,
+      "damage_LONG": 40,
+      "damage_MID": null,
+      "damage_CLOSE": null,
       "ammo_cost": 3,
       "uses_per_battle": null,
       "reward": false,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Long-range guided missile"
     },
     {
       "id": 2,
       "name": "⚡ Hull Cutter",
       "type": "LASER",
-      "range": "CLOSE",
-      "damage": 10,
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 10,
       "ammo_cost": 0,
       "uses_per_battle": null,
       "reward": false,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Close-range cutting beam"
     },
     {
       "id": 3,
       "name": "◾ Reinforced Plating",
       "type": "ARMOR",
-      "range": "PASSIVE",
-      "armor_value": 25,
+      "armor": 25,
       "reward": false,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Ablative armor plating"
     },
-
-    /* --- LONG RANGE : MISSILES --- */
 
     {
       "id": 4,
       "name": "🚀 Meteor Spear",
       "type": "MISSILE",
-      "range": "LONG",
-      "damage": 50,
+      "damage_LONG": 50,
+      "damage_MID": null,
+      "damage_CLOSE": null,
       "ammo_cost": 3,
       "uses_per_battle": null,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Heavy kinetic warhead"
     },
     {
       "id": 5,
       "name": "🚀 Twin Nova Rack",
       "type": "MISSILE",
-      "range": "LONG",
-      "damage": 65,
+      "damage_LONG": 65,
+      "damage_MID": null,
+      "damage_CLOSE": null,
       "ammo_cost": 6,
       "uses_per_battle": null,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Dual-launch missile system"
     },
-
-    /* --- MID RANGE : FIGHTERS --- */
 
     {
       "id": 10,
       "name": "✈️ Skirmish Wing",
       "type": "FIGHTER",
-      "range": "MID",
-      "damage": 20,
+      "damage_LONG": null,
+      "damage_MID": 20,
+      "damage_CLOSE": null,
       "ammo_cost": 1,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Light interceptor squadron"
     },
     {
       "id": 11,
       "name": "✈️ Breaker Squadron",
       "type": "FIGHTER",
-      "range": "MID",
-      "damage": 35,
+      "damage_LONG": null,
+      "damage_MID": 35,
+      "damage_CLOSE": null,
       "ammo_cost": 2,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Heavy bomber wing"
     },
     {
       "id": 12,
       "name": "✈️ Suppression Drones",
       "type": "FIGHTER",
-      "range": "MID",
-      "damage": 10,
+      "damage_LONG": null,
+      "damage_MID": 10,
+      "damage_CLOSE": null,
       "ammo_cost": 0,
       "uses_per_battle": null,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Autonomous attack drones"
     },
-
-    /* --- CLOSE RANGE : DIRECT FIRE --- */
 
     {
       "id": 6,
       "name": "⚡ Plasma Fang",
       "type": "LASER",
-      "range": "CLOSE",
-      "damage": 15,
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 15,
       "ammo_cost": 0,
       "uses_per_battle": null,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Energized plasma beam"
     },
     {
       "id": 7,
       "name": "⚡ Solar Overload",
       "type": "LASER",
-      "range": "CLOSE",
-      "damage": 25,
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 25,
       "ammo_cost": 0,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Concentrated energy burst"
     },
-
-    /* --- SHIELDS (LONG ONLY) --- */
 
     {
       "id": 8,
       "name": "🛡️ Magnetic Veil",
       "type": "SHIELD",
-      "range": "LONG",
-      "absorb": 15,
+      "shield": 15,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Deflects incoming fire at long range"
     },
     {
       "id": 9,
       "name": "🛡️ Aegis Field",
       "type": "SHIELD",
-      "range": "LONG",
-      "absorb": 30,
+      "shield": 30,
       "reward": true,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Heavy electromagnetic barrier"
     },
-
-    /* --- MODULES --- */
 
     {
       "id": 17,
       "name": "💎 Prismatic Lens",
       "type": "MODULE",
-      "range": "PASSIVE",
       "target_type": "LASER",
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor": "Doubles all LASER damage."
+      "flavor_text": "Doubles all LASER damage"
     },
     {
       "id": 18,
       "name": "⚙️ Hangar Uplink",
       "type": "MODULE",
-      "range": "PASSIVE",
       "target_type": "FIGHTER",
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor": "Doubles all FIGHTER damage."
+      "flavor_text": "Doubles all FIGHTER damage"
     },
     {
       "id": 19,
       "name": "🔥 Warhead Optimizer",
       "type": "MODULE",
-      "range": "PASSIVE",
       "target_type": "MISSILE",
       "multiplier": 2,
       "reward": true,
       "disposable": false,
-      "flavor": "Doubles all MISSILE damage."
+      "flavor_text": "Doubles all MISSILE damage"
     },
-
-    /* --- DISPOSABLE --- */
 
     {
       "id": 101,
       "name": "💥 Final Gambit",
       "type": "MISSILE",
-      "range": "LONG",
-      "damage": 120,
+      "damage_LONG": 120,
+      "damage_MID": null,
+      "damage_CLOSE": null,
       "ammo_cost": 0,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": true
+      "disposable": true,
+      "flavor_text": "One-shot ultimate weapon"
     },
     {
       "id": 103,
       "name": "⚡ Singularity Core",
       "type": "LASER",
-      "range": "CLOSE",
-      "damage": 80,
+      "damage_LONG": null,
+      "damage_MID": null,
+      "damage_CLOSE": 80,
       "ammo_cost": 0,
       "uses_per_battle": 1,
       "reward": true,
-      "disposable": true
+      "disposable": true,
+      "flavor_text": "Overcharged reactor discharge"
     },
-
-    /* --- TRASH --- */
 
     {
       "id": 999,
       "name": "⚠️ Broken Scrap",
       "type": "JUNK",
-      "range": "PASSIVE",
       "reward": false,
-      "disposable": false
+      "disposable": false,
+      "flavor_text": "Destroyed equipment remains"
     }
   ]
 }
