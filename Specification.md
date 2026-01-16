@@ -274,9 +274,10 @@ OR
 Dock is a repair station that provides restoration services in exchange for payment.
 
 #### ACT I Dock (Free Service)
-Player chooses ONE option:
-- **Repair:** Heal Hull by 30% (rounded down)
-- **Resupply:** Gain +7 Ammo
+- Player can skip this event.
+- Player chooses ONE option:
+  - **Repair:** Heal Hull by 30% (rounded down)
+  - **Resupply:** Gain +7 Ammo
 
 #### ACT II & ACT III Dock (Requires Payment)
 - Player can skip this event.
