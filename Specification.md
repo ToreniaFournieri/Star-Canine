@@ -138,14 +138,14 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.4.3 ACT III — RECLAMATION  
  not defined yet for this version. 
 
-## 2.5 Boss Reward (Upgrade)
+## 2.5 Boss Reward (Boss Upgrade)
 
 ### 2.5.1 Boss Rewards
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
-- Each boss reward presents the player with **3 Boss Relics**.
-- The player must choose **1** relic; the remaining relics are discarded.
-- Boss Relics are **permanent** and cannot be removed.
-- Each Boss Relic can be obtained **at most once per run**.
+- Each boss reward presents the player with **3 Boss Upgrade**.
+- The player must choose **1** Boss Upgrade; the remaining Boss Upgrade are discarded.
+- Boss Upgrade are **permanent** and cannot be removed.
+- Each Boss Upgrade can be obtained **at most once per run**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
 ### 2.5.2 Boss Rewards List
