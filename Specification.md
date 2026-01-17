@@ -334,11 +334,11 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 **Purpose:** Loadout confirmation before combat
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
-  - Enemy ship: Hull, Shield, Armor, Ammo, dagame_LONG, damage_MID, damage_CLOSE
+  - Enemy ship: `hull`, `shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`
   - Inventory display order:  
     1. Equipped items (checkmarked)  
     2. Unequipped items  
-  - Each equipment item displays its status (shield, armor, dagame_LONG, damage_MID, damage_CLOSE, multiplier)
+  - Each equipment item displays its status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
 - **Input**
   - Equip or unequip inventory items
   - Engage Combat button / command to Exit
@@ -352,8 +352,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Combat Log Scene
 **Purpose:** Display deterministic combat resolution
 - **Display**
-  - Current player ship: Hull, Shield, Armor, Ammo
-  - Current enemy ship: Hull, Shield, Armor, dagame_LONG, damage_MID, damage_CLOSE
+  - Player ship: `hull`, `shield`, `armor`, `ammo`
+  - Enemy ship: `hull`, `shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`
   - Step-by-step combat log
 - **Input**
   - Continue button / Enter
@@ -363,7 +363,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Reward Scene
 **Purpose:** Resolve post-combat rewards
 - **Display**
-  - Available rewards and their status (shield, armor, dagame_LONG, damage_MID, damage_CLOSE, multiplier)
+  - Available rewards and their status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
 - **Input**
   - Select one reward
 - **Exit**
@@ -372,7 +372,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Event Scene (Dock)
 **Purpose:** Resolve Dock-type stage events
 - **Display**
-  - Player ship: Hull, Shield, Armor, Ammo
+  - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Event options
 - **Input**
   - Select an option and continue to Exit
@@ -382,7 +382,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Game Clear Scene
 **Purpose:** End-of-run success state
 - **Display**
-  - Final player ship status
+  - Final player ship status (`hull`, `shield`, `armor`, `ammo`)
   - Player progress summary
 - **Input**
   - Restart button / Enter to Exit
@@ -392,7 +392,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Game Over Scene
 **Purpose:** End-of-run failure state
 - **Display**
-  - Final player ship status
+  - Final player ship status (`hull`, `shield`, `armor`, `ammo`)
   - Player progress summary
 - **Input**
   - Restart button / Enter to Exit
