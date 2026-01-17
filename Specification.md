@@ -54,7 +54,6 @@ Equipment entries define the following fields:
 
 #### 2.1.2 Equipment JSON file
 **Data source precedence:**  
-If an Equipment JSON file is provided as part of the project input, that file is authoritative and overrides the Equipment JSON referenced by the repository URL.
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
 ### 2.2 Enemy Data
@@ -81,7 +80,6 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
      
 #### 2.2.2 Enemy JSON file
 **Data source precedence:**  
-If an Enemy JSON file is provided as part of the project input, that file is authoritative and overrides the Equipment JSON referenced by the repository URL.
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
 ### 2.3 Player ship initial state
