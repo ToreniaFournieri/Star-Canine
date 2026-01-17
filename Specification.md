@@ -102,7 +102,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - armor: 0,
   - ammo: 12,
   - max_slots: 6,
-  - initial_items_in_inventory: [1, 2, 2, 3]
+  - inventory: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
 
 
@@ -247,7 +247,6 @@ Player loses when:
 ### 4.6 Reward
 
 #### 4.6.1 Normal reward
-
 - After winning a battle, the player chooses ONE:
     - Gain +5 Ammo
     - Choose 1 equipment
@@ -256,7 +255,6 @@ Player loses when:
 - Display equipment name and status.  
 
 #### 4.6.2 Boss reward 
-
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
@@ -360,7 +358,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Inventory display order:  
     1. Equipped items (checkmarked)  
     2. Unequipped items  
-  - Each equipment item displays its status
+  - Each equipment item displays its status (shield, armor, dagame_LONG, damage_MID, damage_CLOSE, multiplier)
 - **Input**
   - Equip or unequip inventory items
   - Engage Combat button / command to Exit
@@ -393,18 +391,15 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 **Purpose:** Resolve post-combat rewards
 
 - **Display**
-  - Available rewards and their status
+  - Available rewards and their status (shield, armor, dagame_LONG, damage_MID, damage_CLOSE, multiplier)
 - **Input**
   - Select one reward
 - **Exit**
   - Advances stage and returns to Main Loop
 
 ---
-
 ### Event Scene (Dock)
-
 **Purpose:** Resolve Dock-type stage events
-
 - **Display**
   - Player ship: Hull, Shield, Armor, Ammo
   - Event options
@@ -414,11 +409,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Advances stage and returns to Main Loop
 
 ---
-
 ### Game Clear Scene
-
 **Purpose:** End-of-run success state
-
 - **Display**
   - Final player ship status
   - Player progress summary
@@ -428,11 +420,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Restart game
 
 ---
-
 ### Game Over Scene
-
 **Purpose:** End-of-run failure state
-
 - **Display**
   - Final player ship status
   - Player progress summary
@@ -440,11 +429,9 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Restart button / Enter to Exit
 - **Exit**
   - Restart game
-
 -----
 
 ## 7. Story Opening
-
 ```
 Ship ID confirmed: STAR CANINE  
 Command authority: CAPTAIN  
@@ -468,5 +455,4 @@ Occupation status: ACTIVE.
 
 Setting course for K9.
 ```
-
 **END OF SPECIFICATION**
