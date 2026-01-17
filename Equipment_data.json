@@ -8,9 +8,8 @@
       "damage_MID": null,
       "damage_CLOSE": null,
       "ammo_cost": 3,
-      "uses_per_battle": null,
       "reward": false,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 2,
@@ -20,19 +19,17 @@
       "damage_MID": null,
       "damage_CLOSE": 10,
       "ammo_cost": 0,
-      "uses_per_battle": null,
       "reward": false,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 3,
-      "name": "◾ Reinforced Plating",
+      "name": "🟫 Reinforced Plating",
       "type": "ARMOR",
       "armor": 25,
       "reward": false,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 4,
       "name": "🚀 Meteor Spear",
@@ -41,23 +38,20 @@
       "damage_MID": null,
       "damage_CLOSE": null,
       "ammo_cost": 3,
-      "uses_per_battle": null,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 5,
-      "name": "🚀 Twin Nova Rack",
+      "name": "🚀🚀 Twin Nova Rack",
       "type": "MISSILE",
       "damage_LONG": 65,
       "damage_MID": null,
       "damage_CLOSE": null,
       "ammo_cost": 6,
-      "uses_per_battle": null,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 10,
       "name": "✈️ Skirmish Wing",
@@ -66,21 +60,19 @@
       "damage_MID": 20,
       "damage_CLOSE": null,
       "ammo_cost": 1,
-      "uses_per_battle": 1,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 11,
-      "name": "✈️ Breaker Squadron",
+      "name": "✈️✈️ Breaker Squadron",
       "type": "FIGHTER",
       "damage_LONG": null,
       "damage_MID": 35,
       "damage_CLOSE": null,
       "ammo_cost": 2,
-      "uses_per_battle": 1,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 12,
@@ -90,11 +82,9 @@
       "damage_MID": 10,
       "damage_CLOSE": null,
       "ammo_cost": 0,
-      "uses_per_battle": null,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 6,
       "name": "⚡ Plasma Fang",
@@ -103,40 +93,36 @@
       "damage_MID": null,
       "damage_CLOSE": 15,
       "ammo_cost": 0,
-      "uses_per_battle": null,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 7,
-      "name": "⚡ Solar Overload",
+      "name": "⚡⚡ Solar Overload",
       "type": "LASER",
       "damage_LONG": null,
       "damage_MID": null,
       "damage_CLOSE": 25,
       "ammo_cost": 0,
-      "uses_per_battle": 1,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 8,
       "name": "🛡️ Magnetic Veil",
       "type": "SHIELD",
       "shield": 15,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 9,
-      "name": "🛡️ Aegis Field",
+      "name": "🛡️🛡️ Aegis Field",
       "type": "SHIELD",
       "shield": 30,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 17,
       "name": "💎 Prismatic Lens",
@@ -144,7 +130,7 @@
       "target_type": "LASER",
       "multiplier": 2,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 18,
@@ -153,7 +139,7 @@
       "target_type": "FIGHTER",
       "multiplier": 2,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
     {
       "id": 19,
@@ -162,9 +148,8 @@
       "target_type": "MISSILE",
       "multiplier": 2,
       "reward": true,
-      "disposable": false,
+      "disposable": false
     },
-
     {
       "id": 101,
       "name": "💥 Final Gambit",
@@ -173,9 +158,8 @@
       "damage_MID": null,
       "damage_CLOSE": null,
       "ammo_cost": 0,
-      "uses_per_battle": 1,
       "reward": true,
-      "disposable": true,
+      "disposable": true
     },
     {
       "id": 103,
@@ -185,17 +169,15 @@
       "damage_MID": null,
       "damage_CLOSE": 80,
       "ammo_cost": 0,
-      "uses_per_battle": 1,
       "reward": true,
-      "disposable": true,
+      "disposable": true
     },
-
     {
       "id": 999,
       "name": "⚠️ Broken Scrap",
       "type": "JUNK",
       "reward": false,
-      "disposable": false,
+      "disposable": false
     }
   ]
 }
