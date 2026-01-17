@@ -289,17 +289,18 @@ Main Loop:
 Each scene is a presentation and input layer.
 Scenes do not determine progression; all transitions are dictated by the Flow.
 
-#### Opening Scene
+#### 6.2.1 Opening Scene
 **Purpose:** Game entry point
 - **Display**
   - Game title
+  - Opening Story
   - Start prompt
 - **Input**
   - Start button / Enter to Exit
 - **Exit**
   - Proceeds to Main Loop
 
-#### Combat Scene
+#### 6.2.2 Combat Scene
 **Purpose:** Display preparation and combat resolution
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
@@ -327,7 +328,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Else if draw AND enemy `type` is not Boss → Advance stage, return to Main Loop
   - Else if player loses → Game Over Scene
 
-#### Reward Scene
+#### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat rewards
 - **Display**
   - Available rewards and their status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
@@ -336,7 +337,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### Dock Scene
+#### 6.2.4 Dock Scene
 **Purpose:** Resolve Dock events
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
@@ -346,7 +347,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### Game Over Scene
+#### 6.2.5 Game Over Scene
 - Display this:
 ```
 STAR CANINE has been destroyed...
@@ -362,7 +363,7 @@ Mission Complete.
 
 -----
 
-## 7. Story Opening
+## 7. Opening Story
 ```
 Ship ID confirmed: STAR CANINE  
 Command authority: CAPTAIN  
