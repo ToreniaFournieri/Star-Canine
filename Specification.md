@@ -31,24 +31,24 @@
 #### 2.1.1 Equipment Fields
 Equipment entries define the following fields:
 
-##### Core Fields (all equipment):
+1. **Core Fields** (all equipment):
 - `id`: Unique numeric identifier
 - `name`: Display name with emoji identifier
 - `type`: Equipment category. Valid types: MISSILE, LASER, FIGHTER, SHIELD, ARMOR, MODULE, JUNK
 - `reward`: Boolean. Whether this item can appear as a post-battle reward
 - `disposable`: Boolean. Whether this item is destroyed after combat (replaced with Broken Scrap)
 
-##### Weapon Fields (MISSILE, LASER, FIGHTER):
+2. **Weapon Fields** (MISSILE, LASER, FIGHTER):
 - `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot fire at this range
 - `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot fire at this range
 - `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
 - `ammo_cost`: Integer. Ammo consumed per activation (regardless of range)
 
-##### Defensive Fields:
+3. **Defensive Fields**:
 - `shield`: Integer. Damage absorbed at LONG range only
 - `armor`: Integer. Damage absorbed at CLOSE range only
 
-##### Module Fields (MODULE type only):
+4. **Module Fields** (MODULE type only):
 - `target_type`: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
 - `multiplier`: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
 
@@ -61,18 +61,18 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 
 #### 2.2.1 Enemy Fields
 
-##### Core Fields:
+1. **Core Fields**:
 - `enemy_id`: String. Unique identifier for the enemy.
 - `hull`: Integer. Enemy hit points.
 - `shield`: Integer. Shield value.
 - `armor`: Integer. Armor value.
 
-##### Attack Fields:
+2. **Attack Fields**:
 - `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
 - `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot attack at this range
 - `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
 
-##### Spawn Fields:
+3. **Spawn Fields**:
 - `difficulty`: Integer. Threat rating.
 - `type`: String. Encounter category. One of: Normal, Elite, Boss
      
@@ -350,7 +350,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 ```
 STAR CANINE has been destroyed...
 ```
-#### Game Clear Scene
+#### 6.2.6 Game Clear Scene
 - Display this:
 ```
 Planet K9 has been liberated.
