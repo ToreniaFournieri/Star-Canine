@@ -350,9 +350,9 @@ Display equipment name and status.
 
 - Boss Reward Resolution:
     - The player selects exactly one Boss Module.
-    - For the selected upgrade, set state = owned.
-    - For all other offered upgrades, set state = skipped.
-    - Immediately apply the selected upgrade’s equipment slot bonus.
+    - For the selected Module, set state = owned.
+    - For all other offered Modules, set state = skipped.
+    - Immediately apply the selected Module’s equipment slot bonus.
     - Heal hull to max_hull. 
 
 -----
