@@ -51,12 +51,22 @@ Each equipment entry defines the following fields:
 - **`eq_type`**  
   Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
+
+  **Weapon Types**
   - `LONG` — Weapon that fires only at LONG range
   - `MID` — Weapon that fires only at MID range
   - `CLOSE` — Weapon that fires only at CLOSE range
+
+  **Defensive Types**
   - `SHIELD` — Absorbs damage at LONG range
   - `ARMOR` — Absorbs damage at CLOSE range
-  - `MODULE` — Multiplies outgoing weapon damage
+
+  **Module Types**
+  - `MODULE_LASER` — Multiplies damage of all LASER weapons
+  - `MODULE_MISSILE` — Multiplies damage of all MISSILE weapons
+  - `MODULE_FIGHTER` — Multiplies damage of all FIGHTER weapons
+
+  **Other**
   - `JUNK` — Inert item with no combat effect
 
 - **`rw`**  
