@@ -651,12 +651,14 @@ Status: DANGER.
 Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
 
 - Start
+```
 > “Fight with cudgel.  
 > No cudgel, use your claw.  
 > No claw, use your fang.  
 > No fang, use your soul.   
 > Fight until nothing left."   
-> — DEITY OF BLUE WOLF (Canto IV, Line 12)  
+> — DEITY OF BLUE WOLF (Canto IV, Line 12)  ```
+
 - Boss Encounter  
 Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
