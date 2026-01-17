@@ -32,25 +32,25 @@
 Equipment entries define the following fields:
 
 ##### Core Fields (all equipment):
-- id: Unique numeric identifier
-- name: Display name with emoji identifier
-- type: Equipment category. Valid types: MISSILE, LASER, FIGHTER, SHIELD, ARMOR, MODULE, JUNK
-- reward: Boolean. Whether this item can appear as a post-battle reward
-- disposable: Boolean. Whether this item is destroyed after combat (replaced with Broken Scrap)
+- `id`: Unique numeric identifier
+- `name`: Display name with emoji identifier
+- `type`: Equipment category. Valid types: MISSILE, LASER, FIGHTER, SHIELD, ARMOR, MODULE, JUNK
+- `reward`: Boolean. Whether this item can appear as a post-battle reward
+- `disposable`: Boolean. Whether this item is destroyed after combat (replaced with Broken Scrap)
 
 ##### Weapon Fields (MISSILE, LASER, FIGHTER):
-- damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot fire at this range
-- damage_MID: Integer or null. Damage dealt at MID range. null = cannot fire at this range
-- damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
-- ammo_cost: Integer. Ammo consumed per activation (regardless of range)
+- `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot fire at this range
+- `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot fire at this range
+- `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
+- `ammo_cost`: Integer. Ammo consumed per activation (regardless of range)
 
 ##### Defensive Fields:
-- shield: Integer (SHIELD type only). Damage absorbed at LONG range only
-- armor: Integer (ARMOR type only). Damage absorbed at CLOSE range only
+- `shield`: Integer (SHIELD type only). Damage absorbed at LONG range only
+- `armor`: Integer (ARMOR type only). Damage absorbed at CLOSE range only
 
 ##### Module Fields (MODULE type only):
-- target_type: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
-- multiplier: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
+- `target_type`: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
+- `multiplier`: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
 
 ##### Design Notes:
   - A weapon can fire at multiple ranges with different damage values
@@ -68,21 +68,21 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 #### 2.2.1 Enemy Fields
 
 ##### Core Fields:
-- enemy_id: String. Unique identifier for the enemy.
-- hull: Integer. Enemy hit points.
+- `enemy_id`: String. Unique identifier for the enemy.
+- `hull`: Integer. Enemy hit points.
 
 ##### Defensive Fields (Optional):
-- shield: Integer (optional). Shield value. If omitted, treated as 0.
-- armor: Integer (optional). Armor value. If omitted, treated as 0.
+- `shield`: Integer (optional). Shield value. If omitted, treated as 0.
+- `armor`: Integer (optional). Armor value. If omitted, treated as 0.
 
 ##### Attack Fields:
-- damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
-- damage_MID: Integer or null. Damage dealt at MID range. null = cannot attack at this range
-- damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
+- `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
+- `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot attack at this range
+- `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
 
 ##### Spawn Fields:
-- difficulty: Integer. Threat rating.
-- type: String. Encounter category. One of: Normal, Elite, Boss
+- `difficulty`: Integer. Threat rating.
+- `type`: String. Encounter category. One of: Normal, Elite, Boss
      
 #### 2.2.2 Enemy JSON file
 **Data source precedence:**  
@@ -91,13 +91,13 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ### 2.3 Player ship initial state
 - Player ship state
-  - max_hull: 200,
-  - hull: 200,
-  - shield: 0,
-  - armor: 0,
-  - ammo: 12,
-  - max_slots: 6,
-  - inventory: [1, 2, 2, 3]
+  - `max_hull`: 200,
+  - `hull`: 200,
+  - `shield`: 0,
+  - `armor`: 0,
+  - `ammo`: 12,
+  - `max_slots`: 6,
+  - `inventory`: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
 
 ### 2.4 Stage layout 
@@ -149,8 +149,8 @@ Each combat follows this fixed range sequence:
 - Hull damage persists between battles
 
 - Multiplier calculation:
-  - For each equipped MODULE with a "multiplier" and "target_type":
-    - All weapons with matching "type" have their damage multiplied
+  - For each equipped MODULE with a `multiplier` and `target_type`:
+    - All weapons with matching `type` have their damage multiplied
     - Multiple multipliers stack multiplicatively (two x2 modules = x4 total, two x3 modules = x9 total)
     - Example: If you equip "Prismatic Lens" (multiplier: 2, target_type: LASER), all LASER weapons deal double damage
 
@@ -166,7 +166,7 @@ On EACH turn:
      - Check if player has sufficient ammo for `ammo_cost`
      - If all checks pass, weapon activates automatically
    - All valid weapons fire simultaneously in the same turn
-   - Apply multiplier bonuses from equipped MODULEs to matching weapon types
+   - Apply `multiplier` bonuses from equipped MODULEs to matching weapon types
    - Total damage = sum of all activated weapons (after multipliers)
    - Total ammo consumed = sum of `ammo_cost` from all activated weapons
    - Weapons fire even if damage is overkill
@@ -175,7 +175,7 @@ On EACH turn:
    - Apply damage following damage resolution rules (section 4.4)
 
 3. **Check enemy status**
-   - If enemy Hull ≤ 0:
+   - If enemy `hull` ≤ 0:
      - Enemy is destroyed
      - Enemy does NOT attack this turn
      - Combat ends (victory)
@@ -189,7 +189,7 @@ On EACH turn:
    - Player takes damage following damage resolution rules (section 4.4)
 
 5. **Check player status**
-   - If player Hull ≤ 0:
+   - If player `hull` ≤ 0:
      - Player is destroyed
      - Combat ends (defeat)
 
@@ -198,15 +198,15 @@ Damage resolution depends entirely on the current combat range. There are three 
 
 #### LONG Range Damage Resolution:
 1. Damage is applied to Shield first
-2. Remaining damage (if any) is applied to Hull
+2. Remaining damage (if any) is applied to `hull`
 
 #### MID Range Damage Resolution:
-1. Damage is applied directly to Hull
-2. Shield and Armor are ignored
+1. Damage is applied directly to `hull`
+2. `shield` and `armor` are ignored
 
 #### CLOSE Range Damage Resolution:
-1. Damage is applied to Armor first
-2. Remaining damage (if any) is applied to Hull
+1. Damage is applied to `armor` first
+2. Remaining damage (if any) is applied to `hull`
 
 ### 4.5 End of Combat
 #### 4.5.1 Disposable Item Cleanup
@@ -227,11 +227,11 @@ In a draw:
 
 #### 4.5.3 Victory Condition
 Player wins when:
-- Enemy Hull ≤ 0 before Turn 6 ends
+- Enemy `hull` ≤ 0 before Turn 6 ends
 
 #### 4.5.4 Defeat Condition
 Player loses when:
-- Player Hull ≤ 0 at any point
+- Player `hull` ≤ 0 at any point
 - Draw occurs against a Boss enemy
 
 ### 4.6 Reward
@@ -241,7 +241,7 @@ Player loses when:
     - Gain +5 Ammo
     - Choose 1 equipment
 
-- Equipment is selected from equipment_data.json where "reward": true.  
+- Equipment is selected from equipment_data.json where `"reward": true`.  
 - Display equipment name and status.  
 
 #### 4.6.2 Boss reward 
@@ -249,14 +249,14 @@ Player loses when:
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
 1. **Automatic Restoration:**
-   - Hull is fully restored to max_hull
+   - `hull` is fully restored to `max_hull`
    - Gain +12 Ammo
 
 2. **Boss Bonus (Choose ONE):**
    Player chooses exactly ONE of the following:
-   - **Option A:** +2 Equipment Slots (max_slots increases by 2)
-   - **Option B:** +1 Equipment Slot AND +80 Max Hull and Hull (max_slots +1, max_hull +80, hull +80)
-   - **Option C:** +1 Equipment Slot AND +12 Ammo (max_slots +1, ammo +12)
+   - **Option A:** +2 Equipment Slots (`max_slots` increases by 2)
+   - **Option B:** +1 Equipment Slot AND +80 Max Hull (`max_slots` +1, `max_hull` +80, `hull` +80)
+   - **Option C:** +1 Equipment Slot AND +12 Ammo (`max_slots` +1, `ammo` +12)
 
 
 -----
@@ -265,7 +265,7 @@ Player loses when:
 
 ### 5.1 Dock
 Dock is a repair station.
-- **Repair:** Heal Hull by 30% (rounded down)
+- **Repair:** Heal `hull` by 30% (rounded down)
 - **Resupply:** Gain +7 Ammo
 
 -----
@@ -333,7 +333,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 #### Pre-Combat Scene
 **Purpose:** Loadout confirmation before combat
 - **Display**
-  - Player ship: Hull, Shield, Armor, Ammo
+  - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Enemy ship: Hull, Shield, Armor, Ammo, dagame_LONG, damage_MID, damage_CLOSE
   - Inventory display order:  
     1. Equipped items (checkmarked)  
