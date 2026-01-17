@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.4.4
+# STAR CANINE SPECIFICATION v0.5.0
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -27,34 +27,98 @@
 
 -----
 ## 2. DEFINITIONS
-### 2.1 Equipment Data
-#### 2.1.1 Equipment Fields
-Equipment entries define the following fields:
+## 2.1 Equipment Data
 
-1. **Core Fields** (all equipment):
-- `id`: Unique numeric identifier
-- `name`: Display name with emoji identifier
-- `type`: Equipment category. Valid types: MISSILE, LASER, FIGHTER, SHIELD, ARMOR, MODULE, JUNK
-- `reward`: Boolean. Whether this item can appear as a post-battle reward
-- `disposable`: Boolean. Whether this item is destroyed after combat (replaced with Broken Scrap)
+Equipment data is defined as a compact, behavior-driven table.  
+Each equipment entry contains exactly one primary numeric value (`val`), whose meaning is determined solely by `eq_type`.
 
-2. **Weapon Fields** (MISSILE, LASER, FIGHTER):
-- `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot fire at this range
-- `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot fire at this range
-- `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
-- `ammo_cost`: Integer. Ammo consumed per activation (regardless of range)
+All equipment data is embedded directly in this specification as a CSV block.
 
-3. **Defensive Fields**:
-- `shield`: Integer. Damage absorbed at LONG range only
-- `armor`: Integer. Damage absorbed at CLOSE range only
+### 2.1.1 Equipment Fields
 
-4. **Module Fields** (MODULE type only):
-- `target_type`: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
-- `multiplier`: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
+Each equipment entry defines the following fields:
 
-#### 2.1.2 Equipment JSON file
-**Data source precedence:**  
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
+- **`name`**  
+  Display name of the equipment. May include emoji identifiers.
+
+- **`val`**  
+  Primary numeric value. Its meaning depends entirely on `eq_type`.
+
+- **`ammo`**  
+  Ammo consumed per activation.  
+  Ignored for equipment types that do not consume ammo (set to `0`).
+
+- **`eq_type`**  
+  Equipment behavior category. Defines combat range or special behavior.  
+  Valid values:
+  - `LONG` — Weapon that fires only at LONG range
+  - `MID` — Weapon that fires only at MID range
+  - `CLOSE` — Weapon that fires only at CLOSE range
+  - `SHIELD` — Absorbs damage at LONG range
+  - `ARMOR` — Absorbs damage at CLOSE range
+  - `MODULE` — Multiplies outgoing weapon damage
+  - `JUNK` — Inert item with no combat effect
+
+- **`rw`**  
+  Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
+
+- **`dp`**  
+  Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
+
+---
+
+### 2.1.2 Value Interpretation Rules
+
+The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
+
+- **`LONG` / `MID` / `CLOSE`**
+  - `val`: Damage dealt at the corresponding combat range
+  - `ammo`: Ammo consumed per activation
+  - Weapons never operate outside their defined range
+
+- **`SHIELD`**
+  - `val`: Damage absorbed at LONG range only
+  - `ammo`: Ignored
+
+- **`ARMOR`**
+  - `val`: Damage absorbed at CLOSE range only
+  - `ammo`: Ignored
+
+- **`MODULE`**
+  - `val`: Damage multiplier (integer)
+  - Applies multiplicatively to all outgoing weapon damage
+  - Multiple modules stack multiplicatively
+  - `ammo`: Ignored
+
+- **`JUNK`**
+  - No combat effect
+  - `val` and `ammo` are ignored
+  - Cannot appear as a reward
+  - Not disposable
+
+---
+
+### 2.1.3 Constraints
+
+- Each equipment entry defines exactly one behavior.
+- No equipment operates at multiple ranges.
+- No equipment combines weapon, defense, or module effects.
+- All behavior must be derived from `eq_type`; redundant fields are not allowed.
+
+#### 2.1.4 Equipment csv layout
+
+```
+name,val,ammo,eq_type,rw,dp
+🚀 Comet Lance,40,3,LONG,0,0
+⚡ Hull Cutter,10,0,CLOSE,0,0
+🟫 Reinforced Plating,25,0,ARMOR,0,0
+🚀 Meteor Spear,50,3,LONG,1,0
+✈️ Skirmish Wing,20,1,MID,1,0
+🛡️ Aegis Field,30,0,SHIELD,1,0
+💎 Prismatic Lens,2,0,MODULE,1,0
+💥 Final Gambit,120,0,LONG,1,1
+⚠️ Broken Scrap,0,0,JUNK,0,0
+```
 
 ### 2.2 Enemy Data
 Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
