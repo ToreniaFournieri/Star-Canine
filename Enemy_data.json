@@ -41,7 +41,7 @@
       "damage_LONG": 30,
       "damage_MID": null,
       "damage_CLOSE": 15,
-      "difficulty": 4,
+      "difficulty": 3,
       "type": "Normal"
     },
     {
@@ -63,7 +63,7 @@
       "damage_LONG": 35,
       "damage_MID": null,
       "damage_CLOSE": 20,
-      "difficulty": 6,
+      "difficulty": 4,
       "type": "Normal"
     },
     {
@@ -74,7 +74,7 @@
       "damage_LONG": 20,
       "damage_MID": null,
       "damage_CLOSE": 25,
-      "difficulty": 7,
+      "difficulty": 4,
       "type": "Normal"
     },
     {
@@ -85,7 +85,7 @@
       "damage_LONG": 40,
       "damage_MID": null,
       "damage_CLOSE": 25,
-      "difficulty": 8,
+      "difficulty": 4,
       "type": "Elite"
     },
     {
@@ -96,7 +96,7 @@
       "damage_LONG": 45,
       "damage_MID": null,
       "damage_CLOSE": 30,
-      "difficulty": 9,
+      "difficulty": 8,
       "type": "Elite"
     },
     {
