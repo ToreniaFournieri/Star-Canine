@@ -225,60 +225,86 @@ diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
 
 ## 4. COMBAT SYSTEM
 
+Combat is fully deterministic and proceeds through a fixed sequence of range-based turns.
+No player input is allowed once combat begins.
+
 ### 4.1 Turn Order
-- Each combat follows this fixed range sequence:
-  - LONG -> MID -> CLOSE -> CLOSE -> MID -> LONG
-- 6 turns total per combat, unless someone is destroyed earlier
+Each combat follows this fixed range sequence:
 
-### 4.2 Start of combat
-- Shield and Armor values are recalculated based on equipped items `sheild` and `armor` value
-- Shield and Armor do NOT persist between battles
-- `hull` damage persists between battles
+LONG → MID → CLOSE → CLOSE → MID → LONG
 
-- Multiplier calculation:
-  - For each equipped MODULE with a `multiplier` and `target_type`:
-    - All weapons with matching `type` have their damage multiplied
-    - Multiple multipliers stack multiplicatively (two x2 modules = x4 total, two x3 modules = x9 total)
-    - Example: If you equip "Prismatic Lens" (`multiplier: 2`, `target_type: LASER`), all LASER weapons deal double damage
+- Total of **6 turns per combat**
+- Combat ends immediately if either side is destroyed
 
-### 4.3 Attack Resolution Rule
+### 4.2 Start of Combat
+At the beginning of combat:
 
-On EACH turn:
-#### 4.3.1 Player attacks first
-   - For each equipment:
-     - Check if equipment has non-null damage value for current range:
-       - LONG turn: check `damage_LONG`
-       - MID turn: check `damage_MID`
-       - CLOSE turn: check `damage_CLOSE`
-     - Check if player has sufficient `ammo` for `ammo_cost`
-     - If all checks pass, equipment activates automatically
-   - All valid equipments fire simultaneously in the same turn
-   - Apply `multiplier` bonuses from equipped MODULEs to matching equipment's `type`
-   - Total damage = sum of all activated equipments (after multipliers)
-   - Total ammo consumed = sum of `ammo_cost` from all activated equipments
-   - Equipments fire even if damage is overkill
+- Player **shield** and **armor** values are recalculated from equipped items:
+  - `eq_type = SHIELD` → contributes to shield
+  - `eq_type = ARMOR` → contributes to armor
+- Shield and armor **reset every combat**
+- Player `hull` damage **persists between combats**
 
-#### 4.3.2 Enemy takes damage
-   - Apply damage following damage resolution rules (section 4.4)
+#### Module Multiplier Calculation
 
-#### 4.3.3 Check enemy status
-   - If enemy `hull` ≤ 0:
-     - Enemy is destroyed
-     - Enemy does NOT attack this turn
-     - Combat ends (victory)
-   
-#### 4.3.4 Enemy attacks (only if still alive)
-   - Check if enemy has non-null damage value for current range:
-     - LONG turn: check `damage_LONG`
-     - MID turn: check `damage_MID`
-     - CLOSE turn: check `damage_CLOSE`
-   - Enemy attacks automatically
-   - Player takes damage following damage resolution rules (section 4.4)
+- For each equipped equipment with:
+  - `eq_type = MODULE`
+  - a valid `val` (multiplier)
+- All player equipments whose `eq_type` matches the module’s target receive the multiplier
+- Multipliers stack **multiplicatively**
+  - Two ×2 modules → ×4
+  - Two ×3 modules → ×9
+- Multipliers are applied **before combat starts**
 
-#### 4.3.5 Check player status
-   - If player `hull` ≤ 0:
-     - Player is destroyed
-     - Combat ends (defeat)
+### 4.3 Attack Resolution Rules
+
+Each turn resolves in the following order.
+
+#### 4.3.1 Player Attacks First
+
+For the current range (LONG / MID / CLOSE):
+
+- For each equipped equipment:
+  - If `eq_type` matches the current range:
+    - LONG → `eq_type = LONG`
+    - MID → `eq_type = MID`
+    - CLOSE → `eq_type = CLOSE`
+  - Check if player has enough `ammo` for `ammo` cost
+  - If valid, the equipment activates automatically
+
+Rules:
+- All valid equipments fire **simultaneously**
+- Damage is calculated as:
+  - `val × applicable MODULE multipliers`
+- Total damage = sum of all activated equipments
+- Total ammo consumed = sum of `ammo`
+- Equipments fire even if damage exceeds enemy hull (overkill allowed)
+
+#### 4.3.2 Enemy Takes Damage
+
+- Damage is applied using damage resolution rules (see 4.4)
+
+#### 4.3.3 Enemy Status Check
+
+- If enemy `hull ≤ 0`:
+  - Enemy is destroyed
+  - Enemy does **not** attack this turn
+  - Combat ends immediately (victory)
+
+#### 4.3.4 Enemy Attacks (If Alive)
+For the current range:
+
+- Enemy attack value is read from:
+  - LONG → `atk_L`
+  - MID → `atk_M`
+  - CLOSE → `atk_C`
+- If the value is greater than `0`, enemy attacks automatically
+- Player takes damage following damage resolution rules (see 4.4)
+
+#### 4.3.5 Player Status Check
+- If player `hull ≤ 0`:
+  - Player is destroyed
+  - Combat ends immediately (defeat)
 
 ### 4.4 Damage Resolution rule
 Damage resolution depends entirely on the current combat range. There are three independent damage models:
