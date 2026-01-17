@@ -45,8 +45,8 @@ Equipment entries define the following fields:
 - `ammo_cost`: Integer. Ammo consumed per activation (regardless of range)
 
 ##### Defensive Fields:
-- `shield`: Integer (SHIELD type only). Damage absorbed at LONG range only
-- `armor`: Integer (ARMOR type only). Damage absorbed at CLOSE range only
+- `shield`: Integer. Damage absorbed at LONG range only
+- `armor`: Integer. Damage absorbed at CLOSE range only
 
 ##### Module Fields (MODULE type only):
 - `target_type`: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
