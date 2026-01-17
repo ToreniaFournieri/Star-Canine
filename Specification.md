@@ -52,11 +52,6 @@ Equipment entries define the following fields:
 - `target_type`: String. Weapon type to boost (MISSILE, LASER, FIGHTER)
 - `multiplier`: Integer. Damage multiplier for matching weapons. Multiple modules stack multiplicatively (two x2 modules = x4 total)
 
-##### Design Notes:
-  - A weapon can fire at multiple ranges with different damage values
-  - Example: A lost tech mech might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
-  - Set damage to null for ranges where the weapon cannot fire
-
 #### 2.1.2 Equipment JSON file
 **Data source precedence:**  
 If an Equipment JSON file is provided as part of the project input, that file is authoritative and overrides the Equipment JSON referenced by the repository URL.
@@ -103,8 +98,8 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.4 Stage layout 
 - There are two type of stages
   - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
-    - ACT II, all enemey status x1.5 round down.
-    - ACT III, all enemy status x2.5 round down.
+    - ACT II, all enemy status x1.5 round down.
+    - ACT III, all enemy status x3.0 round down.
   - dock: heal and resupply
  
 ### 2.4.1 ACT structure
@@ -126,50 +121,44 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - **Slots:** up to `max_slots` equipped items
 - You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
-- Equipment can be freely swapped between battles
+- Equipment can be swapped Pre-combat scene 
 
 -----
 
 ## 4. COMBAT SYSTEM
 
 ### 4.1 Turn Order
-Each combat follows this fixed range sequence:
-
-- **Turn 1:** Long
-- **Turn 2:** Mid
-- **Turn 3:** Close
-- **Turn 4:** Close
-- **Turn 5:** Mid
-- **Turn 6:** Long  
-(6 turns total per combat, unless someone is destroyed earlier)
+- Each combat follows this fixed range sequence:
+  - LONG -> MID -> CLOSE -> CLOSE -> MID -> LONG
+- 6 turns total per combat, unless someone is destroyed earlier
 
 ### 4.2 Start of combat
-- Shield and Armor values are recalculated based on equipped SHIELD and ARMOR items
+- Shield and Armor values are recalculated based on equipped items `sheild` and `armor` value
 - Shield and Armor do NOT persist between battles
-- Hull damage persists between battles
+- `hull` damage persists between battles
 
 - Multiplier calculation:
   - For each equipped MODULE with a `multiplier` and `target_type`:
     - All weapons with matching `type` have their damage multiplied
     - Multiple multipliers stack multiplicatively (two x2 modules = x4 total, two x3 modules = x9 total)
-    - Example: If you equip "Prismatic Lens" (multiplier: 2, target_type: LASER), all LASER weapons deal double damage
+    - Example: If you equip "Prismatic Lens" (`multiplier: 2`, `target_type: LASER`), all LASER weapons deal double damage
 
 ### 4.3 Attack Resolution Rule
 
 On EACH turn:
 1. **Player attacks first**
-   - For each equipped weapon:
-     - Check if weapon has non-null damage value for current range:
+   - For each equipment:
+     - Check if equipment has non-null damage value for current range:
        - LONG turn: check `damage_LONG`
        - MID turn: check `damage_MID`
        - CLOSE turn: check `damage_CLOSE`
-     - Check if player has sufficient ammo for `ammo_cost`
-     - If all checks pass, weapon activates automatically
-   - All valid weapons fire simultaneously in the same turn
-   - Apply `multiplier` bonuses from equipped MODULEs to matching weapon types
-   - Total damage = sum of all activated weapons (after multipliers)
-   - Total ammo consumed = sum of `ammo_cost` from all activated weapons
-   - Weapons fire even if damage is overkill
+     - Check if player has sufficient `ammo` for `ammo_cost`
+     - If all checks pass, equipment activates automatically
+   - All valid equipments fire simultaneously in the same turn
+   - Apply `multiplier` bonuses from equipped MODULEs to matching equipment's `type`
+   - Total damage = sum of all activated equipments (after multipliers)
+   - Total ammo consumed = sum of `ammo_cost` from all activated equipments
+   - Equipments fire even if damage is overkill
 
 2. **Enemy takes damage**
    - Apply damage following damage resolution rules (section 4.4)
@@ -197,7 +186,7 @@ On EACH turn:
 Damage resolution depends entirely on the current combat range. There are three independent damage models:
 
 #### LONG Range Damage Resolution:
-1. Damage is applied to Shield first
+1. Damage is applied to `shield` first
 2. Remaining damage (if any) is applied to `hull`
 
 #### MID Range Damage Resolution:
@@ -222,8 +211,8 @@ A combat is considered a draw if:
 In a draw:
 - Combat ends immediately
 - No rewards are granted
-- If enemy type is "Boss": Game Over
-- If enemy type is not "Boss": Proceed to next stage
+- If the enemy `type` is "Boss": Game Over
+- If the enemy `type` is not "Boss": Proceed to next stage
 
 #### 4.5.3 Victory Condition
 Player wins when:
@@ -242,14 +231,13 @@ Player loses when:
     - Choose 1 equipment
 
 - Equipment is selected from equipment_data.json where `"reward": true`.  
-- Display equipment name and status.  
 
 #### 4.6.2 Boss reward 
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
 
 1. **Automatic Restoration:**
-   - `hull` is fully restored to `max_hull`
+   - Hull is fully restored
    - Gain +12 Ammo
 
 2. **Boss Bonus (Choose ONE):**
@@ -265,7 +253,7 @@ Player loses when:
 
 ### 5.1 Dock
 Dock is a repair station.
-- **Repair:** Heal `hull` by 30% (rounded down)
+- **Repair:** Heal Hull by 30% of Max Hull
 - **Resupply:** Gain +7 Ammo
 
 -----
@@ -344,7 +332,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Engage Combat button / command to Exit
 - **Notes**
   - At the first stage, no equipment is selected
-  - Up to max_slots items may be equipped
+  - Up to `max_slots` items may be equipped
   - Previous equipment selections persist
 - **Exit**
   - Proceeds to Combat Log Scene 
