@@ -376,93 +376,188 @@ Dock is a repair station that provides restoration services in exchange for paym
 
 ## 6. Scene and Flow
 
-### 6.1 Scene list
-- Opening scene
-  - Input: Start button/ Enter to start
-- Narrative scene
-  - Display  
-  - Input: Continue button/ Enter to continue
-- Pre-combat scene
-  - Display own ship's Hull, Shield, Armor, Ammo.
-  - Display next enemy's Hull, Shield, Armor, Ammo.
-  - Display full inventory list. Equipment item is checkmarked.
-    - Equipment item shows status
-  - Input: select item of inventory to equip, unequip item/ Command to equip/unequip.
-  - Input: Engage combat button/ Engage to proceed to combat log scene
-  - Note
-    - at the first stage, none of them selected
-    - Selects up to 6 items to equip. Persist previous selection of equipment
-- Combat log scene
-  - Display current own ship's Hull, Shield, Armor, Ammo.
-  - Display current enemy's Hull, Shield, Armor, Ammo.
-  - Display combat log. Step-by-step
-  - Input: Continue button/ Enter to continue
-- Reward scene
-  - Display reward list and its status 
-  - Input: Select reward and continue to the next scene
-- Event scene
-  - Dock event
-    - Display own ship's Hull, Shield, Armor, Ammo.
-    - Input: Select options and continue to the next scene
-- Game Clear scene
-  - Display current own ship's Hull, Shield, Armor, Ammo.
-  - display player's progress. 
-  - Input: Restart button/ Enter to restart
-- Game over scene
-  - Display current own ship's Hull, Shield, Armor, Ammo.
-  - display player's progress. 
-  - Input: Restart button/ Enter to restart
+This section defines the authoritative game progression flow and the scenes used to present game state.
+**Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
-### 6.2 Flow
+---
+
+### 6.1 Flow
+
 ```
 START
-  ↓
+↓
 Opening Scene
-  ↓
+↓
 Main Loop:
 ┌────────────────────────┐
 │ Check Next Stage       │
 └────────────────────────┘
-  │
-  ├─ If Next Stage is null
-  │    → Game Clear Scene
-  │    → END / RESTART
-  │
-  ├─ If Next Stage is 1st of ACT
-  │    → Narrative Scene (ACT Start)
-  │    → continue Main Loop (same stage)
-  │
-  ├─ If Next Stage is last of ACT
-  │    → Narrative Scene (Boss Encounter)
-  │    → continue Main Loop (same stage)
-  │
-  ├─ Resolve Stage Type
-  │   │ 
-  │   ├─ If type is Combat
-  │   │    ↓
-  │   │  Pre-Combat Scene
-  │   │    ↓
-  │   │  Combat Log Scene
-  │   │    ├─ Win
-  │   │    │    → Reward Scene
-  │   │    │    → advance stage
-  │   │    │    → continue Main Loop
-  │   │    ├─ Draw AND Boss
-  │   │    │    → Game Over Scene
-  │   │    │    → END / RESTART
-  │   │    ├─ Draw AND Not Boss
-  │   │    │    → advance stage (no reward)
-  │   │    │    → continue Main Loop
-  │   │    └─ Lose
-  │   │         → Game Over Scene
-  │   │         → END / RESTART
-  │   │ 
-  │   └─ If type is Dock
-  │        → Event Scene (Dock)
-  │        → advance stage
-  │        → continue Main Loop
+│
+├─ If Next Stage is null
+│    → Game Clear Scene
+│    → END / RESTART
+│
+├─ If Next Stage is 1st of ACT
+│    → Narrative Scene (ACT Start)
+│    → continue Main Loop (same stage)
+│
+├─ If Next Stage is last of ACT
+│    → Narrative Scene (Boss Encounter)
+│    → continue Main Loop (same stage)
+│
+├─ Resolve Stage Type
+│   │
+│   ├─ If type is Combat
+│   │    ↓
+│   │  Pre-Combat Scene
+│   │    ↓
+│   │  Combat Log Scene
+│   │    ├─ Win
+│   │    │    → Reward Scene
+│   │    │    → advance stage
+│   │    │    → continue Main Loop
+│   │    ├─ Draw AND Boss
+│   │    │    → Game Over Scene
+│   │    │    → END / RESTART
+│   │    ├─ Draw AND Not Boss
+│   │    │    → advance stage (no reward)
+│   │    │    → continue Main Loop
+│   │    └─ Lose
+│   │         → Game Over Scene
+│   │         → END / RESTART
+│   │
+│   └─ If type is Dock
+│        → Event Scene (Dock)
+│        → advance stage
+│        → continue Main Loop
 ```
- 
+
+---
+
+### 6.2 Scene Definitions
+
+Each scene is a presentation and input layer.
+Scenes do not determine progression; all transitions are dictated by the Flow.
+
+---
+
+### Opening Scene
+
+**Purpose:** Game entry point
+
+- **Display**
+  - Game title
+  - Start prompt
+- **Input**
+  - Start button / Enter
+- **Exit**
+  - Always proceeds to Main Loop
+
+---
+
+### Narrative Scene
+
+**Purpose:** Story delivery at ACT boundaries
+
+- **Display**
+  - Narrative text
+- **Input**
+  - Continue button / Enter
+- **Exit**
+  - Returns to Main Loop (same stage)
+
+---
+
+### Pre-Combat Scene
+
+**Purpose:** Loadout confirmation before combat
+
+- **Display**
+  - Player ship: Hull, Shield, Armor, Ammo
+  - Enemy ship: Hull, Shield, Armor, Ammo
+  - Full inventory list
+    - Equipped items are checkmarked
+    - Each equipment item displays its status
+- **Input**
+  - Equip or unequip inventory items
+  - Engage Combat button / command
+- **Notes**
+  - At the first stage, no equipment is selected
+  - Up to 6 items may be equipped
+  - Previous equipment selections persist
+- **Exit**
+  - Proceeds to Combat Log Scene
+
+---
+
+### Combat Log Scene
+
+**Purpose:** Display deterministic combat resolution
+
+- **Display**
+  - Current player ship: Hull, Shield, Armor, Ammo
+  - Current enemy ship: Hull, Shield, Armor, Ammo
+  - Step-by-step combat log
+- **Input**
+  - Continue button / Enter
+- **Exit**
+  - Outcome is resolved by Flow (Win / Draw / Lose)
+
+---
+
+### Reward Scene
+
+**Purpose:** Resolve post-combat rewards
+
+- **Display**
+  - Available rewards and their status
+- **Input**
+  - Select one reward
+- **Exit**
+  - Advances stage and returns to Main Loop
+
+---
+
+### Event Scene (Dock)
+
+**Purpose:** Resolve Dock-type stage events
+
+- **Display**
+  - Player ship: Hull, Shield, Armor, Ammo
+  - Event options
+- **Input**
+  - Select an option and continue
+- **Exit**
+  - Advances stage and returns to Main Loop
+
+---
+
+### Game Clear Scene
+
+**Purpose:** End-of-run success state
+
+- **Display**
+  - Final player ship status
+  - Player progress summary
+- **Input**
+  - Restart button / Enter
+- **Exit**
+  - Restart game
+
+---
+
+### Game Over Scene
+
+**Purpose:** End-of-run failure state
+
+- **Display**
+  - Final player ship status
+  - Player progress summary
+- **Input**
+  - Restart button / Enter
+- **Exit**
+  - Restart game
+
 -----
 
 ## 7. Story
