@@ -113,10 +113,19 @@ name,val,ammo,eq_type,rw,dp
 ⚡ Hull Cutter,10,0,CLOSE,0,0
 🟫 Reinforced Plating,25,0,ARMOR,0,0
 🚀 Meteor Spear,50,3,LONG,1,0
+🚀🚀 Twin Nova Rack,65,6,LONG,1,0
 ✈️ Skirmish Wing,20,1,MID,1,0
-🛡️ Aegis Field,30,0,SHIELD,1,0
-💎 Prismatic Lens,2,0,MODULE,1,0
+✈️✈️ Breaker Squadron,35,2,MID,1,0
+✈️ Suppression Drones,10,0,MID,1,0
+⚡ Plasma Fang,15,0,CLOSE,1,0
+⚡⚡ Solar Overload,25,0,CLOSE,1,0
+🛡️ Magnetic Veil,15,0,SHIELD,1,0
+🛡️🛡️ Aegis Field,30,0,SHIELD,1,0
+💎 Prismatic Lens,2,0,MODULE_LASER,1,0
+⚙️ Hangar Uplink,2,0,MODULE_FIGHTER,1,0
+🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
 💥 Final Gambit,120,0,LONG,1,1
+⚡ Singularity Core,80,0,CLOSE,1,1
 ⚠️ Broken Scrap,0,0,JUNK,0,0
 ```
 
