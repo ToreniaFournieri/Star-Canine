@@ -566,28 +566,29 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 
 ### 7.1 ACT I — DESOLATION
 - Start
+```
+Ship ID confirmed: STAR CANINE  
+Command authority: CAPTAIN  
 
-> Ship ID confirmed: STAR CANINE  
-> Command authority: CAPTAIN  
+Incoming distress signal detected.  
+Origin: Planet K9  
+Sender ID: LAIKA  
 
-> Incoming distress signal detected.  
-> Origin: Planet K9  
-> Sender ID: LAIKA  
+"It's me.  
+K9 has fallen.  
+Solar Bear battleships took the planet.  
+They took me too.  
+I know you weren't here.  
+I know you'll come back.  
+Please… don't die."
 
-> "It's me.  
-> K9 has fallen.  
-> Solar Bear battleships took the planet.  
-> They took me too.  
-> I know you weren't here.  
-> I know you'll come back.  
-> Please… don't die."
->
-> Signal lost.
+Signal lost.
 
-> Solar Bear Empire detected in K9 orbit.  
-> Occupation status: ACTIVE.
+Solar Bear Empire detected in K9 orbit.  
+Occupation status: ACTIVE.
 
-> Setting course for K9.
+Setting course for K9.
+```
 
 - Boss Encounter 
 > Ship location: K9 Outer Orbit  
