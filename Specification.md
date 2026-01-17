@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.3.1
+# STAR CANINE SPECIFICATION v0.3.2
 
 
 ## 1. OVERVIEW
@@ -97,6 +97,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ### 2.3 Player ship initial state
 - Player ship state
+  - max_hull: 200,
   - hull: 200,
   - shield: 0,
   - armor: 0,
@@ -164,8 +165,8 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.5.1 Boss Upgrade List
 
 #### Regenerative Hull Plating
-- Increase maximum hull by **+40**.
-- At the beginning of each combat, **repair 20 hull** (cannot exceed maximum hull).
+- Increase max_hull by **+40**.
+- At the beginning of each combat, **repair 20 hull** (cannot exceed max_hull).
 
 #### Automated Ammo Synthesizer
 - At the beginning of each combat, **gain +1 ammo**.
@@ -352,6 +353,7 @@ Display equipment name and status.
     - For the selected upgrade, set state = owned.
     - For all other offered upgrades, set state = skipped.
     - Immediately apply the selected upgrade’s equipment slot bonus.
+    - Heal hull to max_hull. 
 
 -----
 
@@ -363,8 +365,8 @@ Dock is a repair station that provides restoration services in exchange for paym
 - Player can skip this event.
 - Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
   - If overloaded_logistics_core is owned, the X is doubled. (as a Boss Upgrade penalty)
-  - Player selects X item(s) from inventory to discard permanently
-  - Item is removed from the game. (cannot be recovered) and set paid_at_dock:true
+  - Player selects X item(s) from inventory to discard permanently. 
+  - Item is unequiped and removed from the game. (cannot be recovered) And set paid_at_dock:true
   - After payment (paid_at_dock:true) , player chooses ONE option:
     - **Repair:** Heal Hull by 30% (rounded down)
     - **Resupply:** Gain +7 Ammo
@@ -396,7 +398,7 @@ Dock is a repair station that provides restoration services in exchange for paym
   - Display combat log. Step-by-step
   - Input: Continue button/ Enter to continue
 - Reward scene
-  - Display reward list
+  - Display reward list and its status 
   - Input: Select reward and continue to the next scene
 - Event scene
   - Dock event
