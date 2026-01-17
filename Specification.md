@@ -444,10 +444,9 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Game title
   - Start prompt
 - **Input**
-  - Start button / Enter
+  - Start button / Enter to Exit
 - **Exit**
-  - Always proceeds to Main Loop
-
+  - Always proceeds to Main Loo
 ---
 
 ### Narrative Scene
@@ -457,9 +456,9 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Display**
   - Narrative text
 - **Input**
-  - Continue button / Enter
+  - Continue button / Enter to Exit
 - **Exit**
-  - Returns to Main Loop (same stage)
+  - Returns to Main Loop
 
 ---
 
@@ -469,19 +468,20 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 
 - **Display**
   - Player ship: Hull, Shield, Armor, Ammo
-  - Enemy ship: Hull, Shield, Armor, Ammo
-  - Full inventory list
-    - Equipped items are checkmarked
+  - Enemy ship: Hull, Shield, Armor, Ammo, dagame_LONG, damage_MID, damage_CLOSE
+  - Full Inventory display order: 
+    - Equipped items are displayed first and marked as equipped.
+    - Unequipped items are displayed after the equipped items.
     - Each equipment item displays its status
 - **Input**
   - Equip or unequip inventory items
-  - Engage Combat button / command
+  - Engage Combat button / command to Exit
 - **Notes**
   - At the first stage, no equipment is selected
-  - Up to 6 items may be equipped
+  - Up to max_slots items may be equipped
   - Previous equipment selections persist
 - **Exit**
-  - Proceeds to Combat Log Scene
+  - Proceeds to Combat Log Scene 
 
 ---
 
@@ -521,7 +521,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Player ship: Hull, Shield, Armor, Ammo
   - Event options
 - **Input**
-  - Select an option and continue
+  - Select an option and continue to Exit
 - **Exit**
   - Advances stage and returns to Main Loop
 
@@ -535,7 +535,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Final player ship status
   - Player progress summary
 - **Input**
-  - Restart button / Enter
+  - Restart button / Enter to Exit
 - **Exit**
   - Restart game
 
@@ -549,7 +549,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Final player ship status
   - Player progress summary
 - **Input**
-  - Restart button / Enter
+  - Restart button / Enter to Exit
 - **Exit**
   - Restart game
 
