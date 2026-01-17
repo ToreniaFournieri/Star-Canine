@@ -109,7 +109,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Player event state
   - paid_at_dock: false,
 
-- Boss Upgrade state. (not_seen, owned, skipped)
+- Boss Module state. (not_seen, owned, skipped)
   - regenerative_hull_plating: not_seen
   - automated_ammo_synthesizer: not_seen
   - forward_shield_projector: not_seen
@@ -159,10 +159,10 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 1. combat: boss (difficulty:30, type:boss)
 
 
-## 2.5 Boss Reward (Boss Upgrade)
+## 2.5 Boss Reward (Boss Module)
 
 
-### 2.5.1 Boss Upgrade List
+### 2.5.1 Boss Module List
 
 #### Regenerative Hull Plating
 - Increase max_hull by **+40**.
@@ -226,7 +226,7 @@ Each combat follows this fixed range sequence:
   - Counters do NOT modify Equipment_data.json or Enemy_data.json
   - All counters reset for the next battle
 
-- Apply combat-start effects of all owned Boss Upgrades:
+- Apply combat-start effects of all owned Boss Modules:
     regenerative_hull_plating
     automated_ammo_synthesizer
     forward_shield_projector
@@ -334,7 +334,7 @@ After winning a battle, the player chooses ONE:
 
 Equipment options:  
     - 3 options if expanded_hardpoint_array is not owned  
-    - 1 option if expanded_hardpoint_array is owned (Boss Upgrade penalty)  
+    - 1 option if expanded_hardpoint_array is owned (Boss Module penalty)  
 
 Equipment is selected from equipment_data.json where "reward": true.  
 Display equipment name and status.  
@@ -343,13 +343,13 @@ Display equipment name and status.
 
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
-- Boss Upgrade are **permanent** and cannot be removed.
-- Each Boss Upgrade can be obtained **at most once per run**.
-- Each boss reward presents the player with **3 Boss Upgrade**.
+- Boss Module are **permanent** and cannot be removed.
+- Each Boss Module can be obtained **at most once per run**.
+- Each boss reward presents the player with **3 Boss Module**.
 
 
 - Boss Reward Resolution:
-    - The player selects exactly one Boss Upgrade.
+    - The player selects exactly one Boss Module.
     - For the selected upgrade, set state = owned.
     - For all other offered upgrades, set state = skipped.
     - Immediately apply the selected upgrade’s equipment slot bonus.
@@ -364,7 +364,7 @@ Dock is a repair station that provides restoration services in exchange for paym
 
 - Player can skip this event.
 - Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
-  - If overloaded_logistics_core is owned, the X is doubled. (as a Boss Upgrade penalty)
+  - If overloaded_logistics_core is owned, the X is doubled. (as a Boss Module penalty)
   - Player selects X item(s) from inventory to discard permanently. 
   - Item is unequiped and removed from the game. (cannot be recovered) And set paid_at_dock:true
   - After payment (paid_at_dock:true) , player chooses ONE option:
