@@ -64,10 +64,8 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 ##### Core Fields:
 - `enemy_id`: String. Unique identifier for the enemy.
 - `hull`: Integer. Enemy hit points.
-
-##### Defensive Fields (Optional):
-- `shield`: Integer (optional). Shield value. If omitted, treated as 0.
-- `armor`: Integer (optional). Armor value. If omitted, treated as 0.
+- `shield`: Integer. Shield value.
+- `armor`: Integer. Armor value.
 
 ##### Attack Fields:
 - `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
@@ -115,7 +113,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ## 3. EQUIPMENT SYSTEM
 
 ### 3.1 Inventory vs Slots
-- **Inventory:** all equipment the player owns
+- **Inventory:** all equipments the player owns
 - **Slots:** up to `max_slots` equipped items
 - You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
@@ -212,7 +210,7 @@ In a draw:
 - If the enemy `type` is "Boss": Game Over
 - If the enemy `type` is not "Boss": Proceed to next stage
 
-#### 4.5.3 Victory Condition
+#### 4.5.3 Win Condition
 Player wins when:
 - Enemy `hull` ≤ 0 before Turn 6 ends
 
@@ -324,9 +322,9 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - If player wins and it is the last stage → Game Clear Scene
   - If player wins → Reward Scene
-  - If draw AND enemy `type` is Boss → Game Over Scene
-  - If draw AND enemy `type` is not Boss → Advance stage, return to Main Loop
-  - If player loses → Game Over Scene
+  - If player draws AND enemy `type` is Boss → Game Over Scene
+  - If player draws AND enemy `type` is not Boss → Advance stage, return to Main Loop
+  - If player defeats → Game Over Scene
 
 #### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat rewards
