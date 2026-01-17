@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.4.2
+# STAR CANINE SPECIFICATION v0.4.4
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -271,13 +271,15 @@ Main Loop:
 │ Check Next Stage       │
 └────────────────────────┘
 │ 
-├─ If type is Combat
+├─ If stage type is Combat
 │   ↓
 │   Combat Scene
 │   ↓
 │   Reward Scene
+│   ↓
+│   continue Main Loop / Game Over Scene / Game Clear Scene
 │
-└─ If type is Dock
+└─ If stage type is Dock
     ↓
     Dock Scene
 
@@ -301,26 +303,29 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 **Purpose:** Display preparation and combat resolution
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
-  - Enemy ship: `hull`, `shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`
+  - Enemy ship: `hull`, `shield`, `armor`, `damage_LONG`, `damage_MID`, `damage_CLOSE`
   - Inventory display order:  
     1. Equipped items (checkmarked)  
     2. Unequipped items  
-  - Each equipment item displays its status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
-  - Display combat rog after engaing combat
+  - Each equipment item displays its stats (`shield`, `armor`, `damage_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
+  - After engaging combat: Combat log appears and updates turn-by-turn
+
 - **Input**
-  - Equip or unequip inventory items
-  - Engage Combat button / command
-  - Continue button / command
+  - **Pre-combat:** Equip/unequip inventory items, then "Engage Combat" button
+  - **During combat:** Combat log updates automatically (no input needed)
+  - **Post-combat:** "Continue" button to proceed
+
 - **Notes**
   - At the first stage, no equipment is selected
   - Up to `max_slots` items may be equipped
-  - Previous equipment selections persist
+  - Previous equipment selections persist between battles
+
 - **Exit**
-  - If player win and it is last stage, Game clear!
-  - ElseIf player win, Proceeds to Reward Scene
-  - Elseif player draw and enemy `type` is Boss, Game over...
-  - Elseif player draw and enemy `type` is not Boss, Advances stage and returns to Main Loop
-  - Elseif player lost, Game over...
+  - If player wins and it is the last stage → Game Clear Scene
+  - Else if player wins → Reward Scene
+  - Else if draw AND enemy `type` is Boss → Game Over Scene
+  - Else if draw AND enemy `type` is not Boss → Advance stage, return to Main Loop
+  - Else if player loses → Game Over Scene
 
 #### Reward Scene
 **Purpose:** Resolve post-combat rewards
@@ -340,6 +345,20 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Select an option and continue to Exit
 - **Exit**
   - Advances stage and returns to Main Loop
+
+#### Game Over Scene
+- Display this:
+```
+STAR CANINE has been destroyed...
+```
+#### Game Clear Scene
+- Display this:
+```
+Planet K9 has been liberated.
+LAIKA is safe.
+
+Mission Complete.
+```
 
 -----
 
