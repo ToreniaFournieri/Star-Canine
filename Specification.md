@@ -652,22 +652,24 @@ Star Canine arrives at K9, continuing fierce battles. No message exchange betwee
 
 - Start
 ```
-> “Fight with cudgel.  
-> No cudgel, use your claw.  
-> No claw, use your fang.  
-> No fang, use your soul.   
-> Fight until nothing left."   
-> — DEITY OF BLUE WOLF (Canto IV, Line 12)  ```
+“Fight with cudgel.  
+No cudgel, use your claw.  
+No claw, use your fang.  
+No fang, use your soul.   
+Fight until nothing left."   
+— DEITY OF BLUE WOLF (Canto IV, Line 12)  
+```
 
 - Boss Encounter  
 Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
 
-> Reminiscence of academy five years ago  
-> FENRIR: "You don't get it, right? My grandma told me the story.  
-> The Blue Wolf... the deity that conquered the Great Continent.  
-> It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
-> 
-> You got a good callsign, Blue Wolf. Sleep tight.   
+```
+Reminiscence of academy five years ago  
+FENRIR: "You don't get it, right? My grandma told me the story.  
+The Blue Wolf... the deity that conquered the Great Continent.  
+It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
 
+You got a good callsign, Blue Wolf. Sleep tight.   
+```
 
 **END OF SPECIFICATION**
