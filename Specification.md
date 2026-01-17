@@ -142,7 +142,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 4.3 Attack Resolution Rule
 
 On EACH turn:
-1. **Player attacks first**
+#### 4.3.1 Player attacks first
    - For each equipment:
      - Check if equipment has non-null damage value for current range:
        - LONG turn: check `damage_LONG`
@@ -156,16 +156,16 @@ On EACH turn:
    - Total ammo consumed = sum of `ammo_cost` from all activated equipments
    - Equipments fire even if damage is overkill
 
-2. **Enemy takes damage**
+#### 4.3.2 Enemy takes damage
    - Apply damage following damage resolution rules (section 4.4)
 
-3. **Check enemy status**
+#### 4.3.3 Check enemy status
    - If enemy `hull` ≤ 0:
      - Enemy is destroyed
      - Enemy does NOT attack this turn
      - Combat ends (victory)
    
-4. **Enemy attacks** (only if still alive)
+#### 4.3.4 Enemy attacks (only if still alive)
    - Check if enemy has non-null damage value for current range:
      - LONG turn: check `damage_LONG`
      - MID turn: check `damage_MID`
@@ -173,7 +173,7 @@ On EACH turn:
    - Enemy attacks automatically
    - Player takes damage following damage resolution rules (section 4.4)
 
-5. **Check player status**
+#### 4.3.5 Check player status
    - If player `hull` ≤ 0:
      - Player is destroyed
      - Combat ends (defeat)
@@ -181,15 +181,15 @@ On EACH turn:
 ### 4.4 Damage Resolution rule
 Damage resolution depends entirely on the current combat range. There are three independent damage models:
 
-#### LONG Range Damage Resolution:
+#### 4.4.1 LONG Range Damage Resolution:
 1. Damage is applied to `shield` first
 2. Remaining damage (if any) is applied to `hull`
 
-#### MID Range Damage Resolution:
+#### 4.4.2 MID Range Damage Resolution:
 1. Damage is applied directly to `hull`
 2. `shield` and `armor` are ignored
 
-#### CLOSE Range Damage Resolution:
+#### 4.4.3 CLOSE Range Damage Resolution:
 1. Damage is applied to `armor` first
 2. Remaining damage (if any) is applied to `hull`
 
