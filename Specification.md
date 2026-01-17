@@ -323,10 +323,10 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 
 - **Exit**
   - If player wins and it is the last stage → Game Clear Scene
-  - Else if player wins → Reward Scene
-  - Else if draw AND enemy `type` is Boss → Game Over Scene
-  - Else if draw AND enemy `type` is not Boss → Advance stage, return to Main Loop
-  - Else if player loses → Game Over Scene
+  - If player wins → Reward Scene
+  - If draw AND enemy `type` is Boss → Game Over Scene
+  - If draw AND enemy `type` is not Boss → Advance stage, return to Main Loop
+  - If player loses → Game Over Scene
 
 #### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat rewards
