@@ -379,8 +379,6 @@ Dock is a repair station that provides restoration services in exchange for paym
 This section defines the authoritative game progression flow and the scenes used to present game state.
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
----
-
 ### 6.1 Flow
 
 ```
@@ -432,14 +430,11 @@ Main Loop:
 │        → continue Main Loop
 ```
 
----
-
 ### 6.2 Scene Definitions
 
 Each scene is a presentation and input layer.
 Scenes do not determine progression; all transitions are dictated by the Flow.
 
----
 
 ### Opening Scene
 
