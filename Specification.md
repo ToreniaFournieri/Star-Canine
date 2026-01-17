@@ -431,56 +431,90 @@ Main Loop:
 ```
 
 ### 6.2 Scene Definitions
-Each scene is a presentation and input layer.
-Scenes do not determine progression; all transitions are dictated by the Flow.
+Each scene is a presentation and input layer only.  
+Scenes do not control progression; all transitions are dictated by the Flow system.
+
 
 #### 6.2.1 Opening Scene
 **Purpose:** Game entry point
+
 - **Display**
   - Game title
-  - Opening Story
+  - Opening story text
   - Start prompt
+
 - **Input**
-  - Start button / Enter to Exit
+  - Start button / Enter key
+
 - **Exit**
   - Proceeds to Main Loop
 
 #### 6.2.2 Combat Scene
-**Purpose:** Display preparation and combat resolution
+**Purpose:** Equipment preparation and deterministic combat resolution
+
 - **Display**
-  - Player ship: `hull`, `shield`, `armor`, `ammo`
-  - Enemy ship: `hull`, `shield`, `armor`, `damage_LONG`, `damage_MID`, `damage_CLOSE`
-  - Inventory display order:  
-    1. Equipped items (checkmarked)  
-    2. Unequipped items  
-  - Each equipment item displays its stats (`shield`, `armor`, `damage_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
-  - After engaging combat: Combat log appears and updates turn-by-turn
+  - **Player status**
+    - `hull`
+    - `shield`
+    - `armor`
+    - `ammo`
+  - **Enemy status**
+    - `hull`
+    - `shield`
+    - `armor`
+    - Attack values: `atk_L`, `atk_M`, `atk_C`
+  - **Inventory display order**
+    1. Equipped items (checkmarked)
+    2. Unequipped items
+  - **Equipment display**
+    - `name`
+    - `eq_type`
+    - `val`
+    - `ammo`
+    - `rw`
+    - `dp`
+  - After combat engagement, a combat log is shown and updated turn-by-turn
 
 - **Input**
-  - **Pre-combat:** Equip/unequip inventory items, then "Engage Combat" button
-  - **During combat:** Combat log updates automatically (no input needed)
-  - **Post-combat:** "Continue" button to proceed
+  - **Pre-combat**
+    - Equip / unequip inventory items
+    - "Engage Combat" button
+  - **During combat**
+    - No input (combat resolves automatically)
+  - **Post-combat**
+    - "Continue" button
 
 - **Notes**
-  - At the first stage, no equipment is selected
+  - At the first stage, no equipment is equipped by default
   - Up to `max_slots` items may be equipped
-  - Previous equipment selections persist between battles
+  - Equipment selections persist between battles
 
 - **Exit**
-  - If player wins and it is the last stage → Game Clear Scene
-  - If player wins → Reward Scene
-  - If player draws AND enemy `type` is Boss → Game Over Scene
-  - If player draws AND enemy `type` is not Boss → Advance stage, return to Main Loop
-  - If player defeats → Game Over Scene
+  - Player victory and final stage → Game Clear Scene
+  - Player victory → Reward Scene
+  - Draw vs Boss enemy → Game Over Scene
+  - Draw vs non-Boss enemy → Advance stage, return to Main Loop
+  - Player defeat → Game Over Scene
 
 #### 6.2.3 Reward Scene
-**Purpose:** Resolve post-combat rewards
+**Purpose:** Resolve post-combat equipment acquisition
+
 - **Display**
-  - Available rewards and their status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
+  - Available reward items
+  - Each reward shows:
+    - `name`
+    - `eq_type`
+    - `val`
+    - `ammo`
+    - `dp`
+
 - **Input**
-  - Select one reward
+  - Select exactly one reward
+
 - **Exit**
-  - Advances stage and returns to Main Loop
+  - Advances stage
+  - Returns to Main Loop
+
 
 #### 6.2.4 Dock Scene
 **Purpose:** Resolve Dock events
