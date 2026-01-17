@@ -83,7 +83,6 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 ### 2.3 Player ship initial state
 - Player ship state
   - `max_hull`: 200,
-  - `hull`: 200,
   - `shield`: 0,
   - `armor`: 0,
   - `ammo`: 12,
