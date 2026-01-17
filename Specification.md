@@ -446,7 +446,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Input**
   - Start button / Enter to Exit
 - **Exit**
-  - Always proceeds to Main Loo
+  - Proceeds to Main Loop
 ---
 
 ### Narrative Scene
