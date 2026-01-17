@@ -1,5 +1,4 @@
-# STAR CANINE SPECIFICATION v0.3.2
-
+# STAR CANINE SPECIFICATION v0.4.0
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -46,7 +45,6 @@ Equipment entries define the following fields:
 - damage_MID: Integer or null. Damage dealt at MID range. null = cannot fire at this range
 - damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot fire at this range
 - ammo_cost: Integer. Ammo consumed per activation (regardless of range)
-- uses_per_battle: Integer or null. Maximum total activations per combat across all ranges. null = unlimited
 
 ##### Defensive Fields:
 - shield: Integer (SHIELD type only). Damage absorbed at LONG range only
@@ -58,9 +56,8 @@ Equipment entries define the following fields:
 
 ##### Design Notes:
   - A weapon can fire at multiple ranges with different damage values
-  - Example: A laser might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
+  - Example: A lost tech mech might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
   - Set damage to null for ranges where the weapon cannot fire
-  - uses_per_battle counts total activations, not per-range (e.g., uses_per_battle: 2 means 2 shots total, not 2 per range)
 
 
 #### 2.1.2 Equipment JSON file
@@ -76,7 +73,6 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 
 ##### Core Fields:
 - enemy_id: String. Unique identifier for the enemy.
-- faction: String. Narrative alignment and affiliation. Example values: SolarBear, K9.
 - hull: Integer. Enemy hit points.
 
 ##### Defensive Fields (Optional):
@@ -87,12 +83,9 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 - damage_LONG: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
 - damage_MID: Integer or null. Damage dealt at MID range. null = cannot attack at this range
 - damage_CLOSE: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
-- uses_LONG: Integer or null. Max uses at LONG range. null = unlimited
-- uses_MID: Integer or null. Max uses at MID range. null = unlimited
-- uses_CLOSE: Integer or null. Max uses at CLOSE range. null = unlimited
 
 ##### Spawn Fields:
-- difficulty: Integer. Global relative threat rating.
+- difficulty: Integer. Threat rating.
 - type: String. Encounter category. One of: Normal, Elite, Boss
      
 #### 2.2.2 Enemy JSON file
@@ -112,87 +105,25 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - initial_items_in_inventory: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
 
-- Player event state
-  - paid_at_dock: false,
-
-- Module state. (not_seen, owned, skipped)
-  - regenerative_hull_plating: not_seen
-  - automated_ammo_synthesizer: not_seen
-  - forward_shield_projector: not_seen
-  - reinforced_hangar: not_seen
-  - expanded_hardpoint_array: not_seen
-  - overloaded_logistics_core: not_seen
-
 
 ### 2.4 Stage layout 
-- There are three type of stages
-  - narrative: story telling scene. display text from Story.
+- There are two type of stages
   - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
-  - event: Special stage.
+    - ACT II, all enemey status x1.5 round down.
+    - ACT III, all enemy status x2.5 round down.
+  - dock: heal and resupply
  
-### 2.4.1 ACT I — DESOLATION
+### 2.4.1 ACT structure
 1. combat: a random enemy (difficulty:1, type:normal)
 1. combat: a random enemy (difficulty:2, type:normal) 
 1. combat: a random enemy (where difficulty:3, type:normal) 
-1. event: Dock 
+1. dock 
 1. combat: an elite (difficulty:5, type:elite)
 1. combat: a random enemy (difficulty:4, type:normal)
 1. combat: a random enemy (difficulty:4, type:normal) 
-1. event: Dock
+1. dock
 1. combat: boss (difficulty:10, type:boss)
 
-### 2.4.2 ACT II — BETRAYAL 
-1. combat: a random enemy (difficulty:11, type:normal)
-1. combat: a random enemy (difficulty:12, type:normal) 
-1. combat: a random enemy (where difficulty:13, type:normal) 
-1. event: Dock 
-1. combat: an elite (difficulty:16, type:elite)
-1. combat: a random enemy (difficulty:14, type:normal)
-1. combat: a random enemy (difficulty:14, type:normal) 
-1. event: Dock
-1. combat: boss (difficulty:20, type:boss)
-
-
-### 2.4.3 ACT III — RECLAMATION  
-1. combat: a random enemy (difficulty:21, type:normal)
-1. combat: a random enemy (difficulty:22, type:normal) 
-1. combat: a random enemy (where difficulty:23, type:normal) 
-1. event: Dock 
-1. combat: an elite (difficulty:26, type:elite)
-1. combat: a random enemy (difficulty:24, type:normal)
-1. combat: a random enemy (difficulty:24, type:normal) 
-1. event: Dock
-1. combat: boss (difficulty:30, type:boss)
-
-
-## 2.5 Boss Reward (Boss Module)
-
-
-### 2.5.1 Boss Module List
-
-#### Regenerative Hull Plating
-- Increase max_hull by **+40**.
-- At the beginning of each combat, **repair 20 hull** (cannot exceed max_hull).
-
-#### Automated Ammo Synthesizer
-- At the beginning of each combat, **gain +1 ammo**.
-
-#### Forward Shield Projector
-- **+1 Equipment Slot**.
-- At the beginning of each combat, **+15 shield**.
-
-#### Reinforced Hangar
-- **+1 Equipment Slot**.
-- At the beginning of each combat, For each **FIGHTER-type attack instance**, add **+5 base damage**.
-- This bonus is applied **before module multipliers**.
-
-#### Expanded Hardpoint Array
-- **+2 Equipment Slots**.
-- Equipment rewards provide **only 1 choice** instead of 3.
-
-#### Overloaded Logistics Core
-- **+2 Equipment Slots**.
-- All **dock payments cost double** (healing and ammo).
 
 -----
 
@@ -200,7 +131,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 
 ### 3.1 Inventory vs Slots
 - **Inventory:** all equipment the player owns
-- **Slots:** up to 6 equipped items. you cannot assign 7 or more equipment
+- **Slots:** up to `max_slots` equipped items
 - You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
@@ -218,25 +149,13 @@ Each combat follows this fixed range sequence:
 - **Turn 3:** Close
 - **Turn 4:** Close
 - **Turn 5:** Mid
-- **Turn 6:** Long
+- **Turn 6:** Long  
 (6 turns total per combat, unless someone is destroyed earlier)
 
 ### 4.2 Start of combat
 - Shield and Armor values are recalculated based on equipped SHIELD and ARMOR items
 - Shield and Armor do NOT persist between battles
 - Hull damage persists between battles
-- **Temporary use counters are initialized:**
-  - Each equipped weapon's remaining uses = its `uses_per_battle` value (null = unlimited)
-  - Each enemy attack's remaining uses = its `uses_LONG`, `uses_MID`, `uses_CLOSE` value (null = unlimited)
-  - These counters exist only during this combat
-  - Counters do NOT modify Equipment_data.json or Enemy_data.json
-  - All counters reset for the next battle
-
-- Apply combat-start effects of all owned Boss Modules:
-    regenerative_hull_plating
-    automated_ammo_synthesizer
-    forward_shield_projector
-    reinforced_hangar
 
 - Multiplier calculation:
   - For each equipped MODULE with a "multiplier" and "target_type":
@@ -254,7 +173,6 @@ On EACH turn:
        - LONG turn: check `damage_LONG`
        - MID turn: check `damage_MID`
        - CLOSE turn: check `damage_CLOSE`
-     - Check if weapon has remaining `uses_per_battle` (if not null)
      - Check if player has sufficient ammo for `ammo_cost`
      - If all checks pass, weapon activates automatically
    - All valid weapons fire simultaneously in the same turn
@@ -277,11 +195,7 @@ On EACH turn:
      - LONG turn: check `damage_LONG`
      - MID turn: check `damage_MID`
      - CLOSE turn: check `damage_CLOSE`
-   - Check if enemy has remaining uses for that range:
-     - LONG turn: check `uses_LONG`
-     - MID turn: check `uses_MID`
-     - CLOSE turn: check `uses_CLOSE`
-   - If both checks pass, enemy attacks automatically
+   - Enemy attacks automatically
    - Player takes damage following damage resolution rules (section 4.4)
 
 5. **Check player status**
@@ -334,49 +248,38 @@ Player loses when:
 
 #### 4.6.1 Normal reward
 
-After winning a battle, the player chooses ONE:
+- After winning a battle, the player chooses ONE:
     - Gain +5 Ammo
     - Choose 1 equipment
 
-Equipment options:  
-    - 3 options if expanded_hardpoint_array is not owned  
-    - 1 option if expanded_hardpoint_array is owned (Boss Module penalty)  
-
-Equipment is selected from equipment_data.json where "reward": true.  
-Display equipment name and status.  
+- Equipment is selected from equipment_data.json where "reward": true.  
+- Display equipment name and status.  
 
 #### 4.6.2 Boss reward 
 
 - Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
 - No boss reward is granted after the **ACT III boss**, which ends the game.
-- Boss Module are **permanent** and cannot be removed.
-- Each Boss Module can be obtained **at most once per run**.
-- Each boss reward presents the player with **3 Boss Module**.
 
+1. **Automatic Restoration:**
+   - Hull is fully restored to max_hull
+   - Gain +12 Ammo
 
-- Boss Reward Resolution:
-    - The player selects exactly one Boss Module.
-    - For the selected Module, set state = owned.
-    - For all other offered Modules, set state = skipped.
-    - Immediately apply the selected Module’s equipment slot bonus.
-    - Heal hull to max_hull. 
+2. **Boss Bonus (Choose ONE):**
+   Player chooses exactly ONE of the following:
+   - **Option A:** +2 Equipment Slots (max_slots increases by 2)
+   - **Option B:** +1 Equipment Slot AND +80 Max Hull and Hull (max_slots +1, max_hull +80, hull +80)
+   - **Option C:** +1 Equipment Slot AND +12 Ammo (max_slots +1, ammo +12)
+
 
 -----
 
 ## 5. Event
 
 ### 5.1 Dock
-Dock is a repair station that provides restoration services in exchange for payment.
+Dock is a repair station.
 
-- Player can skip this event.
-- Player must discard X item(s) from inventory, where X = current ACT number. (ex. ACT II: Discard 2 items)
-  - If overloaded_logistics_core is owned, the X is doubled. (as a Boss Module penalty)
-  - Player selects X item(s) from inventory to discard permanently. 
-  - Item is unequiped and removed from the game. (cannot be recovered) And set paid_at_dock:true
-  - After payment (paid_at_dock:true) , player chooses ONE option:
-    - **Repair:** Heal Hull by 30% (rounded down)
-    - **Resupply:** Gain +7 Ammo
-  - Reset to paid_at_dock:false
+- **Repair:** Heal Hull by 30% (rounded down)
+- **Resupply:** Gain +7 Ammo
 
 -----
 
@@ -400,14 +303,6 @@ Main Loop:
 ├─ If Next Stage is null
 │    → Game Clear Scene
 │    → END / RESTART
-│
-├─ If Next Stage is 1st of ACT
-│    → Narrative Scene (ACT Start)
-│    → continue Main Loop (same stage)
-│
-├─ If Next Stage is last of ACT
-│    → Narrative Scene (Boss Encounter)
-│    → continue Main Loop (same stage)
 │
 ├─ Resolve Stage Type
 │   │
@@ -455,19 +350,6 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Proceeds to Main Loop
 ---
 
-### Narrative Scene
-
-**Purpose:** Story delivery at ACT boundaries
-
-- **Display**
-  - Narrative text
-- **Input**
-  - Continue button / Enter to Exit
-- **Exit**
-  - Returns to Main Loop
-
----
-
 ### Pre-Combat Scene
 
 **Purpose:** Loadout confirmation before combat
@@ -497,7 +379,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 
 - **Display**
   - Current player ship: Hull, Shield, Armor, Ammo
-  - Current enemy ship: Hull, Shield, Armor, Ammo
+  - Current enemy ship: Hull, Shield, Armor, dagame_LONG, damage_MID, damage_CLOSE
   - Step-by-step combat log
 - **Input**
   - Continue button / Enter
@@ -561,17 +443,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 
 -----
 
-## 7. Story
+## 7. Story Opening
 
-- ACT I   — DESOLATION 
-  - location:Far orbital area
-- ACT II  — BETRAYAL 
-  - location:Asteroid belt
-- ACT III — RECLAMATION 
-  - location:Planet K9
-
-### 7.1 ACT I — DESOLATION
-- Start
 ```
 Ship ID confirmed: STAR CANINE  
 Command authority: CAPTAIN  
@@ -594,88 +467,6 @@ Solar Bear Empire detected in K9 orbit.
 Occupation status: ACTIVE.
 
 Setting course for K9.
-```
-
-- Boss Encounter 
-
-```
-Ship location: K9 Outer Orbit  
-Massive signature detected: URSA-CLASS DREADNOUGHT  
-Sender ID: COMMODORE URSA  
-
-"A stray dog is sniffing at the gate.  
-K9 is no longer your dog house—it belongs to the Empire.  
-No bone for you, underdog.”  
-
-Warning: Imperial Railguns charging.  
-Status: EXTERMINATION  
-```
-
-### 7.2 ACT II  — BETRAYAL 
-- Start
-```
-Ship location: Asteroid Belt (Inner)  
-Unknown signal detected.  
-Decrypting...  
-Sender ID: COMMANDER FENRIR  
-
-"Signal confirmed.  
-Star Canine, is that you, 'Blue Wolf'?  
-I've been fighting the Bears from the shadows.  
-Let me assist."  
-
-Action: VANGUARD LOGISTICS  
-Status: Hull restored to 100%. +12 Ammo. 
-Target Update: MOON BEAR.  
-
-"Kill MOON BEAR.  
-If he falls, the Empire's grip on K9 breaks.  
-Clear the path, Blue Wolf.  
-I’ll secure your flank."  
-```
-
-- Boss Encounter 
-```
-Target status: MOON BEAR NEUTRALIZED.  
-Incoming transmission...  
-Sender ID: COMMANDER FENRIR  
-
-"Moon bear is gone.  
-The Bears have a new General.  
-Me.  
-Thank you for your hard work, Blue Wolf.  
-
-Rest in peace."  
-
-Signal lost.  
-Warning: Target lock detected.  
-Origin: FENRIR.  
-Status: DANGER.
-```
-
-### 7.3 ACT III — RECLAMATION 
-Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
-
-- Start
-```
-“Fight with cudgel.  
-No cudgel, use your claw.  
-No claw, use your fang.  
-No fang, use your soul.   
-Fight until nothing left."   
-— DEITY OF BLUE WOLF (Canto IV, Line 12)  
-```
-
-- Boss Encounter  
-Encountering Celestial Reaper, the boss of Solar Bear. Overlapping the myth. 
-
-```
-Reminiscence of academy five years ago  
-FENRIR: "You don't get it, right? My grandma told me the story.  
-The Blue Wolf... the deity that conquered the Great Continent.  
-It’s an incarnation. A living god in a canine body. It appears when Canine is in danger.   
-
-You got a good callsign, Blue Wolf. Sleep tight.   
 ```
 
 **END OF SPECIFICATION**
