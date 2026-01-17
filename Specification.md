@@ -591,54 +591,61 @@ Setting course for K9.
 ```
 
 - Boss Encounter 
-> Ship location: K9 Outer Orbit  
-> Massive signature detected: URSA-CLASS DREADNOUGHT  
-> Sender ID: COMMODORE URSA  
-> 
-> "A stray dog is sniffing at the gate.  
-> K9 is no longer your dog house—it belongs to the Empire.  
-> No bone for you, underdog.”  
->
-> Warning: Imperial Railguns charging.  
-> Status: EXTERMINATION  
+
+```
+Ship location: K9 Outer Orbit  
+Massive signature detected: URSA-CLASS DREADNOUGHT  
+Sender ID: COMMODORE URSA  
+
+"A stray dog is sniffing at the gate.  
+K9 is no longer your dog house—it belongs to the Empire.  
+No bone for you, underdog.”  
+
+Warning: Imperial Railguns charging.  
+Status: EXTERMINATION  
+```
 
 ### 7.2 ACT II  — BETRAYAL 
 - Start
-> Ship location: Asteroid Belt (Inner)  
-> Unknown signal detected.  
-> Decrypting...  
-> Sender ID: COMMANDER FENRIR  
->  
-> "Signal confirmed.  
-> Star Canine, is that you, 'Blue Wolf'?  
-> I've been fighting the Bears from the shadows.  
-> Let me assist."  
->  
-> Action: VANGUARD LOGISTICS  
-> Status: Hull restored to 100%. +12 Ammo. 
-> Target Update: MOON BEAR.  
->  
-> "Kill MOON BEAR.  
-> If he falls, the Empire's grip on K9 breaks.  
-> Clear the path, Blue Wolf.  
-> I’ll secure your flank."  
+```
+Ship location: Asteroid Belt (Inner)  
+Unknown signal detected.  
+Decrypting...  
+Sender ID: COMMANDER FENRIR  
+
+"Signal confirmed.  
+Star Canine, is that you, 'Blue Wolf'?  
+I've been fighting the Bears from the shadows.  
+Let me assist."  
+
+Action: VANGUARD LOGISTICS  
+Status: Hull restored to 100%. +12 Ammo. 
+Target Update: MOON BEAR.  
+
+"Kill MOON BEAR.  
+If he falls, the Empire's grip on K9 breaks.  
+Clear the path, Blue Wolf.  
+I’ll secure your flank."  
+```
 
 - Boss Encounter 
+```
+Target status: MOON BEAR NEUTRALIZED.  
+Incoming transmission...  
+Sender ID: COMMANDER FENRIR  
 
-> Target status: MOON BEAR NEUTRALIZED.  
-> Incoming transmission...  
-> Sender ID: COMMANDER FENRIR  
->  
-> "Moon bear is gone.  
-> The Bears have a new General.  
-> Me.  
-> Thank you for your hard work, Blue Wolf.  
-> Rest in peace."  
->  
-> Signal lost.  
-> Warning: Target lock detected.  
-> Origin: FENRIR.  
-> Status: DANGER.  
+"Moon bear is gone.  
+The Bears have a new General.  
+Me.  
+Thank you for your hard work, Blue Wolf.  
+
+Rest in peace."  
+
+Signal lost.  
+Warning: Target lock detected.  
+Origin: FENRIR.  
+Status: DANGER.
+```
 
 ### 7.3 ACT III — RECLAMATION 
 Star Canine arrives at K9, continuing fierce battles. No message exchange between Star Canine and Solar Bears. Only reverberation of explosions. 
