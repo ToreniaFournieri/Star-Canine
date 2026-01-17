@@ -270,36 +270,17 @@ Main Loop:
 ┌────────────────────────┐
 │ Check Next Stage       │
 └────────────────────────┘
+│ 
+├─ If type is Combat
+│   ↓
+│   Combat Scene
+│   ↓
+│   Reward Scene
 │
-├─ If Next Stage is null
-│    → Game Clear Scene
-│    → END / RESTART
-│
-├─ Resolve Stage Type
-│   │
-│   ├─ If type is Combat
-│   │    ↓
-│   │  Pre-Combat Scene
-│   │    ↓
-│   │  Combat Log Scene
-│   │    ├─ Win
-│   │    │    → Reward Scene
-│   │    │    → advance stage
-│   │    │    → continue Main Loop
-│   │    ├─ Draw AND Boss
-│   │    │    → Game Over Scene
-│   │    │    → END / RESTART
-│   │    ├─ Draw AND Not Boss
-│   │    │    → advance stage (no reward)
-│   │    │    → continue Main Loop
-│   │    └─ Lose
-│   │         → Game Over Scene
-│   │         → END / RESTART
-│   │
-│   └─ If type is Dock
-│        → Event Scene (Dock)
-│        → advance stage
-│        → continue Main Loop
+└─ If type is Dock
+    ↓
+    Dock Scene
+
 ```
 
 ### 6.2 Scene Definitions
@@ -316,8 +297,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Proceeds to Main Loop
 
-#### Pre-Combat Scene
-**Purpose:** Loadout confirmation before combat
+#### Combat Scene
+**Purpose:** Display preparation and combat resolution
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Enemy ship: `hull`, `shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`
@@ -325,26 +306,21 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
     1. Equipped items (checkmarked)  
     2. Unequipped items  
   - Each equipment item displays its status (`shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`, `target_type`, `multiplier`)
+  - Display combat rog after engaing combat
 - **Input**
   - Equip or unequip inventory items
-  - Engage Combat button / command to Exit
+  - Engage Combat button / command
+  - Continue button / command
 - **Notes**
   - At the first stage, no equipment is selected
   - Up to `max_slots` items may be equipped
   - Previous equipment selections persist
 - **Exit**
-  - Proceeds to Combat Log Scene 
-
-#### Combat Log Scene
-**Purpose:** Display deterministic combat resolution
-- **Display**
-  - Player ship: `hull`, `shield`, `armor`, `ammo`
-  - Enemy ship: `hull`, `shield`, `armor`, `dagame_LONG`, `damage_MID`, `damage_CLOSE`
-  - Step-by-step combat log
-- **Input**
-  - Continue button / Enter
-- **Exit**
-  - Outcome is resolved by Flow (Win / Draw / Lose)
+  - If player win and it is last stage, Game clear!
+  - ElseIf player win, Proceeds to Reward Scene
+  - Elseif player draw and enemy `type` is Boss, Game over...
+  - Elseif player draw and enemy `type` is not Boss, Advances stage and returns to Main Loop
+  - Elseif player lost, Game over...
 
 #### Reward Scene
 **Purpose:** Resolve post-combat rewards
@@ -355,8 +331,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### Event Scene (Dock)
-**Purpose:** Resolve Dock-type stage events
+#### Dock Scene
+**Purpose:** Resolve Dock events
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Event options
@@ -364,26 +340,6 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Select an option and continue to Exit
 - **Exit**
   - Advances stage and returns to Main Loop
-
-#### Game Clear Scene
-**Purpose:** End-of-run success state
-- **Display**
-  - Final player ship status (`hull`, `shield`, `armor`, `ammo`)
-  - Player progress summary
-- **Input**
-  - Restart button / Enter to Exit
-- **Exit**
-  - Restart game
-
-#### Game Over Scene
-**Purpose:** End-of-run failure state
-- **Display**
-  - Final player ship status (`hull`, `shield`, `armor`, `ammo`)
-  - Player progress summary
-- **Input**
-  - Restart button / Enter to Exit
-- **Exit**
-  - Restart game
 
 -----
 
