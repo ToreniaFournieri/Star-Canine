@@ -109,7 +109,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - Player event state
   - paid_at_dock: false,
 
-- Boss Module state. (not_seen, owned, skipped)
+- Module state. (not_seen, owned, skipped)
   - regenerative_hull_plating: not_seen
   - automated_ammo_synthesizer: not_seen
   - forward_shield_projector: not_seen
