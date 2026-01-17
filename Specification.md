@@ -472,7 +472,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Inventory display order:  
     1. Equipped items (checkmarked)  
     2. Unequipped items  
-    Each equipment item displays its status
+  - Each equipment item displays its status
 - **Input**
   - Equip or unequip inventory items
   - Engage Combat button / command to Exit
