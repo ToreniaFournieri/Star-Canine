@@ -121,28 +121,67 @@ name,val,ammo,eq_type,rw,dp
 ```
 
 ### 2.2 Enemy Data
-Enemy data is defined in JSON. Each enemy entry represents a single hostile unit encountered in combat.
+Enemy data is defined as CSV-style rows embedded directly in the specification.
+Each row represents a single hostile unit encountered in combat.
 
 #### 2.2.1 Enemy Fields
 
-1. **Core Fields**:
-- `enemy_id`: String. Unique identifier for the enemy.
-- `hull`: Integer. Enemy hit points.
-- `shield`: Integer. Shield value.
-- `armor`: Integer. Armor value.
+Enemy data columns **must follow this exact order**:
+```
+diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
+```
 
-2. **Attack Fields**:
-- `damage_LONG`: Integer or null. Damage dealt at LONG range. null = cannot attack at this range
-- `damage_MID`: Integer or null. Damage dealt at MID range. null = cannot attack at this range
-- `damage_CLOSE`: Integer or null. Damage dealt at CLOSE range. null = cannot attack at this range
+#### 2.2.2 Enemy Field Definitions
 
-3. **Spawn Fields**:
-- `difficulty`: Integer. Threat rating.
-- `type`: String. Encounter category. One of: Normal, Elite, Boss
+1. **diff**  
+   Integer. Difficulty tier used for enemy pool selection and ACT scaling.
+
+2. **name**  
+   String. Enemy display name. Must be unique within the enemy list.
+
+3. **hull**  
+   Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
+
+4. **shield**  
+   Integer. Shield value. Absorbs damage at **LONG range only**.
+
+5. **armor**  
+   Integer. Armor value. Absorbs damage at **CLOSE range only**.
+
+6. **rank**  
+   String. Enemy classification. One of:
+   - `Normal`
+   - `Elite`
+   - `Boss`
+
+7. **atk_L**  
+   Integer or `0`. Damage dealt at **LONG range**.  
+   `0` means the enemy cannot attack at this range.
+
+8. **atk_M**  
+   Integer or `0`. Damage dealt at **MID range**.  
+   `0` means the enemy cannot attack at this range.
+
+9. **atk_C**  
+   Integer or `0`. Damage dealt at **CLOSE range**.  
+   `0` means the enemy cannot attack at this range.
+
      
-#### 2.2.2 Enemy JSON file
-**Data source precedence:**  
-https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
+#### 2.2.2 Enemy csv layout
+
+```
+diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
+1,Scrap Skirmisher,30,0,0,NORMAL,0,0,10
+2,Void Drifter,35,5,0,NORMAL,20,0,10
+3,Rustbound Scout,40,0,10,NORMAL,0,0,15
+3,Debris Lancer,45,10,0,NORMAL,30,0,15
+5,Cold Orbit Raider,50,10,10,ELITE,30,0,20
+4,Gravewake Interceptor,55,15,10,NORMAL,35,0,20
+4,Iron Dust Frigate,65,0,20,NORMAL,20,0,25
+4,Ashline Enforcer,70,20,15,ELITE,40,0,25
+8,Void Howler,80,25,20,ELITE,45,0,30
+10,Black Orbit Marauder,100,30,40,BOSS,50,0,35
+```
 
 ### 2.3 Player ship initial state
 - Player ship state
