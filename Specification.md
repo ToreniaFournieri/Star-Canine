@@ -26,9 +26,7 @@
 - No hidden rules
 
 -----
-
 ## 2. DEFINITIONS
-
 ### 2.1 Equipment Data
 #### 2.1.1 Equipment Fields
 Equipment entries define the following fields:
@@ -59,11 +57,9 @@ Equipment entries define the following fields:
   - Example: A lost tech mech might deal 5 damage at LONG (diffused), 15 at MID, and 25 at CLOSE (focused)
   - Set damage to null for ranges where the weapon cannot fire
 
-
 #### 2.1.2 Equipment JSON file
 **Data source precedence:**  
 If an Equipment JSON file is provided as part of the project input, that file is authoritative and overrides the Equipment JSON referenced by the repository URL.
-
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Equipment_data.json
 
 ### 2.2 Enemy Data
@@ -91,7 +87,6 @@ Enemy data is defined in JSON. Each enemy entry represents a single hostile unit
 #### 2.2.2 Enemy JSON file
 **Data source precedence:**  
 If an Enemy JSON file is provided as part of the project input, that file is authoritative and overrides the Equipment JSON referenced by the repository URL.
-
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.json
 
 ### 2.3 Player ship initial state
@@ -104,7 +99,6 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
   - max_slots: 6,
   - inventory: [1, 2, 2, 3]
     - These number aee "Equipment_data.json"'s id. 
-
 
 ### 2.4 Stage layout 
 - There are two type of stages
@@ -124,9 +118,7 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 1. dock
 1. combat: boss (difficulty:10, type:boss)
 
-
 -----
-
 ## 3. EQUIPMENT SYSTEM
 
 ### 3.1 Inventory vs Slots
@@ -135,7 +127,6 @@ https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Enemy_data.j
 - You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
 - Equipment can be freely swapped between battles
-
 
 -----
 
@@ -162,7 +153,6 @@ Each combat follows this fixed range sequence:
     - All weapons with matching "type" have their damage multiplied
     - Multiple multipliers stack multiplicatively (two x2 modules = x4 total, two x3 modules = x9 total)
     - Example: If you equip "Prismatic Lens" (multiplier: 2, target_type: LASER), all LASER weapons deal double damage
-
 
 ### 4.3 Attack Resolution Rule
 
@@ -275,19 +265,16 @@ Player loses when:
 
 ### 5.1 Dock
 Dock is a repair station.
-
 - **Repair:** Heal Hull by 30% (rounded down)
 - **Resupply:** Gain +7 Ammo
 
 -----
 
 ## 6. Scene and Flow
-
 This section defines the authoritative game progression flow and the scenes used to present game state.
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
 ### 6.1 Flow
-
 ```
 START
 ↓
@@ -330,15 +317,11 @@ Main Loop:
 ```
 
 ### 6.2 Scene Definitions
-
 Each scene is a presentation and input layer.
 Scenes do not determine progression; all transitions are dictated by the Flow.
 
-
-### Opening Scene
-
+#### Opening Scene
 **Purpose:** Game entry point
-
 - **Display**
   - Game title
   - Start prompt
@@ -346,12 +329,9 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Start button / Enter to Exit
 - **Exit**
   - Proceeds to Main Loop
----
 
-### Pre-Combat Scene
-
+#### Pre-Combat Scene
 **Purpose:** Loadout confirmation before combat
-
 - **Display**
   - Player ship: Hull, Shield, Armor, Ammo
   - Enemy ship: Hull, Shield, Armor, Ammo, dagame_LONG, damage_MID, damage_CLOSE
@@ -369,12 +349,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Proceeds to Combat Log Scene 
 
----
-
-### Combat Log Scene
-
+#### Combat Log Scene
 **Purpose:** Display deterministic combat resolution
-
 - **Display**
   - Current player ship: Hull, Shield, Armor, Ammo
   - Current enemy ship: Hull, Shield, Armor, dagame_LONG, damage_MID, damage_CLOSE
@@ -384,12 +360,8 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Outcome is resolved by Flow (Win / Draw / Lose)
 
----
-
-### Reward Scene
-
+#### Reward Scene
 **Purpose:** Resolve post-combat rewards
-
 - **Display**
   - Available rewards and their status (shield, armor, dagame_LONG, damage_MID, damage_CLOSE, multiplier)
 - **Input**
@@ -397,8 +369,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Advances stage and returns to Main Loop
 
----
-### Event Scene (Dock)
+#### Event Scene (Dock)
 **Purpose:** Resolve Dock-type stage events
 - **Display**
   - Player ship: Hull, Shield, Armor, Ammo
@@ -408,8 +379,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Advances stage and returns to Main Loop
 
----
-### Game Clear Scene
+#### Game Clear Scene
 **Purpose:** End-of-run success state
 - **Display**
   - Final player ship status
@@ -419,8 +389,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
 - **Exit**
   - Restart game
 
----
-### Game Over Scene
+#### Game Over Scene
 **Purpose:** End-of-run failure state
 - **Display**
   - Final player ship status
@@ -429,6 +398,7 @@ Scenes do not determine progression; all transitions are dictated by the Flow.
   - Restart button / Enter to Exit
 - **Exit**
   - Restart game
+
 -----
 
 ## 7. Story Opening
