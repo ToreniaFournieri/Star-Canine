@@ -95,15 +95,16 @@ name,val,ammo,eq_type,reward,disposable
 🚀 Lance,40,3,LONG,0,0
 🚀🚀 Meteor,50,4,LONG,1,0
 🚀🚀🚀 Nova,65,5,LONG,1,0
-🚀💥 Gambit,120,0,LONG,1,1
+🚀💥 Gambit,80,0,LONG,1,1
 🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
 ✈️ Drones,10,0,MID,1,0
 ✈️✈️ Wing,20,1,MID,1,0
 ✈️✈️✈️ Squadron,35,2,MID,1,0
+✈️💥 Kamikaze,80,0,MID,1,1
 ⚙️ Uplink,2,0,MODULE_FIGHTER,1,0
 ⚡ Cutter,10,0,CLOSE,0,0
 ⚡⚡ Craw,15,0,CLOSE,1,0
-⚡⚡⚡ Fang,250,0,CLOSE,1,0
+⚡⚡⚡ Fang,25,0,CLOSE,1,0
 ⚡💥 Singularity Core,80,0,CLOSE,1,1
 💎 Prismatic Lens,2,0,MODULE_LASER,1,0
 🟫 Plating,25,0,ARMOR,0,0
