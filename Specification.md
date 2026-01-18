@@ -324,31 +324,32 @@ After combat ends:
 - **Combat log message:**
 > [Item Name] has burned out. Replaced with `⚠️ Broken Scrap`.
 
-### 4.5.2 Draw Condition
-A draw occurs if:
-- Both player and enemy are alive after **Turn 6**.
-
-**Draw effects:**
-- Combat ends immediately.
-- No rewards granted.
-- If `enemy rank = Boss` → **Game Over**.
-- Otherwise → Advance to next stage.
-
-### 4.5.3 Win / Defeat Conditions
-- **Win:** Enemy hull ≤ 0 before Turn 6 ends.
-- **Defeat:**
-    * Player hull ≤ 0 at any time.
-    * **OR** draw against a Boss enemy.
+### 4.5.2 Combat Outcomes
+A combat ends with one of three results:
+**Clear:**
+- Enemy `hull` ≤ 0 before Turn 6 ends
+- It is a final stage
+- Game Clear
+**Victory:**
+- Enemy `hull` ≤ 0 before Turn 6 ends
+- It is not a final stage
+- Player receives rewards (see 4.6)
+**Defeat:**
+- Player `hull` ≤ 0 at any point
+- **OR** draw occurs against a Boss enemy (`type` = "Boss")
+- Game Over
+**Draw:**
+- Both player and enemy are alive after Turn 6
+- No rewards granted
+- Note: if enemy `rank` = "Boss" → Count as a Defeat (Game Over)
+- Otherwise → Advance to next stage
 
 ---
 ## 4.6 Rewards
 ### 4.6.1 Normal Battle Reward
 After a win, player chooses **ONE**:
 - +5 Ammo
-- 1 Equipment item
-
-**Equipment pool:**
-- Selected from equipment data where `"reward": true`.
+- Choose 1 equipment from 3 randomly selected items (where `"reward": true`)
 
 ### 4.6.2 Boss Rewards
 Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss).
@@ -358,9 +359,9 @@ Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss)
 - +12 Ammo.
 
 **Choose ONE bonus:**
-- **Option A:** `max_slots +2`
-- **Option B:** `max_slots +1`, `max_hull +80`, `hull +80`
-- **Option C:** `max_slots +1`, `ammo +12`
+1. `max_slots +2`
+2. `max_slots +1`, `max_hull +80`, `hull +80`
+3. `max_slots +1`, `ammo +12`
 
 ## 4.7 Implementation Constraint (LLM Guidance)
 - **Combat logic MUST be:**
@@ -439,12 +440,12 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - Equipment selections persist between battles
 
 - **Exit**
-  - Player victory and final stage → Game End Scene
-  - Player victory → Reward Scene
-  - Draw vs Boss enemy → Game End Scene
-  - Draw vs non-Boss enemy → Advance stage, return to Main Loop
-  - Player defeat → Game End Scene
-
+  - Detailed conditions described in 4.5.2 Combat Outcomes
+    - Clear → Game End Scene
+    - Victory → Reward Scene
+    - Draw → Advance stage, return to Main Loop
+    - Defeat → Game End Scene
+ 
 #### 6.2.2 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
 
