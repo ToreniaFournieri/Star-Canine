@@ -373,6 +373,7 @@ Main Loop:
 ```
 
 ### 6.2 Scene Definitions
+- Each scene is a presentation and input layer only.  
 - Scenes do not control progression; all transitions are dictated by the Flow system.
 
 #### 6.2.1 Start Scene
