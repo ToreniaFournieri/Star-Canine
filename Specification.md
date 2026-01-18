@@ -383,6 +383,8 @@ This section defines the authoritative game progression flow and the scenes used
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
 ### 6.1 Flow
+
+- Main loop decides the next scence by following flow:
 ```
 START
 ↓
