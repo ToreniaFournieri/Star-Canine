@@ -326,12 +326,19 @@ This phase occurs after the 6th turn ends or a ship is destroyed.
 
 #### 4.5.1 Cleanup & Evolution
 1. **Disposable Removal:** Items with `disposable: 1` are replaced with `⚠️ Broken Scrap`.
-2. **Scaling Abilities:** Items with `+X damage per combat` have their `power_stat` permanently increased.
-3. **Utility Repair:** - Sum all `+X hull repair` abilities from equipped `UTILITY` items.
+2. **Utility Repair:** - Sum all `+X hull repair` abilities from equipped `UTILITY` items.
     - Apply `MODULE_UTILITY` multipliers to this sum.
     - Heal player `hull` by the resulting total (clamped to `max_hull`).
 
-#### 4.5.2 Outcomes
+#### 4.5.2 Permanent Stat Mutation
+- For each item in the ACTIVE slots:
+  - If `ability` contains `+X damage per combat`:
+    - PARSE X.
+    - UPDATE that specific instance's `power_stat` in the `playerState.inventory`.
+- CRITICAL: These changes MUST be saved to the global state before the Reward Scene is initialized.
+
+
+#### 4.5.3 Outcomes
 - **Clear:** Boss of Stage 30 defeated (End of ACT III). (Game Clear).
 - **Victory:** Enemy `hull` ≤ 0. (Proceed to Rewards).
 - **Defeat:** Player `hull` ≤ 0 OR Boss remains alive after Turn 6. (Game Over).
