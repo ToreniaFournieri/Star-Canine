@@ -24,8 +24,9 @@
 - Easy to reason damage
 - Minimal state tracking
 - No hidden rules
+- Optimize token usuage
 
-- **FOR AI coders, especially Claude**  
+**FOR AI coders, especially Claude**  
 To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
