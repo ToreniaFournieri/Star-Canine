@@ -183,7 +183,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,0,NORMAL,0,0,10
 2,Drifter,35,5,0,NORMAL,20,0,10
 3,Scout,40,0,10,NORMAL,0,0,15
-3,ancer,45,10,0,NORMAL,30,0,15
+3,Lancer,45,10,0,NORMAL,30,0,15
 5,Raider,50,10,10,ELITE,30,0,20
 4,Interceptor,55,15,10,NORMAL,35,0,20
 4,Frigate,65,0,20,NORMAL,20,0,25
@@ -210,15 +210,15 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - dock: heal and resupply
  
 ### 2.4.1 ACT structure
-1. combat: a random enemy (difficulty:1, type:normal)
+1. combat: a random enemy (difficulty:1, rank:normal)
 1. combat: a random enemy (difficulty:2, type:normal) 
-1. combat: a random enemy (where difficulty:3, type:normal) 
+1. combat: a random enemy (where difficulty:3, rank:normal) 
 1. dock 
-1. combat: an elite (difficulty:5, type:elite)
-1. combat: a random enemy (difficulty:4, type:normal)
-1. combat: a random enemy (difficulty:4, type:normal) 
+1. combat: an elite (difficulty:5, rank:elite)
+1. combat: a random enemy (difficulty:4, rank:normal)
+1. combat: a random enemy (difficulty:4, rank:normal) 
 1. dock
-1. combat: boss (difficulty:10, type:boss)
+1. combat: boss (difficulty:10, rank:boss)
 
 -----
 ## 3. EQUIPMENT SYSTEM
@@ -340,7 +340,7 @@ A draw occurs if:
 **Draw effects:**
 - Combat ends immediately.
 - No rewards granted.
-- If `enemy type = Boss` → **Game Over**.
+- If `enemy rank = Boss` → **Game Over**.
 - Otherwise → Advance to next stage.
 
 ### 4.5.3 Win / Defeat Conditions
@@ -444,7 +444,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - Equip / unequip inventory items
     - "Engage Combat" button
   - **During combat**
-    - "Continue" button 
+    - No player input (combat resolves automatically)
   - **Post-combat**
     - "Continue" button
 
