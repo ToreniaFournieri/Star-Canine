@@ -30,8 +30,8 @@
 
 1. **Robust CSV Parsing** To optimize token usage and prevent data-type errors, embed data as a CSV string and use a sanitizing parser. The parser must trim whitespace from headers and values to prevent LLM-formatting artifacts from breaking the game logic.
 
-   **REQUIRED Sanitizing Parser Pattern:**
-   ```javascript
+**REQUIRED Sanitizing Parser Pattern:**
+```javascript
    const parseCSV = (csv) => {
      const lines = csv.trim().split('\n');
      const headers = lines[0].split(',').map(h => h.trim());
