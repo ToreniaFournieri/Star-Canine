@@ -119,7 +119,7 @@ Each row represents a single hostile unit encountered in combat.
 
 #### 2.2.1 Enemy Field Definitions
 
-1. `diff`: Integer. Difficulty tier used for enemy pool selection and ACT scaling.
+1. `difficulty`: Integer. Difficulty tier used for enemy pool selection and ACT scaling.
 2. `name`: String. Enemy display name. Must be unique within the enemy list.
 3. `hull`: Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
 4. `shield`: Integer. Shield value. Absorbs damage at **LONG range only**.
@@ -132,7 +132,7 @@ Each row represents a single hostile unit encountered in combat.
 #### 2.2.2 Enemy csv layout
 
 ```
-diff,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
+difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,0,NORMAL,0,0,10
 2,Drifter,35,5,0,NORMAL,20,0,10
 3,Scout,40,0,10,NORMAL,0,0,15
