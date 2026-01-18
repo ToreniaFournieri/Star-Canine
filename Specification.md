@@ -129,7 +129,7 @@ Abilities are parsed for a numeric value and a target keyword.
 - All behavior must be derived from `eq_type` and `ability` fields.
 - Scaling items (e.g., `Rookie fighter`) must have their `power_stat` tracked individually in the player's unique inventory instance.
 
-#### 2.1.4 Equipment csv layout
+### 2.1.5 Equipment csv layout
 
 ```csv
 name,power_stat,ammo_cost,eq_type,rarity,disposable,ability
@@ -247,7 +247,7 @@ ACT III: Stages 21–30 (Scale x3.0)
 - ONLY equipped items affect combat
 - Equipment can be swapped Pre-combat scene
 
-### 3.1 How equipment works
+### 3.2 How equipment works
   - At the first stage, no equipment is equipped by default
   - Up to `max_slots` items may be equipped
   - Equipment selections **persist** between stages
