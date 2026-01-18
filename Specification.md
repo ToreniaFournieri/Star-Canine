@@ -387,7 +387,8 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     2. Unequipped items
   - **Equipment display**
     - `name`, `eq_type`, `val`, `ammo`, `disposable `
-  - After combat engagement, a combat log is shown
+  - **LOG**
+    - After combat engagement, a combat log is shown
 
 - **Input**
   - **Pre-combat**
