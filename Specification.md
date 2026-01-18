@@ -399,7 +399,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
+    - `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `, `ability`
   - **LOG**
     - After combat engagement, a combat log is shown
 - **Input**
@@ -421,7 +421,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 **Purpose:** Resolve post-combat equipment acquisition
 - **Display**
   - Available normal reward items
-  - Each reward shows: `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
+  - Each reward shows: `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `, `ability`
   - Boss reward list
 - **Input**
   - **Normal reward**
