@@ -92,23 +92,23 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 
 ```
 name,val,ammo,eq_type,reward,disposable
-🚀 Comet Lance,40,3,LONG,0,0
-🚀 Meteor Spear,50,3,LONG,1,0
-🚀🚀 Twin Nova Rack,65,6,LONG,1,0
-🚀🚀💥 Final Gambit,120,0,LONG,1,1
+🚀 Lance,40,3,LONG,0,0
+🚀🚀 Meteor,50,4,LONG,1,0
+🚀🚀🚀 Nova,65,5,LONG,1,0
+🚀💥 Gambit,120,0,LONG,1,1
 🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
-✈️ Suppression Drones,10,0,MID,1,0
-✈️ Skirmish Wing,20,1,MID,1,0
-✈️✈️ Breaker Squadron,35,2,MID,1,0
-⚙️ Hangar Uplink,2,0,MODULE_FIGHTER,1,0
-⚡ Hull Cutter,10,0,CLOSE,0,0
-⚡ Plasma Fang,15,0,CLOSE,1,0
-⚡⚡ Solar Overload,25,0,CLOSE,1,0
-⚡⚡⚡ Singularity Core,80,0,CLOSE,1,1
+✈️ Drones,10,0,MID,1,0
+✈️✈️ Wing,20,1,MID,1,0
+✈️✈️✈️ Squadron,35,2,MID,1,0
+⚙️ Uplink,2,0,MODULE_FIGHTER,1,0
+⚡ Cutter,10,0,CLOSE,0,0
+⚡⚡ Craw,15,0,CLOSE,1,0
+⚡⚡⚡ Fang,250,0,CLOSE,1,0
+⚡💥 Singularity Core,80,0,CLOSE,1,1
 💎 Prismatic Lens,2,0,MODULE_LASER,1,0
-🟫 Reinforced Plating,25,0,ARMOR,0,0
-🛡️ Magnetic Veil,15,0,SHIELD,1,0
-🛡️🛡️ Aegis Field,30,0,SHIELD,1,0
+🟫 Plating,25,0,ARMOR,0,0
+🛡️ Veil,15,0,SHIELD,1,0
+🛡️🛡️ Aegis,30,0,SHIELD,1,0
 ⚠️ Broken Scrap,0,0,JUNK,0,0
 ```
 
@@ -132,16 +132,16 @@ Each row represents a single hostile unit encountered in combat.
 
 ```
 diff,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
-1,Scrap Skirmisher,30,0,0,NORMAL,0,0,10
-2,Void Drifter,35,5,0,NORMAL,20,0,10
-3,Rustbound Scout,40,0,10,NORMAL,0,0,15
-3,Debris Lancer,45,10,0,NORMAL,30,0,15
-5,Cold Orbit Raider,50,10,10,ELITE,30,0,20
-4,Gravewake Interceptor,55,15,10,NORMAL,35,0,20
-4,Iron Dust Frigate,65,0,20,NORMAL,20,0,25
-4,Ashline Enforcer,70,20,15,ELITE,40,0,25
-8,Void Howler,80,25,20,ELITE,45,0,30
-10,Black Orbit Marauder,100,30,40,BOSS,50,0,35
+1,Skirmisher,30,0,0,NORMAL,0,0,10
+2,Drifter,35,5,0,NORMAL,20,0,10
+3,Scout,40,0,10,NORMAL,0,0,15
+3,ancer,45,10,0,NORMAL,30,0,15
+5,Raider,50,10,10,ELITE,30,0,20
+4,Interceptor,55,15,10,NORMAL,35,0,20
+4,Frigate,65,0,20,NORMAL,20,0,25
+4,Enforcer,70,20,15,ELITE,40,0,25
+8,Howler,80,25,20,ELITE,45,0,30
+10,the Boss,100,30,40,BOSS,50,0,35
 ```
 
 ### 2.3 Player ship initial state
