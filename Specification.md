@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.9
+# STAR CANINE SPECIFICATION v0.5.10
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -460,7 +460,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 
 - **Exit**
   - Advances stage
-  - Returns to Main Loop
+  - Returns to Main Loop (Scene would be Combat Scene, Dock Scene or Game end(Game Clear))
 
 #### 6.2.3 Dock Scene
 **Purpose:** Resolve Dock events
