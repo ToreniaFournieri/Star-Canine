@@ -1,5 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.6
-- Version note:Easyer for testing abilities functions
+# STAR CANINE SPECIFICATION v0.6.7
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -353,7 +352,6 @@ This section defines the authoritative game progression flow and the scenes used
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
 ### 6.1 Flow
-
 - Main loop decides the next Scene by following flow:
 ```
 Start Scene
@@ -375,23 +373,15 @@ Main Loop:
 ```
 
 ### 6.2 Scene Definitions
-Each scene is a presentation and input layer only.  
-Scenes do not control progression; all transitions are dictated by the Flow system.
+- Scenes do not control progression; all transitions are dictated by the Flow system.
 
 #### 6.2.1 Start Scene
-- **Display**
-  - Title, version
-  - Opening Story
-- **Input**
-  - "Launch" to Exit
-- **Exit**
-  - Move to Main Loop (Stage 1)
 
 #### 6.2.2 Combat Scene
 **Purpose:** Equipment preparation and deterministic combat resolution
 - **Display**
   - **Player status**
-    - `hull`,  `shield`, `armor`, `ammo`
+    - `hull`, `shield`, `armor`, `ammo`
   - **Enemy status**
     - `hull`, `shield`, `armor`
     - Attack values: `attack_LONG`, `attack_MID`, `attack_CLOSE`
@@ -432,20 +422,13 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - Advances stage and returns to Main Loop
 
 #### 6.2.4 Dock Scene
-**Purpose:** Resolve Dock events
-- **Display**
-  - Player ship: `hull`, `shield`, `armor`, `ammo`
-  - Event options
-- **Input**
-  - Select an option and continue to Exit
-- **Exit**
-  - Advances stage and returns to Main Loop
+- Resolve Dock events (See `5.1 Dock` section)
 
 #### 6.2.5 Game End Scene
-Game End Scene handles both Game Over and Game Clear outcomes.
+- Game End Scene handles both Game Over and Game Clear outcomes.
 
 ## 7. Story
-### 7.1 Opening Story
+
 ```
 Ship ID confirmed: STAR CANINE  
 Command authority: CAPTAIN  
@@ -468,30 +451,6 @@ Solar Bear Empire detected in K9 orbit.
 Occupation status: ACTIVE.
 
 Setting course for K9.
-```
-### 7.2 Game Over  
-```
-STAR CANINE has been destroyed...
-```
-
-### 7.3 Game Clear
-```
-Planet K9 has been liberated.
-LAIKA is safe.
-
-Mission Complete.
-```
-### 7.4 Others
-- Up to the implementer's discretion
-
-1. Myth quotation  
-```
-“Fight with cudgel.  
-No cudgel, use your claw.  
-No claw, use your fang.  
-No fang, use your soul.   
-Fight until nothing left."   
-— DEITY OF BLUE WOLF (Canto IV, Line 12)  
 ```
 
 **END OF SPECIFICATION**
