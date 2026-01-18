@@ -54,7 +54,6 @@ const parseCSV = (csv) => {
 };
 ```
 
-
 2. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
 - Centralized Logic: All state transitions (scene and stageNum) must happen in the parent Flow component via an advanceStage function.
@@ -380,21 +379,16 @@ Each scene is a presentation and input layer only.
 Scenes do not control progression; all transitions are dictated by the Flow system.
 
 #### 6.2.1 Start Scene
-
 - **Display**
   - Title, version
   - Opening Story
-
 - **Input**
   - "Launch" to Exit
-
 - **Exit**
   - Move to Main Loop (Stage 1)
 
-
 #### 6.2.2 Combat Scene
 **Purpose:** Equipment preparation and deterministic combat resolution
-
 - **Display**
   - **Player status**
     - `hull`,  `shield`, `armor`, `ammo`
@@ -408,7 +402,6 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
   - **LOG**
     - After combat engagement, a combat log is shown
-
 - **Input**
   - **Pre-combat**
     - Equip / unequip inventory items
@@ -417,7 +410,6 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - No player input (combat resolves automatically)
   - **Post-combat**
     - "Continue" button
-
 - **Exit**
   - Detailed conditions described in 4.5.2 Combat Outcomes
     - Clear → Game End Scene
@@ -427,31 +419,25 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
  
 #### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
-
 - **Display**
   - Available normal reward items
   - Each reward shows: `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
   - Boss reward list
-
 - **Input**
   - **Normal reward**
     - Select exactly one reward
   - **Boss reward**
     - Select exactly one reward
-
 - **Exit**
   - Advances stage and returns to Main Loop
 
 #### 6.2.4 Dock Scene
 **Purpose:** Resolve Dock events
-
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Event options
-
 - **Input**
   - Select an option and continue to Exit
-
 - **Exit**
   - Advances stage and returns to Main Loop
 
