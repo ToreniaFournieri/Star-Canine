@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.11
+# STAR CANINE SPECIFICATION v0.5.12
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -135,20 +135,21 @@ name,value,ammo,eq_type,reward,disposable
 🚀 Lance,40,3,LONG,0,0
 🚀🚀 Meteor,50,4,LONG,1,0
 🚀🚀🚀 Nova,65,5,LONG,1,0
-🚀💥 Gambit,80,0,LONG,1,1
+🚀💥 Gambit,80,3,LONG,1,1
 🔥 Warhead Optimizer,2,0,MODULE_LONG,1,0
 ✈️ Drones,10,0,MID,1,0
 ✈️✈️ Wing,20,1,MID,1,0
 ✈️✈️✈️ Squadron,35,2,MID,1,0
-✈️💥 Kamikaze,80,0,MID,1,1
+✈️💥 Kamikaze,80,2,MID,1,1
 ⚙️ Uplink,2,0,MODULE_MID,1,0
 ⚡ Fang,10,0,CLOSE,0,0
-⚡⚡ Claw,15,0,CLOSE,1,0
-⚡⚡⚡ Cudgel,25,0,CLOSE,1,0
-⚡💥 Burn soul,80,0,CLOSE,1,1
+⚡⚡ Claw,15,1,CLOSE,1,0
+⚡⚡⚡ Cudgel,20,2,CLOSE,1,0
+⚡💥 Burn soul,40,2,CLOSE,1,1
 💎 Prismatic Lens,2,0,MODULE_CLOSE,1,0
 🟫 Plating,25,0,ARMOR,0,0
-🛡️ Veil,15,0,SHIELD,1,0
+🟫🟫 Heavy armor,35,0,ARMOR,1,0
+🛡️ Veil,20,0,SHIELD,1,0
 🛡️🛡️ Aegis,30,0,SHIELD,1,0
 ⚠️ Broken Scrap,0,0,JUNK,0,0
 ```
