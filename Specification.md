@@ -509,7 +509,9 @@ LAIKA is safe.
 
 Mission Complete.
 ```
-## 7. Opening Story
+## 7. Story
+
+1. Opening srory
 
 ```
 Ship ID confirmed: STAR CANINE  
@@ -533,6 +535,16 @@ Solar Bear Empire detected in K9 orbit.
 Occupation status: ACTIVE.
 
 Setting course for K9.
+```
+
+2. Myth quatarion  
+```
+“Fight with cudgel.  
+No cudgel, use your claw.  
+No claw, use your fang.  
+No fang, use your soul.   
+Fight until nothing left."   
+— DEITY OF BLUE WOLF (Canto IV, Line 12)  
 ```
 
 **END OF SPECIFICATION**
