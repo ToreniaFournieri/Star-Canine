@@ -25,6 +25,9 @@
 - Minimal state tracking
 - No hidden rules
 - **Optimize token usuage**
+  - Use CSV strings for all static data blocks to reduce boilerplate.
+  - Strict Data Formatting: CSV blocks must contain NO leading spaces, NO trailing spaces, and NO indentation within the backticks.
+
 
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
 
