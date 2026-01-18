@@ -352,6 +352,8 @@ Damage resolution depends entirely on the current combat range. There are three 
 - Combat log displays: "[Item Name] has burned out. Replaced with Broken Scrap."
 
 #### 4.5.2 Draw Condition
+Draws are expected to be rare and are treated as tactical failure. 
+
 A combat is considered a draw if:
 - Both player and enemy are still alive after Turn 6.
 
