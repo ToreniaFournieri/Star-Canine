@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.5
+# STAR CANINE SPECIFICATION v0.5.6
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -27,7 +27,7 @@
 - Optimize token usuage
 
 **FOR AI coders, especially Claude**  
-IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
+1. IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
 const EQUIPMENT_CSV = `name,val,ammo,eq_type,reward,disposable
@@ -45,6 +45,35 @@ const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
     disposable: disposable === '1' 
   };
 });
+```
+
+2. Scene Mapping
+
+- UI rendering MUST use a **scene-to-component mapping**, not conditional chains.
+- The main render function MUST NOT contain multiple `if / else` or `switch` blocks for scenes.
+
+REQUIRED pattern:
+
+```javascript
+const SCENES = {
+  start: StartScene,
+  combat: CombatScene,
+  reward: RewardScene,
+  boss_reward: BossRewardScene,
+  dock: DockScene,
+  gameover: GameOverScene,
+  victory: VictoryScene
+};
+
+const Scene = SCENES[gameState];
+return Scene ? <Scene /> : null;
+```
+
+FORBIDDEN pattern:
+```javascript
+if (gameState === 'start') { ... }
+if (gameState === 'combat') { ... }
+if (gameState === 'reward') { ... }
 ```
 
 -----
