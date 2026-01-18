@@ -63,7 +63,7 @@ const SCENES = {
   combat: CombatScene,
   reward: RewardScene,
   dock: DockScene,
-  gameover: GameOverScene
+  gameend: GameEndScene
 };
 
 const Scene = SCENES[scene];
