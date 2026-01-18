@@ -69,10 +69,10 @@ Each equipment entry defines the following fields:
   **Other**
   - `JUNK` — Inert item with no combat effect
 
-- **`rw`**  
+- **`reward`**  
   Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
 
-- **`dp`**  
+- **`disposable`**  
   Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
 
 ---
@@ -121,7 +121,7 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 #### 2.1.4 Equipment csv layout
 
 ```
-name,val,ammo,eq_type,rw,dp
+name,val,ammo,eq_type,reward,disposable
 🚀 Comet Lance,40,3,LONG,0,0
 ⚡ Hull Cutter,10,0,CLOSE,0,0
 🟫 Reinforced Plating,25,0,ARMOR,0,0
