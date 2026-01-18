@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.7
+# STAR CANINE SPECIFICATION v0.6.8
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
