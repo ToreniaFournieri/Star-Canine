@@ -459,8 +459,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - Sekect exactly one reward
 
 - **Exit**
-  - Advances stage
-  - Returns to Main Loop (Scene would be Combat Scene, Dock Scene or Game end(Game Clear))
+  - Advances stage and returns to Main Loop
 
 #### 6.2.3 Dock Scene
 **Purpose:** Resolve Dock events
