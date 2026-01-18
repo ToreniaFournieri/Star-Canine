@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.0
+# STAR CANINE SPECIFICATION v0.5.1
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -212,8 +212,11 @@ diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
   - `armor`: 0,
   - `ammo`: 12,
   - `max_slots`: 6,
-  - `inventory`: [1, 2, 2, 3]
-    - These number aee "Equipment_data.json"'s id. 
+  - inventory:
+    - "🚀 Comet Lance"
+    - "⚡ Hull Cutter"
+    - "⚡ Hull Cutter"
+    - "🟫 Reinforced Plating"
 
 ### 2.4 Stage layout 
 - There are two type of stages
