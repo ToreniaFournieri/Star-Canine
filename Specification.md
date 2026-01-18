@@ -60,22 +60,6 @@ const parseCSV = (csv) => {
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
 - Centralized Logic: All state transitions (scene and stageNum) must happen in the parent Flow component via an advanceStage function.
 - Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
-- Scene Names: Do NOT rename scenes. Use: start, combat, reward, dock, gameend.
-
-REQUIRED pattern:
-```javascript
-const SCENES = {
-  start: StartScene,
-  combat: CombatScene,
-  reward: RewardScene,
-  dock: DockScene,
-  gameend: GameEndScene
-};
-
-// In the main render:
-const ActiveScene = SCENES[state.scene];
-return ActiveScene ? <ActiveScene {...props} /> : <ErrorView message="Invalid Scene" />;
-```
 
 3. Data Verification Constraint
 - Combat Init: Before entering combat, the controller must verify that ENEMY_DATA contains a matching entry for the current stage's difficulty and rank.
