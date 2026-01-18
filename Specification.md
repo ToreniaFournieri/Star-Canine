@@ -475,8 +475,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - `eq_type`
     - `val`
     - `ammo`
-    - `rw`
-    - `dp`
+    - `disposable `
   - After combat engagement, a combat log is shown and updated turn-by-turn
 
 - **Input**
@@ -510,7 +509,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - `eq_type`
     - `val`
     - `ammo`
-    - `dp`
+    - `disposable`
 
 - **Input**
   - Select exactly one reward
