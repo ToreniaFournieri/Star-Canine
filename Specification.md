@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.8
+# STAR CANINE SPECIFICATION v0.6.9
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -447,6 +447,8 @@ Main Loop:
 
 #### 6.2.4 Dock Scene
 - Resolve Dock events (See `5.1 Dock` section)
+- Display **Player status**
+  - `hull`, `ammo`
 
 #### 6.2.5 Game End Scene
 - Game End Scene handles both Game Over and Game Clear outcomes.
