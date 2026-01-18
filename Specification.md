@@ -75,8 +75,6 @@ Each equipment entry defines the following fields:
 - `reward`: Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
 - `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
 
----
-
 ### 2.1.2 Value Interpretation Rules
 The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 
@@ -101,8 +99,6 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 - **`JUNK`**
   - No combat effect
   - Cannot appear as a reward
-
----
 
 ### 2.1.3 Constraints
 - Each equipment entry defines exactly one behavior.
@@ -174,11 +170,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - `armor`: 0,
   - `ammo`: 12,
   - `max_slots`: 6,
-  - `inventory`:
-    - "🚀 Lance"
-    - "⚡ Cutter"
-    - "⚡ Cutter"
-    - "🟫 Plating"
+  - `inventory`: "🚀 Lance", "⚡ Cutter", "⚡ Cutter", "🟫 Plating"
 
 ### 2.4 Stage layout 
 - There are two type of stages
@@ -209,7 +201,6 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 - Equipment can be swapped Pre-combat scene 
 
 -----
-
 ## 4. COMBAT SYSTEM
 Combat is fully deterministic and proceeds through a fixed sequence of range-based turns.
 No player input is allowed once combat begins.
@@ -355,7 +346,6 @@ Player loses when:
 -----
 
 ## 5. Event
-
 ### 5.1 Dock
 Dock is a repair station. Chose one:
 - **Repair:** Heal Hull by 30% of Max Hull
@@ -373,9 +363,7 @@ This section defines the authoritative game progression flow and the scenes used
 START
 ↓
 Main Loop:
-┌────────────────────────┐
-│ Check Next Stage       │
-└────────────────────────┘
+[Check Next Stage]
 │ 
 ├─ If stage type is Combat
 │   ↓
@@ -388,7 +376,6 @@ Main Loop:
 └─ If stage type is Dock
     ↓
     Dock Scene
-
 ```
 
 ### 6.2 Scene Definitions
@@ -474,6 +461,31 @@ Planet K9 has been liberated.
 LAIKA is safe.
 
 Mission Complete.
+```
+## 7. Opening Story
+
+```
+Ship ID confirmed: STAR CANINE  
+Command authority: CAPTAIN  
+
+Incoming distress signal detected.  
+Origin: Planet K9  
+Sender ID: LAIKA  
+
+"It's me.  
+K9 has fallen.  
+Solar Bear battleships took the planet.  
+They took me too.  
+I know you weren't here.  
+I know you'll come back.  
+Please… don't die."
+
+Signal lost.
+
+Solar Bear Empire detected in K9 orbit.  
+Occupation status: ACTIVE.
+
+Setting course for K9.
 ```
 
 **END OF SPECIFICATION**
