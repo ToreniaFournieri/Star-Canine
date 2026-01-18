@@ -36,15 +36,10 @@ All equipment data is embedded directly in this specification as a CSV block.
 ### 2.1.1 Equipment Fields
 Each equipment entry defines the following fields:
 
-- **`name`**  
-  Display name of the equipment. May include emoji identifiers.
-- **`val`**  
-  Primary numeric value. Its meaning depends entirely on `eq_type`.
-- **`ammo`**  
-  Ammo consumed per activation.  
-  Ignored for equipment types that do not consume ammo (set to `0`).
-- **`eq_type`**  
-  Equipment behavior category. Defines combat range or special behavior.  
+- `name`: Display name of the equipment. May include emoji identifiers.
+- `val`: Primary numeric value. Its meaning depends entirely on `eq_type`.
+- `ammo`: Ammo consumed per activation. Ignored for equipment types that do not consume ammo (set to `0`).
+- `eq_type`: Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
     - `LONG` — Weapon that fires only at LONG range. like MISSILE 
     - `MID` — Weapon that fires only at MID range. like FIGHTER
@@ -55,10 +50,8 @@ Each equipment entry defines the following fields:
     - `MODULE_MISSILE` — Multiplies damage of all MISSILE weapons
     - `MODULE_FIGHTER` — Multiplies damage of all FIGHTER weapons
     - `JUNK` — Inert item with no combat effect
-- **`reward`**  
-  Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
-- **`disposable`**  
-  Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
+- `reward`: Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
+- `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
 
 ---
 
@@ -100,22 +93,22 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 ```
 name,val,ammo,eq_type,reward,disposable
 🚀 Comet Lance,40,3,LONG,0,0
-⚡ Hull Cutter,10,0,CLOSE,0,0
-🟫 Reinforced Plating,25,0,ARMOR,0,0
 🚀 Meteor Spear,50,3,LONG,1,0
 🚀🚀 Twin Nova Rack,65,6,LONG,1,0
+🚀🚀💥 Final Gambit,120,0,LONG,1,1
+🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
+✈️ Suppression Drones,10,0,MID,1,0
 ✈️ Skirmish Wing,20,1,MID,1,0
 ✈️✈️ Breaker Squadron,35,2,MID,1,0
-✈️ Suppression Drones,10,0,MID,1,0
+⚙️ Hangar Uplink,2,0,MODULE_FIGHTER,1,0
+⚡ Hull Cutter,10,0,CLOSE,0,0
 ⚡ Plasma Fang,15,0,CLOSE,1,0
 ⚡⚡ Solar Overload,25,0,CLOSE,1,0
+⚡⚡⚡ Singularity Core,80,0,CLOSE,1,1
+💎 Prismatic Lens,2,0,MODULE_LASER,1,0
+🟫 Reinforced Plating,25,0,ARMOR,0,0
 🛡️ Magnetic Veil,15,0,SHIELD,1,0
 🛡️🛡️ Aegis Field,30,0,SHIELD,1,0
-💎 Prismatic Lens,2,0,MODULE_LASER,1,0
-⚙️ Hangar Uplink,2,0,MODULE_FIGHTER,1,0
-🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
-💥 Final Gambit,120,0,LONG,1,1
-⚡ Singularity Core,80,0,CLOSE,1,1
 ⚠️ Broken Scrap,0,0,JUNK,0,0
 ```
 
@@ -125,33 +118,20 @@ Each row represents a single hostile unit encountered in combat.
 
 #### 2.2.1 Enemy Field Definitions
 
-1. **diff**  
-   Integer. Difficulty tier used for enemy pool selection and ACT scaling.
-2. **name**  
-   String. Enemy display name. Must be unique within the enemy list.
-3. **hull**  
-   Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
-4. **shield**  
-   Integer. Shield value. Absorbs damage at **LONG range only**.
-5. **armor**  
-   Integer. Armor value. Absorbs damage at **CLOSE range only**.
-6. **rank**  
-   String. Enemy classification. One of:
-   - `NORMAL`, `ELITE`, `BOSS`
-7. **atk_L**  
-   Integer or `0`. Damage dealt at **LONG range**.  
-   `0` means the enemy cannot attack at this range.
-8. **atk_M**  
-   Integer or `0`. Damage dealt at **MID range**.  
-   `0` means the enemy cannot attack at this range.
-9. **atk_C**  
-   Integer or `0`. Damage dealt at **CLOSE range**.  
-   `0` means the enemy cannot attack at this range.
+1. `diff`: Integer. Difficulty tier used for enemy pool selection and ACT scaling.
+2. `name`: String. Enemy display name. Must be unique within the enemy list.
+3. `hull`: Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
+4. `shield`: Integer. Shield value. Absorbs damage at **LONG range only**.
+5. `armor`: Integer. Armor value. Absorbs damage at **CLOSE range only**.
+6. `rank`: String. Enemy classification. One of:`NORMAL`, `ELITE`, `BOSS`
+7. `attack_LONG`: Integer or `0`. Damage dealt at **LONG range**. `0` means the enemy cannot attack at this range.
+8. `attack_MID`: Integer or `0`. Damage dealt at **MID range**.  `0` means the enemy cannot attack at this range.
+9. `attack_CLOSE`: Integer or `0`. Damage dealt at **CLOSE range**. `0` means the enemy cannot attack at this range.
      
 #### 2.2.2 Enemy csv layout
 
 ```
-diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
+diff,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Scrap Skirmisher,30,0,0,NORMAL,0,0,10
 2,Void Drifter,35,5,0,NORMAL,20,0,10
 3,Rustbound Scout,40,0,10,NORMAL,0,0,15
@@ -272,9 +252,9 @@ Damage is applied using damage resolution rules (see 4.4)
 For the current range:
 
 - Enemy attack value is read from:
-  - LONG → `atk_L`
-  - MID → `atk_M`
-  - CLOSE → `atk_C`
+  - LONG → `attack_LONG`
+  - MID → `attack_MID`
+  - CLOSE → `attack_CLOSE`
 - If the value is greater than `0`, enemy attacks automatically
 - Player takes damage following damage resolution rules (see 4.4)
 
@@ -399,7 +379,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - `hull`,  `shield`, `armor`, `ammo`
   - **Enemy status**
     - `hull`, `shield`, `armor`
-    - Attack values: `atk_L`, `atk_M`, `atk_C`
+    - Attack values: `attack_LONG`, `attack_MID`, `attack_CLOSE`
   - **Inventory display order**
     1. Equipped items (checkmarked)
     2. Unequipped items
