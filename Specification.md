@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.4
+# STAR CANINE SPECIFICATION v0.6.5
 - Version note:Easyer for texting abilities
 
 ## 1. OVERVIEW
@@ -70,8 +70,8 @@ const parseCSV = (csv) => {
 ### 2.1.1 Equipment Fields
 Each equipment entry defines the following fields:
 - `name`: Display name of the equipment. May include emoji identifiers.
-- `value`: Primary numeric value. Its meaning depends entirely on `eq_type`.
-- `ammo`: Ammo consumed per activation. Ignored for types that do not consume ammo (set to `0`).
+- `power_stat`: Primary numeric value. Its meaning depends entirely on `eq_type`.
+- `ammo_cost`: Ammo consumed per activation. Ignored for types that do not consume ammo (set to `0`).
 - `eq_type`: Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
     - `LONG` — Weapon that fires only at LONG range.
@@ -91,29 +91,29 @@ Each equipment entry defines the following fields:
 - `ability`: String effect (e.g., `+10 shield`). Set to `0` if no ability exists.
 
 ### 2.1.2 Value Interpretation Rules
-The meaning of `value`, `ammo`, and `ability` is inferred from `eq_type`.
+The meaning of `power_stat`, `ammo_cost`, and `ability` is inferred from `eq_type`.
 
 - **`LONG` / `MID` / `CLOSE`**
-  - `value`: Damage dealt at the corresponding combat range.
-  - `ammo`: Ammo consumed per activation turn.
+  - `power_stat`: Damage dealt at the corresponding combat range.
+  - `ammo_cost`: Ammo consumed per activation turn.
 - **`SHIELD` / `ARMOR`**
-  - `value`: Damage absorbed at corresponding range (SHIELD: LONG, ARMOR: CLOSE).
+  - `power_stat`: Damage absorbed at corresponding range (SHIELD: LONG, ARMOR: CLOSE).
 - **`MODULE`**
-  - Applies a multiplier to the `value` (or `ability` numeric value) of target type.
+  - Applies a multiplier to the `power_stat` (or `ability` numeric value) of target type.
   - `MODULE_UTILITY` specifically multiplies the numeric values in `UTILITY` abilities.
 - **`UTILITY`**
-  - `value`: Usually `0`. Combat effect is driven by the `ability` field.
+  - `power_stat`: Usually `0`. Combat effect is driven by the `ability` field.
 
 ### 2.1.3 Ability Logic & Timing
 Abilities are parsed for a numeric value and a target keyword.
 - **Pre-Combat (Initialization):** `+X shield`, `+X armor`. These values are added to the ship's defense totals for the duration of the current battle only.
 - **Post-Combat (Resolution):** - `+X hull repair`: Heals player hull.
-    - `+X damage per combat`: Permanently increases the `value` field of that specific item instance.
+    - `+X damage per combat`: Permanently increases the `power_stat` field of that specific item instance.
 
 ### 2.1.4 Constraints
 - Each equipment entry defines exactly one behavior via `eq_type`.
 - All behavior must be derived from `eq_type` and `ability` fields.
-- Scaling items (e.g., `Rookie fighter`) must have their `value` tracked individually in the player's unique inventory instance.
+- Scaling items (e.g., `Rookie fighter`) must have their `power_stat` tracked individually in the player's unique inventory instance.
 
 #### 2.1.4 Equipment csv layout
 
@@ -275,7 +275,7 @@ For the current range:
     - `eq_type` matches the current range.
     - Player has sufficient `ammo`.
 - **Rules:**
-    - **Damage per item:** `value` × matching module multiplier.
+    - **Damage per item:** `power_stat` × matching module multiplier.
     - **Total damage:** Sum of all activated items.
     - **Ammo cost:** Consumed cumulatively. If ammo is insufficient for an item, it does not fire.
 
@@ -309,7 +309,7 @@ This phase occurs after the 6th turn ends or a ship is destroyed.
 
 #### 4.5.1 Cleanup & Evolution
 1. **Disposable Removal:** Items with `disposable: 1` are replaced with `⚠️ Broken Scrap`.
-2. **Scaling Abilities:** Items with `+X damage per combat` have their `value` permanently increased.
+2. **Scaling Abilities:** Items with `+X damage per combat` have their `power_stat` permanently increased.
 3. **Utility Repair:** - Sum all `+X hull repair` abilities from equipped `UTILITY` items.
     - Apply `MODULE_UTILITY` multipliers to this sum.
     - Heal player `hull` by the resulting total (clamped to `max_hull`).
@@ -405,7 +405,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`, `eq_type`, `value`, `ammo`, `disposable `
+    - `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
   - **LOG**
     - After combat engagement, a combat log is shown
 
@@ -430,7 +430,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 
 - **Display**
   - Available normal reward items
-  - Each reward shows: `name`, `eq_type`, `value`, `ammo`, `disposable `
+  - Each reward shows: `name`, `eq_type`, `power_stat`, `ammo_cost`, `disposable `
   - Boss reward list
 
 - **Input**
