@@ -537,7 +537,7 @@ Occupation status: ACTIVE.
 Setting course for K9.
 ```
 
-2. Myth quatarion  
+2. Myth quotation  
 ```
 “Fight with cudgel.  
 No cudgel, use your claw.  
