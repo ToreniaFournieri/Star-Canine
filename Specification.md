@@ -97,9 +97,9 @@ Each equipment entry defines the following fields:
     - `CLOSE` — Weapon that fires only at CLOSE range. Like LASER
     - `SHIELD` — Absorbs damage at LONG range
     - `ARMOR` — Absorbs damage at CLOSE range
-    - `MODULE_LASER` — Multiplies damage of all LASER weapons
-    - `MODULE_MISSILE` — Multiplies damage of all MISSILE weapons
-    - `MODULE_FIGHTER` — Multiplies damage of all FIGHTER weapons
+    - `MODULE_CLOSE` — Multiplies damage of all CLOSE range weapons
+    - `MODULE_LONG` — Multiplies damage of all LONG range weapons
+    - `MODULE_MID` — Multiplies damage of all MID range weapons
     - `JUNK` — Inert item with no combat effect
 - `reward`: Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
 - `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
@@ -120,9 +120,9 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 - **`MODULE`**
 - Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
 - The suffix defines the target weapon category:
-  - `MODULE_LASER` → affects LASER weapons
-  - `MODULE_MISSILE` → affects MISSILE weapons
-  - `MODULE_FIGHTER` → affects FIGHTER weapons
+  - `MODULE_LONG` → affects LONG range weapons
+  - `MODULE_MID` → affects MID range weapons
+  - `MODULE_CLOSE` → affects CLOSE range weapons
   - Multiple modules stack multiplicatively
   - `ammo`: Ignored
 - **`JUNK`**
@@ -143,17 +143,17 @@ name,val,ammo,eq_type,reward,disposable
 🚀🚀 Meteor,50,4,LONG,1,0
 🚀🚀🚀 Nova,65,5,LONG,1,0
 🚀💥 Gambit,80,0,LONG,1,1
-🔥 Warhead Optimizer,2,0,MODULE_MISSILE,1,0
+🔥 Warhead Optimizer,2,0,MODULE_LONG,1,0
 ✈️ Drones,10,0,MID,1,0
 ✈️✈️ Wing,20,1,MID,1,0
 ✈️✈️✈️ Squadron,35,2,MID,1,0
 ✈️💥 Kamikaze,80,0,MID,1,1
-⚙️ Uplink,2,0,MODULE_FIGHTER,1,0
+⚙️ Uplink,2,0,MODULE_MID,1,0
 ⚡ Cutter,10,0,CLOSE,0,0
 ⚡⚡ Craw,15,0,CLOSE,1,0
 ⚡⚡⚡ Fang,25,0,CLOSE,1,0
 ⚡💥 Singularity Core,80,0,CLOSE,1,1
-💎 Prismatic Lens,2,0,MODULE_LASER,1,0
+💎 Prismatic Lens,2,0,MODULE_CLOSE,1,0
 🟫 Plating,25,0,ARMOR,0,0
 🛡️ Veil,15,0,SHIELD,1,0
 🛡️🛡️ Aegis,30,0,SHIELD,1,0
