@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.4
+# STAR CANINE SPECIFICATION v0.5.5
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -174,8 +174,9 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 
 ### 2.4 Stage layout 
 - There are two type of stages
-  - combat: Combat stage. Enemy is chosen from Enemy_data.json. If it hits mutiple enemies by the provided condition, pick one randomly.
-    - ACT II, all enemy status x1.5 round down.
+  - combat: Combat stage. Enemy is chosen from Enemy data. If it hits mutiple enemies by the provided condition, pick one randomly.
+  - Enemy scaling affects: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
+    - ACT II, all enemy status x2.0 round down.
     - ACT III, all enemy status x3.0 round down.
   - dock: heal and resupply
  
