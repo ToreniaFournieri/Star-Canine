@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.12
+# STAR CANINE SPECIFICATION v0.6.0
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -77,81 +77,94 @@ if (gameState === 'reward') { ... }
 
 -----
 ## 2. DEFINITIONS
+
 ## 2.1 Equipment Data
+
 ### 2.1.1 Equipment Fields
 Each equipment entry defines the following fields:
 - `name`: Display name of the equipment. May include emoji identifiers.
 - `value`: Primary numeric value. Its meaning depends entirely on `eq_type`.
-- `ammo`: Ammo consumed per activation. Ignored for equipment types that do not consume ammo (set to `0`).
+- `ammo`: Ammo consumed per activation. Ignored for types that do not consume ammo (set to `0`).
 - `eq_type`: Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
-    - `LONG` — Weapon that fires only at LONG range. like MISSILE 
-    - `MID` — Weapon that fires only at MID range. like FIGHTER
-    - `CLOSE` — Weapon that fires only at CLOSE range. Like LASER
-    - `SHIELD` — Absorbs damage at LONG range
-    - `ARMOR` — Absorbs damage at CLOSE range
-    - `MODULE_CLOSE` — Multiplies damage of all CLOSE range weapons
-    - `MODULE_LONG` — Multiplies damage of all LONG range weapons
-    - `MODULE_MID` — Multiplies damage of all MID range weapons
-    - `JUNK` — Inert item with no combat effect
-- `reward`: Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
+    - `LONG` — Weapon that fires only at LONG range.
+    - `MID` — Weapon that fires only at MID range.
+    - `CLOSE` — Weapon that fires only at CLOSE range.
+    - `SHIELD` — Absorbs damage at LONG range.
+    - `ARMOR` — Absorbs damage at CLOSE range.
+    - `MODULE_[TYPE]` — Multiplies damage/effect of matching category.
+    - `UTILITY` — Passive items that trigger special abilities.
+    - `JUNK` — Inert item with no combat effect.
+- `rarity`: Integer (`0` to `3`). Determines reward tier.
+    - `0`: Starter/Non-reward.
+    - `1`: Normal Enemy Drop.
+    - `2`: Elite Enemy Drop.
+    - `3`: Boss Enemy Drop.
 - `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
+- `ability`: String effect (e.g., `+10 shield`). Set to `0` if no ability exists.
 
 ### 2.1.2 Value Interpretation Rules
-The meaning of `value` and `ammo` is inferred exclusively from `eq_type`.
+The meaning of `value`, `ammo`, and `ability` is inferred from `eq_type`.
 
 - **`LONG` / `MID` / `CLOSE`**
-  - `value`: Damage dealt at the corresponding combat range
-  - `ammo`: Ammo consumed per activation
-  - Weapons never operate outside their defined range
-- **`SHIELD`**
-  - `value`: Damage absorbed at LONG range only
-  - `ammo`: Ignored
-- **`ARMOR`**
-  - `value`: Damage absorbed at CLOSE range only
-  - `ammo`: Ignored
+  - `value`: Damage dealt at the corresponding combat range.
+  - `ammo`: Ammo consumed per activation turn.
+- **`SHIELD` / `ARMOR`**
+  - `value`: Damage absorbed at corresponding range (SHIELD: LONG, ARMOR: CLOSE).
 - **`MODULE`**
-  - Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
-  - The suffix defines the target weapon category:
-    - `MODULE_LONG` → affects LONG range weapons
-    - `MODULE_MID` → affects MID range weapons
-    - `MODULE_CLOSE` → affects CLOSE range weapons
-    - Multiple modules stack multiplicatively
-    - `ammo`: Ignored
-- **`JUNK`**
-  - No combat effect
-  - Cannot appear as a reward
+  - Applies a multiplier to the `value` (or `ability` numeric value) of target type.
+  - `MODULE_UTILITY` specifically multiplies the numeric values in `UTILITY` abilities.
+- **`UTILITY`**
+  - `value`: Usually `0`. Combat effect is driven by the `ability` field.
 
-### 2.1.3 Constraints
-- Each equipment entry defines exactly one behavior.
-- No equipment operates at multiple ranges.
-- No equipment combines weapon, defense, or module effects.
-- All behavior must be derived from `eq_type`; redundant fields are not allowed.
+### 2.1.3 Ability Logic & Timing
+Abilities are parsed for a numeric value and a target keyword.
+- **Pre-Combat (Initialization):** `+X shield`, `+X armor`. These values are added to the ship's defense totals for the duration of the current battle only.
+- **Post-Combat (Resolution):** - `+X hull repair`: Heals player hull.
+    - `+X damage per combat`: Permanently increases the `value` field of that specific item instance.
+
+### 2.1.4 Constraints
+- Each equipment entry defines exactly one behavior via `eq_type`.
+- All behavior must be derived from `eq_type` and `ability` fields.
+- Scaling items (e.g., `Rookie fighter`) must have their `value` tracked individually in the player's unique inventory instance.
+
+
 
 #### 2.1.4 Equipment csv layout
 
-```
-name,value,ammo,eq_type,reward,disposable
-🚀 Lance,40,3,LONG,0,0
-🚀🚀 Meteor,50,4,LONG,1,0
-🚀🚀🚀 Nova,65,5,LONG,1,0
-🚀💥 Gambit,80,3,LONG,1,1
-🔥 Warhead Optimizer,2,0,MODULE_LONG,1,0
-✈️ Drones,10,0,MID,1,0
-✈️✈️ Wing,20,1,MID,1,0
-✈️✈️✈️ Squadron,35,2,MID,1,0
-✈️💥 Kamikaze,80,2,MID,1,1
-⚙️ Uplink,2,0,MODULE_MID,1,0
-⚡ Fang,10,0,CLOSE,0,0
-⚡⚡ Claw,15,1,CLOSE,1,0
-⚡⚡⚡ Cudgel,20,2,CLOSE,1,0
-⚡💥 Burn soul,40,2,CLOSE,1,1
-💎 Prismatic Lens,2,0,MODULE_CLOSE,1,0
-🟫 Plating,25,0,ARMOR,0,0
-🟫🟫 Heavy armor,35,0,ARMOR,1,0
-🛡️ Veil,20,0,SHIELD,1,0
-🛡️🛡️ Aegis,30,0,SHIELD,1,0
-⚠️ Broken Scrap,0,0,JUNK,0,0
+```csv
+name,value,ammo,eq_type,rarity,disposable,ability
+🚀 Lance,40,3,LONG,0,0,0
+🚀 Interceptor,40,3,LONG,1,0,+10 shield
+🚀 Meteor,50,4,LONG,1,0,0
+🚀 Nova,65,5,LONG,1,0,0
+🚀🚀 Resurrection,40,1,LONG,2,0,0
+🚀💥 Gambit,80,3,LONG,2,1,0
+🔥 Warhead Optimizer,2,0,MODULE_LONG,3,0,0
+✈️ Drones,15,0,MID,1,0,0
+✈️ Defender,10,1,MID,1,0,+10 shield
+✈️ Wing,20,1,MID,1,0,0
+✈️ Squadron,35,2,MID,1,0,0
+✈️✈️ Rookie fighter,5,1,MID,2,0,+3 damage per combat
+✈️💥 Kamikaze,80,2,MID,2,1,0
+✈️✈️✈️ Blue Wolf,60,2,MID,3,0,0
+⚡ Fang,10,0,CLOSE,0,0,0
+⚡️ Iron Beam,5,0,CLOSE,1,0,+10 armor
+⚡ Claw,15,1,CLOSE,1,0,0
+⚡ Cudgel,20,2,CLOSE,1,0,0
+⚡️⚡️ Laser shield,10,0,CLOSE,2,0,+15 shield
+⚡💥 Burn soul,40,2,CLOSE,2,1,0
+💎 Prismatic Lens,2,0,MODULE_CLOSE,3,0,0
+🟫 Plating,25,0,ARMOR,0,0,0
+🟫🟫 Heavy armor,35,0,ARMOR,1,0,0
+🟫 Improvised armor,60,0,ARMOR,2,1,0
+🛡️ Veil,20,0,SHIELD,1,0,0
+🛡️🛡️ Aegis,30,0,SHIELD,2,0,0
+🛡️🛡️ Ephemera shield,60,0,SHIELD,2,1,0
+🔧 Repairer,0,0,UTILITY,1,0,+10 hull repair
+🔧🔧 Veteran Repairer,0,0,UTILITY,2,0,+20 hull repair
+🔧🔧🔧 Recreational facility,2,0,MODULE_UTILITY,3,0,0
+⚠️ Broken Scrap,0,0,JUNK,0,0,0
 ```
 
 ### 2.2 Enemy Data
@@ -172,7 +185,7 @@ Each row represents a single hostile unit encountered in combat.
      
 #### 2.2.2 Enemy csv layout
 
-```
+```csv
 difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,0,NORMAL,0,0,10
 2,Drifter,35,5,0,NORMAL,20,0,10
@@ -206,7 +219,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 ### 2.4.1 ACT structure
 - One enemy selected deterministically from the matching pool
 - CSV format below:
-```
+```csv
 stage,type,difficulty,rank
 1,combat,1,NORMAL
 2,combat,2,NORMAL
