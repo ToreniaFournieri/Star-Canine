@@ -95,8 +95,11 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
   - `ammo`: Ignored
 
 - **`MODULE`**
-  - `val`: Damage multiplier (integer)
-  - Applies multiplicatively to all outgoing weapon damage
+- Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
+- The suffix defines the target weapon category:
+  - `MODULE_LASER` → affects LASER weapons
+  - `MODULE_MISSILE` → affects MISSILE weapons
+  - `MODULE_FIGHTER` → affects FIGHTER weapons
   - Multiple modules stack multiplicatively
   - `ammo`: Ignored
 
@@ -266,9 +269,7 @@ At the beginning of combat:
 
 #### Module Multiplier Calculation
 
-- For each equipped equipment with:
-  - `eq_type = MODULE`
-  - a valid `val` (multiplier)
+- For each equipped equipment where `eq_type` starts with `MODULE_`
 - All player equipments whose `eq_type` matches the module’s target receive the multiplier
 - Multipliers stack **multiplicatively**
   - Two ×2 modules → ×4
