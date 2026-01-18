@@ -150,10 +150,10 @@ name,val,ammo,eq_type,reward,disposable
 ✈️✈️✈️ Squadron,35,2,MID,1,0
 ✈️💥 Kamikaze,80,0,MID,1,1
 ⚙️ Uplink,2,0,MODULE_MID,1,0
-⚡ Cutter,10,0,CLOSE,0,0
-⚡⚡ Craw,15,0,CLOSE,1,0
-⚡⚡⚡ Fang,25,0,CLOSE,1,0
-⚡💥 Singularity Core,80,0,CLOSE,1,1
+⚡ Fang,10,0,CLOSE,0,0
+⚡⚡ Claw,15,0,CLOSE,1,0
+⚡⚡⚡ Cudgel,25,0,CLOSE,1,0
+⚡💥 Burn soul,80,0,CLOSE,1,1
 💎 Prismatic Lens,2,0,MODULE_CLOSE,1,0
 🟫 Plating,25,0,ARMOR,0,0
 🛡️ Veil,15,0,SHIELD,1,0
