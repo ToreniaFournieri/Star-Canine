@@ -348,7 +348,7 @@ Dock is a repair station. Chose one:
 - **Resupply:** Gain +7 Ammo
 
 -----
-## 6. Scene and Flow
+## 6. Flow and Scene
 This section defines the authoritative game progression flow and the scenes used to present game state.
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
