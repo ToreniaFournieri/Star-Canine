@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.10
+# STAR CANINE SPECIFICATION v0.5.11
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -386,7 +386,7 @@ This section defines the authoritative game progression flow and the scenes used
 
 - Main loop decides the next Scene by following flow:
 ```
-START
+Start Scene
 ↓
 Main Loop:
 [Check Next Stage]
@@ -408,7 +408,20 @@ Main Loop:
 Each scene is a presentation and input layer only.  
 Scenes do not control progression; all transitions are dictated by the Flow system.
 
-#### 6.2.1 Combat Scene
+#### 6.2.1 Start Scene
+
+- **Display**
+  - Title, version
+  - Opening Story
+
+- **Input**
+  - "Launch" to Exit
+
+- **Exit**
+  - Move to Main Loop (Stage 1)
+
+
+#### 6.2.2 Combat Scene
 **Purpose:** Equipment preparation and deterministic combat resolution
 
 - **Display**
@@ -446,7 +459,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - Draw → Advance stage, return to Main Loop
     - Defeat → Game End Scene
  
-#### 6.2.2 Reward Scene
+#### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
 
 - **Display**
@@ -463,7 +476,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### 6.2.3 Dock Scene
+#### 6.2.4 Dock Scene
 **Purpose:** Resolve Dock events
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
@@ -473,7 +486,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### 6.2.4 Game End Scene
+#### 6.2.5 Game End Scene
 Game End Scene handles both Game Over and Game Clear outcomes.
 
 ## 7. Story
