@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.0
+# STAR CANINE SPECIFICATION v0.6.0 - Equipment update -
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -206,7 +206,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - `armor`: 0,
   - `ammo`: 12,
   - `max_slots`: 6,
-  - `inventory`: "🚀 Lance", "⚡ Cutter", "⚡ Cutter", "🟫 Plating"
+  - `inventory`: "🚀 Lance", "⚡ Fang", "⚡ Fang", "🟫 Plating"
 
 ### 2.4 Stage layout 
 - There are two type of stages
