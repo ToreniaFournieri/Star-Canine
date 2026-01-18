@@ -153,10 +153,10 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - `ammo`: 12,
   - `max_slots`: 6,
   - `inventory`:
-    - "🚀 Comet Lance"
-    - "⚡ Hull Cutter"
-    - "⚡ Hull Cutter"
-    - "🟫 Reinforced Plating"
+    - "🚀 Lance"
+    - "⚡ Cutter"
+    - "⚡ Cutter"
+    - "🟫 Plating"
 
 ### 2.4 Stage layout 
 - There are two type of stages
