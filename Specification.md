@@ -225,7 +225,12 @@ stage,type,difficulty,rank
 - **Slots:** up to `max_slots` equipped items
 - You may have multiple same id equipments. Need to distinguish them
 - ONLY equipped items affect combat
-- Equipment can be swapped Pre-combat scene 
+- Equipment can be swapped Pre-combat scene
+
+### 3.1 How equipment works
+  - At the first stage, no equipment is equipped by default
+  - Up to `max_slots` items may be equipped
+  - Equipment selections **persist** between stages
 
 -----
 ## 4. COMBAT SYSTEM
@@ -447,11 +452,6 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - **Post-combat**
     - "Continue" button
 
-- **Notes**
-  - At the first stage, no equipment is equipped by default
-  - Up to `max_slots` items may be equipped
-  - Equipment selections persist between battles
-
 - **Exit**
   - Detailed conditions described in 4.5.2 Combat Outcomes
     - Clear → Game End Scene
@@ -478,11 +478,14 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 
 #### 6.2.4 Dock Scene
 **Purpose:** Resolve Dock events
+
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
   - Event options
+
 - **Input**
   - Select an option and continue to Exit
+
 - **Exit**
   - Advances stage and returns to Main Loop
 
