@@ -1,12 +1,11 @@
-# STAR CANINE SPECIFICATION v0.5.8
+# STAR CANINE SPECIFICATION v0.5.9
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
   - No randomness in combat
   - No graphics
-  - No real-time input during battle
   - Designed to be playable and solvable by LLMs
-- Player progresses through fixed stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
+- Player progresses through stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
 
 ### 1.1 CORE CONCEPTS
 - The player controls ONE ship
@@ -24,9 +23,9 @@
 - Easy to reason damage
 - Minimal state tracking
 - No hidden rules
-- Optimize token usuage
+- **Optimize token usuage**
 
-**FOR AI coders, especially Claude**  
+### 1.3 Implementation Rules (FOR CORDER **especially Claude**)
 1. IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
@@ -56,7 +55,6 @@ const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
 - Do NOT introduce any scene names not defined in the specification.
 
 REQUIRED pattern:
-
 ```javascript
 const SCENES = {
   start: StartScene,
@@ -211,8 +209,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - dock: heal and resupply
  
 ### 2.4.1 ACT structure
-- one enemy selected deterministically from the matching pool
-
+- One enemy selected deterministically from the matching pool
 1. combat: an enemy (difficulty:1, rank:normal)
 1. combat: an enemy(difficulty:2, type:normal) 
 1. combat: an enemy (where difficulty:3, rank:normal) 
@@ -225,7 +222,6 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 
 -----
 ## 3. EQUIPMENT SYSTEM
-
 ### 3.1 Inventory vs Slots
 - **Inventory:** all equipments the player owns
 - **Slots:** up to `max_slots` equipped items
@@ -239,7 +235,6 @@ Combat is deterministic, non-interactive, and resolved through a fixed range seq
   - No player input once combat starts
   - Combat ends immediately when either side is destroyed
 
-
 ### 4.1 Turn Structure 
 Combat consists of 6 turns following this fixed range order:
 LONG → MID → CLOSE → CLOSE → MID → LONG
@@ -248,9 +243,7 @@ LONG → MID → CLOSE → CLOSE → MID → LONG
 - If either side is destroyed, combat ends immediately
 
 ### 4.2 Combat Initialization
-
 At the beginning of combat:
-
 - Player **shield** and **armor** values are recalculated from equipped items:
   - `eq_type = SHIELD` → contributes to shield
   - `eq_type = ARMOR` → contributes to armor
@@ -258,13 +251,10 @@ At the beginning of combat:
 - Player `hull` damage **persists between combats**
 
 #### Module Multiplier Calculation
-
 - Equipments with `eq_type` starting with `MODULE_` act as multipliers
   - Each module targets a specific equipment type
   - All matching equipments receive the multiplier
-  - Multipliers stack multiplicatively
-    - ×2 and ×2 → ×4
-    - ×3 and ×3 → ×9
+  - Multipliers stack multiplicatively. Example: ×3 and ×3 → ×9
   - All multipliers are computed once before combat
 
 ## 4.3 Turn Resolution (Per Turn)
@@ -280,7 +270,6 @@ For the current range:
   - Player has sufficient ammo
     - If ammo is insufficient, the equipment does not activate.
 - All valid items activate simultaneously
-
 
 **Rules:**
 - **Damage per item:** `base_value` × module multipliers
@@ -310,7 +299,6 @@ For the current range:
 - **If player hull ≤ 0:**
     - Combat ends immediately (**Defeat**)
 
-
 ## 4.4 Damage Resolution (Authoritative)
 Damage resolution depends only on current range.
 
@@ -326,9 +314,7 @@ Damage resolution depends only on current range.
 - Shield and armor never regenerate during combat.
 
 ---
-
 ## 4.5 Combat End Processing
-
 ### 4.5.1 Disposable Equipment Cleanup
 After combat ends:
 - All equipped items with `"disposable": true` are removed.
@@ -355,9 +341,7 @@ A draw occurs if:
     * **OR** draw against a Boss enemy.
 
 ---
-
 ## 4.6 Rewards
-
 ### 4.6.1 Normal Battle Reward
 After a win, player chooses **ONE**:
 - +5 Ammo
@@ -378,8 +362,6 @@ Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss)
 - **Option B:** `max_slots +1`, `max_hull +80`, `hull +80`
 - **Option C:** `max_slots +1`, `ammo +12`
 
----
-
 ## 4.7 Implementation Constraint (LLM Guidance)
 - **Combat logic MUST be:**
     - Single-loop.
@@ -389,7 +371,6 @@ Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss)
 - **Scalability:** Adding a new range must require data changes only.
 
 -----
-
 ## 5. Event
 ### 5.1 Dock
 Dock is a repair station. Chose one:
@@ -398,7 +379,6 @@ Dock is a repair station. Chose one:
 - **Resupply:** Gain +7 Ammo
 
 -----
-
 ## 6. Scene and Flow
 This section defines the authoritative game progression flow and the scenes used to present game state.
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
@@ -470,8 +450,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 
 - **Display**
   - Available normal reward items
-  - Each reward shows:
-    - `name`, `eq_type`, `val`, `ammo`, `disposable `
+  - Each reward shows: `name`, `eq_type`, `val`, `ammo`, `disposable `
   - Boss reward list
 
 - **Input**
@@ -497,22 +476,8 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 #### 6.2.4 Game End Scene
 Game End Scene handles both Game Over and Game Clear outcomes.
 
-- If it is game over, display this:
-```
-STAR CANINE has been destroyed...
-```
-
-- If it is game clear, display this:
-```
-Planet K9 has been liberated.
-LAIKA is safe.
-
-Mission Complete.
-```
 ## 7. Story
-
-1. Opening srory
-
+### 7.1 Opening Story
 ```
 Ship ID confirmed: STAR CANINE  
 Command authority: CAPTAIN  
@@ -536,8 +501,22 @@ Occupation status: ACTIVE.
 
 Setting course for K9.
 ```
+### 7.2 Game Over  
+```
+STAR CANINE has been destroyed...
+```
 
-2. Myth quotation  
+### 7.3 Game Clear
+```
+Planet K9 has been liberated.
+LAIKA is safe.
+
+Mission Complete.
+```
+### 7.4 Others
+- Up to the implementer's discretion
+
+1. Myth quotation  
 ```
 “Fight with cudgel.  
 No cudgel, use your claw.  
