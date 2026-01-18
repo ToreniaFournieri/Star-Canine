@@ -27,8 +27,26 @@
   - Use CSV strings for all static data blocks to reduce boilerplate.
   - Strict Data Formatting: CSV blocks must contain NO leading spaces, NO trailing spaces, and NO indentation within the backticks.
 
+
+
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
-1. **Robust CSV Parsing** 
+1. DATA INTEGRITY & RAW FORMATTING (CRITICAL)
+To prevent the Sanitizing Parser from failing due to LLM-generated formatting artifacts, the following rules are absolute:
+
+- **Zero-Indentation Rule:** CSV blocks must be written starting at the very first column of the text buffer. Do NOT indent CSV rows to match the Markdown hierarchy.
+- **No Leading/Trailing Whitespace:** The first character after the opening backticks (```csv) must be the first header letter. The last character before the closing backticks must be the last value of the last row.
+- **Strict Type Casting:** The logic must interpret any cell that is purely numeric as a `Number` type. 
+- **Empty Cell Handling:** If a value is missing between commas (e.g., `,,`), the parser must default the value to `0` for numeric fields or an empty string `""` for text fields.
+
+**Correct "Flat" Format Example:**
+```csv
+name,power_stat,ammo_cost
+🚀 Lance,40,3
+🚀 Meteor,50,4
+```
+(Note: No spaces or tabs precede the text above)
+
+2. **Robust CSV Parsing** 
 - To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
 
 **REQUIRED Sanitizing Parser Pattern:**
@@ -53,12 +71,13 @@ const parseCSV = (csv) => {
 };
 ```
 
-2. Scene Mapping & Flow Control
+
+3. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
 - Centralized Logic: All state transitions (scene and stageNum) must happen in the parent Flow component via an advanceStage function.
 - Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
 
-3. Data Verification Constraint
+4. Data Verification Constraint
 - Combat Init: Before entering combat, the controller must verify that ENEMY_DATA contains a matching entry for the current stage's difficulty and rank.
 - Fallback: If a lookup fails, the game must not hang; it must return to the start scene or display a "Signal Lost (Data Error)" message.
 
