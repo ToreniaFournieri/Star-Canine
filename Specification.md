@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.0 
+# STAR CANINE SPECIFICATION v0.6.1
 - Equipment update
 
 ## 1. OVERVIEW
@@ -31,35 +31,36 @@
 
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
 
-1. **Robust CSV Parsing** To optimize token usage and prevent data-type errors, embed data as a CSV string and use a sanitizing parser. The parser must trim whitespace from headers and values to prevent LLM-formatting artifacts from breaking the game logic.
+1. **Robust CSV Parsing** 
+- To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
 
 **REQUIRED Sanitizing Parser Pattern:**
 ```javascript
-   const parseCSV = (csv) => {
-     const lines = csv.trim().split('\n');
-     const headers = lines[0].split(',').map(h => h.trim());
-     return lines.slice(1).map(line => {
-       const values = line.split(',');
-       const obj = {};
-       headers.forEach((h, i) => {
-         let val = values[i]?.trim();
-         // Convert to Number if numeric and not empty, otherwise keep as string
-         if (val === '0' || val === '') obj[h] = 0;
-         else if (!isNaN(val) && val !== '') obj[h] = Number(val);
-         else obj[h] = val;
-       });
-       return obj;
-     });
-   };
+const parseCSV = (csv) => {
+  // Split by newline and remove empty lines caused by LLM formatting
+  const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
+  const headers = lines[0].split(',').map(h => h.trim());
+
+  return lines.slice(1).map(line => {
+    const values = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => {
+      let val = values[i]?.trim(); // Remove LLM-generated padding
+      // Automatic type conversion
+      if (val === '0' || val === '') obj[h] = 0;
+      else if (!isNaN(val) && val !== '') obj[h] = Number(val);
+      else obj[h] = val;
+    });
+    return obj;
+  });
+};
 ```
 
-2. Scene Mapping
-- Do NOT manage progression inside scenes.
-- Scenes must be pure UI.
-- All progression must be handled by a single Flow controller using stageNum.
-- Scene mapping MUST use component references, not instantiated JSX.
-- advanceStage() may only be triggered by stageNum changes (useEffect).
-- Do NOT introduce any scene names not defined in the specification.
+2. Scene Mapping & Flow Control
+- Separation of Concerns: Scenes must be "dumb" (Presentation only).
+- Centralized Logic: All state transitions (scene and stageNum) must happen in the parent Flow component via an advanceStage function.
+- Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
+- Scene Names: Do NOT rename scenes. Use: start, combat, reward, dock, gameend.
 
 REQUIRED pattern:
 ```javascript
@@ -71,18 +72,14 @@ const SCENES = {
   gameend: GameEndScene
 };
 
-const Scene = SCENES[scene];
-return Scene ? <Scene {...props} /> : null;
+// In the main render:
+const ActiveScene = SCENES[state.scene];
+return ActiveScene ? <ActiveScene {...props} /> : <ErrorView message="Invalid Scene" />;
 ```
 
-FORBIDDEN pattern:
-```javascript
-if (gameState === 'start') { ... }
-if (gameState === 'combat') { ... }
-if (gameState === 'reward') { ... }
-```
-3. Defensive State Rendering
-- Scenes must include a fallback or "null check" for data-dependent UI (like currentEnemy) to prevent the application from crashing if the stage transition fails.
+3. Data Verification Constraint
+- Combat Init: Before entering combat, the controller must verify that ENEMY_DATA contains a matching entry for the current stage's difficulty and rank.
+- Fallback: If a lookup fails, the game must not hang; it must return to the start scene or display a "Signal Lost (Data Error)" message.
 
 -----
 ## 2. DEFINITIONS
