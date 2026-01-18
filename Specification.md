@@ -29,15 +29,15 @@
 1. IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
-const EQUIPMENT_CSV = `name,val,ammo,eq_type,reward,disposable
+const EQUIPMENT_CSV = `name,value,ammo,eq_type,reward,disposable
 🚀 Lance,40,3,LONG,0,0
 🚀🚀 Meteor,50,4,LONG,1,0`;
 
 const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
-  const [name, val, ammo, eq_type, reward, disposable] = line.split(',');
+  const [name, value, ammo, eq_type, reward, disposable] = line.split(',');
   return { 
     name, 
-    val: parseInt(val), 
+    value: parseInt(value), 
     ammo: parseInt(ammo), 
     eq_type, 
     reward: reward === '1', 
@@ -78,16 +78,10 @@ if (gameState === 'reward') { ... }
 -----
 ## 2. DEFINITIONS
 ## 2.1 Equipment Data
-Equipment data is defined as a compact, behavior-driven table.  
-Each equipment entry contains exactly one primary numeric value (`val`), whose meaning is determined solely by `eq_type`.
-
-All equipment data is embedded directly in this specification as a CSV block.
-
 ### 2.1.1 Equipment Fields
 Each equipment entry defines the following fields:
-
 - `name`: Display name of the equipment. May include emoji identifiers.
-- `val`: Primary numeric value. Its meaning depends entirely on `eq_type`.
+- `value`: Primary numeric value. Its meaning depends entirely on `eq_type`.
 - `ammo`: Ammo consumed per activation. Ignored for equipment types that do not consume ammo (set to `0`).
 - `eq_type`: Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
@@ -104,17 +98,17 @@ Each equipment entry defines the following fields:
 - `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
 
 ### 2.1.2 Value Interpretation Rules
-The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
+The meaning of `value` and `ammo` is inferred exclusively from `eq_type`.
 
 - **`LONG` / `MID` / `CLOSE`**
-  - `val`: Damage dealt at the corresponding combat range
+  - `value`: Damage dealt at the corresponding combat range
   - `ammo`: Ammo consumed per activation
   - Weapons never operate outside their defined range
 - **`SHIELD`**
-  - `val`: Damage absorbed at LONG range only
+  - `value`: Damage absorbed at LONG range only
   - `ammo`: Ignored
 - **`ARMOR`**
-  - `val`: Damage absorbed at CLOSE range only
+  - `value`: Damage absorbed at CLOSE range only
   - `ammo`: Ignored
 - **`MODULE`**
   - Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
@@ -137,7 +131,7 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 #### 2.1.4 Equipment csv layout
 
 ```
-name,val,ammo,eq_type,reward,disposable
+name,value,ammo,eq_type,reward,disposable
 🚀 Lance,40,3,LONG,0,0
 🚀🚀 Meteor,50,4,LONG,1,0
 🚀🚀🚀 Nova,65,5,LONG,1,0
@@ -421,7 +415,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`, `eq_type`, `val`, `ammo`, `disposable `
+    - `name`, `eq_type`, `value`, `ammo`, `disposable `
   - **LOG**
     - After combat engagement, a combat log is shown
 
@@ -451,7 +445,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 
 - **Display**
   - Available normal reward items
-  - Each reward shows: `name`, `eq_type`, `val`, `ammo`, `disposable `
+  - Each reward shows: `name`, `eq_type`, `value`, `ammo`, `disposable `
   - Boss reward list
 
 - **Input**
