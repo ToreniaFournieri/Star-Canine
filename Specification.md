@@ -1,5 +1,5 @@
-# STAR CANINE SPECIFICATION v0.6.2
-- Equipment update
+# STAR CANINE SPECIFICATION v0.6.3
+- MEMO:Easy mode for Debug
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -118,8 +118,6 @@ Abilities are parsed for a numeric value and a target keyword.
 - All behavior must be derived from `eq_type` and `ability` fields.
 - Scaling items (e.g., `Rookie fighter`) must have their `value` tracked individually in the player's unique inventory instance.
 
-
-
 #### 2.1.4 Equipment csv layout
 
 ```csv
@@ -128,32 +126,32 @@ name,value,ammo,eq_type,rarity,disposable,ability
 🚀 Interceptor,40,3,LONG,1,0,+10 shield
 🚀 Meteor,50,4,LONG,1,0,0
 🚀 Nova,65,5,LONG,1,0,0
-🚀🚀 Resurrection,40,1,LONG,2,0,0
-🚀💥 Gambit,80,3,LONG,2,1,0
+🚀🚀 Resurrection,40,1,LONG,1,0,0
+🚀💥 Gambit,80,3,LONG,1,1,0
 🔥 Warhead Optimizer,2,0,MODULE_LONG,3,0,0
 ✈️ Drones,15,0,MID,1,0,0
 ✈️ Defender,10,1,MID,1,0,+10 shield
 ✈️ Wing,20,1,MID,1,0,0
 ✈️ Squadron,35,2,MID,1,0,0
-✈️✈️ Rookie fighter,5,1,MID,2,0,+3 damage per combat
-✈️💥 Kamikaze,80,2,MID,2,1,0
-✈️✈️✈️ Blue Wolf,60,2,MID,3,0,0
+✈️✈️ Rookie fighter,5,1,MID,1,0,+3 damage per combat
+✈️💥 Kamikaze,80,2,MID,1,1,0
+✈️✈️✈️ Blue Wolf,60,2,MID,2,0,0
 ⚡ Fang,10,0,CLOSE,0,0,0
 ⚡️ Iron Beam,5,0,CLOSE,1,0,+10 armor
 ⚡ Claw,15,1,CLOSE,1,0,0
 ⚡ Cudgel,20,2,CLOSE,1,0,0
-⚡️⚡️ Laser shield,10,0,CLOSE,2,0,+15 shield
-⚡💥 Burn soul,40,2,CLOSE,2,1,0
-💎 Prismatic Lens,2,0,MODULE_CLOSE,3,0,0
+⚡️⚡️ Laser shield,10,0,CLOSE,1,0,+15 shield
+⚡💥 Burn soul,40,2,CLOSE,1,1,0
+💎 Prismatic Lens,2,0,MODULE_CLOSE,2,0,0
 🟫 Plating,25,0,ARMOR,0,0,0
 🟫🟫 Heavy armor,35,0,ARMOR,1,0,0
-🟫 Improvised armor,60,0,ARMOR,2,1,0
+🟫 Improvised armor,60,0,ARMOR,1,1,0
 🛡️ Veil,20,0,SHIELD,1,0,0
 🛡️🛡️ Aegis,30,0,SHIELD,2,0,0
-🛡️🛡️ Ephemera shield,60,0,SHIELD,2,1,0
+🛡️🛡️ Ephemera shield,60,0,SHIELD,1,1,0
 🔧 Repairer,0,0,UTILITY,1,0,+10 hull repair
 🔧🔧 Veteran Repairer,0,0,UTILITY,2,0,+20 hull repair
-🔧🔧🔧 Recreational facility,2,0,MODULE_UTILITY,3,0,0
+🔧🔧🔧 Recreational facility,2,0,MODULE_UTILITY,2,0,0
 ⚠️ Broken Scrap,0,0,JUNK,0,0,0
 ```
 
@@ -213,10 +211,10 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 stage,type,difficulty,rank
 1,combat,1,NORMAL
 2,combat,2,NORMAL
-3,combat,3,NORMAL
+3,combat,5,ELITE
 4,dock,,
-5,combat,5,ELITE
-6,combat,4,NORMAL
+5,combat,4,NORMAL
+6,combat,6,ELITE
 7,combat,6,NORMAL
 8,dock,,
 9,combat,10,BOSS
