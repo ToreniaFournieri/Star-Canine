@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.6
+# STAR CANINE SPECIFICATION v0.5.7
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -232,17 +232,20 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 
 -----
 ## 4. COMBAT SYSTEM
-Combat is fully deterministic and proceeds through a fixed sequence of range-based turns.
-No player input is allowed once combat begins.
+Combat is deterministic, non-interactive, and resolved through a fixed range sequence.
+  - No player input once combat starts
+  - Combat ends immediately when either side is destroyed
 
-### 4.1 Turn Order
-Each combat follows this fixed range sequence:
+
+### 4.1 Turn Structure 
+Combat consists of 6 turns following this fixed range order:
 LONG → MID → CLOSE → CLOSE → MID → LONG
 
-- Total of **6 turns per combat**
-- Combat ends immediately if either side is destroyed
+- One range per turn
+- If either side is destroyed, combat ends immediately
 
-### 4.2 Start of Combat
+### 4.2 Combat Initialization
+
 At the beginning of combat:
 
 - Player **shield** and **armor** values are recalculated from equipped items:
@@ -253,125 +256,132 @@ At the beginning of combat:
 
 #### Module Multiplier Calculation
 
-- For each equipped equipment where `eq_type` starts with `MODULE_`
-- All player equipments whose `eq_type` matches the module’s target receive the multiplier
-- Multipliers stack **multiplicatively**
-  - Two ×2 modules → ×4
-  - Two ×3 modules → ×9
-- Multipliers are applied **before combat starts**
+- Equipments with `eq_type` starting with `MODULE_` act as multipliers
+  - Each module targets a specific equipment type
+  - All matching equipments receive the multiplier
+  - Multipliers stack multiplicatively
+    - ×2 and ×2 → ×4
+    - ×3 and ×3 → ×9
+  - All multipliers are computed once before combat
 
-### 4.3 Attack Resolution Rules
-Each turn resolves in the following order.
+## 4.3 Turn Resolution (Per Turn)
+Each turn resolves in the following fixed order.
 
-#### 4.3.1 Player Attacks First
-For the current range (LONG / MID / CLOSE):
-
-- For each equipped equipment:
-  - If `eq_type` matches the current range:
-    - LONG → `eq_type = LONG`
-    - MID → `eq_type = MID`
-    - CLOSE → `eq_type = CLOSE`
-  - Check if player has enough `ammo` for `ammo` cost
-  - If valid, the equipment activates automatically
-
-Rules:
-- All valid equipments fire **simultaneously**
-- Damage is calculated as:
-  - `val × applicable MODULE multipliers`
-- Total damage = sum of all activated equipments
-- Total ammo consumed = sum of `ammo`
-- Equipments fire even if damage exceeds enemy hull (overkill allowed)
-
-#### 4.3.2 Enemy Takes Damage
-Damage is applied using damage resolution rules (see 4.4)
-
-#### 4.3.3 Enemy Status Check
-
-- If enemy `hull ≤ 0`:
-  - Enemy is destroyed
-  - Enemy does **not** attack this turn
-  - Combat ends immediately (victory)
-
-#### 4.3.4 Enemy Attacks (If Alive)
+### 4.3.1 Player Attack
 For the current range:
+- **All equipped items where:**
+  - `eq_type` matches the range:
+    - `LONG` → `eq_type = LONG`
+    - `MID` → `eq_type = MID`
+    - `CLOSE` → `eq_type = CLOSE`
+  - Player has sufficient ammo
+- All valid items activate simultaneously
 
+**Rules:**
+- **Damage per item:** `base_value` × module multipliers
+- **Total damage:** Sum of all activated items
+- **Ammo cost:** Consumed cumulatively
+- **Overkill:** Overkill damage is allowed
+
+### 4.3.2 Enemy Damage Application
+- Apply total damage using range damage rules (see **4.4**)
+
+### 4.3.3 Enemy Status Check
+- **If enemy hull ≤ 0:**
+    - Enemy is destroyed
+    - Enemy does not attack
+    - Combat ends immediately (**Win**)
+
+### 4.3.4 Enemy Attack (If Alive)
 - Enemy attack value is read from:
-  - LONG → `attack_LONG`
-  - MID → `attack_MID`
-  - CLOSE → `attack_CLOSE`
-- If the value is greater than `0`, enemy attacks automatically
-- Player takes damage following damage resolution rules (see 4.4)
+    - `LONG` → `attack_LONG`
+    - `MID` → `attack_MID`
+    - `CLOSE` → `attack_CLOSE`
+- **If attack value > 0:**
+    - Enemy attacks automatically
+    - Damage is resolved using the same rules (**4.4**)
 
-#### 4.3.5 Player Status Check
-- If player `hull ≤ 0`:
-  - Player is destroyed
-  - Combat ends immediately (defeat)
+### 4.3.5 Player Status Check
+- **If player hull ≤ 0:**
+    - Combat ends immediately (**Defeat**)
 
-### 4.4 Damage Resolution rule
-Damage resolution depends entirely on the current combat range. There are three independent damage models:
 
-#### 4.4.1 LONG Range Damage Resolution:
-1. Damage is applied to `shield` first
-2. Remaining damage (if any) is applied to `hull`
+## 4.4 Damage Resolution (Authoritative)
+Damage resolution depends only on current range.
 
-#### 4.4.2 MID Range Damage Resolution:
-1. Damage is applied directly to `hull`
-2. `shield` and `armor` are ignored
+| Range | Primary Target | Overflow Target |
+| :--- | :--- | :--- |
+| **LONG** | Shield | Hull |
+| **MID** | Hull | — |
+| **CLOSE** | Armor | Hull |
 
-#### 4.4.3 CLOSE Range Damage Resolution:
-1. Damage is applied to `armor` first
-2. Remaining damage (if any) is applied to `hull`
+**Rules:**
+- Damage always applies to primary target first.
+- Overflow (if any) applies to secondary target.
+- Shield and armor never regenerate during combat.
 
-### 4.5 End of Combat
-#### 4.5.1 Disposable Item Cleanup
-- All equipped disposable items (`"disposable": true`) are removed from equipped slots
-- Each disposable item is replaced in inventory with one Broken Scrap (ID: 999)
-- This happens regardless of whether the item was activated during combat
-- Combat log displays: "[Item Name] has burned out. Replaced with Broken Scrap."
+---
 
-#### 4.5.2 Draw Condition
-Draws are expected to be rare and are treated as tactical failure. 
+## 4.5 Combat End Processing
 
-A combat is considered a draw if:
-- Both player and enemy are still alive after Turn 6.
+### 4.5.1 Disposable Equipment Cleanup
+After combat ends:
+- All equipped items with `"disposable": true` are removed.
+- Each removed item is replaced in inventory with:
+    - **Broken Scrap (ID: 999)**
+- This occurs even if the item never activated.
+- **Combat log message:**
+> [Item Name] has burned out. Replaced with Broken Scrap.
 
-In a draw:
-- Combat ends immediately
-- No rewards are granted
-- If the enemy `type` is "Boss": Game Over
-- If the enemy `type` is not "Boss": Proceed to next stage
+### 4.5.2 Draw Condition
+A draw occurs if:
+- Both player and enemy are alive after **Turn 6**.
 
-#### 4.5.3 Win Condition
-Player wins when:
-- Enemy `hull` ≤ 0 before Turn 6 ends
+**Draw effects:**
+- Combat ends immediately.
+- No rewards granted.
+- If `enemy type = Boss` → **Game Over**.
+- Otherwise → Advance to next stage.
 
-#### 4.5.4 Defeat Condition
-Player loses when:
-- Player `hull` ≤ 0 at any point
-- Draw occurs against a Boss enemy
+### 4.5.3 Win / Defeat Conditions
+- **Win:** Enemy hull ≤ 0 before Turn 6 ends.
+- **Defeat:**
+    * Player hull ≤ 0 at any time.
+    * **OR** draw against a Boss enemy.
 
-### 4.6 Reward
+---
 
-#### 4.6.1 Normal reward
-- After winning a battle, the player chooses ONE:
-    - Gain +5 Ammo
-    - Choose 1 equipment
+## 4.6 Rewards
 
-- Equipment is selected from equipment_data.json where `"reward": true`.  
+### 4.6.1 Normal Battle Reward
+After a win, player chooses **ONE**:
+- +5 Ammo
+- 1 Equipment item
 
-#### 4.6.2 Boss reward 
-- Boss rewards are granted after defeating the **ACT I boss** and **ACT II boss**.
-- No boss reward is granted after the **ACT III boss**, which ends the game.
+**Equipment pool:**
+- Selected from equipment data where `"reward": true`.
 
-1. **Automatic Restoration:**
-   - Hull is fully restored
-   - Gain +12 Ammo
+### 4.6.2 Boss Rewards
+Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss).
 
-2. **Boss Bonus (Choose ONE):**
-   Player chooses exactly ONE of the following:
-   - **Option A:** +2 Equipment Slots (`max_slots` increases by 2)
-   - **Option B:** +1 Equipment Slot AND +80 Max Hull (`max_slots` +1, `max_hull` +80, `hull` +80)
-   - **Option C:** +1 Equipment Slot AND +12 Ammo (`max_slots` +1, `ammo` +12)
+**Automatic:**
+- Hull fully restored.
+- +12 Ammo.
+
+**Choose ONE bonus:**
+- **Option A:** `max_slots +2`
+- **Option B:** `max_slots +1`, `max_hull +80`, `hull +80`
+- **Option C:** `max_slots +1`, `ammo +12`
+
+---
+
+## 4.7 Implementation Constraint (LLM Guidance)
+- **Combat logic MUST be:**
+    - Single-loop.
+    - Range-driven by data.
+    - Free of duplicated range-specific logic.
+- **Damage resolution MUST exist exactly once.**
+- **Scalability:** Adding a new range must require data changes only.
 
 -----
 
