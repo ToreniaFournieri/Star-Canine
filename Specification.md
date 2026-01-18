@@ -334,8 +334,9 @@ Player loses when:
 ## 5. Event
 
 ### 5.1 Dock
-Dock is a repair station.
+Dock is a repair station. Chose one:
 - **Repair:** Heal Hull by 30% of Max Hull
+  OR
 - **Resupply:** Gain +7 Ammo
 
 -----
@@ -385,7 +386,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     2. Unequipped items
   - **Equipment display**
     - `name`, `eq_type`, `val`, `ammo`, `disposable `
-  - After combat engagement, a combat log is shown and updated turn-by-turn
+  - After combat engagement, a combat log is shown
 
 - **Input**
   - **Pre-combat**
