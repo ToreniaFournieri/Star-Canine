@@ -1,5 +1,5 @@
 # STAR CANINE SPECIFICATION v0.6.3
-- MEMO:Easy mode for Debug
+- Version note:Easyer for texting abilities
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -28,33 +28,9 @@
   - Use CSV strings for all static data blocks to reduce boilerplate.
   - Strict Data Formatting: CSV blocks must contain NO leading spaces, NO trailing spaces, and NO indentation within the backticks.
 
-
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
-
 1. **Robust CSV Parsing** 
 - To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
-
-**REQUIRED Sanitizing Parser Pattern:**
-```javascript
-const parseCSV = (csv) => {
-  // Split by newline and remove empty lines caused by LLM formatting
-  const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
-  const headers = lines[0].split(',').map(h => h.trim());
-
-  return lines.slice(1).map(line => {
-    const values = line.split(',');
-    const obj = {};
-    headers.forEach((h, i) => {
-      let val = values[i]?.trim(); // Remove LLM-generated padding
-      // Automatic type conversion
-      if (val === '0' || val === '') obj[h] = 0;
-      else if (!isNaN(val) && val !== '') obj[h] = Number(val);
-      else obj[h] = val;
-    });
-    return obj;
-  });
-};
-```
 
 2. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
@@ -67,9 +43,7 @@ const parseCSV = (csv) => {
 
 -----
 ## 2. DEFINITIONS
-
 ## 2.1 Equipment Data
-
 ### 2.1.1 Equipment Fields
 Each equipment entry defines the following fields:
 - `name`: Display name of the equipment. May include emoji identifiers.
@@ -199,9 +173,6 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 ### 2.4 Stage layout 
 - There are two type of stages
   - combat: Combat stage. Enemy is chosen from Enemy data. If it hits mutiple enemies by the provided condition, pick one randomly.
-  - Enemy scaling affects: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
-    - ACT II, all enemy status x2.0 round down.
-    - ACT III, all enemy status x3.0 round down.
   - dock: heal and resupply
  
 ### 2.4.1 ACT structure
@@ -213,12 +184,22 @@ stage,type,difficulty,rank
 2,combat,2,NORMAL
 3,combat,5,ELITE
 4,dock,,
-5,combat,4,NORMAL
-6,combat,6,ELITE
-7,combat,6,NORMAL
-8,dock,,
-9,combat,10,BOSS
+5,combat,3,NORMAL
+6,combat,4,NORMAL
+7,combat,6,ELITE
+8,combat,6,NORMAL
+9,dock,,
+10,combat,10,BOSS
 ```
+
+### 2.4.2 Progression & Act Scaling
+- Act Loop: Upon completing Stage 10, the player advances to Stage 11 (which uses the Stage 1 layout but with Act II scaling).
+Act Identification:
+ACT I: Stages 1–10 (Scale x1.0)
+ACT II: Stages 11–20 (Scale x2.0)
+ACT III: Stages 21–30 (Scale x3.0)
+
+- Scale affects　Enemy's: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
 
 -----
 ## 3. EQUIPMENT SYSTEM
