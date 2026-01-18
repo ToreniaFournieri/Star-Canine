@@ -26,7 +26,7 @@
 - No hidden rules
 - **Optimize token usuage**
 
-### 1.3 Implementation Rules (FOR CODER)
+### 1.3 Implementation Rules (FOR CODER, especially Claude)
 
 1. **Robust CSV Parsing** To optimize token usage and prevent data-type errors, embed data as a CSV string and use a sanitizing parser. The parser must trim whitespace from headers and values to prevent LLM-formatting artifacts from breaking the game logic.
 
