@@ -249,144 +249,104 @@ stage,type,difficulty,rank
 -----
 ## 4. COMBAT SYSTEM
 Combat is deterministic, non-interactive, and resolved through a fixed range sequence.
-  - No player input once combat starts
-  - Combat ends immediately when either side is destroyed
+- No player input once combat starts.
+- Combat ends immediately when either side is destroyed.
 
 ### 4.1 Turn Structure 
 Combat consists of 6 turns following this fixed range order:
-LONG → MID → CLOSE → CLOSE → MID → LONG
+**LONG → MID → CLOSE → CLOSE → MID → LONG**
 
-- One range per turn
-- If either side is destroyed, combat ends immediately
+- One range per turn.
+- If either side is destroyed, combat ends immediately.
 
 ### 4.2 Combat Initialization
-At the beginning of combat:
-- Player **shield** and **armor** values are recalculated from equipped items:
-  - `eq_type = SHIELD` → contributes to shield
-  - `eq_type = ARMOR` → contributes to armor
-- Shield and armor **reset every combat**
-- Player `hull` damage **persists between combats**
+At the beginning of combat, the ship's temporary combat stats are calculated:
 
-#### Module Multiplier Calculation
-- Equipments with `eq_type` starting with `MODULE_` act as multipliers
-  - Each module targets a specific equipment type
-  - All matching equipments receive the multiplier
-  - Multipliers stack multiplicatively. Example: ×3 and ×3 → ×9
-  - All multipliers are computed once before combat
+1. **Defense Summation:**
+    - Base Shield = Sum of all `eq_type: SHIELD` values.
+    - Base Armor = Sum of all `eq_type: ARMOR` values.
+2. **Ability Bonuses:**
+    - Scan all equipped items for `ability` strings containing `+X shield` or `+X armor`.
+    - Add these values to the Base Shield and Base Armor.
+3. **Module Multiplier Calculation:**
+    - Equipments with `eq_type` starting with `MODULE_` (e.g., `MODULE_LONG`, `MODULE_UTILITY`) act as multipliers.
+    - All matching items receive the multiplier.
+    - Multipliers stack multiplicatively (e.g., two x2 modules = x4 total multiplier).
+    - Multipliers are computed once before combat and remain static.
 
-## 4.3 Turn Resolution (Per Turn)
-Each turn resolves in the following fixed order.
+### 4.3 Turn Resolution (Per Turn)
+Each turn resolves in the following fixed order:
 
-### 4.3.1 Player Attack
+#### 4.3.1 Player Attack
 For the current range:
-- **All equipped items where:**
-  - `eq_type` matches the range:
-    - `LONG` → `eq_type = LONG`
-    - `MID` → `eq_type = MID`
-    - `CLOSE` → `eq_type = CLOSE`
-  - Player has sufficient ammo
-    - If ammo is insufficient, the equipment does not activate.
-- All valid items activate simultaneously
+- **Activate all equipped items where:**
+    - `eq_type` matches the current range.
+    - Player has sufficient `ammo`.
+- **Rules:**
+    - **Damage per item:** `value` × matching module multiplier.
+    - **Total damage:** Sum of all activated items.
+    - **Ammo cost:** Consumed cumulatively. If ammo is insufficient for an item, it does not fire.
 
-**Rules:**
-- **Damage per item:** `base_value` × module multipliers
-- **Total damage:** Sum of all activated items
-- **Ammo cost:** Consumed cumulatively
-- **Overkill:** Overkill damage is allowed
+#### 4.3.2 Enemy Damage Application
+- Apply total damage using **Range Damage Rules (4.4)**.
 
-### 4.3.2 Enemy Damage Application
-- Apply total damage using range damage rules (see **4.4**)
+#### 4.3.3 Enemy Status Check
+- If enemy `hull` ≤ 0: Combat ends immediately (**Win**).
 
-### 4.3.3 Enemy Status Check
-- **If enemy hull ≤ 0:**
-    - Enemy is destroyed
-    - Enemy does not attack
-    - Combat ends immediately (**Win**)
+#### 4.3.4 Enemy Attack (If Alive)
+- Enemy attacks using the value for the current range (`attack_LONG`, etc.).
+- Damage is resolved against the player using **Range Damage Rules (4.4)**.
 
-### 4.3.4 Enemy Attack (If Alive)
-- Enemy attack value is read from:
-    - `LONG` → `attack_LONG`
-    - `MID` → `attack_MID`
-    - `CLOSE` → `attack_CLOSE`
-- **If attack value > 0:**
-    - Enemy attacks automatically
-    - Damage is resolved using the same rules (**4.4**)
+#### 4.3.5 Player Status Check
+- If player `hull` ≤ 0: Combat ends immediately (**Defeat**).
 
-### 4.3.5 Player Status Check
-- **If player hull ≤ 0:**
-    - Combat ends immediately (**Defeat**)
-
-## 4.4 Damage Resolution (Authoritative)
-Damage resolution depends only on current range.
+### 4.4 Damage Resolution (Authoritative)
+Damage application depends on the current range:
 
 | Range | Primary Target | Overflow Target |
 | :--- | :--- | :--- |
 | **LONG** | Shield | Hull |
-| **MID** | Hull | — |
+| **MID** | Hull | None |
 | **CLOSE** | Armor | Hull |
 
-**Rules:**
-- Damage always applies to primary target first.
-- Overflow (if any) applies to secondary target.
-- Shield and armor never regenerate during combat.
+- **Shield/Armor:** Temporary pools that do not regenerate during combat.
+- **Overflow:** Damage exceeding the primary target applies to the secondary target (if applicable).
 
----
-## 4.5 Combat End Processing
-### 4.5.1 Disposable Equipment Cleanup
-After combat ends:
-- All equipped items with `"disposable": true` are removed.
-- Each removed item is replaced in inventory with:
-    - `⚠️ Broken Scrap`
-- This occurs even if the item never activated.
-- **Combat log message:**
-> [Item Name] has burned out. Replaced with `⚠️ Broken Scrap`.
+### 4.5 Combat End Processing
+This phase occurs after the 6th turn ends or a ship is destroyed.
 
-### 4.5.2 Combat Outcomes
-A combat ends with one of three results:
-**Clear:**
-- Enemy `hull` ≤ 0 before Turn 6 ends
-- It is a final stage
-- Game Clear
-**Victory:**
-- Enemy `hull` ≤ 0 before Turn 6 ends
-- It is not a final stage
-- Player receives rewards (see 4.6)
-**Defeat:**
-- Player `hull` ≤ 0 at any point
-- **OR** draw occurs against a Boss enemy (`type` = "Boss")
-- Game Over
-**Draw:**
-- Both player and enemy are alive after Turn 6
-- No rewards granted
-- Note: if enemy `rank` = "Boss" → Count as a Defeat (Game Over)
-- Otherwise → Advance to next stage
+#### 4.5.1 Cleanup & Evolution
+1. **Disposable Removal:** Items with `disposable: 1` are replaced with `⚠️ Broken Scrap`.
+2. **Scaling Abilities:** Items with `+X damage per combat` have their `value` permanently increased.
+3. **Utility Repair:** - Sum all `+X hull repair` abilities from equipped `UTILITY` items.
+    - Apply `MODULE_UTILITY` multipliers to this sum.
+    - Heal player `hull` by the resulting total (clamped to `max_hull`).
 
----
-## 4.6 Rewards
-### 4.6.1 Normal Battle Reward
-After a win, player chooses **ONE**:
-- +5 Ammo
-- Choose 1 equipment from 3 randomly selected items (where `"reward": true`)
+#### 4.5.2 Outcomes
+- **Clear:** Final Boss defeated. (Game Clear).
+- **Victory:** Enemy `hull` ≤ 0. (Proceed to Rewards).
+- **Defeat:** Player `hull` ≤ 0 OR Boss remains alive after Turn 6. (Game Over).
+- **Draw:** Both alive after Turn 6 (and enemy is not a Boss). (Advance Stage, no rewards).
 
-### 4.6.2 Boss Rewards
-Granted after defeating ACT I or ACT II Boss (No boss reward after ACT III boss).
+### 4.6 Rewards
+#### 4.6.1 Rarity-Based Drops
+After a **Victory**, the player chooses **ONE**:
+1. **Ammo:** +5 Ammo.
+2. **Equipment:** Choose 1 from 3 randomly selected items filtered by the enemy's `rank`:
+    - **NORMAL Rank:** Returns items with `rarity: 1`.
+    - **ELITE Rank:** Returns items with `rarity: 2`.
+    - **BOSS Rank:** Returns items with `rarity: 3`.
 
-**Automatic:**
-- Hull fully restored.
-- +12 Ammo.
+#### 4.6.2 Boss Bonus (ACT I & II)
+Automatically grants: **Full Hull Repair** and **+12 Ammo**.
+Additionally, choose **ONE** bonus:
+- `max_slots +2`
+- `max_slots +1` AND `max_hull +80` (includes immediate +80 heal)
+- `max_slots +1` AND `ammo +12`
 
-**Choose ONE bonus:**
-1. `max_slots +2`
-2. `max_slots +1`, `max_hull +80`, `hull +80`
-3. `max_slots +1`, `ammo +12`
-
-## 4.7 Implementation Constraint (LLM Guidance)
-- **Combat logic MUST be:**
-    - Single-loop.
-    - Range-driven by data.
-    - Free of duplicated range-specific logic.
-- **Damage resolution MUST exist exactly once.**
-- **Scalability:** Adding a new range must require data changes only.
+### 4.7 Implementation Constraint
+- **Pure Logic:** Combat must be calculated as a deterministic function.
+- **Single Source:** Damage resolution rules must exist in one place to ensure consistency across LONG/MID/CLOSE ranges.
 
 -----
 ## 5. Event
