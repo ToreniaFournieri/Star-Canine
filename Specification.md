@@ -118,16 +118,16 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
   - `val`: Damage absorbed at CLOSE range only
   - `ammo`: Ignored
 - **`MODULE`**
-- Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
-- The suffix defines the target weapon category:
-  - `MODULE_LONG` → affects LONG range weapons
-  - `MODULE_MID` → affects MID range weapons
-  - `MODULE_CLOSE` → affects CLOSE range weapons
-  - Multiple modules stack multiplicatively
-  - `ammo`: Ignored
-- **`JUNK`**
-  - No combat effect
-  - Cannot appear as a reward
+  - Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
+  - The suffix defines the target weapon category:
+    - `MODULE_LONG` → affects LONG range weapons
+    - `MODULE_MID` → affects MID range weapons
+    - `MODULE_CLOSE` → affects CLOSE range weapons
+    - Multiple modules stack multiplicatively
+    - `ammo`: Ignored
+  - **`JUNK`**
+    - No combat effect
+    - Cannot appear as a reward
 
 ### 2.1.3 Constraints
 - Each equipment entry defines exactly one behavior.
