@@ -27,8 +27,6 @@
   - Use CSV strings for all static data blocks to reduce boilerplate.
   - Strict Data Formatting: CSV blocks must contain NO leading spaces, NO trailing spaces, and NO indentation within the backticks.
 
-
-
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
 1. DATA INTEGRITY & RAW FORMATTING (CRITICAL)
 To prevent the Sanitizing Parser from failing due to LLM-generated formatting artifacts, the following rules are absolute:
@@ -70,7 +68,6 @@ const parseCSV = (csv) => {
   });
 };
 ```
-
 
 3. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
