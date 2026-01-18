@@ -187,8 +187,8 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 3,Lancer,45,10,0,NORMAL,30,0,15
 5,Raider,50,10,10,ELITE,30,0,20
 4,Interceptor,55,15,10,NORMAL,35,0,20
-4,Frigate,65,0,20,NORMAL,20,0,25
-4,Enforcer,70,20,15,ELITE,40,0,25
+6,Frigate,65,0,20,NORMAL,20,0,25
+7,Enforcer,70,20,15,ELITE,40,0,25
 8,Howler,80,25,20,ELITE,45,0,30
 10,the Boss,100,30,40,BOSS,50,0,35
 ```
@@ -211,13 +211,15 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
   - dock: heal and resupply
  
 ### 2.4.1 ACT structure
-1. combat: a random enemy (difficulty:1, rank:normal)
-1. combat: a random enemy (difficulty:2, type:normal) 
-1. combat: a random enemy (where difficulty:3, rank:normal) 
+- one enemy selected deterministically from the matching pool
+
+1. combat: an enemy (difficulty:1, rank:normal)
+1. combat: an enemy(difficulty:2, type:normal) 
+1. combat: an enemy (where difficulty:3, rank:normal) 
 1. dock 
 1. combat: an elite (difficulty:5, rank:elite)
-1. combat: a random enemy (difficulty:4, rank:normal)
-1. combat: a random enemy (difficulty:4, rank:normal) 
+1. combat: an enemy (difficulty:4, rank:normal)
+1. combat: an enemy (difficulty:6, rank:normal) 
 1. dock
 1. combat: boss (difficulty:10, rank:boss)
 
