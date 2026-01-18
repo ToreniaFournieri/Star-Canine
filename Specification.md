@@ -125,9 +125,9 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
     - `MODULE_CLOSE` → affects CLOSE range weapons
     - Multiple modules stack multiplicatively
     - `ammo`: Ignored
-  - **`JUNK`**
-    - No combat effect
-    - Cannot appear as a reward
+- **`JUNK`**
+  - No combat effect
+  - Cannot appear as a reward
 
 ### 2.1.3 Constraints
 - Each equipment entry defines exactly one behavior.
