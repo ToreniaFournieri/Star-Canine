@@ -190,8 +190,8 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 2,Drifter,35,5,0,NORMAL,20,0,10
 3,Scout,40,0,10,NORMAL,0,0,15
 3,Lancer,45,10,0,NORMAL,30,0,15
-5,Raider,50,10,10,ELITE,30,0,20
 4,Interceptor,55,15,10,NORMAL,35,0,20
+5,Raider,50,10,10,ELITE,30,0,20
 6,Frigate,65,0,20,NORMAL,20,0,25
 7,Enforcer,70,20,15,ELITE,40,0,25
 8,Howler,80,25,20,ELITE,45,0,30
@@ -223,7 +223,7 @@ stage,type,difficulty,rank
 4,dock,,
 5,combat,3,NORMAL
 6,combat,4,NORMAL
-7,combat,6,ELITE
+7,combat,7,ELITE
 8,combat,6,NORMAL
 9,dock,,
 10,combat,10,BOSS
