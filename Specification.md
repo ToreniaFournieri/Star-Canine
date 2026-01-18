@@ -1,4 +1,5 @@
-# STAR CANINE SPECIFICATION v0.6.0 - Equipment update -
+# STAR CANINE SPECIFICATION v0.6.0 
+- Equipment update
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
