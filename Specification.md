@@ -328,10 +328,10 @@ Damage resolution depends only on current range.
 After combat ends:
 - All equipped items with `"disposable": true` are removed.
 - Each removed item is replaced in inventory with:
-    - **Broken Scrap (ID: 999)**
+    - `⚠️ Broken Scrap`
 - This occurs even if the item never activated.
 - **Combat log message:**
-> [Item Name] has burned out. Replaced with Broken Scrap.
+> [Item Name] has burned out. Replaced with `⚠️ Broken Scrap`.
 
 ### 4.5.2 Draw Condition
 A draw occurs if:
