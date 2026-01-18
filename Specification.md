@@ -204,15 +204,19 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
  
 ### 2.4.1 ACT structure
 - One enemy selected deterministically from the matching pool
-1. combat: an enemy (difficulty:1, rank:normal)
-1. combat: an enemy(difficulty:2, type:normal) 
-1. combat: an enemy (where difficulty:3, rank:normal) 
-1. dock 
-1. combat: an elite (difficulty:5, rank:elite)
-1. combat: an enemy (difficulty:4, rank:normal)
-1. combat: an enemy (difficulty:6, rank:normal) 
-1. dock
-1. combat: boss (difficulty:10, rank:boss)
+- CSV format below:
+```
+stage,type,difficulty,rank
+1,combat,1,NORMAL
+2,combat,2,NORMAL
+3,combat,3,NORMAL
+4,dock,,
+5,combat,5,ELITE
+6,combat,4,NORMAL
+7,combat,6,NORMAL
+8,dock,,
+9,combat,10,BOSS
+```
 
 -----
 ## 3. EQUIPMENT SYSTEM
