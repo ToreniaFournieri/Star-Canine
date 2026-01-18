@@ -25,7 +25,7 @@
 - Minimal state tracking
 - No hidden rules
 
-- **FOR AI especially Claude**  
+- **FOR AI coders, especially Claude**  
 To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
