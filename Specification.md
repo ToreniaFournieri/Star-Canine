@@ -180,7 +180,7 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 6,Frigate,65,0,20,NORMAL,20,0,25
 7,Enforcer,70,20,15,ELITE,40,0,25
 8,Howler,80,25,20,ELITE,45,0,30
-10,the Boss,100,30,40,BOSS,50,0,35
+10,Celestial Reaper,100,30,40,BOSS,50,0,35
 ```
 
 ### 2.3 Player ship initial state
