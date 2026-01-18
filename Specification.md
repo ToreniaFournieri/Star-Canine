@@ -275,7 +275,9 @@ For the current range:
     - `MID` → `eq_type = MID`
     - `CLOSE` → `eq_type = CLOSE`
   - Player has sufficient ammo
+    - If ammo is insufficient, the equipment does not activate.
 - All valid items activate simultaneously
+
 
 **Rules:**
 - **Damage per item:** `base_value` × module multipliers
@@ -460,7 +462,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - Draw vs non-Boss enemy → Advance stage, return to Main Loop
   - Player defeat → Game End Scene
 
-#### 6.22 Reward Scene
+#### 6.2.2 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
 
 - **Display**
@@ -490,6 +492,8 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - Advances stage and returns to Main Loop
 
 #### 6.2.4 Game End Scene
+Game End Scene handles both Game Over and Game Clear outcomes.
+
 - If it is game over, display this:
 ```
 STAR CANINE has been destroyed...
