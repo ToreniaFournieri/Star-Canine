@@ -25,6 +25,27 @@
 - Minimal state tracking
 - No hidden rules
 
+- **FOR AI especially Claude**  
+To optimize token usage, embed data as a CSV string and parse it at runtime  
+Example:
+```javascript
+const EQUIPMENT_CSV = `name,val,ammo,eq_type,reward,disposable
+🚀 Lance,40,3,LONG,0,0
+🚀🚀 Meteor,50,4,LONG,1,0`;
+
+const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
+  const [name, val, ammo, eq_type, reward, disposable] = line.split(',');
+  return { 
+    name, 
+    val: parseInt(val), 
+    ammo: parseInt(ammo), 
+    eq_type, 
+    reward: reward === '1', 
+    disposable: disposable === '1' 
+  };
+});
+```
+
 -----
 ## 2. DEFINITIONS
 ## 2.1 Equipment Data
