@@ -384,7 +384,7 @@ This section defines the authoritative game progression flow and the scenes used
 
 ### 6.1 Flow
 
-- Main loop decides the next scence by following flow:
+- Main loop decides the next Scene by following flow:
 ```
 START
 ↓
