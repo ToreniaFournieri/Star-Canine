@@ -28,72 +28,53 @@
 -----
 ## 2. DEFINITIONS
 ## 2.1 Equipment Data
-
 Equipment data is defined as a compact, behavior-driven table.  
 Each equipment entry contains exactly one primary numeric value (`val`), whose meaning is determined solely by `eq_type`.
 
 All equipment data is embedded directly in this specification as a CSV block.
 
 ### 2.1.1 Equipment Fields
-
 Each equipment entry defines the following fields:
 
 - **`name`**  
   Display name of the equipment. May include emoji identifiers.
-
 - **`val`**  
   Primary numeric value. Its meaning depends entirely on `eq_type`.
-
 - **`ammo`**  
   Ammo consumed per activation.  
   Ignored for equipment types that do not consume ammo (set to `0`).
-
 - **`eq_type`**  
   Equipment behavior category. Defines combat range or special behavior.  
   Valid values:
-
-  **Weapon Types**
-  - `LONG` — Weapon that fires only at LONG range. like MISSILE 
-  - `MID` — Weapon that fires only at MID range. like FIGHTER
-  - `CLOSE` — Weapon that fires only at CLOSE range. Like LASER
-
-  **Defensive Types**
-  - `SHIELD` — Absorbs damage at LONG range
-  - `ARMOR` — Absorbs damage at CLOSE range
-
-  **Module Types**
-  - `MODULE_LASER` — Multiplies damage of all LASER weapons
-  - `MODULE_MISSILE` — Multiplies damage of all MISSILE weapons
-  - `MODULE_FIGHTER` — Multiplies damage of all FIGHTER weapons
-
-  **Other**
-  - `JUNK` — Inert item with no combat effect
-
+    - `LONG` — Weapon that fires only at LONG range. like MISSILE 
+    - `MID` — Weapon that fires only at MID range. like FIGHTER
+    - `CLOSE` — Weapon that fires only at CLOSE range. Like LASER
+    - `SHIELD` — Absorbs damage at LONG range
+    - `ARMOR` — Absorbs damage at CLOSE range
+    - `MODULE_LASER` — Multiplies damage of all LASER weapons
+    - `MODULE_MISSILE` — Multiplies damage of all MISSILE weapons
+    - `MODULE_FIGHTER` — Multiplies damage of all FIGHTER weapons
+    - `JUNK` — Inert item with no combat effect
 - **`reward`**  
   Boolean (`0` or `1`). Whether the equipment may appear as a post-battle reward.
-
 - **`disposable`**  
   Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
 
 ---
 
 ### 2.1.2 Value Interpretation Rules
-
 The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
 
 - **`LONG` / `MID` / `CLOSE`**
   - `val`: Damage dealt at the corresponding combat range
   - `ammo`: Ammo consumed per activation
   - Weapons never operate outside their defined range
-
 - **`SHIELD`**
   - `val`: Damage absorbed at LONG range only
   - `ammo`: Ignored
-
 - **`ARMOR`**
   - `val`: Damage absorbed at CLOSE range only
   - `ammo`: Ignored
-
 - **`MODULE`**
 - Equipment with `eq_type` starting with `MODULE_` applies a damage multiplier.
 - The suffix defines the target weapon category:
@@ -102,17 +83,13 @@ The meaning of `val` and `ammo` is inferred exclusively from `eq_type`.
   - `MODULE_FIGHTER` → affects FIGHTER weapons
   - Multiple modules stack multiplicatively
   - `ammo`: Ignored
-
 - **`JUNK`**
   - No combat effect
-  - `val` and `ammo` are ignored
   - Cannot appear as a reward
-  - Not disposable
 
 ---
 
 ### 2.1.3 Constraints
-
 - Each equipment entry defines exactly one behavior.
 - No equipment operates at multiple ranges.
 - No equipment combines weapon, defense, or module effects.
@@ -146,48 +123,30 @@ name,val,ammo,eq_type,reward,disposable
 Enemy data is defined as CSV-style rows embedded directly in the specification.
 Each row represents a single hostile unit encountered in combat.
 
-#### 2.2.1 Enemy Fields
-
-Enemy data columns **must follow this exact order**:
-```
-diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
-```
-
-#### 2.2.2 Enemy Field Definitions
+#### 2.2.1 Enemy Field Definitions
 
 1. **diff**  
    Integer. Difficulty tier used for enemy pool selection and ACT scaling.
-
 2. **name**  
    String. Enemy display name. Must be unique within the enemy list.
-
 3. **hull**  
    Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
-
 4. **shield**  
    Integer. Shield value. Absorbs damage at **LONG range only**.
-
 5. **armor**  
    Integer. Armor value. Absorbs damage at **CLOSE range only**.
-
 6. **rank**  
    String. Enemy classification. One of:
-   - `NORMAL`
-   - `ELITE`
-   - `BOSS`
-
+   - `NORMAL`, `ELITE`, `BOSS`
 7. **atk_L**  
    Integer or `0`. Damage dealt at **LONG range**.  
    `0` means the enemy cannot attack at this range.
-
 8. **atk_M**  
    Integer or `0`. Damage dealt at **MID range**.  
    `0` means the enemy cannot attack at this range.
-
 9. **atk_C**  
    Integer or `0`. Damage dealt at **CLOSE range**.  
    `0` means the enemy cannot attack at this range.
-
      
 #### 2.2.2 Enemy csv layout
 
@@ -212,7 +171,7 @@ diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
   - `armor`: 0,
   - `ammo`: 12,
   - `max_slots`: 6,
-  - inventory:
+  - `inventory`:
     - "🚀 Comet Lance"
     - "⚡ Hull Cutter"
     - "⚡ Hull Cutter"
@@ -249,13 +208,11 @@ diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
 -----
 
 ## 4. COMBAT SYSTEM
-
 Combat is fully deterministic and proceeds through a fixed sequence of range-based turns.
 No player input is allowed once combat begins.
 
 ### 4.1 Turn Order
 Each combat follows this fixed range sequence:
-
 LONG → MID → CLOSE → CLOSE → MID → LONG
 
 - Total of **6 turns per combat**
@@ -280,11 +237,9 @@ At the beginning of combat:
 - Multipliers are applied **before combat starts**
 
 ### 4.3 Attack Resolution Rules
-
 Each turn resolves in the following order.
 
 #### 4.3.1 Player Attacks First
-
 For the current range (LONG / MID / CLOSE):
 
 - For each equipped equipment:
@@ -304,8 +259,7 @@ Rules:
 - Equipments fire even if damage exceeds enemy hull (overkill allowed)
 
 #### 4.3.2 Enemy Takes Damage
-
-- Damage is applied using damage resolution rules (see 4.4)
+Damage is applied using damage resolution rules (see 4.4)
 
 #### 4.3.3 Enemy Status Check
 
@@ -395,7 +349,6 @@ Player loses when:
    - **Option B:** +1 Equipment Slot AND +80 Max Hull (`max_slots` +1, `max_hull` +80, `hull` +80)
    - **Option C:** +1 Equipment Slot AND +12 Ammo (`max_slots` +1, `ammo` +12)
 
-
 -----
 
 ## 5. Event
@@ -415,8 +368,6 @@ This section defines the authoritative game progression flow and the scenes used
 ```
 START
 ↓
-Opening Scene
-↓
 Main Loop:
 ┌────────────────────────┐
 │ Check Next Stage       │
@@ -428,7 +379,7 @@ Main Loop:
 │   ↓
 │   Reward Scene
 │   ↓
-│   continue Main Loop / Game Over Scene / Game Clear Scene
+│   continue Main Loop / Game End Scene
 │
 └─ If stage type is Dock
     ↓
@@ -440,44 +391,20 @@ Main Loop:
 Each scene is a presentation and input layer only.  
 Scenes do not control progression; all transitions are dictated by the Flow system.
 
-
-#### 6.2.1 Opening Scene
-**Purpose:** Game entry point
-
-- **Display**
-  - Game title
-  - Opening story text
-  - Start prompt
-
-- **Input**
-  - Start button / Enter key
-
-- **Exit**
-  - Proceeds to Main Loop
-
-#### 6.2.2 Combat Scene
+#### 6.2.1 Combat Scene
 **Purpose:** Equipment preparation and deterministic combat resolution
 
 - **Display**
   - **Player status**
-    - `hull`
-    - `shield`
-    - `armor`
-    - `ammo`
+    - `hull`,  `shield`, `armor`, `ammo`
   - **Enemy status**
-    - `hull`
-    - `shield`
-    - `armor`
+    - `hull`, `shield`, `armor`
     - Attack values: `atk_L`, `atk_M`, `atk_C`
   - **Inventory display order**
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`
-    - `eq_type`
-    - `val`
-    - `ammo`
-    - `disposable `
+    - `name`, `eq_type`, `val`, `ammo`, `disposable `
   - After combat engagement, a combat log is shown and updated turn-by-turn
 
 - **Input**
@@ -485,7 +412,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
     - Equip / unequip inventory items
     - "Engage Combat" button
   - **During combat**
-    - No input (combat resolves automatically)
+    - "Continue" button 
   - **Post-combat**
     - "Continue" button
 
@@ -495,33 +422,32 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - Equipment selections persist between battles
 
 - **Exit**
-  - Player victory and final stage → Game Clear Scene
+  - Player victory and final stage → Game End Scene
   - Player victory → Reward Scene
-  - Draw vs Boss enemy → Game Over Scene
+  - Draw vs Boss enemy → Game End Scene
   - Draw vs non-Boss enemy → Advance stage, return to Main Loop
-  - Player defeat → Game Over Scene
+  - Player defeat → Game End Scene
 
-#### 6.2.3 Reward Scene
+#### 6.22 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
 
 - **Display**
-  - Available reward items
+  - Available normal reward items
   - Each reward shows:
-    - `name`
-    - `eq_type`
-    - `val`
-    - `ammo`
-    - `disposable`
+    - `name`, `eq_type`, `val`, `ammo`, `disposable `
+  - Boss reward list
 
 - **Input**
-  - Select exactly one reward
+  - **Normal reward**
+    - Select exactly one reward
+  - **Boss reward**
+    - Sekect exactly one reward
 
 - **Exit**
   - Advances stage
   - Returns to Main Loop
 
-
-#### 6.2.4 Dock Scene
+#### 6.2.3 Dock Scene
 **Purpose:** Resolve Dock events
 - **Display**
   - Player ship: `hull`, `shield`, `armor`, `ammo`
@@ -531,13 +457,13 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
 - **Exit**
   - Advances stage and returns to Main Loop
 
-#### 6.2.5 Game Over Scene
-- Display this:
+#### 6.2.4 Game End Scene
+- If it is game over, display this:
 ```
 STAR CANINE has been destroyed...
 ```
-#### 6.2.6 Game Clear Scene
-- Display this:
+
+- If it is game clear, display this:
 ```
 Planet K9 has been liberated.
 LAIKA is safe.
@@ -545,30 +471,4 @@ LAIKA is safe.
 Mission Complete.
 ```
 
------
-
-## 7. Opening Story
-```
-Ship ID confirmed: STAR CANINE  
-Command authority: CAPTAIN  
-
-Incoming distress signal detected.  
-Origin: Planet K9  
-Sender ID: LAIKA  
-
-"It's me.  
-K9 has fallen.  
-Solar Bear battleships took the planet.  
-They took me too.  
-I know you weren't here.  
-I know you'll come back.  
-Please… don't die."
-
-Signal lost.
-
-Solar Bear Empire detected in K9 orbit.  
-Occupation status: ACTIVE.
-
-Setting course for K9.
-```
 **END OF SPECIFICATION**
