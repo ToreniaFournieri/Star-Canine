@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.5.3
+# STAR CANINE SPECIFICATION v0.5.4
 
 ## 1. OVERVIEW
 - This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
@@ -27,7 +27,7 @@
 - Optimize token usuage
 
 **FOR AI coders, especially Claude**  
-To optimize token usage, embed data as a CSV string and parse it at runtime  
+IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
 Example:
 ```javascript
 const EQUIPMENT_CSV = `name,val,ammo,eq_type,reward,disposable
