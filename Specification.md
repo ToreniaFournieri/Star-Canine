@@ -26,25 +26,28 @@
 - No hidden rules
 - **Optimize token usuage**
 
-### 1.3 Implementation Rules (FOR CORDER **especially Claude**)
-1. IF you are going to embed data of Equipment or Enemy. To optimize token usage, embed data as a CSV string and parse it at runtime  
-Example:
-```javascript
-const EQUIPMENT_CSV = `name,value,ammo,eq_type,reward,disposable
-🚀 Lance,40,3,LONG,0,0
-🚀🚀 Meteor,50,4,LONG,1,0`;
+### 1.3 Implementation Rules (FOR CODER)
 
-const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
-  const [name, value, ammo, eq_type, reward, disposable] = line.split(',');
-  return { 
-    name, 
-    value: parseInt(value), 
-    ammo: parseInt(ammo), 
-    eq_type, 
-    reward: reward === '1', 
-    disposable: disposable === '1' 
-  };
-});
+1. **Robust CSV Parsing** To optimize token usage and prevent data-type errors, embed data as a CSV string and use a sanitizing parser. The parser must trim whitespace from headers and values to prevent LLM-formatting artifacts from breaking the game logic.
+
+   **REQUIRED Sanitizing Parser Pattern:**
+   ```javascript
+   const parseCSV = (csv) => {
+     const lines = csv.trim().split('\n');
+     const headers = lines[0].split(',').map(h => h.trim());
+     return lines.slice(1).map(line => {
+       const values = line.split(',');
+       const obj = {};
+       headers.forEach((h, i) => {
+         let val = values[i]?.trim();
+         // Convert to Number if numeric and not empty, otherwise keep as string
+         if (val === '0' || val === '') obj[h] = 0;
+         else if (!isNaN(val) && val !== '') obj[h] = Number(val);
+         else obj[h] = val;
+       });
+       return obj;
+     });
+   };
 ```
 
 2. Scene Mapping
@@ -75,6 +78,8 @@ if (gameState === 'start') { ... }
 if (gameState === 'combat') { ... }
 if (gameState === 'reward') { ... }
 ```
+3. Defensive State Rendering
+- Scenes must include a fallback or "null check" for data-dependent UI (like currentEnemy) to prevent the application from crashing if the stage transition fails.
 
 -----
 ## 2. DEFINITIONS
