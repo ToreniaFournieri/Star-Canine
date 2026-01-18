@@ -2,7 +2,7 @@
 - Equipment update
 
 ## 1. OVERVIEW
-- This is a terminal-based (or simple UI), deterministic, text-only roguelike spaceship game.
+- This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
   - No randomness in combat
   - No graphics
   - Designed to be playable and solvable by LLMs
