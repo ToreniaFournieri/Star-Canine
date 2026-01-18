@@ -172,9 +172,9 @@ diff,name,hull,shield,armor,rank,atk_L,atk_M,atk_C
 
 6. **rank**  
    String. Enemy classification. One of:
-   - `Normal`
-   - `Elite`
-   - `Boss`
+   - `NORMAL`
+   - `ELITE`
+   - `BOSS`
 
 7. **atk_L**  
    Integer or `0`. Damage dealt at **LONG range**.  
