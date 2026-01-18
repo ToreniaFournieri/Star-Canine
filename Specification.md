@@ -48,9 +48,12 @@ const EQUIPMENT_DATA = EQUIPMENT_CSV.trim().split('\n').slice(1).map(line => {
 ```
 
 2. Scene Mapping
-
-- UI rendering MUST use a **scene-to-component mapping**, not conditional chains.
-- The main render function MUST NOT contain multiple `if / else` or `switch` blocks for scenes.
+- Do NOT manage progression inside scenes.
+- Scenes must be pure UI.
+- All progression must be handled by a single Flow controller using stageNum.
+- Scene mapping MUST use component references, not instantiated JSX.
+- advanceStage() may only be triggered by stageNum changes (useEffect).
+- Do NOT introduce any scene names not defined in the specification.
 
 REQUIRED pattern:
 
@@ -59,14 +62,12 @@ const SCENES = {
   start: StartScene,
   combat: CombatScene,
   reward: RewardScene,
-  boss_reward: BossRewardScene,
   dock: DockScene,
-  gameover: GameOverScene,
-  victory: VictoryScene
+  gameover: GameOverScene
 };
 
-const Scene = SCENES[gameState];
-return Scene ? <Scene /> : null;
+const Scene = SCENES[scene];
+return Scene ? <Scene {...props} /> : null;
 ```
 
 FORBIDDEN pattern:
