@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.3
+# STAR CANINE SPECIFICATION v0.6.4
 - Version note:Easyer for texting abilities
 
 ## 1. OVERVIEW
@@ -31,6 +31,29 @@
 ### 1.3 Implementation Rules (FOR CODER, especially Claude)
 1. **Robust CSV Parsing** 
 - To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
+
+**REQUIRED Sanitizing Parser Pattern:**
+```javascript
+const parseCSV = (csv) => {
+  // Split by newline and remove empty lines caused by LLM formatting
+  const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
+  const headers = lines[0].split(',').map(h => h.trim());
+
+  return lines.slice(1).map(line => {
+    const values = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => {
+      let val = values[i]?.trim(); // Remove LLM-generated padding
+      // Automatic type conversion
+      if (val === '0' || val === '') obj[h] = 0;
+      else if (!isNaN(val) && val !== '') obj[h] = Number(val);
+      else obj[h] = val;
+    });
+    return obj;
+  });
+};
+```
+
 
 2. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
