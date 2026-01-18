@@ -53,9 +53,9 @@ Each equipment entry defines the following fields:
   Valid values:
 
   **Weapon Types**
-  - `LONG` — Weapon that fires only at LONG range
-  - `MID` — Weapon that fires only at MID range
-  - `CLOSE` — Weapon that fires only at CLOSE range
+  - `LONG` — Weapon that fires only at LONG range. like MISSILE 
+  - `MID` — Weapon that fires only at MID range. like FIGHTER
+  - `CLOSE` — Weapon that fires only at CLOSE range. Like LASER
 
   **Defensive Types**
   - `SHIELD` — Absorbs damage at LONG range
