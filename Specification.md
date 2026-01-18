@@ -1,5 +1,5 @@
-# STAR CANINE SPECIFICATION v0.6.5
-- Version note:Easyer for texting abilities
+# STAR CANINE SPECIFICATION v0.6.6
+- Version note:Easyer for testing abilities functions
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -118,7 +118,7 @@ Abilities are parsed for a numeric value and a target keyword.
 #### 2.1.4 Equipment csv layout
 
 ```csv
-name,value,ammo,eq_type,rarity,disposable,ability
+name,power_stat,ammo_cost,eq_type,rarity,disposable,ability
 🚀 Lance,40,3,LONG,0,0,0
 🚀 Interceptor,40,3,LONG,1,0,+10 shield
 🚀 Meteor,50,4,LONG,1,0,0
@@ -222,7 +222,7 @@ ACT I: Stages 1–10 (Scale x1.0)
 ACT II: Stages 11–20 (Scale x2.0)
 ACT III: Stages 21–30 (Scale x3.0)
 
-- Scale affects　Enemy's: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
+- Scale factor applies to Enemy's: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
 
 -----
 ## 3. EQUIPMENT SYSTEM
@@ -277,7 +277,7 @@ For the current range:
 - **Rules:**
     - **Damage per item:** `power_stat` × matching module multiplier.
     - **Total damage:** Sum of all activated items.
-    - **Ammo cost:** Consumed cumulatively. If ammo is insufficient for an item, it does not fire.
+    - **Ammo Consumption Rule:** When an item activates, subtract its `ammo_cost` from the player ship's `ammo` pool. If the player ship's `ammo` is less than an item's `ammo_cost`, that specific item cannot be activated for that turn.
 
 #### 4.3.2 Enemy Damage Application
 - Apply total damage using **Range Damage Rules (4.4)**.
@@ -315,7 +315,7 @@ This phase occurs after the 6th turn ends or a ship is destroyed.
     - Heal player `hull` by the resulting total (clamped to `max_hull`).
 
 #### 4.5.2 Outcomes
-- **Clear:** Final Boss defeated. (Game Clear).
+- **Clear:** Boss of Stage 30 defeated (End of ACT III). (Game Clear).
 - **Victory:** Enemy `hull` ≤ 0. (Proceed to Rewards).
 - **Defeat:** Player `hull` ≤ 0 OR Boss remains alive after Turn 6. (Game Over).
 - **Draw:** Both alive after Turn 6 (and enemy is not a Boss). (Advance Stage, no rewards).
@@ -437,7 +437,7 @@ Scenes do not control progression; all transitions are dictated by the Flow syst
   - **Normal reward**
     - Select exactly one reward
   - **Boss reward**
-    - Sekect exactly one reward
+    - Select exactly one reward
 
 - **Exit**
   - Advances stage and returns to Main Loop
