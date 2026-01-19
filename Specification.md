@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.10
+# STAR CANINE SPECIFICATION v0.6.11
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -71,7 +71,7 @@ const parseCSV = (csv) => {
 
 3. Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
-- Centralized Logic: All state transitions (scene and stageNum) must happen in the parent Flow component via an advanceStage function.
+- Centralized Logic: All state transitions (scene and `stageNum`) must happen in the parent Flow component via an advanceStage function.
 - Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
 
 4. Data Verification Constraint
@@ -171,8 +171,8 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 • `inventory`: `🚀 Lance`, `⚡ Fang`, `⚡ Fang`, `🟫 Plating`
 
 ### 2.4 Progression & Scaling
-- ACT System: ACT I (1-10), ACT II (11-20), ACT III (21-30).
-- Scaling Rule: Multiply Enemy hull, shield, armor, and all attack values by the Act Factor:
+- ACT System: ACT I (`stageNum`: 1-10), ACT II (`stageNum`: 11-20), ACT III (`stageNum`: 21-30).
+- Scaling Rule: Multiply Enemy `hull`, `shield`, `armor`, and all attack values by the Act Factor:
 - ACT I: x1.0 | ACT II: x2.0 | ACT III: x3.0
 
 **[DATA] Stage Layout CSV:**
