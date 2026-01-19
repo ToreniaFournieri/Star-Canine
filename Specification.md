@@ -168,17 +168,13 @@ stage,type,difficulty,rank
 
 -----
 ## 3. EQUIPMENT SYSTEM
-### 3.1 Inventory vs. Slots
-- **Inventory:** The master list of all equipment objects owned by the player.
-- **Slots (Equipped):** A subset of the inventory, up to `max_slots`, that is currently active.
-- **Persistence:** Equipment selections and slot assignments persist between stages unless manually changed by the player.
-- **Combat Impact:** ONLY items currently assigned to **Slots** affect combat stats, multipliers, and range actions.
-- **Uniqueness:** Players may own multiple items with the same name. Each must be treated as a unique instance (especially for scaling items like `Rookie fighter`).
-
-### 3.2 Management Rules
-- **Initial State:** At Stage 1,the player need to manually equip items in `inventory` into Slots before the first engagement.
-- **Swapping:** Equipment can be freely swapped between Inventory and Slots during the **Pre-Combat** phase of any Combat Scene.
-- **Capacity:** Players cannot equip more items than the current `max_slots` value allows.
+### 3.1 Inventory & Slot Rules
+- **Definitions:** `Inventory` = all owned items. `Slots` = active items (max = `max_slots`).
+- **Initialization:** At Stage 1, player must manually move items from Inventory to Slots before combat.
+- **Combat Logic:** ONLY items in **Slots** affect stats, multipliers, and range actions.
+- **Persistence:** Slot assignments and item stats (like scaling damage) persist between stages.
+- **Management:** Items are swapped between Inventory and Slots during the **Pre-Combat** phase.
+- **Uniqueness:** Each item is a unique instance. Duplicate names (e.g., two `🚀 Lance`) must be tracked separately in the state.
 
 -----
 ## 4. COMBAT SYSTEM
