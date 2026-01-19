@@ -26,7 +26,6 @@ name,power_stat,ammo_cost
 #### 1.3.1 Robust CSV Parser
 Parser must sanitize input to handle LLM artifacts (leading spaces, ghost lines).
 
-
 **REQUIRED Sanitizing Parser Pattern:**
 ```javascript
 const parseCSV = (csv) => {
