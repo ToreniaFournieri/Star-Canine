@@ -139,15 +139,15 @@ name,power_stat,ammo_cost,eq_type,rarity,disposable,ability
 ```
 ### 2.2 Enemy Data
 **Fields & Types:**
-- difficulty: Number (Tier for stage selection)
-- `name`: String (Display name)
-- hull: Number (HP)
-- shield: Number (Absorbs LONG)
-- armor: Number (Absorbs CLOSE)
-- rank: String (NORMAL, ELITE, BOSS)
-- attack_LONG: Number (Damage at range)
-- attack_MID: Number (Damage at range)
-- attack_CLOSE: Number (Damage at range)
+- `difficulty`: `Number` (Tier for stage selection)
+- `name`: `String` (Display name)
+- `hull`: `Number` (HP)
+- `shield`: `Number` (Absorbs LONG)
+- `armor`: `Number` (Absorbs CLOSE)
+- `rank`: `String` (NORMAL, ELITE, BOSS)
+- `attack_LONG`: `Number` (Damage at range)
+- `attack_MID`: `Number` (Damage at range)
+- `attack_CLOSE`: `Number` (Damage at range)
      
 **[DATA]Enemy CSV**
 ```csv
@@ -165,10 +165,10 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 ```
 
 ### 2.3 2.3 Initial Player State
-• max_hull: 200 (Number)
-• ammo: 12 (Number)
-• max_slots: 6 (Number)
-• inventory: 🚀 Lance, ⚡ Fang, ⚡ Fang, 🟫 Plating
+• `max_hull`: 200 (Number)
+• `ammo`: 12 (Number)
+• `max_slots`: 6 (Number)
+• `inventory`: `🚀 Lance`, `⚡ Fang`, `⚡ Fang`, `🟫 Plating`
 
 ### 2.4 Progression & Scaling
 - ACT System: ACT I (1-10), ACT II (11-20), ACT III (21-30).
@@ -297,12 +297,12 @@ This section defines the authoritative game progression flow and the scenes used
 1. Stage Check: Flow Controller identifies the current stage type and parameters (difficulty/rank).
 2. Scene Initialization:
 - If Combat: Launch Combat Scene. (Detailed conditions described in 4.5.2 Combat Outcomes)
-  - On **Victory**: Proceed to Reward Scene.
-  - On **Draw**: Increment Stage and return to Loop.
-  - On **Defeat**: Proceed to Game End Scene.
+  - On **Game Clear:** break loop and launch Game End Scene.
+  - On **Victory:** Proceed to Reward Scene.
+  - On **Draw** Increment Stage and return to Loop.
+  - On **Defeat:** Proceed to Game End Scene.
 - If Dock: Launch Dock Scene.
   - On Completion: Increment Stage and return to Loop.
-3. End State: If Stage 30 Boss is defeated or Player hull reaches 0, break loop and launch Game End Scene.
 
 ### 6.2 Scene Definitions
 - Each scene is a presentation and input layer only.  
