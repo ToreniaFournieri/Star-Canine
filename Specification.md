@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.9
+# STAR CANINE SPECIFICATION v0.6.10
 
 ## 1. OVERVIEW
 - This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
@@ -79,58 +79,30 @@ const parseCSV = (csv) => {
 - Fallback: If a lookup fails, the game must not hang; it must return to the start scene or display a "Signal Lost (Data Error)" message.
 
 -----
-## 2. DEFINITIONS
-## 2.1 Equipment Data
-### 2.1.1 Equipment Fields
-Each equipment entry defines the following fields:
-- `name`: Display name of the equipment. May include emoji identifiers.
-- `power_stat`: Primary numeric value. Its meaning depends entirely on `eq_type`.
-- `ammo_cost`: Ammo consumed per activation. Ignored for types that do not consume ammo (set to `0`).
-- `eq_type`: Equipment behavior category. Defines combat range or special behavior.  
-  Valid values:
-    - `LONG` — Weapon that fires only at LONG range.
-    - `MID` — Weapon that fires only at MID range.
-    - `CLOSE` — Weapon that fires only at CLOSE range.
-    - `SHIELD` — Absorbs damage at LONG range.
-    - `ARMOR` — Absorbs damage at CLOSE range.
-    - `MODULE_[TYPE]` — Multiplies damage/effect of matching category.
-    - `UTILITY` — Passive items that trigger special abilities.
-    - `JUNK` — Inert item with no combat effect.
-- `rarity`: Integer (`0` to `3`). Determines reward tier.
-    - `0`: Starter/Non-reward.
-    - `1`: Normal Enemy Drop.
-    - `2`: Elite Enemy Drop.
-    - `3`: Boss Enemy Drop.
-- `disposable`: Boolean (`0` or `1`). Whether the equipment is destroyed after combat and replaced with *Broken Scrap*.
-- `ability`: String effect (e.g., `+10 shield`). Set to `0` if no ability exists.
+## 2. DEFINITIONS & DATA
+### 2.1 Equipment System
+**Fields & Types:**
+- `name`: `String` (Display name + Emoji)
+- `power_stat`: `Number` (Primary numeric value)
+- `ammo_cost`: `Number` (Ammo consumed per activation)
+- `eq_type`: `String` (Behavior category)
+- `rarity`: `Number` (Tier 0-3)
+- `disposable`: `Boolean` (0 = No, 1 = Replaced by Scrap after battle)
+- `ability`: `String` (Parsed effect or "0")
 
-### 2.1.2 Value Interpretation Rules
-The meaning of `power_stat`, `ammo_cost`, and `ability` is inferred from `eq_type`.
+**Logic by eq_type:**
+- **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
+- **SHIELD/ARMOR:** Absorbs damage = `power_stat`. (SHIELD: LONG, ARMOR: CLOSE).
+- **MODULE_[TYPE]:** Multiplies `power_stat` or `ability` of matching items. Stacks multiplicatively.
+- **UTILITY:** Effect driven by `ability`.
+- **JUNK:** No combat effect.
 
-- **`LONG` / `MID` / `CLOSE`**
-  - `power_stat`: Damage dealt at the corresponding combat range.
-  - `ammo_cost`: Ammo consumed per activation turn.
-- **`SHIELD` / `ARMOR`**
-  - `power_stat`: Damage absorbed at corresponding range (SHIELD: LONG, ARMOR: CLOSE).
-- **`MODULE`**
-  - Applies a multiplier to the `power_stat` (or `ability` numeric value) of target type.
-  - `MODULE_UTILITY` specifically multiplies the numeric values in `UTILITY` abilities.
-- **`UTILITY`**
-  - `power_stat`: Usually `0`. Combat effect is driven by the `ability` field.
+**Ability Timing & Effects:**
+- **Pre-Combat:** `+X shield` or `+X armor` (Temporary battle bonus).
+- **Post-Combat:** - `+X hull repair`: Heals player hull.
+    - `+X damage per combat`: Permanent `power_stat` increase for that instance.
 
-### 2.1.3 Ability Logic & Timing
-Abilities are parsed for a numeric value and a target keyword.
-- **Pre-Combat (Initialization):** `+X shield`, `+X armor`. These values are added to the ship's defense totals for the duration of the current battle only.
-- **Post-Combat (Resolution):** - `+X hull repair`: Heals player hull.
-    - `+X damage per combat`: Permanently increases the `power_stat` field of that specific item instance.
-
-### 2.1.4 Constraints
-- Each equipment entry defines exactly one behavior via `eq_type`.
-- All behavior must be derived from `eq_type` and `ability` fields.
-- Scaling items (e.g., `Rookie fighter`) must have their `power_stat` tracked individually in the player's unique inventory instance.
-
-### 2.1.5 Equipment csv layout
-
+**[DATA] Equipment CSV**
 ```csv
 name,power_stat,ammo_cost,eq_type,rarity,disposable,ability
 🚀 Lance,40,3,LONG,0,0,0
@@ -165,25 +137,19 @@ name,power_stat,ammo_cost,eq_type,rarity,disposable,ability
 🔧🔧🔧 Recreational facility,2,0,MODULE_UTILITY,2,0,0
 ⚠️ Broken Scrap,0,0,JUNK,0,0,0
 ```
-
 ### 2.2 Enemy Data
-Enemy data is defined as CSV-style rows embedded directly in the specification.
-Each row represents a single hostile unit encountered in combat.
-
-#### 2.2.1 Enemy Field Definitions
-
-1. `difficulty`: Integer. Difficulty tier used for enemy pool selection and ACT scaling.
-2. `name`: String. Enemy display name. Must be unique within the enemy list.
-3. `hull`: Integer. Enemy hull points (HP). Enemy is destroyed when this reaches 0.
-4. `shield`: Integer. Shield value. Absorbs damage at **LONG range only**.
-5. `armor`: Integer. Armor value. Absorbs damage at **CLOSE range only**.
-6. `rank`: String. Enemy classification. One of:`NORMAL`, `ELITE`, `BOSS`
-7. `attack_LONG`: Integer or `0`. Damage dealt at **LONG range**. `0` means the enemy cannot attack at this range.
-8. `attack_MID`: Integer or `0`. Damage dealt at **MID range**.  `0` means the enemy cannot attack at this range.
-9. `attack_CLOSE`: Integer or `0`. Damage dealt at **CLOSE range**. `0` means the enemy cannot attack at this range.
+**Fields & Types:**
+- difficulty: Number (Tier for stage selection)
+- `name`: String (Display name)
+- hull: Number (HP)
+- shield: Number (Absorbs LONG)
+- armor: Number (Absorbs CLOSE)
+- rank: String (NORMAL, ELITE, BOSS)
+- attack_LONG: Number (Damage at range)
+- attack_MID: Number (Damage at range)
+- attack_CLOSE: Number (Damage at range)
      
-#### 2.2.2 Enemy csv layout
-
+**[DATA]Enemy CSV**
 ```csv
 difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,0,NORMAL,0,0,10
@@ -198,23 +164,18 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 10,Celestial Reaper,100,30,40,BOSS,50,0,35
 ```
 
-### 2.3 Player ship initial state
-- Player ship state
-  - `max_hull`: 200,
-  - `shield`: 0,
-  - `armor`: 0,
-  - `ammo`: 12,
-  - `max_slots`: 6,
-  - `inventory`: "🚀 Lance", "⚡ Fang", "⚡ Fang", "🟫 Plating"
+### 2.3 2.3 Initial Player State
+• max_hull: 200 (Number)
+• ammo: 12 (Number)
+• max_slots: 6 (Number)
+• inventory: 🚀 Lance, ⚡ Fang, ⚡ Fang, 🟫 Plating
 
-### 2.4 Stage layout 
-- There are two type of stages
-  - combat: Combat stage. Enemy is chosen from Enemy data. If it hits mutiple enemies by the provided condition, pick one randomly.
-  - dock: heal and resupply
- 
-### 2.4.1 ACT structure
-- One enemy selected deterministically from the matching pool
-- CSV format below:
+### 2.4 Progression & Scaling
+- ACT System: ACT I (1-10), ACT II (11-20), ACT III (21-30).
+- Scaling Rule: Multiply Enemy hull, shield, armor, and all attack values by the Act Factor:
+- ACT I: x1.0 | ACT II: x2.0 | ACT III: x3.0
+
+**[DATA] Stage Layout CSV:**
 ```csv
 stage,type,difficulty,rank
 1,combat,1,NORMAL
@@ -228,15 +189,6 @@ stage,type,difficulty,rank
 9,dock,,
 10,combat,10,BOSS
 ```
-
-### 2.4.2 Progression & Act Scaling
-- Act Loop: Upon completing Stage 10, the player advances to Stage 11 (which uses the Stage 1 layout but with Act II scaling).
-Act Identification:
-ACT I: Stages 1–10 (Scale x1.0)
-ACT II: Stages 11–20 (Scale x2.0)
-ACT III: Stages 21–30 (Scale x3.0)
-
-- Scale factor applies to Enemy's: `hull`,`shield`,`armor`,`attack_LONG`, `attack_MID`, `attack_CLOSE`
 
 -----
 ## 3. EQUIPMENT SYSTEM
