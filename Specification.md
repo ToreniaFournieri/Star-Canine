@@ -50,13 +50,10 @@ const parseCSV = (csv) => {
 ```
 
 #### 1.3.2 Scene Mapping & Flow Control
-- Separation of Concerns: Scenes must be "dumb" (Presentation only).
-- Centralized Logic: All state transitions (scene and `stageNum`) must happen in the parent Flow component via an advanceStage function.
-- Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
-
-#### 1.3.3 Data Verification Constraint
-- Combat Init: Before entering combat, the controller must verify that ENEMY_DATA contains a matching entry for the current stage's difficulty and rank.
-- Fallback: If a lookup fails, the game must not hang; it must return to the start scene or display a "Signal Lost (Data Error)" message.
+- Centralized Logic: All state/stage transitions occur in a parent Flow component (advanceStage).
+- Passive Scenes: Scenes are "dumb" presentation layers for data and input; they do not trigger progression logic.
+- Verification: Before combat, verify ENEMY_DATA matches the current stage difficulty and rank.
+- Error Handling: If lookup fails, display "Signal Lost (Data Error)" and return to Start.
 
 -----
 ## 2. DEFINITIONS & DATA
