@@ -1,50 +1,33 @@
 # STAR CANINE SPECIFICATION v0.6.11
 
+# STAR CANINE SPECIFICATION v0.6.11
+
 ## 1. OVERVIEW
-- This is a terminal-based (or React), deterministic, text-only roguelike spaceship game.
-  - No randomness in combat
-  - No graphics
-  - Designed to be playable and solvable by LLMs
-- Player progresses through stages, fighting enemies, managing hull HP and ammo, and upgrading ship equipment.
+Deterministic, text-only roguelike. No RNG in combat. Designed for LLM playability.
+- **Scope:** 1 vs 1 battles, persistent Hull HP, limited Ammo.
+- **Strategy:** Loadout optimization, resource management, initiative-based kills.
 
-### 1.1 CORE CONCEPTS
-- The player controls ONE ship
-- Battles are 1 vs 1
-- Damage persists between battles (hull only)
-- Ammo is a limited resource
-- Strategy is about:
-  - Equipment selection
-  - Ammo usage
-  - Preventing enemy attacks by killing first
+### 1.1 DESIGN GOALS
+- **Deterministic:** Same state + same input = same result.
+- **Traceable:** Detailed turn-by-turn combat logs.
+- **Token Efficient:** Use raw CSV blocks. No leading/trailing spaces or indentation within backticks.
 
-### 1.2 DESIGN GOALS (FOR CODER)
-- Deterministic output
-- Clear logs per turn
-- Easy to reason damage
-- Minimal state tracking
-- No hidden rules
-- **Optimize token usuage**
-  - Use CSV strings for all static data blocks to reduce boilerplate.
-  - Strict Data Formatting: CSV blocks must contain NO leading spaces, NO trailing spaces, and NO indentation within the backticks.
+### 1.2 DATA INTEGRITY (CRITICAL)
+To prevent parser failure, follow these strict formatting rules:
+1. **Zero-Indentation:** Start CSV headers/rows at column 0. Do not indent for Markdown hierarchy.
+2. **Clean Edges:** No whitespace between backticks and CSV content.
+3. **Strict Casting:** Treat numeric cells as `Number`. Default empty cells (`,,`) to `0` or `""`.
 
-### 1.3 Implementation Rules (FOR CODER, especially Claude)
-1. DATA INTEGRITY & RAW FORMATTING (CRITICAL)
-To prevent the Sanitizing Parser from failing due to LLM-generated formatting artifacts, the following rules are absolute:
-
-- **Zero-Indentation Rule:** CSV blocks must be written starting at the very first column of the text buffer. Do NOT indent CSV rows to match the Markdown hierarchy.
-- **No Leading/Trailing Whitespace:** The first character after the opening backticks (```csv) must be the first header letter. The last character before the closing backticks must be the last value of the last row.
-- **Strict Type Casting:** The logic must interpret any cell that is purely numeric as a `Number` type. 
-- **Empty Cell Handling:** If a value is missing between commas (e.g., `,,`), the parser must default the value to `0` for numeric fields or an empty string `""` for text fields.
-
-**Correct "Flat" Format Example:**
+**Correct Format:**
 ```csv
 name,power_stat,ammo_cost
 🚀 Lance,40,3
-🚀 Meteor,50,4
 ```
-(Note: No spaces or tabs precede the text above)
 
-2. **Robust CSV Parsing** 
+### 1.3 IMPLEMENTATION RULES
+#### 1.3.1 Robust CSV Parser
+
+**Robust CSV Parsing** 
 - To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
 
 **REQUIRED Sanitizing Parser Pattern:**
@@ -69,12 +52,12 @@ const parseCSV = (csv) => {
 };
 ```
 
-3. Scene Mapping & Flow Control
+#### 1.3.2 Scene Mapping & Flow Control
 - Separation of Concerns: Scenes must be "dumb" (Presentation only).
 - Centralized Logic: All state transitions (scene and `stageNum`) must happen in the parent Flow component via an advanceStage function.
 - Component References: Use the mapping pattern below to avoid deeply nested conditional trees.
 
-4. Data Verification Constraint
+#### 1.3.3 Data Verification Constraint
 - Combat Init: Before entering combat, the controller must verify that ENEMY_DATA contains a matching entry for the current stage's difficulty and rank.
 - Fallback: If a lookup fails, the game must not hang; it must return to the start scene or display a "Signal Lost (Data Error)" message.
 
