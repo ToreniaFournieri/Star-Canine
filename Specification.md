@@ -176,7 +176,7 @@ stage,type,difficulty,rank
 - **Uniqueness:** Players may own multiple items with the same name. Each must be treated as a unique instance (especially for scaling items like `Rookie fighter`).
 
 ### 3.2 Management Rules
-- **Initial State:** At Stage 1, all items start in the Inventory. The player must manually equip items into Slots before the first engagement.
+- **Initial State:** At Stage 1,the player need to manually equip items in `inventory` into Slots before the first engagement.
 - **Swapping:** Equipment can be freely swapped between Inventory and Slots during the **Pre-Combat** phase of any Combat Scene.
 - **Capacity:** Players cannot equip more items than the current `max_slots` value allows.
 
