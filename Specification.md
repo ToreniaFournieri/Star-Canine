@@ -26,9 +26,8 @@ name,power_stat,ammo_cost
 
 ### 1.3 IMPLEMENTATION RULES
 #### 1.3.1 Robust CSV Parser
+Parser must sanitize input to handle LLM artifacts (leading spaces, ghost lines).
 
-**Robust CSV Parsing** 
-- To prevent formatting artifacts (extra spaces, indentations) from breaking the game, the parser must actively sanitize input. Use the following logic to ensure strings like " 40" are correctly treated as the number 40.
 
 **REQUIRED Sanitizing Parser Pattern:**
 ```javascript
