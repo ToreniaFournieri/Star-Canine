@@ -204,12 +204,6 @@ stage,type,difficulty,rank
 - **Swapping:** Equipment can be freely swapped between Inventory and Slots during the **Pre-Combat** phase of any Combat Scene.
 - **Capacity:** Players cannot equip more items than the current `max_slots` value allows.
 
-### 3.3 Item Lifecycle
-1. **Acquisition:** New items from Reward Scenes are added directly to the Inventory.
-2. **Usage:** Items in Slots activate automatically during combat if conditions (Range/Ammo) are met.
-3. **Depletion:** Items marked as `disposable: 1` are removed from the Slot/Inventory after combat and replaced with `⚠️ Broken Scrap`.
-4. **Evolution:** Items with scaling abilities (e.g., `+X damage per combat`) update their `power_stat` permanently within the inventory instance.
-
 -----
 ## 4. COMBAT SYSTEM
 Combat is deterministic, non-interactive, and resolved through a fixed sequence. It ends immediately if any ship's `hull` reaches 0.
