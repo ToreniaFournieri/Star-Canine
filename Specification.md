@@ -192,126 +192,92 @@ stage,type,difficulty,rank
 
 -----
 ## 3. EQUIPMENT SYSTEM
-### 3.1 Inventory vs Slots
-- **Inventory:** all equipments the player owns
-- **Slots:** up to `max_slots` equipped items
-- You may have multiple same id equipments. Need to distinguish them
-- ONLY equipped items affect combat
-- Equipment can be swapped Pre-combat scene
+### 3.1 Inventory vs. Slots
+- **Inventory:** The master list of all equipment objects owned by the player.
+- **Slots (Equipped):** A subset of the inventory, up to `max_slots`, that is currently active.
+- **Persistence:** Equipment selections and slot assignments persist between stages unless manually changed by the player.
+- **Combat Impact:** ONLY items currently assigned to **Slots** affect combat stats, multipliers, and range actions.
+- **Uniqueness:** Players may own multiple items with the same name. Each must be treated as a unique instance (especially for scaling items like `Rookie fighter`).
 
-### 3.2 How equipment works
-  - At the first stage, no equipment is equipped by default
-  - Up to `max_slots` items may be equipped
-  - Equipment selections **persist** between stages
+### 3.2 Management Rules
+- **Initial State:** At Stage 1, all items start in the Inventory. The player must manually equip items into Slots before the first engagement.
+- **Swapping:** Equipment can be freely swapped between Inventory and Slots during the **Pre-Combat** phase of any Combat Scene.
+- **Capacity:** Players cannot equip more items than the current `max_slots` value allows.
+
+### 3.3 Item Lifecycle
+1. **Acquisition:** New items from Reward Scenes are added directly to the Inventory.
+2. **Usage:** Items in Slots activate automatically during combat if conditions (Range/Ammo) are met.
+3. **Depletion:** Items marked as `disposable: 1` are removed from the Slot/Inventory after combat and replaced with `⚠️ Broken Scrap`.
+4. **Evolution:** Items with scaling abilities (e.g., `+X damage per combat`) update their `power_stat` permanently within the inventory instance.
 
 -----
 ## 4. COMBAT SYSTEM
-Combat is deterministic, non-interactive, and resolved through a fixed range sequence.
-- No player input once combat starts.
-- Combat ends immediately when either side is destroyed.
+Combat is deterministic, non-interactive, and resolved through a fixed sequence. It ends immediately if any ship's `hull` reaches 0.
 
-### 4.1 Turn Structure 
-Combat consists of 6 turns following this fixed range order:
+### 4.1 Turn Structure
+A battle consists of exactly 6 turns following this fixed range order:
 **LONG → MID → CLOSE → CLOSE → MID → LONG**
 
-- One range per turn.
-- If either side is destroyed, combat ends immediately.
+### 4.2 Combat Initialization (Setup Phase)
+Before the first turn, calculate the ship's temporary battle stats:
+1.  **Defense Summation:** - `Battle_Shield` = Sum of all equipped `SHIELD` items + any `+X shield` abilities.
+    - `Battle_Armor` = Sum of all equipped `ARMOR` items + any `+X armor` abilities.
+2.  **Module Multipliers:** - Identify items with `eq_type` starting with `MODULE_` (e.g., `MODULE_LONG`).
+    - Multipliers stack multiplicatively (e.g., two `x2` modules = `x4` total).
+    - These values remain static for the duration of the combat.
 
-### 4.2 Combat Initialization
-At the beginning of combat, the ship's temporary combat stats are calculated:
+### 4.3 Turn Resolution (Execution Phase)
+Every turn follows this strict order of operations:
 
-1. **Defense Summation:**
-    - Base Shield = Sum of all `eq_type: SHIELD` values.
-    - Base Armor = Sum of all `eq_type: ARMOR` values.
-2. **Ability Bonuses:**
-    - Scan all equipped items for `ability` strings containing `+X shield` or `+X armor`.
-    - Add these values to the Base Shield and Base Armor.
-3. **Module Multiplier Calculation:**
-    - Equipments with `eq_type` starting with `MODULE_` (e.g., `MODULE_LONG`, `MODULE_UTILITY`) act as multipliers.
-    - All matching items receive the multiplier.
-    - Multipliers stack multiplicatively (e.g., two x2 modules = x4 total multiplier).
-    - Multipliers are computed once before combat and remain static.
+#### 4.3.1 Player Action
+1.  **Selection:** Identify equipped items where `eq_type` matches the current range.
+2.  **Ammo Check:** An item activates only if current `ammo` >= `ammo_cost`.
+3.  **Application:**
+    - Subtract `ammo_cost` from player's `ammo` pool.
+    - Calculated Damage = `power_stat` × matching module multiplier.
+4.  **Enemy Damage:** Apply total damage to the Enemy using **Damage Resolution Rules (4.4)**.
+5.  **Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
-### 4.3 Turn Resolution (Per Turn)
-Each turn resolves in the following fixed order:
+#### 4.3.2 Enemy Action (If Alive)
+1.  **Attack:** Enemy deals damage based on their stat for the current range (e.g., `attack_MID`).
+2.  **Player Damage:** Apply damage to the Player using **Damage Resolution Rules (4.4)**.
+3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
-#### 4.3.1 Player Attack
-For the current range:
-- **Activate all equipped items where:**
-    - `eq_type` matches the current range.
-    - Player has sufficient `ammo`.
-- **Rules:**
-    - **Damage per item:** `power_stat` × matching module multiplier.
-    - **Total damage:** Sum of all activated items.
-    - **Ammo Consumption Rule:** When an item activates, subtract its `ammo_cost` from the player ship's `ammo` pool. If the player ship's `ammo` is less than an item's `ammo_cost`, that specific item cannot be activated for that turn.
+### 4.4 Damage Resolution Rules
+Damage applies to targets based on the current range:
 
-#### 4.3.2 Enemy Damage Application
-- Apply total damage using **Range Damage Rules (4.4)**.
-
-#### 4.3.3 Enemy Status Check
-- If enemy `hull` ≤ 0: Combat ends immediately (**Win**).
-
-#### 4.3.4 Enemy Attack (If Alive)
-- Enemy attacks using the value for the current range (`attack_LONG`, etc.).
-- Damage is resolved against the player using **Range Damage Rules (4.4)**.
-
-#### 4.3.5 Player Status Check
-- If player `hull` ≤ 0: Combat ends immediately (**Defeat**).
-
-### 4.4 Damage Resolution (Authoritative)
-Damage application depends on the current range:
-
-| Range | Primary Target | Overflow Target |
+| Current Range | Primary Target | Overflow Target |
 | :--- | :--- | :--- |
 | **LONG** | Shield | Hull |
 | **MID** | Hull | None |
 | **CLOSE** | Armor | Hull |
 
-- **Shield/Armor:** Temporary pools that do not regenerate during combat.
-- **Overflow:** Damage exceeding the primary target applies to the secondary target (if applicable).
+- **Non-Regenerative:** Shield and Armor do not replenish during the 6 turns.
+- **Overflow:** Damage exceeding the Primary Target's current value is applied to the Overflow Target.
 
-### 4.5 Combat End Processing
-This phase occurs after the 6th turn ends or a ship is destroyed.
+### 4.5 Post-Combat Processing
+#### 4.5.1 Cleanup & Scaling
+1.  **Disposables:** Items with `disposable: 1` are replaced with `⚠️ Broken Scrap`.
+2.  **Permanent Scaling:** Items with `+X damage per combat` have their `power_stat` permanently increased in the inventory.
+3.  **Repairs:** Sum all `+X hull repair` Utility abilities, apply `MODULE_UTILITY` multipliers, and heal player `hull` (clamped to `max_hull`).
 
-#### 4.5.1 Cleanup & Evolution
-1. **Disposable Removal:** Items with `disposable: 1` are replaced with `⚠️ Broken Scrap`.
-2. **Utility Repair:** - Sum all `+X hull repair` abilities from equipped `UTILITY` items.
-    - Apply `MODULE_UTILITY` multipliers to this sum.
-    - Heal player `hull` by the resulting total (clamped to `max_hull`).
-
-#### 4.5.2 Permanent Stat Mutation
-- For each item in the ACTIVE slots:
-  - If `ability` contains `+X damage per combat`:
-    - PARSE X.
-    - UPDATE that specific instance's `power_stat` in the `playerState.inventory`.
-- CRITICAL: These changes MUST be saved to the global state before the Reward Scene is initialized.
-
-
-#### 4.5.3 Outcomes
-- **Clear:** Boss of Stage 30 defeated (End of ACT III). (Game Clear).
-- **Victory:** Enemy `hull` ≤ 0. (Proceed to Rewards).
-- **Defeat:** Player `hull` ≤ 0 OR Boss remains alive after Turn 6. (Game Over).
-- **Draw:** Both alive after Turn 6 (and enemy is not a Boss). (Advance Stage, no rewards).
+#### 4.5.2 Outcomes
+- **Game Clear:** Defeated Boss of Stage 30.
+- **Victory:** Enemy `hull` <= 0. Proceed to Rewards.
+- **Defeat:** Player `hull` <= 0 OR Boss is alive after Turn 6.
+- **Draw:** Both ships alive after Turn 6 (Non-Boss enemies only). Advance stage, no rewards.
 
 ### 4.6 Rewards
-#### 4.6.1 Rarity-Based Drops
-After a **Victory**, the player chooses **ONE**:
-1. **Ammo:** +5 Ammo.
-2. **Equipment:** Choose 1 from 3 randomly selected items filtered by the enemy's `rank`:
-    - **NORMAL Rank:** Returns items with `rarity: 1`.
-    - **ELITE Rank:** Returns items with `rarity: 2`.
-    - **BOSS Rank:** Returns items with `rarity: 3`.
+**Victory Reward (Pick ONE):**
+1.  **Resupply:** +5 Ammo.
+2.  **Salvage:** Choose 1 of 3 items matching the Enemy's `rank` (Rarity 1, 2, or 3).
 
-#### 4.6.2 Boss Bonus (ACT I & II)
-Automatically grants: **Full Hull Repair** and **+12 Ammo**.
-Additionally, choose **ONE** bonus:
-- `max_slots +2`
-- `max_slots +1` AND `max_hull +80` (includes immediate +80 heal)
-- `max_slots +1` AND `ammo +12`
-
-### 4.7 Implementation Constraint
-- **Pure Logic:** Combat must be calculated as a deterministic function.
-- **Single Source:** Damage resolution rules must exist in one place to ensure consistency across LONG/MID/CLOSE ranges.
+**Boss Bonus (ACT I & II only):**
+- **Automatic:** Full Hull Repair and +12 Ammo.
+- **Bonus (Pick ONE):**
+    - `max_slots +2`
+    - `max_slots +1` AND `max_hull +80` (includes immediate heal)
+    - `max_slots +1` AND `ammo +12`
 
 -----
 ## 5. Event
@@ -327,25 +293,16 @@ This section defines the authoritative game progression flow and the scenes used
 **Progression is controlled exclusively by the Flow; scenes do not alter progression logic.**
 
 ### 6.1 Flow
-- Main loop decides the next Scene by following flow:
-```
-Start Scene
-↓
-Main Loop:
-[Check Next Stage]
-│ 
-├─ If stage type is Combat
-│   ↓
-│   Combat Scene
-│   ↓
-│   Reward Scene
-│   ↓
-│   continue Main Loop / Game End Scene
-│
-└─ If stage type is Dock
-    ↓
-    Dock Scene
-```
+- The system follows a deterministic loop based on the Stage Layout CSV:
+1. Stage Check: Flow Controller identifies the current stage type and parameters (difficulty/rank).
+2. Scene Initialization:
+- If Combat: Launch Combat Scene. (Detailed conditions described in 4.5.2 Combat Outcomes)
+  - On **Victory**: Proceed to Reward Scene.
+  - On **Draw**: Increment Stage and return to Loop.
+  - On **Defeat**: Proceed to Game End Scene.
+- If Dock: Launch Dock Scene.
+  - On Completion: Increment Stage and return to Loop.
+3. End State: If Stage 30 Boss is defeated or Player hull reaches 0, break loop and launch Game End Scene.
 
 ### 6.2 Scene Definitions
 - Each scene is a presentation and input layer only.  
@@ -376,12 +333,6 @@ Main Loop:
     - No player input (combat resolves automatically)
   - **Post-combat**
     - "Continue" button
-- **Exit**
-  - Detailed conditions described in 4.5.2 Combat Outcomes
-    - Clear → Game End Scene
-    - Victory → Reward Scene
-    - Draw → Advance stage, return to Main Loop
-    - Defeat → Game End Scene
  
 #### 6.2.3 Reward Scene
 **Purpose:** Resolve post-combat equipment acquisition
@@ -394,8 +345,6 @@ Main Loop:
     - Select exactly one reward
   - **Boss reward**
     - Select exactly one reward
-- **Exit**
-  - Advances stage and returns to Main Loop
 
 #### 6.2.4 Dock Scene
 - Resolve Dock events (See `5.1 Dock` section)
