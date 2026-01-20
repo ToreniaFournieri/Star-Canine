@@ -197,48 +197,48 @@ A battle consists of exactly 6 turns following this fixed range order:
 
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
-1.  **Defense Summation:** - `Battle_Shield` = Sum of all equipped `SHIELD` items + any `+X SHIELD` abilities. 
-2. **Multipliers:** 
-  - Identify items with `multiplier`. 
-    - `multiplier` multiplier [eq_type] by X.
-Multipliers stack multiplicatively (e.g., two `CLOSE x2`  = `x4` total).
-    - These values remain static for the duration of the combat.
-
-3. **Ability**
-  - `+X [eq_type]` (Temporary battle bonus only once).
-  - `+X ALL [eq_type]`(Temporary battle bonus for all matched items)
+1.  **Stat Summation (Base):** Sum `power_stat` for each category (`LONG`, `MID`, `CLOSE`, `SHIELD`).
+3.  **Module Multipliers:** Identify items with `eq_type: MODULE`.
+    - Apply `multiplier` (e.g., `LONG x2`) to the **Base Sum** of that category only.
+    - Multipliers stack multiplicatively (e.g., two `x2` modules = `x4`).
+4.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
+    - *Note: Multipliers do NOT scale flat ability bonuses.*
+5.  **Battle Pools:**
+    - `Battle_Shield` = Final calculated Shield total.
+    - `Battle_Hull` = Current Player `hull`.
 
 ### 4.3 Turn Resolution (Execution Phase)
 Every turn follows this strict order of operations:
 
 #### 4.3.1 Player Action
 1.  **Selection:** Identify equipped items where `eq_type` matches the current range.
-2.  **Application:**
-    - Calculated Damage = `power_stat` × matching module multiplier.
-4.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield`, then `hull`)
-5.  **Status Check:** If Enemy `hull` <= 0, player wins immediately unless equipped  item contains `Simultaneous` ability. 
+2.  **Application:** Total Damage = Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
+3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
+4.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
+5.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
-
-#### 4.3.2 Enemy Action (If Alive or Simultaneous conditon)
+#### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1.  **Attack:** Enemy deals damage based on their stat for the current range (e.g., `attack_MID`).
-2.  **Player Damage:** Apply damage to the Player. (Reduces `shield`, then `hull`)
+2.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
-### 4.5 Post-Combat Processing
-#### 4.5.1 Cleanup & Scaling
-1.  **Disposables:** Items with `disposable: 1` are removed from `inventory`.
-2.  **Permanent Scaling:** Items with `+X damage per combat` have their `power_stat` permanently increased in the inventory.
-3.  **Repairs:** 
-- Only applies when there is no `ability:No Repair` equiped item. 
-- Sum all `+X hull repair` Utility abilities, apply `MODULE_UTILITY` multipliers, and heal player `hull` (clamped to `max_hull`).
+### 4.4 Post-Combat Processing
+#### 4.4.1 Cleanup & Scaling
+1.  **Disposables:** Items with `disposable: true` are removed from `inventory`.
+2.  **Permanent Scaling:** Items with `+X damage per combat` have their `power_stat` permanently increased in the inventory instance.
+3.  **Repairs:** - Identify items with `eq_type: HULL`.
+    - Base Repair = Sum of `HULL` `power_stat`.
+    - Final Repair = (Base Repair × `HULL` multipliers).
+    - If `No Repair` ability is active (e.g., Swarm Hanger), Final Repair = 0.
+    - Apply Final Repair to player `hull` (clamped to `max_hull`).
 
-#### 4.5.2 Outcomes
+#### 4.4.2 Outcomes
 - **Game Clear:** Defeated Boss of Stage 30.
 - **Victory:** Enemy `hull` <= 0. Proceed to Rewards.
 - **Defeat:** Player `hull` <= 0 OR Boss is alive after Turn 6.
-- **Draw:** Both ships alive after Turn 6 (Non-Boss enemies only). Advance stage, no rewards.
+- **Draw:** Both ships alive after Turn 6 (Non-Boss only). Advance stage, no rewards.
 
-### 4.6 Rewards
+### 4.5 Rewards
 **Victory Reward (Pick ONE):**
 1.  **Salvage:** Choose 1 of 3 items matching the Enemy's `rank` and`rarity` (Normal:1, Elite:2, Boss:3).
 
