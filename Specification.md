@@ -92,6 +92,7 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🚀 Lance,40,LONG,0,true,0,0
 1,🚀🛡️ Interceptor,35,LONG,1,true,+10 SHIELD,0
 1,🚀 Meteor,45,LONG,1,true,0,0
+2,🚀 Harpoon,66,LONG,1,true,0,0
 1,🚀⚠️ Isolation,55,LONG,1,true,0,LONG x0.9
 1,🚀🔺 Javelin,23,LONG,1,true,0,LONG x1.2
 1,🚀🔺 Gambit,45,LONG,2,true,0,LONG x1.3
