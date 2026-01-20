@@ -1,8 +1,8 @@
 # STAR CANINE SPECIFICATION v0.7.0
 
 ## 1. OVERVIEW
-Deterministic, text-only roguelike. No RNG in combat. Designed for LLM playability.
-- Scope: 1 vs 1 battles, persistent Hull HP, no ammo costs.
+Deterministic, text-only roguelike. Designed for LLM playability.
+- Scope: 1 vs 1 battles, persistent Hull HP, no randomness in combat. 
 - Strategy: Loadout optimization and initiative-based turn efficiency.
 
 ### 1.1 DESIGN GOALS
