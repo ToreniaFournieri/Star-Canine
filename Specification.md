@@ -317,17 +317,17 @@ This section defines the authoritative game progression flow and the scenes used
 ## 7. Story
 
 ```
->Incoming distress signal detected.
->Sender ID: LAIKA
+> Incoming distress signal detected.
+> Sender ID: LAIKA
 
 "It's me. K9 has fallen.
 Solar Bear took the planet.
 They took me too.
 Please… don't die."
 
-Signal lost.
+> Signal lost.
 
->Setting course for K9.
+> Setting course for K9.
 ```
 
 **END OF SPECIFICATION**
