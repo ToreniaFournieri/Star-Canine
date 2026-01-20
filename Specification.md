@@ -1,7 +1,7 @@
-# STAR CANINE SPECIFICATION v0.7.6
+# STAR CANINE SPECIFICATION v0.7.7
 
 ## 1. OVERVIEW
-Deterministic, text-only roguelike. Designed for LLM playability.
+Deterministic, text-only roguelike space ship game. Designed for LLM playability.
 - Scope: 1 vs 1 battles, persistent Hull HP, no randomness in combat. 
 - Strategy: Loadout optimization and initiative-based turn efficiency.
 
@@ -130,14 +130,14 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,NORMAL,0,0,10
 2,Drifter,35,5,NORMAL,20,0,10
-3,Scout,40,0,NORMAL,0,0,15
-3,Lancer,45,10,NORMAL,30,0,15
-4,Interceptor,55,15,NORMAL,35,0,20
-5,Raider,50,10,ELITE,30,0,20
-6,Frigate,65,0,NORMAL,20,0,25
-7,Enforcer,70,20,ELITE,40,0,25
+3,Scout,40,0,NORMAL,0,5,10
+3,Lancer,45,10,NORMAL,10,20,15
+4,Interceptor,55,15,NORMAL,15,20,20
+5,Raider,50,10,ELITE,15,15,20
+6,Frigate,65,0,NORMAL,10,10,25
+7,Enforcer,70,20,ELITE,20,20,25
 8,Howler,80,25,ELITE,45,0,30
-10,Celestial Reaper,100,60,BOSS,50,0,35
+10,Celestial Reaper,100,60,BOSS,40,20,35
 ```
 
 ### 2.3 2.3 Initial Player State
