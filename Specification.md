@@ -79,12 +79,12 @@ const parseCSV = (csv) => {
 ```csv
 slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,🚀 Lance,40,LONG,0,true,none,0,none
-1,🚀🛡️ Interceptor,35,LONG,1,true,none,0,+10 SHIELD
 1,🚀 Meteor,45,LONG,1,true,none,0,none
+2,🚀🛡️ Interceptor,50,LONG,1,true,none,0,+10 SHIELD
 2,🚀 Harpoon,66,LONG,1,true,none,0,none
-1,🚀⚠️ Isolation,55,LONG,1,true,LONG,0.9,none
-1,🚀🔺 Javelin,23,LONG,1,true,LONG,1.2,none
-1,🚀🔺 Gambit,45,LONG,2,true,LONG,1.3,none
+2,🚀⚠️ Isolation,75,LONG,1,true,LONG,0.9,none
+2,🚀🔺 Javelin,39,LONG,1,true,LONG,1.2,none
+2,🚀🔺 Gambit,55,LONG,2,true,LONG,1.3,none
 1,🔫 Quantum Displacer,40,LONG,3,false,CLOSE,0.5,none
 2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,LONG,2,none
 1,✈️ Drones,12,MID,1,false,none,0,none
