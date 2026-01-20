@@ -94,7 +94,7 @@ name,power_stat,eq_type,rarity,disposable,ability
 ✈️💥 Kamikaze,80,MID,1,1,0
 ✈️✈️✈️ Blue Wolf,60,MID,2,0,0
 ⚡ Fang,10,CLOSE,0,0,0
-⚡️ Iron Beam,5,CLOSE,1,0,+10 armor
+⚡️ Iron Beam,5,CLOSE,1,0,+10 shield
 ⚡ Claw,15,CLOSE,1,0,0
 ⚡ Cudgel,20,CLOSE,1,0,0
 ⚡️⚡️ Laser shield,10,CLOSE,1,0,+15 shield
