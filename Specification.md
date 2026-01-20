@@ -68,7 +68,7 @@ const parseCSV = (csv) => {
 **Logic by eq_type:**
 - **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
 - **SHIELD:** Battle start protection = `power_stat`
-- **MODULE_[EQ_TYPE]:** Multiplies `power_stat` or `ability` of matching items. Stacks multiplicatively.
+- **MODULE_[EQ_TYPE]:** Multiplies `power_stat` of matching items. Stacks multiplicatively.
 - **UTILITY:** Effect driven by `ability`.
 
 **Ability Timing & Effects:**
