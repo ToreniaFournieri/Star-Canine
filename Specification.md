@@ -317,7 +317,8 @@ This section defines the authoritative game progression flow and the scenes used
 ## 7. Story
 
 ```
-Ship ID: STAR CANINE
+Incoming distress signal detected.
+Sender ID: LAIKA
 
 "It's me. K9 has fallen.
 Solar Bear took the planet.
