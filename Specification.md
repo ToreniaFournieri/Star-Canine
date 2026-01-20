@@ -96,10 +96,10 @@ const parseCSV = (csv) => {
 slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🚀 Lance,40,LONG,0,true,0,0
 1,🚀🛡️ Interceptor,35,LONG,1,true,+10 shield,0
-1,🚀 Meteor,50,LONG,1,true,0,0
-1,🚀⚠️ Isolation,70,LONG,1,true,0,LONG x0.9
-1,🚀🔺 Resurrection,40,LONG,2,true,0,LONG x1.2
-1,🚀🚀🔺 Gambit,50,LONG,2,true,0,LONG x1.3
+1,🚀 Meteor,45,LONG,1,true,0,0
+1,🚀⚠️ Isolation,55,LONG,1,true,0,LONG x0.9
+1,🚀🔺 name,32,LONG,1,true,0,LONG x1.2
+1,🚀🔺 Gambit,45,LONG,2,true,0,LONG x1.3
 1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
 2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
 1,✈️ Drones,12,MID,1,false,0,0
@@ -117,15 +117,15 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,⚡️🔺 Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
 1,⚡💥 Burn soul,40,CLOSE,1,true,0,0
 1,💎🔺 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
-1,🛡️ Plating,15,SHIELD,0,false,0,0
-1,🛡️ Veil,20,SHIELD,1,false,0,0
-1,🛡️⚠️ name,30,SHIELD,1,false,0,SHIELD x0.9
-1,🛡️💥 Ephemera shield,40,SHIELD,1,true,0,0
+1,🛡️ Plating,14,SHIELD,0,false,0,0
+1,🛡️ Veil,17,SHIELD,1,false,0,0
+1,🛡️⚠️ name,25,SHIELD,1,false,0,SHIELD x0.9
+1,🛡️💥 Ephemera shield,33,SHIELD,1,true,0,0
 1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
 1,🛡️🔺 Barrier,13,SHIELD,2,false,0,SHIELD x1.2
 1,🟫🔺 Double Shield,0,MODULE,3,false,0,SHIELD x2
 1,🔧 Repairer,0,UTILITY,1,false,+10 hull repair,0
-1,🔧🔧 Veteran Repairer,0,UTILITY,2,false,+20 hull repair,0
+1,🔧🔧 Veteran Repairer,0,UTILITY,2,false,+15 hull repair,0
 1,♨️🔺 Recreational facility,2,MODULE,2,false,0,UTILITY x2
 ```
 
