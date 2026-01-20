@@ -141,10 +141,10 @@ difficulty,name,hull,shield,armor,rank,attack_LONG,attack_MID,attack_CLOSE
 ```
 
 ### 2.3 2.3 Initial Player State
-• `max_hull`: 200 (Number)
-• `ammo`: 12 (Number)
-• `max_slots`: 6 (Number)
-• `inventory`: `🚀 Lance`, `⚡ Fang`, `⚡ Fang`, `🟫 Plating`
+- `max_hull`: 200 (Number)
+- `ammo`: 12 (Number)
+- `max_slots`: 6 (Number)
+- `inventory`: `🚀 Lance`, `⚡ Fang`, `⚡ Fang`, `🟫 Plating`
 
 ### 2.4 Progression & Scaling
 - ACT System: ACT I (`stageNum`: 1-10), ACT II (`stageNum`: 11-20), ACT III (`stageNum`: 21-30).
