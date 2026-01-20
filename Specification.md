@@ -178,8 +178,8 @@ A battle consists of exactly 6 turns following this fixed range order:
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
 1.  **Defense Summation:** - `Battle_Shield` = Sum of all equipped `SHIELD` items + any `+X shield` abilities. 
-2.  **Module Multipliers:** - Identify items with `eq_type` starting with `MODULE_` (e.g., `MODULE_LONG`).
-    - Multipliers stack multiplicatively (e.g., two `x2` modules = `x4` total).
+2.  **Multipliers:** - Identify items with `multiplier`. 
+    - Multipliers stack multiplicatively (e.g., two `CLOSE x2`  = `x4` total).
     - These values remain static for the duration of the combat.
 
 ### 4.3 Turn Resolution (Execution Phase)
