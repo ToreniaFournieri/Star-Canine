@@ -18,8 +18,8 @@ To prevent parser failure, follow these strict formatting rules:
 
 **Correct Format:**
 ```csv
-name,power_stat,ammo_cost
-🚀 Lance,40,3
+name,power_stat
+🚀 Lance,40
 ```
 
 ### 1.3 IMPLEMENTATION RULES
