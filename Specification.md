@@ -104,7 +104,7 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,✈️⤴️ Rookie fighter,5,MID,1,false,+2 damage per combat,0
 1,✈️✈️ Blue Wolf,20,MID,2,false,0,0
 1,🛫🔺 Swarm Core,0,MODULE,3,false,+10 ALL MID,LONG x0.5
-1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
+1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,DISABLE_HULL_REPAIR,MID x2
 1,⚡ Fang,10,CLOSE,0,false,0,0
 1,⚡ Claw,15,CLOSE,1,false,0,0
 1,⚡⚠️ Static Blade,22,CLOSE,1,false,0,CLOSE x0.9
@@ -200,7 +200,7 @@ Before the first turn, calculate the ship's temporary battle stats:
 1.  **Stat Summation (Base):** Sum `power_stat` for each category (`LONG`, `MID`, `CLOSE`, `SHIELD`).
 3.  **Module Multipliers:** Identify items with `eq_type: MODULE`.
     - Apply `multiplier` (e.g., `LONG x2`) to the **Base Sum** of that category only.
-    - Multipliers stack multiplicatively (e.g., two `x2` modules = `x4`).
+    - Multipliers stack multiplicatively (e.g., LONG_damage = LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
 4.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
     - *Note: Multipliers do NOT scale flat ability bonuses.*
 5.  **Battle Pools:**
@@ -229,7 +229,7 @@ Every turn follows this strict order of operations:
 3.  **Repairs:** - Identify items with `eq_type: HULL`.
     - Base Repair = Sum of `HULL` `power_stat`.
     - Final Repair = (Base Repair × `HULL` multipliers).
-    - If `No Repair` ability is active (e.g., Swarm Hanger), Final Repair = 0.
+    - If `DISABLE_HULL_REPAIR` ability is active (e.g., Swarm Hanger), Final Repair = 0.
     - Apply Final Repair to player `hull` (clamped to `max_hull`).
 
 #### 4.4.2 Outcomes
