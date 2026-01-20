@@ -20,19 +20,42 @@ name,power_stat
 
 ```javascript
 const parseCSV = (csv) => {
-  // Split by newline and remove empty lines caused by LLM formatting
-  const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
+  // 1. Clean the raw string and split into lines
+  const lines = csv.trim().split('\n').map(line => line.trim()).filter(line => line);
+  
+  if (lines.length < 2) return [];
+
+  // 2. Extract and sanitize headers
   const headers = lines[0].split(',').map(h => h.trim());
 
+  // 3. Process each data row
   return lines.slice(1).map(line => {
     const values = line.split(',');
     const obj = {};
-    headers.forEach((h, i) => {
-      let val = values[i]?.trim(); // Remove LLM-generated padding
-      // Automatic type conversion
-      if (val === '0' || val === '') obj[h] = 0;
-      else if (!isNaN(val) && val !== '') obj[h] = Number(val);
-      else obj[h] = val;
+
+    headers.forEach((header, i) => {
+      let val = values[i] ? values[i].trim() : "";
+
+      // Logic: Convert strings to appropriate types
+      if (val.toLowerCase() === 'true') {
+        obj[header] = true;
+      } 
+      else if (val.toLowerCase() === 'false') {
+        obj[header] = false;
+      } 
+      else if (val === '0' || val === '') {
+        // Default empty cells or "0" to numeric 0 or empty string based on header
+        // For technical fields, 0 is safer.
+        obj[header] = (header === 'name' || header === 'eq_type' || header === 'ability' || header === 'multiplier') ? val : 0;
+      } 
+      else if (!isNaN(val)) {
+        // Automatically cast numeric strings to Numbers
+        obj[header] = Number(val);
+      } 
+      else {
+        // Keep as String
+        obj[header] = val;
+      }
     });
     return obj;
   });
