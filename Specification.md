@@ -317,25 +317,14 @@ This section defines the authoritative game progression flow and the scenes used
 ## 7. Story
 
 ```
-Ship ID confirmed: STAR CANINE  
-Command authority: CAPTAIN  
+Ship ID: STAR CANINE
 
-Incoming distress signal detected.  
-Origin: Planet K9  
-Sender ID: LAIKA  
-
-"It's me.  
-K9 has fallen.  
-Solar Bear battleships took the planet.  
-They took me too.  
-I know you weren't here.  
-I know you'll come back.  
+"It's me. K9 has fallen.
+Solar Bear took the planet.
+They took me too.
 Please… don't die."
 
 Signal lost.
-
-Solar Bear Empire detected in K9 orbit.  
-Occupation status: ACTIVE.
 
 Setting course for K9.
 ```
