@@ -235,7 +235,7 @@ Damage applies to targets based on the current range:
 ### 4.6 Rewards
 **Victory Reward (Pick ONE):**
 1.  **Resupply:** `ammo +5`
-2.  **Salvage:** Choose 1 of 3 items matching the Enemy's `rank` (Rarity 1, 2, or 3).
+2.  **Salvage:** Choose 1 of 3 items matching the Enemy's `rank` (`rarity' 1, 2, or 3).
 
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair and `ammo +12`
