@@ -262,7 +262,7 @@ This section defines the authoritative game progression flow and the scenes used
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`, `eq_type`, `power_stat`, `disposable `, `ability`
+    - `name`, `eq_type`, `power_stat`, `disposable`, `ability`
   - **LOG**
     - After combat engagement, a combat log is shown
 - **Input**
