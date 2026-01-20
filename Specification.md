@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.7.5
+# STAR CANINE SPECIFICATION v0.7.6
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike. Designed for LLM playability.
@@ -78,8 +78,9 @@ const parseCSV = (csv) => {
 - `eq_type`: `String` (Behavior category)
 - `rarity`: `Number` (Tier 0-3)
 - `disposable`: `Boolean` (true/false)
-- `ability`: `String` (Parsed effect or "0")
-- `multiplier`: `String` (e.g., `LONG x2`)
+- `mult_target`: `String` Which stat to multiply (LONG, MID, CLOSE, SHIELD, HULL, or none)
+- `mult_power`: `Number` (Float) The multiplier value (2, 0.9, 1.2, etc.)
+- `ability`: `String` (Parsed effect or none)
 
 **Logic by eq_type:**
 - **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
@@ -88,41 +89,41 @@ const parseCSV = (csv) => {
 
 **[DATA] Equipment CSV**
 ```csv
-slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
-1,🚀 Lance,40,LONG,0,true,0,0
-1,🚀🛡️ Interceptor,35,LONG,1,true,+10 SHIELD,0
-1,🚀 Meteor,45,LONG,1,true,0,0
-2,🚀 Harpoon,66,LONG,1,true,0,0
-1,🚀⚠️ Isolation,55,LONG,1,true,0,LONG x0.9
-1,🚀🔺 Javelin,23,LONG,1,true,0,LONG x1.2
-1,🚀🔺 Gambit,45,LONG,2,true,0,LONG x1.3
-1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
-2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
-1,✈️ Drones,12,MID,1,false,0,0
-1,✈️⚠️ Scavenger,20,MID,1,false,0,MID x0.9
-1,✈️🔺 Squadron,8,MID,1,false,0,MID x1.2
-1,✈️⤴️ Rookie fighter,5,MID,1,false,+2 damage per combat,0
-1,✈️✈️ Blue Wolf,20,MID,2,false,0,0
-1,🛫🔺 Swarm Core,0,MODULE,3,false,+10 ALL MID,LONG x0.5
-1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,DISABLE_HULL_REPAIR,MID x2
-1,⚡ Fang,10,CLOSE,0,false,0,0
-1,⚡ Claw,15,CLOSE,1,false,0,0
-1,⚡⚠️ Static Blade,22,CLOSE,1,false,0,CLOSE x0.9
-1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,+10 SHIELD,0
-1,⚡ Cudgel,25,CLOSE,2,false,0,0
-1,⚡️🔺 Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
-1,⚡💥 Burn soul,40,CLOSE,1,true,0,0
-1,💎🔺 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
-1,🛡️ Plating,14,SHIELD,0,false,0,0
-1,🛡️ Veil,17,SHIELD,1,false,0,0
-1,🛡️⚠️ Bulkhead,25,SHIELD,1,false,0,SHIELD x0.9
-1,🛡️💥 Ephemera shield,33,SHIELD,1,true,0,0
-1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
-1,🛡️🔺 Barrier,13,SHIELD,2,false,0,SHIELD x1.2
-1,🟫🔺 Double Shield,0,MODULE,3,false,0,SHIELD x2
-1,🔧 Repairer,10,HULL,1,false,0,0
-1,🔧🔧 Veteran Repairer,15,HULL,2,false,0,0
-1,♨️🔺 Recreational facility,2,MODULE,2,false,0,HULL x2
+slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
+1,🚀 Lance,40,LONG,0,true,none,0,none
+1,🚀🛡️ Interceptor,35,LONG,1,true,none,0,+10 SHIELD
+1,🚀 Meteor,45,LONG,1,true,none,0,none
+2,🚀 Harpoon,66,LONG,1,true,none,0,none
+1,🚀⚠️ Isolation,55,LONG,1,true,LONG,0.9,none
+1,🚀🔺 Javelin,23,LONG,1,true,LONG,1.2,none
+1,🚀🔺 Gambit,45,LONG,2,true,LONG,1.3,none
+1,🔫 Quantum Displacer,40,LONG,3,false,CLOSE,0.5,none
+2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,LONG,2,none
+1,✈️ Drones,12,MID,1,false,none,0,none
+1,✈️⚠️ Scavenger,20,MID,1,false,MID,0.9,none
+1,✈️🔺 Squadron,8,MID,1,false,MID,1.2,none
+1,✈️⤴️ Rookie fighter,5,MID,1,false,none,0,+2 damage per combat
+1,✈️✈️ Blue Wolf,20,MID,2,false,none,0,none
+1,🛫🔺 Swarm Core,0,MODULE,3,false,LONG,0.5,+10 ALL MID
+1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,MID,2,DISABLE_HULL_REPAIR
+1,⚡ Fang,10,CLOSE,0,false,none,0,none
+1,⚡ Claw,15,CLOSE,1,false,none,0,none
+1,⚡⚠️ Static Blade,22,CLOSE,1,false,CLOSE,0.9,none
+1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,none,0,+10 SHIELD
+1,⚡ Cudgel,25,CLOSE,2,false,none,0,none
+1,⚡️🔺 Boost laser,10,CLOSE,2,false,CLOSE,1.2,none
+1,⚡💥 Burn soul,40,CLOSE,1,true,none,0,none
+1,💎🔺 Prismatic Focus,0,MODULE,3,false,CLOSE,2,Simultaneous
+1,🛡️ Plating,14,SHIELD,0,false,none,0,none
+1,🛡️ Veil,17,SHIELD,1,false,none,0,none
+1,🛡️⚠️ Bulkhead,25,SHIELD,1,false,SHIELD,0.9,none
+1,🛡️💥 Ephemera shield,33,SHIELD,1,true,none,0,none
+1,🛡️🛡️ Aegis,30,SHIELD,2,false,none,0,none
+1,🛡️🔺 Barrier,13,SHIELD,2,false,SHIELD,1.2,none
+1,🟫🔺 Double Shield,0,MODULE,3,false,SHIELD,2,none
+1,🔧 Repairer,10,HULL,1,false,none,0,none
+1,🔧🔧 Veteran Repairer,15,HULL,2,false,none,0,none
+1,♨️🔺 Recreational facility,2,MODULE,2,false,HULL,2,none
 ```
 
 ### 2.2 Enemy Data
