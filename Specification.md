@@ -202,7 +202,9 @@ Every turn follows this strict order of operations:
 #### 4.5.1 Cleanup & Scaling
 1.  **Disposables:** Items with `disposable: 1` are removed from `inventory`.
 2.  **Permanent Scaling:** Items with `+X damage per combat` have their `power_stat` permanently increased in the inventory.
-3.  **Repairs:** Sum all `+X hull repair` Utility abilities, apply `MODULE_UTILITY` multipliers, and heal player `hull` (clamped to `max_hull`).
+3.  **Repairs:** 
+- Only applies when there is no `ability:No Repair` equiped item. 
+- Sum all `+X hull repair` Utility abilities, apply `MODULE_UTILITY` multipliers, and heal player `hull` (clamped to `max_hull`).
 
 #### 4.5.2 Outcomes
 - **Game Clear:** Defeated Boss of Stage 30.
