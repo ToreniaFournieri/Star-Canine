@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.7.1
+# STAR CANINE SPECIFICATION v0.7.2
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike. Designed for LLM playability.
@@ -98,34 +98,36 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🚀 Interceptor,40,LONG,1,true,+10 shield,0
 1,🚀 Meteor,50,LONG,1,true,0,0
 1,🚀 Nova,65,LONG,1,true,0,0
-1,🚀🚀 Resurrection,40,LONG,2,true,0,LONG x1.2
-1,🚀🚀 Gambit,60,LONG,2,true,0,0
+1,🚀🔺 Resurrection,40,LONG,2,true,0,LONG x1.2
+1,🚀🚀🔺 Gambit,50,LONG,2,true,0,LONG x1.3
 1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
-2,🔥 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
+2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
 1,✈️ Drones,15,MID,1,false,0,0
 1,✈️ Wing,20,MID,1,false,0,0
-1,✈️ Squadron,10,MID,1,false,0,MID x1.2
+1,✈️🔺 Squadron,10,MID,1,false,0,MID x1.2
 1,✈️ Defender,10,MID,2,false,+10 shield,0
 1,✈️✈️ Rookie fighter,3,MID,1,false,+3 damage per combat,0
 1,✈️✈️✈️ Blue Wolf,45,MID,2,false,0,0
-1,🛫 Swarm Core,0,MODULE,3,false,+10 MID dmg,LONG x0.5
-1,🏗️ Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
+1,🛫🔺 Swarm Core,0,MODULE,3,false,+10 MID dmg,LONG x0.5
+1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
 1,⚡ Fang,10,CLOSE,0,false,0,0
 1,⚡ Claw,15,CLOSE,1,false,0,0
 1,⚡️ Iron Beam,5,CLOSE,2,false,+10 shield,0
 1,⚡ Cudgel,20,CLOSE,2,false,0,0
-1,⚡️⚡️ Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
+1,⚡️🔺 Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
 1,⚡💥 Burn soul,40,CLOSE,1,true,0,0
-1,💎 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
+1,💎🔺 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
 1,🛡️ Plating,15,SHIELD,0,false,0,0
 1,🛡️ Veil,20,SHIELD,1,false,0,0
 1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
+1,🛡️🔺 Barrier,13,SHIELD,2,false,0,SHIELD x1.2
 1,🛡️🛡️ Ephemera shield,60,SHIELD,1,true,0,0
-1,🟫 Double Shield,0,MODULE,3,false,0,SHIELD x2
+1,🟫🔺 Double Shield,0,MODULE,3,false,0,SHIELD x2
 1,🔧 Repairer,0,UTILITY,1,false,+10 hull repair,0
 1,🔧🔧 Veteran Repairer,0,UTILITY,2,false,+20 hull repair,0
-1,🔧🔧🔧 Recreational facility,2,MODULE,2,false,0,UTILITY x2
+1,🔧🔧🔺 Recreational facility,2,MODULE,2,false,0,UTILITY x2
 ```
+
 ### 2.2 Enemy Data
 **Fields & Types:**
 - `difficulty`: `Number` (Tier for stage selection)
