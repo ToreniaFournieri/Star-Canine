@@ -11,6 +11,8 @@ Hello, please make this:
 https://raw.githubusercontent.com/ToreniaFournieri/Star-Canine/main/Specification.md 
 ```
 
+**Do not post this prompt repeatedly. it could be flagged as a DDOS attack.**
+
 ## Story
 
 ```
