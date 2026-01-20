@@ -130,10 +130,10 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE
 1,Skirmisher,30,0,NORMAL,0,0,10
 2,Drifter,35,5,NORMAL,20,0,10
-3,Scout,40,0,NORMAL,0,5,10
-3,Lancer,45,10,NORMAL,10,20,15
-4,Interceptor,55,15,NORMAL,15,20,20
-5,Raider,50,10,ELITE,15,15,20
+3,Scout,40,0,NORMAL,0,15,0
+3,Lancer,45,10,NORMAL,10,10,10
+4,Interceptor,55,15,NORMAL,5,20,0
+5,Raider,55,30,ELITE,15,15,20
 6,Frigate,65,0,NORMAL,10,10,25
 7,Enforcer,70,20,ELITE,20,20,25
 8,Howler,80,25,ELITE,45,0,30
