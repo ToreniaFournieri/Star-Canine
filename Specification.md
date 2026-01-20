@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.6.12
+# STAR CANINE SPECIFICATION v0.6.13
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike. No RNG in combat. Designed for LLM playability.
