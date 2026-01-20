@@ -323,6 +323,7 @@ This section defines the authoritative game progression flow and the scenes used
 "It's me. K9 has fallen.
 Solar Bear took the planet.
 They took me too.
+I know you weren't here.
 Please… don't die."
 
 > Signal lost.
