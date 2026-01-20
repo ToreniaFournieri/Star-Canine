@@ -266,6 +266,7 @@ This section defines the authoritative game progression flow and the scenes used
 ### 6.2 Scene Definitions
 - Each scene is a presentation and input layer only.  
 - Scenes do not control progression; all transitions are dictated by the Flow system.
+- values like currenr `hull` should be rounded off. (135.99... → 136)
 
 #### 6.2.1 Start Scene
 
