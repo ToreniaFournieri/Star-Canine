@@ -1,17 +1,11 @@
-# STAR CANINE SPECIFICATION v0.7.0
+# STAR CANINE SPECIFICATION v0.7.1
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike. Designed for LLM playability.
 - Scope: 1 vs 1 battles, persistent Hull HP, no randomness in combat. 
 - Strategy: Loadout optimization and initiative-based turn efficiency.
 
-### 1.1 DESIGN GOALS
-- **Deterministic:** Same state + same input = same result.
-- **Traceable:** Detailed turn-by-turn combat logs.
-- **Token Efficient:** Use raw CSV blocks. No leading/trailing spaces or indentation within backticks.
-
-### 1.2 DATA INTEGRITY (CRITICAL)
-To prevent parser failure, follow these strict formatting rules:
+### 1.1 DATA INTEGRITY (CRITICAL)
 1. **Zero-Indentation:** Start CSV headers/rows at column 0. Do not indent for Markdown hierarchy.
 2. **Clean Edges:** No whitespace between backticks and CSV content.
 3. **Strict Casting:** Treat numeric cells as `Number`. Default empty cells (`,,`) to `0` or `""`.
@@ -22,11 +16,8 @@ name,power_stat
 🚀 Lance,40
 ```
 
-### 1.3 IMPLEMENTATION RULES
-#### 1.3.1 Robust CSV Parser
-Parser must sanitize input to handle LLM artifacts (leading spaces, ghost lines).
+### 1.2 ROBUST PARSER (REQUIRED)
 
-**REQUIRED Sanitizing Parser Pattern:**
 ```javascript
 const parseCSV = (csv) => {
   // Split by newline and remove empty lines caused by LLM formatting
@@ -48,7 +39,7 @@ const parseCSV = (csv) => {
 };
 ```
 
-#### 1.3.2 Scene Mapping & Flow Control
+#### 1.3 Scene Mapping & Flow Control
 - Centralized Logic: All state/stage transitions occur in a parent Flow component (advanceStage).
 - Passive Scenes: Scenes are "dumb" presentation layers for data and input; they do not trigger progression logic.
 - Verification: Before combat, verify ENEMY_DATA matches the current stage difficulty and rank.
@@ -58,18 +49,20 @@ const parseCSV = (csv) => {
 ## 2. DEFINITIONS & DATA
 ### 2.1 Equipment System
 **Fields & Types:**
+- `slots`: `Number`
 - `name`: `String` (Display name + Emoji)
 - `power_stat`: `Number` (Primary numeric value)
 - `eq_type`: `String` (Behavior category)
 - `rarity`: `Number` (Tier 0-3)
-- `disposable`: `Boolean` (0 = No, 1 = Replaced by Scrap after battle)
+- `disposable`: `Boolean` (true/false)
 - `ability`: `String` (Parsed effect or "0")
+- `multiplier`: `String` (Range-specific multiplier, e.g., `LONG x2`)
+
 
 **Logic by eq_type:**
 - **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
 - **SHIELD:** Battle start protection = `power_stat`
-- **MODULE_[EQ_TYPE]:** Multiplies `power_stat` of matching items. Stacks multiplicatively.
-- **UTILITY:** Effect driven by `ability`.
+- **MODULE:** Multiplies `power_stat` of matching items in `multiplier`. Stacks multiplicatively.
 
 **Ability Timing & Effects:**
 - **Pre-Combat:** `+X shield` (Temporary battle bonus).
@@ -78,35 +71,39 @@ const parseCSV = (csv) => {
 
 **[DATA] Equipment CSV**
 ```csv
-name,power_stat,eq_type,rarity,disposable,ability
-🚀 Lance,40,LONG,0,1,0
-🚀 Interceptor,40,LONG,1,1,+10 shield
-🚀 Meteor,50,LONG,1,1,0
-🚀 Nova,65,LONG,1,1,0
-🚀🚀 Resurrection,40,LONG,1,0,0
-🚀💥 Gambit,80,LONG,1,1,0
-🔥 Warhead Optimizer,2,MODULE_LONG,3,0,0
-✈️ Drones,15,MID,1,0,0
-✈️ Defender,10,MID,1,0,+10 shield
-✈️ Wing,20,MID,1,0,0
-✈️ Squadron,35,MID,1,0,0
-✈️✈️ Rookie fighter,5,MID,1,0,+3 damage per combat
-✈️💥 Kamikaze,80,MID,1,1,0
-✈️✈️✈️ Blue Wolf,60,MID,2,0,0
-⚡ Fang,10,CLOSE,0,0,0
-⚡️ Iron Beam,5,CLOSE,1,0,+10 shield
-⚡ Claw,15,CLOSE,1,0,0
-⚡ Cudgel,20,CLOSE,1,0,0
-⚡️⚡️ Laser shield,10,CLOSE,1,0,+15 shield
-⚡💥 Burn soul,40,CLOSE,1,1,0
-💎 Prismatic Lens,2,MODULE_CLOSE,2,0,0
-🟫 Plating,25,SHIELD,0,0,0
-🛡️ Veil,20,SHIELD,1,0,0
-🛡️🛡️ Aegis,30,SHIELD,2,0,0
-🛡️🛡️ Ephemera shield,60,SHIELD,1,1,0
-🔧 Repairer,0,UTILITY,1,0,+10 hull repair
-🔧🔧 Veteran Repairer,0,UTILITY,2,0,+20 hull repair
-🔧🔧🔧 Recreational facility,2,MODULE_UTILITY,2,0,0
+slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
+1,🚀 Lance,40,LONG,0,true,0,0
+1,🚀 Interceptor,40,LONG,1,true,+10 shield,0
+1,🚀 Meteor,50,LONG,1,true,0,0
+1,🚀 Nova,65,LONG,1,true,0,0
+1,🚀🚀 Resurrection,40,LONG,1,false,0,0
+1,🚀💥 Gambit,80,LONG,1,true,0,0
+1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
+2,🔥 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
+1,✈️ Drones,15,MID,1,false,0,0
+1,✈️ Defender,10,MID,1,false,+10 shield,0
+1,✈️ Wing,20,MID,1,false,0,0
+1,✈️ Squadron,35,MID,1,false,0,0
+1,✈️✈️ Rookie fighter,5,MID,1,false,+3 damage per combat,0
+1,✈️💥 Kamikaze,80,MID,1,true,0,0
+1,✈️✈️✈️ Blue Wolf,60,MID,2,false,0,0
+1,🛫 Swarm Core,0,MODULE,3,false,+10 MID dmg,LONG x0.5
+1,🏗️ Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
+1,⚡ Fang,10,CLOSE,0,false,0,0
+1,⚡️ Iron Beam,5,CLOSE,1,false,+10 shield,0
+1,⚡ Claw,15,CLOSE,1,false,0,0
+1,⚡ Cudgel,20,CLOSE,1,false,0,0
+1,⚡️⚡️ Laser shield,10,CLOSE,1,false,+15 shield,0
+1,⚡💥 Burn soul,40,CLOSE,1,true,0,0
+1,💎 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
+1,🟫 Plating,25,SHIELD,0,false,0,0
+1,🛡️ Veil,20,SHIELD,1,false,0,0
+1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
+1,🛡️🛡️ Ephemera shield,60,SHIELD,1,true,0,0
+1,🟫 Double Shield,0,MODULE,3,false,0,SHIELD x2
+1,🔧 Repairer,0,UTILITY,1,false,+10 hull repair,0
+1,🔧🔧 Veteran Repairer,0,UTILITY,2,false,+20 hull repair,0
+1,🔧🔧🔧 Recreational facility,2,MODULE,2,false,0,UTILITY x2
 ```
 ### 2.2 Enemy Data
 **Fields & Types:**
@@ -166,6 +163,8 @@ stage,type,difficulty,rank
 - **Combat Logic:** ONLY items in **Slots** affect stats, multipliers, and range actions.
 - **Persistence:** Slot assignments and item stats (like scaling damage) persist between stages.
 - **Management:** Items are swapped between Inventory and Slots during the **Pre-Combat** phase.
+- **Slot Validation**: Ensure Sum(`slots`) of all equipped items ≤ max_slots.
+
 - **Uniqueness:** Each item is a unique instance. Duplicate names (e.g., two `🚀 Lance`) must be tracked separately in the state.
 
 -----
@@ -191,9 +190,10 @@ Every turn follows this strict order of operations:
 2.  **Application:**
     - Calculated Damage = `power_stat` × matching module multiplier.
 4.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield`, then `hull`)
-5.  **Status Check:** If Enemy `hull` <= 0, player wins immediately.
+5.  **Status Check:** If Enemy `hull` <= 0, player wins immediately unless equipped  item contains `Simultaneous` ability. 
 
-#### 4.3.2 Enemy Action (If Alive)
+
+#### 4.3.2 Enemy Action (If Alive or Simultaneous conditon)
 1.  **Attack:** Enemy deals damage based on their stat for the current range (e.g., `attack_MID`).
 2.  **Player Damage:** Apply damage to the Player. (Reduces `shield`, then `hull`)
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
