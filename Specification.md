@@ -234,11 +234,11 @@ Damage applies to targets based on the current range:
 
 ### 4.6 Rewards
 **Victory Reward (Pick ONE):**
-1.  **Resupply:** +5 Ammo.
+1.  **Resupply:** `ammo +5`
 2.  **Salvage:** Choose 1 of 3 items matching the Enemy's `rank` (Rarity 1, 2, or 3).
 
 **Boss Bonus (ACT I & II only):**
-- **Automatic:** Full Hull Repair and +12 Ammo.
+- **Automatic:** Full Hull Repair and `ammo +12`
 - **Bonus (Pick ONE):**
     - `max_slots +2`
     - `max_slots +1` AND `max_hull +80` (includes immediate heal)
@@ -250,7 +250,7 @@ Damage applies to targets based on the current range:
 Dock is a repair station. Chose one:
 - **Repair:** Heal Hull by 30% of Max Hull
   OR
-- **Resupply:** Gain +7 Ammo
+- **Resupply:** `ammo +7`
 
 -----
 ## 6. Flow and Scene
