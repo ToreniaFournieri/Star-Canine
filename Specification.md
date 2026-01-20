@@ -238,7 +238,7 @@ Every turn follows this strict order of operations:
 - **Bonus (Pick ONE):**
     - `max_slots +2`
     - `max_slots +1` AND `max_hull +80` (includes immediate heal)
-    - `max_hull +160` (includes immediate heal)
+    - **Special**: if no `🚀 Lance` in inventory, add one every beginning of Pre-combat. 
 
 -----
 ## 5. Event
