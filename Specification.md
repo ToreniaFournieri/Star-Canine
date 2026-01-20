@@ -93,12 +93,12 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🚀🛡️ Interceptor,35,LONG,1,true,+10 SHIELD,0
 1,🚀 Meteor,45,LONG,1,true,0,0
 1,🚀⚠️ Isolation,55,LONG,1,true,0,LONG x0.9
-1,🚀🔺 name,23,LONG,1,true,0,LONG x1.2
+1,🚀🔺 Javelin,23,LONG,1,true,0,LONG x1.2
 1,🚀🔺 Gambit,45,LONG,2,true,0,LONG x1.3
 1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
 2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
 1,✈️ Drones,12,MID,1,false,0,0
-1,✈️⚠️ name,20,MID,1,false,0,MID x0.9
+1,✈️⚠️ Scavenger,20,MID,1,false,0,MID x0.9
 1,✈️🔺 Squadron,8,MID,1,false,0,MID x1.2
 1,✈️⤴️ Rookie fighter,5,MID,1,false,+2 damage per combat,0
 1,✈️✈️ Blue Wolf,20,MID,2,false,0,0
@@ -106,7 +106,7 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
 1,⚡ Fang,10,CLOSE,0,false,0,0
 1,⚡ Claw,15,CLOSE,1,false,0,0
-1,⚡⚠️ name,22,CLOSE,1,false,0,CLOSE x0.9
+1,⚡⚠️ Static Blade,22,CLOSE,1,false,0,CLOSE x0.9
 1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,+10 SHIELD,0
 1,⚡ Cudgel,25,CLOSE,2,false,0,0
 1,⚡️🔺 Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
@@ -114,7 +114,7 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,💎🔺 Prismatic Focus,0,MODULE,3,false,Simultaneous,CLOSE x2
 1,🛡️ Plating,14,SHIELD,0,false,0,0
 1,🛡️ Veil,17,SHIELD,1,false,0,0
-1,🛡️⚠️ name,25,SHIELD,1,false,0,SHIELD x0.9
+1,🛡️⚠️ Bulkhead,25,SHIELD,1,false,0,SHIELD x0.9
 1,🛡️💥 Ephemera shield,33,SHIELD,1,true,0,0
 1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
 1,🛡️🔺 Barrier,13,SHIELD,2,false,0,SHIELD x1.2
