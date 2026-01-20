@@ -20,23 +20,14 @@ name,power_stat
 
 ```javascript
 const parseCSV = (csv) => {
-  // 1. Clean the raw string and split into lines
-  const lines = csv.trim().split('\n').map(line => line.trim()).filter(line => line);
-  
+  const lines = csv.trim().split('\n').map(line => line.trim()).filter(line => line);  
   if (lines.length < 2) return [];
-
-  // 2. Extract and sanitize headers
   const headers = lines[0].split(',').map(h => h.trim());
-
-  // 3. Process each data row
   return lines.slice(1).map(line => {
     const values = line.split(',');
     const obj = {};
-
     headers.forEach((header, i) => {
       let val = values[i] ? values[i].trim() : "";
-
-      // Logic: Convert strings to appropriate types
       if (val.toLowerCase() === 'true') {
         obj[header] = true;
       } 
@@ -44,12 +35,9 @@ const parseCSV = (csv) => {
         obj[header] = false;
       } 
       else if (val === '0' || val === '') {
-        // Default empty cells or "0" to numeric 0 or empty string based on header
-        // For technical fields, 0 is safer.
         obj[header] = (header === 'name' || header === 'eq_type' || header === 'ability' || header === 'multiplier') ? val : 0;
       } 
       else if (!isNaN(val)) {
-        // Automatically cast numeric strings to Numbers
         obj[header] = Number(val);
       } 
       else {
@@ -199,9 +187,11 @@ A battle consists of exactly 6 turns following this fixed range order:
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
 1.  **Stat Summation (Base):** Sum `power_stat` for each category (`LONG`, `MID`, `CLOSE`, `SHIELD`).
-3.  **Module Multipliers:** Identify items with `eq_type: MODULE`.
-    - Apply `multiplier` (e.g., `LONG x2`) to the **Base Sum** of that category only.
-    - Multipliers stack multiplicatively (e.g., LONG_damage = LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
+3.  **Module Multipliers:** 
+    - Collect all equipped items where `mult_target` is not `none`.
+    - Group by `mult_target` category (LONG, MID, CLOSE, SHIELD, HULL).
+    - Multiply the **Base Sum** of each category by all applicable `mult_power` values.
+    - Multipliers stack multiplicatively (e.g., LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
 4.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
     - *Note: Multipliers do NOT scale flat ability bonuses.*
 5.  **Battle Pools:**
