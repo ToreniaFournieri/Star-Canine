@@ -79,26 +79,21 @@ const parseCSV = (csv) => {
 - `rarity`: `Number` (Tier 0-3)
 - `disposable`: `Boolean` (true/false)
 - `ability`: `String` (Parsed effect or "0")
-- `multiplier`: `String` (Range-specific multiplier, e.g., `LONG x2`)
-
+- `multiplier`: `String` (e.g., `LONG x2`)
 
 **Logic by eq_type:**
 - **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
 - **SHIELD:** Battle start protection = `power_stat`
-
-**Ability Timing & Effects:**
-- **Pre-Combat:** `+X shield` (Temporary battle bonus).
-- **Post-Combat:** - `+X hull repair`: Heals player hull.
-    - `+X damage per combat`: Permanent `power_stat` increase for that instance.
+- **HULL:** Battle end repair = `power_stat`
 
 **[DATA] Equipment CSV**
 ```csv
 slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🚀 Lance,40,LONG,0,true,0,0
-1,🚀🛡️ Interceptor,35,LONG,1,true,+10 shield,0
+1,🚀🛡️ Interceptor,35,LONG,1,true,+10 SHIELD,0
 1,🚀 Meteor,45,LONG,1,true,0,0
 1,🚀⚠️ Isolation,55,LONG,1,true,0,LONG x0.9
-1,🚀🔺 name,32,LONG,1,true,0,LONG x1.2
+1,🚀🔺 name,23,LONG,1,true,0,LONG x1.2
 1,🚀🔺 Gambit,45,LONG,2,true,0,LONG x1.3
 1,🔫 Quantum Displacer,40,LONG,3,false,0,CLOSE x0.5
 2,🔥🔺 Warhead Optimizer,0,MODULE,3,false,0,LONG x2
@@ -107,12 +102,12 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,✈️🔺 Squadron,8,MID,1,false,0,MID x1.2
 1,✈️⤴️ Rookie fighter,5,MID,1,false,+2 damage per combat,0
 1,✈️✈️ Blue Wolf,20,MID,2,false,0,0
-1,🛫🔺 Swarm Core,0,MODULE,3,false,+10 MID dmg,LONG x0.5
+1,🛫🔺 Swarm Core,0,MODULE,3,false,+10 ALL MID,LONG x0.5
 1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,No Repair,MID x2
 1,⚡ Fang,10,CLOSE,0,false,0,0
 1,⚡ Claw,15,CLOSE,1,false,0,0
 1,⚡⚠️ name,22,CLOSE,1,false,0,CLOSE x0.9
-1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,+10 shield,0
+1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,+10 SHIELD,0
 1,⚡ Cudgel,25,CLOSE,2,false,0,0
 1,⚡️🔺 Boost laser,10,CLOSE,2,false,0,CLOSE x1.2
 1,⚡💥 Burn soul,40,CLOSE,1,true,0,0
@@ -124,9 +119,9 @@ slots,name,power_stat,eq_type,rarity,disposable,ability,multiplier
 1,🛡️🛡️ Aegis,30,SHIELD,2,false,0,0
 1,🛡️🔺 Barrier,13,SHIELD,2,false,0,SHIELD x1.2
 1,🟫🔺 Double Shield,0,MODULE,3,false,0,SHIELD x2
-1,🔧 Repairer,0,UTILITY,1,false,+10 hull repair,0
-1,🔧🔧 Veteran Repairer,0,UTILITY,2,false,+15 hull repair,0
-1,♨️🔺 Recreational facility,2,MODULE,2,false,0,UTILITY x2
+1,🔧 Repairer,10,HULL,1,false,0,0
+1,🔧🔧 Veteran Repairer,15,HULL,2,false,0,0
+1,♨️🔺 Recreational facility,2,MODULE,2,false,0,HULL x2
 ```
 
 ### 2.2 Enemy Data
@@ -201,10 +196,16 @@ A battle consists of exactly 6 turns following this fixed range order:
 
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
-1.  **Defense Summation:** - `Battle_Shield` = Sum of all equipped `SHIELD` items + any `+X shield` abilities. 
-2.  **Multipliers:** - Identify items with `multiplier`. 
-    - Multipliers stack multiplicatively (e.g., two `CLOSE x2`  = `x4` total).
+1.  **Defense Summation:** - `Battle_Shield` = Sum of all equipped `SHIELD` items + any `+X SHIELD` abilities. 
+2. **Multipliers:** 
+  - Identify items with `multiplier`. 
+    - `multiplier` multiplier [eq_type] by X.
+Multipliers stack multiplicatively (e.g., two `CLOSE x2`  = `x4` total).
     - These values remain static for the duration of the combat.
+
+3. **Ability**
+  - `+X [eq_type]` (Temporary battle bonus only once).
+  - `+X ALL [eq_type]`(Temporary battle bonus for all matched items)
 
 ### 4.3 Turn Resolution (Execution Phase)
 Every turn follows this strict order of operations:
