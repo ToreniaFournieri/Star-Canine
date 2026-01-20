@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.7.4
+# STAR CANINE SPECIFICATION v0.7.5
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike. Designed for LLM playability.
