@@ -261,7 +261,7 @@ Every turn follows this strict order of operations:
 - **Bonus (Pick ONE):**
     - `max_slots +2` (Expansion)
     - `max_slots +1` AND `max_hull +80` (Reinforcement)
-    - **Standard Issue Protocol**: If no `🚀 Lance` in inventory, add one at the beginning of Pre-combat. (Logistics)
+    - **Standard Issue Protocol**: add one `🚀 Lance` into `inventory` at the beginning of Pre-combat. (Logistics)
 
 -----
 ## 5. Event
