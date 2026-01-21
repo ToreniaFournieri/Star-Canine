@@ -99,8 +99,8 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,⚡⚠️ Static Blade,22,CLOSE,1,false,CLOSE,0.9,none
 1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,none,0,+10 SHIELD
 1,⚡ Cudgel,25,CLOSE,2,false,none,0,none
-1,⚡️🔺 Boost laser,10,CLOSE,2,false,CLOSE,1.2,none
-1,⚡💥 Burn soul,40,CLOSE,1,true,none,0,none
+1,⚡️🔺 Boost laser,10,CLOSE,1,false,CLOSE,1.2,none
+1,⚡💥 Burn soul,40,CLOSE,2,true,none,0,none
 1,💎🔺 Prismatic Focus,0,MODULE,3,false,CLOSE,2,Simultaneous
 1,🛡️ Plating,14,SHIELD,0,false,none,0,none
 1,🛡️ Veil,17,SHIELD,1,false,none,0,none
