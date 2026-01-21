@@ -138,7 +138,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 5,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
 6,Shield Gate,55,20,ELITE,15,15,20,GATE,20
 8,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
-10,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
+9,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
 ```
 
 ### 2.3 2.3 Initial Player State
