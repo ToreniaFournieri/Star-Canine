@@ -215,12 +215,6 @@ Every turn follows this strict order of operations:
     - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
     - If Player `hull` <= 0, game ends in **Defeat**.
 
-
-3.  **Simultaneous Check:** If `Simultaneous` ability is active, the "Enemy Status Check" is deferred until after the Enemy Action.
-
-
-
-
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1. **Skill Trigger (Passive):**
    - If `REGEN`: Enemy heals `skill_value` hull.
