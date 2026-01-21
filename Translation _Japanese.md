@@ -101,7 +101,6 @@ LONG
 
 
 MID
-```
 | English Key | Japanese Name |
 | :--- | :--- |
 | ✈️ Drones | ✈️ ドローン |
@@ -111,10 +110,8 @@ MID
 | ✈️✈️ Blue Wolf | ✈️✈️ ブルーウルフ |
 | 🛫🔺 Swarm Core | 🛫🔺 スウォーム・コア |
 | 🏗️🔺 Swarm Hanger | 🏗️🔺 スウォーム・ハンガー |
-```
 
 CLOSE
-```
 | English Key | Japanese Name |
 | :--- | :--- |
 | ⚡ Fang | ⚡ ファング |
@@ -125,10 +122,9 @@ CLOSE
 | ⚡️🔺 Boost laser | ⚡️🔺 ブースト・レーザー |
 | ⚡💥 Burn soul | ⚡💥 バーンソウル |
 | 💎🔺 Prismatic Focus | 💎🔺 プリズマティック・フォーカス |
-```
+
 
 OTHERS
-```
 | English Key | Japanese Name |
 | :--- | :--- |
 | 🛡️ Plating | 🛡️ 外装プレート |
@@ -141,10 +137,9 @@ OTHERS
 | 🔧 Repairer | 🔧 リペアラー |
 | 🔧🔧 Veteran Repairer | 🔧🔧 ベテラン・リペアラー |
 | ♨️🔺 Recreational facility | ♨️🔺 娯楽施設 |
-```
+
 
 ENEMY
-```
 | English Key | Japanese Name |
 | :--- | :--- |
 | Skirmisher | スカミッシャー |
@@ -156,10 +151,8 @@ ENEMY
 | Shield Gate | シールド・ゲート |
 | Overload Enforcer | オーバーロード・エンフォーサー |
 | Celestial Reaper | セレスティアル・リーパー |
-```
 
 BOSS REWARD, SKILL
-```
 | English Key | Japanese Name |
 | :--- | :--- |
 | Expansion | スロット拡張 (+2) |
@@ -172,4 +165,3 @@ BOSS REWARD, SKILL
 | OVERLOAD | 過負荷 |
 | GATE | 防壁 |
 | COUNTER(LONG) | 遠距離反撃 |
-```
