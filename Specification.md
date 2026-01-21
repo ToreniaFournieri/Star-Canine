@@ -258,7 +258,6 @@ Every turn follows this strict order of operations:
 
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair
-- **Automatic:** Full Hull Repair
 - **Bonus (Pick ONE):**
     - `max_slots +2` (Expansion)
     - `max_slots +1` AND `max_hull +80` (Reinforcement)
