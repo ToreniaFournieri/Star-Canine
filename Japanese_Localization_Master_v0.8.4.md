@@ -1,9 +1,8 @@
 /**
- * STAR CANINE: Japanese Localization Master (v0.8.2)
+ * STAR CANINE: Japanese Localization Master (v0.8.4)
  * Integration: Use logic keys (English) to look up display strings (Japanese).
  */
 
-```JavaScript 
 const LOCALIZATION = {
   // Navigation & Nodes
   nodes: {
@@ -16,20 +15,24 @@ const LOCALIZATION = {
   // Stats & Ship Data
   stats: {
     hull: "耐久値",
+    [span_0](start_span)max_hull: "最大耐久値", // Added for v0.8.4[span_0](end_span)
     shield: "シールド",
     slots: "スロット",
     inventory: "倉庫",
     equipped: "装備中",
     power: "威力",
     rarity: "レア度",
-    stage: "第 {n} ステージ"
+    stage: "第 {n} ステージ",
+    [span_1](start_span)act: "ACT {n}" // Added for v0.8.4[span_1](end_span)
   },
 
   // Range Categories
   ranges: {
     LONG: "遠距離",
     MID: "中距離",
-    CLOSE: "近距離"
+    CLOSE: "近距離",
+    [span_2](start_span)SHIELD: "シールド", // Added for Module logic[span_2](end_span)
+    [span_3](start_span)HULL: "船体修理" // Added for Post-combat logic[span_3](end_span)
   },
 
   // UI Actions
@@ -53,7 +56,7 @@ const LOCALIZATION = {
 
   // Equipment & Enemy Names Mapping
   names: {
-    // LONG
+    //
     "🚀 Lance": "🚀 ランス",
     "🚀 Meteor": "🚀 メテオ",
     "🚀🛡️ Interceptor": "🚀🛡️ インターセプター",
@@ -61,27 +64,24 @@ const LOCALIZATION = {
     "🚀⚠️ Isolation": "🚀⚠️ アイソレーション",
     "🚀🔺 Javelin": "🚀🔺 ジャベリン",
     "🚀🔺 Gambit": "🚀🔺 ギャンビット",
-    "🔫 Quantum Displacer": "🔫 クォンタム・ディスプレーサー",
-    "🔥🔺 Warhead Optimizer": "🔥🔺 ウォーヘッド・オプティマイザー",
-    // MID
+    "🔫 Quantum Displacer": "🔫 クァンタム・ディスプレーサー",
+    "🔥🔺 Warhead Optimizer": "🔥🔺 弾頭最適化装置",
     "✈️ Drones": "✈️ ドローン",
     "✈️⚠️ Scavenger": "✈️⚠️ スカベンジャー",
-    "✈️🔺 Squadron": "✈️🔺 スクアドラ",
-    "✈️⤴️ Rookie fighter": "✈️⤴️ ルーキーファイター",
+    "✈️🔺 Squadron": "✈️🔺 スクアドラル",
+    "✈️⤴️ Rookie fighter": "✈️⤴️ ルーキー・ファイター",
     "✈️✈️ Blue Wolf": "✈️✈️ ブルーウルフ",
     "🛫🔺 Swarm Core": "🛫🔺 スウォーム・コア",
     "🏗️🔺 Swarm Hanger": "🏗️🔺 スウォーム・ハンガー",
-    // CLOSE
-    "⚡ Fang": "⚡ ファング",
     "⚡ Claw": "⚡ クロウ",
+    "⚡🩸 Fang": "⚡🩸 ファング",
     "⚡⚠️ Static Blade": "⚡⚠️ スタティック・ブレード",
     "⚡️🛡️ Iron Beam": "⚡️🛡️ アイアン・ビーム",
     "⚡ Cudgel": "⚡ カジェル",
     "⚡️🔺 Boost laser": "⚡️🔺 ブースト・レーザー",
-    "⚡💥 Burn soul": "⚡💥 バーンソウル",
+    "⚡💥 Burn soul": "⚡💥 バーン・ソウル",
     "💎🔺 Prismatic Focus": "💎🔺 プリズマティック・フォーカス",
-    // OTHERS
-    "🛡️ Plating": "🛡️ 外装プレート",
+    "🛡️ Plating": "🛡️ 装甲板",
     "🛡️ Veil": "🛡️ ヴェール",
     "🛡️⚠️ Bulkhead": "🛡️⚠️ バルクヘッド",
     "🛡️💥 Ephemera shield": "🛡️💥 エフェメラ・シールド",
@@ -112,35 +112,30 @@ const LOCALIZATION = {
     DORMANT: "【起動待機】待機中。第4ターン以降、攻撃力が大幅に上昇する。",
     OVERLOAD: "【過負荷】過負荷状態。第4ターン以降、火力が上昇する。",
     GATE: "【防壁】ターン終了時、一定値までシールドを強制再生成する。",
-    "COUNTER(LONG)": "【遠距離反撃】遠距離攻撃に対し、LONG兵装数に応じた反撃を行う。",
-    // Equipment Abilities
-    "+X SHIELD": "開始時、シールド値を加算する。",
-    "+X ALL MID": "すべての中距離兵装の威力を加算する。",
-    "+X damage per combat": "戦闘終了後、この装備の威力が永続的に上昇する。",
-    "Simultaneous": "【同時攻撃】敵を撃破してもそのターンの反撃を受ける。",
-    "DISABLE_HULL_REPAIR": "修理機能を停止する代わりに、他の出力を強化する。",
+    "COUNTER(LONG)": "【迎撃】遠距離攻撃を受けた際、装備中の遠距離兵装の数に応じた反撃を行う。",
+
+    // Item Abilities
+    "none": "なし",
+    "+10 SHIELD": "戦闘開始時にシールド+10",
+    "+10 ALL MID": "すべての中距離兵装の威力を+10",
+    "Simultaneous": "【同時攻撃】敵の撃破チェックを自機攻撃直後ではなく、ターン終了時に行う。",
+    "DISABLE_HULL_REPAIR": "【修復機能停止】戦闘終了後の耐久値回復が無効化される。",
+    [span_4](start_span)[span_5](start_span)"LIFE-STEAL": "【生命吸収】敵シールドが0の状態でダメージを与えた際、自身を修復する。", // Added v0.8.4[span_4](end_span)[span_5](end_span)
+    "+2 damage per combat": "【成長】戦闘終了ごとに威力が永久に+2される。",
+
     // Boss Bonuses
-    "Expansion": "船体スロットを2つ拡張する。",
-    "Reinforcement": "スロット+1、最大耐久値を80上昇させる。",
-    "Logistics": "兵站支援。毎回の戦闘前に「🚀 ランス」を1つ無償支給する。"
+    expansion: "【拡張】スロット最大値 +2",
+    reinforcement: "【強化】スロット最大値 +1 & 耐久値最大値 +80",
+    logistics: "【兵站】標準支給プロトコル：次戦開始時に 🚀 ランス を1つ追加する。" // Added v0.8.4
   },
 
-  // Story Text
-  story: {
-    intro: `機体ID: STAR CANINE
-
-「私よ。K9（ケーナイン）は陥落した。
-ソーラーベアにこの星を奪われたわ。
-私も捕まったみたい。
-お願い…死なないで。」
-
-> 通信途絶。
-> 目的地：惑星K9へ進路固定。`,
-    
-    ending: `惑星K9 到着。
-ライカを救出した。
-「…戻ってきてくれたのね。」`
+  [span_6](start_span)[span_7](start_span)[span_8](start_span)// Log Events[span_6](end_span)[span_7](end_span)[span_8](end_span)
+  logs: {
+    player_destroyed: "自機大破。システムをシャットダウンします...",
+    enemy_destroyed: "敵機の撃破を確認。",
+    gate_trigger: "GATEシステム作動：シールド再展開。",
+    counter_trigger: "迎撃確認：カウンターダメージ発生。",
+    [span_9](start_span)evolve: "{name} が成長：威力+{val} (現在: {total})", // Added for v0.8.4[span_9](end_span)
+    repair_done: "戦闘後修理完了：+{val}HP回復。"
   }
 };
-
-```
