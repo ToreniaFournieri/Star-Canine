@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.8.0
+# STAR CANINE SPECIFICATION v0.8.1
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
@@ -115,7 +115,6 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 ```
 
 ### 2.2 Enemy Data
-### 2.2 Enemy Data
 **Fields & Types:**
 - `difficulty`: `Number` (Tier for stage selection)
 - `name`: `String` (Display name)
@@ -125,10 +124,10 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 - `attack_LONG`: `Number` (Damage dealt at LONG range)
 - `attack_MID`: `Number` (Damage dealt at MID range)
 - `attack_CLOSE`: `Number` (Damage dealt at CLOSE range)
-- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`,`GATE`,`COUNTER(LONG)`, or `none`)
+- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`, `GATE`, `COUNTER(LONG)`, or `none`)
 - `skill_value`: `Number` (Numeric intensity of the skill; `0` if skill is `none`)
      
-**[DATA]Enemy CSV**
+**[DATA] Enemy CSV**
 ```csv
 difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill_value
 1,Skirmisher,30,0,NORMAL,0,0,10,none,0
@@ -228,14 +227,14 @@ Every turn follows this strict order of operations:
 3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
-4. **GATE Calculation:** This check occurs if enemy has `GATE` skill.  
+#### 4.3.3 End of turn 
+1. **GATE Calculation:** This check occurs if enemy has `GATE` skill.  
   - Check enemy's current shield.
   - If current shield < `skill_value`, set shield to the `skill_value` (e.g., 20).
   - This means even if the player reduced the shield to 0 during their turn, 
      the enemy will regenerate it next rurn, 
      effectively creating a permanent buffer unless the player's damage 
      exceeds (Current Shield + Enemy Hull) in one burst.
-
 
 ### 4.4 Post-Combat Processing
 #### 4.4.1 Cleanup & Scaling
