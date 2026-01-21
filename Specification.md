@@ -205,7 +205,6 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-    - **Weapon Count:** Determine the number of attacking items used in this turn.
 3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
 4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
