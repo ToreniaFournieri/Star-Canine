@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.8.3
+# STAR CANINE SPECIFICATION v0.8.4
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
