@@ -86,7 +86,7 @@ const LOCALIZATION = {
 ```
 
 LONG
-```
+
 | English Key | Japanese Name |
 | :--- | :--- |
 | 🚀 Lance | 🚀 ランス |
@@ -98,7 +98,7 @@ LONG
 | 🚀🔺 Gambit | 🚀🔺 ギャンビット |
 | 🔫 Quantum Displacer | 🔫 クォンタム・ディスプレーサー |
 | 🔥🔺 Warhead Optimizer | 🔥🔺 ウォーヘッド・オプティマイザー |
-```
+
 
 MID
 ```
