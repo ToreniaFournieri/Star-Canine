@@ -1,5 +1,5 @@
-# STAR CANINE SPECIFICATION v0.8.2
-- note:Enemy skill update
+# STAR CANINE SPECIFICATION v0.8.3
+
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
 - Scope: 1 vs 1 battles, persistent Hull HP, no randomness in combat. 
@@ -301,11 +301,12 @@ This section defines the authoritative game progression flow and the scenes used
   - **Enemy status**
     - `hull`, `shield`
     - Attack values: `attack_LONG`, `attack_MID`, `attack_CLOSE`
+    - `skill`, `skill_value`, skill description 
   - **Inventory display order**
     1. Equipped items (checkmarked)
     2. Unequipped items
   - **Equipment display**
-    - `name`, `eq_type`, `power_stat`, `disposable`, `ability`
+    - `name`, `eq_type`, `power_stat`, `disposable`, `ability`, `mult_target`, `mult_power`
   - **LOG**
     - After combat engagement, a combat log is shown
 - **Input**
@@ -321,7 +322,7 @@ This section defines the authoritative game progression flow and the scenes used
 **Purpose:** Resolve post-combat equipment acquisition
 - **Display**
   - Available normal reward items
-  - Each reward shows: `name`, `eq_type`, `power_stat`, `disposable `, `ability`
+  - Each reward shows: `name`, `eq_type`, `power_stat`, `disposable `, `ability`, `mult_target`, `mult_power`
   - Boss reward list
 - **Input**
   - **Normal reward**
