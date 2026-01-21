@@ -209,7 +209,7 @@ Every turn follows this strict order of operations:
 3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
 4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
-    - **Total Counter Damage** = `skill_value` × (Weapon Count).
+    - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
     - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
     - If Player `hull` <= 0, game ends in **Defeat**.
 5.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
