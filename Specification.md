@@ -125,7 +125,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 - `attack_LONG`: `Number` (Damage dealt at LONG range)
 - `attack_MID`: `Number` (Damage dealt at MID range)
 - `attack_CLOSE`: `Number` (Damage dealt at CLOSE range)
-- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`, or `none`)
+- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`,`GATE`, or `none`)
 - `skill_value`: `Number` (Numeric intensity of the skill; `0` if skill is `none`)
      
 **[DATA]Enemy CSV**
@@ -137,7 +137,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 3,Lancer,45,10,NORMAL,10,10,10,none,0
 4,Zombie,25,80,NORMAL,5,20,0,DEGEN,10
 5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
-5,Bio-Raider,55,30,ELITE,15,15,20,REGEN,15
+5,Shield Gate,55,20,ELITE,15,15,20,GATE,20
 6,Kamikaze Frigate,65,0,NORMAL,10,10,25,EXPLOSIVE,60
 7,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
 8,Dormant Howler,80,25,ELITE,45,0,30,DORMANT,0
@@ -223,6 +223,15 @@ Every turn follows this strict order of operations:
 
 3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
+
+4. - **GATE Logic:** This check occurs at the end of turn. 
+  - Check enemy's current shield.
+  - If current shield < `skill_value`, set shield to the `skill_value` (e.g., 20).
+  - This means even if the player reduced the shield to 0 during their turn, 
+     the enemy will regenerate it next rurn, 
+     effectively creating a permanent buffer unless the player's damage 
+     exceeds (Current Shield + Enemy Hull) in one burst.
+
 
 ### 4.4 Post-Combat Processing
 #### 4.4.1 Cleanup & Scaling
