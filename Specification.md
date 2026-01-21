@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.7.8
+# STAR CANINE SPECIFICATION v0.8.0
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
@@ -138,7 +138,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 4,Zombie,25,80,NORMAL,5,20,0,DEGEN,10
 5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
 5,Shield Gate,55,20,ELITE,15,15,20,GATE,20
-6,Kamikaze Frigate,65,0,NORMAL,10,10,25,EXPLOSIVE,60
+6,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
 7,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
 8,Dormant Howler,80,25,ELITE,45,0,30,DORMANT,0
 10,Celestial Reaper,100,60,BOSS,40,20,35,none,0
