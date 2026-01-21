@@ -95,7 +95,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,🛫🔺 Swarm Core,0,MODULE,3,false,LONG,0.5,+10 ALL MID
 1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,MID,2,DISABLE_HULL_REPAIR
 1,⚡ Claw,10,CLOSE,0,false,none,0,none
-1,⚡ Fang,8,CLOSE,1,false,none,0,LIFE-STEAL
+1,⚡🩸 Fang,8,CLOSE,1,false,none,0,LIFE-STEAL
 1,⚡⚠️ Static Blade,22,CLOSE,1,false,CLOSE,0.9,none
 1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,none,0,+10 SHIELD
 1,⚡ Cudgel,25,CLOSE,2,false,none,0,none
