@@ -125,7 +125,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 - `attack_LONG`: `Number` (Damage dealt at LONG range)
 - `attack_MID`: `Number` (Damage dealt at MID range)
 - `attack_CLOSE`: `Number` (Damage dealt at CLOSE range)
-- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`,`GATE`, or `none`)
+- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`,`GATE`,`COUNTER(LONG)`, or `none`)
 - `skill_value`: `Number` (Numeric intensity of the skill; `0` if skill is `none`)
      
 **[DATA]Enemy CSV**
@@ -141,7 +141,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 6,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
 7,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
 8,Dormant Howler,80,25,ELITE,45,0,30,DORMANT,0
-10,Celestial Reaper,100,60,BOSS,40,20,35,none,0
+10,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
 ```
 
 ### 2.3 2.3 Initial Player State
@@ -211,6 +211,11 @@ Every turn follows this strict order of operations:
 3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
 4.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
 5.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
+6.  **COUNTER(LONG) Check:**
+    - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
+    - Player takes `skill_value` damage immediately.
+    - If Player `hull` <= 0, game ends in **Defeat**.
+
 
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1. **Skill Trigger (Passive):**
