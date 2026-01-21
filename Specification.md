@@ -134,13 +134,11 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 1,Skirmisher,30,0,NORMAL,0,0,10,none,0
 2,Drifter,35,5,NORMAL,20,0,10,none,0
 3,Self-Repairer,40,0,NORMAL,0,15,5,REGEN,8
-3,Lancer,45,10,NORMAL,10,10,10,none,0
 4,Zombie,25,80,NORMAL,5,20,0,DEGEN,5
 5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
-5,Shield Gate,55,20,ELITE,15,15,20,GATE,20
-6,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
-7,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
-8,Dormant Howler,80,25,ELITE,45,0,30,DORMANT,0
+5,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
+6,Shield Gate,55,20,ELITE,15,15,20,GATE,20
+8,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
 10,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
 ```
 
@@ -158,12 +156,12 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 stage,type,difficulty,rank
 1,combat,1,NORMAL
 2,combat,2,NORMAL
-3,combat,5,ELITE
+3,combat,6,ELITE
 4,dock,,
 5,combat,3,NORMAL
 6,combat,4,NORMAL
-7,combat,7,ELITE
-8,combat,6,NORMAL
+7,combat,8,ELITE
+8,combat,5,NORMAL
 9,dock,,
 10,combat,10,BOSS
 ```
