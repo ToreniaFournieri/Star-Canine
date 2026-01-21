@@ -224,7 +224,7 @@ Every turn follows this strict order of operations:
 3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
-4. **GATE Calculation:** This check occurs at the end of turn. 
+4. **GATE Calculation:** This check occurs if enemy has `GATE` skill.  
   - Check enemy's current shield.
   - If current shield < `skill_value`, set shield to the `skill_value` (e.g., 20).
   - This means even if the player reduced the shield to 0 during their turn, 
