@@ -148,7 +148,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 
 ### 2.4 Progression & Scaling
 - ACT System: ACT I (`stageNum`: 1-10), ACT II (`stageNum`: 11-20), ACT III (`stageNum`: 21-30).
-- Scaling Rule: Multiply Enemy `hull`, `shield`, and all attack values by the Act Factor: ACT I: x1.0 | ACT II: x2.0 | ACT III: x3.0
+- Scaling Rule: Multiply Enemy `hull`, `shield`, and all attack values by the Act Factor: ACT I: x1.0 | ACT II: x1.5 | ACT III: x2.0
 
 **[DATA] Stage Layout CSV:**
 ```csv
