@@ -207,7 +207,7 @@ Every turn follows this strict order of operations:
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
 3.  **Enemy Damage & LIFE-STEAL:** - Record Enemy `hull` before damage is applied.
     - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
-    - **LIFE-STEAL Check:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
+    - **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
         - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
         - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
         - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
