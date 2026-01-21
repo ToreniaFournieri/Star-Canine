@@ -3,6 +3,7 @@
  * Integration: Use logic keys (English) to look up display strings (Japanese).
  */
 
+```JavaScript 
 const LOCALIZATION = {
   // Navigation & Nodes
   nodes: {
@@ -141,3 +142,5 @@ const LOCALIZATION = {
 「…戻ってきてくれたのね。」`
   }
 };
+
+```
