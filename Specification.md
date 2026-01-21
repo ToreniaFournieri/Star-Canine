@@ -207,10 +207,9 @@ Every turn follows this strict order of operations:
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
 3.  **Enemy Damage & LIFE-STEAL:** - Record Enemy `hull` before damage is applied.
     - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
-    - **LIFE-STEAL Check:** If any equipped item in the current range has the `LIFE-STEAL` ability:
-        - Calculate `Hull_Damage_Dealt` = (Enemy `hull` before damage) - (Enemy `hull` after damage).
-        - If `Hull_Damage_Dealt` > 0: Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Damage_Dealt`).
-        - *Note: Damage absorbed by shields does not trigger LIFE-STEAL.*
+    - **LIFE-STEAL Check:** If any equipped item in the current range has the `LIFE-STEAL` ability and Enemy's `shield`
+= 0. 
+      - Heals the item's `power_stat` x applicable multipliers, not exceed `max_hull`.
 4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
     - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
