@@ -222,7 +222,7 @@ Every turn follows this strict order of operations:
    - If `DORMANT` or `OVERLOAD` AND turn > 3: Multiply current range attack by `skill_value`.
    
 2. **Attack:** Enemy deals damage based on calculated range attack.
-   - If `EXPLOSIVE` AND current turn is the 2nd CLOSE turn: Add `skill_value` to damage, then set Enemy `hull` to 0.
+   - If `EXPLOSIVE` AND current turn is the turn 4: Add `skill_value` to damage, then set Enemy `hull` to 0.
 
 3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
