@@ -135,7 +135,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 2,Drifter,35,5,NORMAL,20,0,10,none,0
 3,Self-Repairer,40,0,NORMAL,0,15,5,REGEN,8
 3,Lancer,45,10,NORMAL,10,10,10,none,0
-4,Zombie,25,80,NORMAL,5,20,0,DEGEN,10
+4,Zombie,25,80,NORMAL,5,20,0,DEGEN,5
 5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
 5,Shield Gate,55,20,ELITE,15,15,20,GATE,20
 6,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
