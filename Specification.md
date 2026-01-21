@@ -1,5 +1,5 @@
 # STAR CANINE SPECIFICATION v0.8.1
-
+- note:Enemy skill update
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
 - Scope: 1 vs 1 battles, persistent Hull HP, no randomness in combat. 
