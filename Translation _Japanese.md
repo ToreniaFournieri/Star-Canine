@@ -155,9 +155,9 @@ ENEMY
 BOSS REWARD, SKILL
 | English Key | Japanese Name |
 | :--- | :--- |
-| Expansion | スロット拡張 (+2) |
-| Reinforcement | 装甲強化 (スロット+1 / 耐久+80) |
-| Logistics | 標準支給プロトコル (戦闘毎に🚀ランス) |
+| Expansion | 拡張|
+| Reinforcement | 耐久 |
+| Logistics | 攻勢 |
 | REGEN | 自己修復 |
 | DEGEN | 腐食 |
 | EXPLOSIVE | 自爆 |
@@ -165,3 +165,31 @@ BOSS REWARD, SKILL
 | OVERLOAD | 過負荷 |
 | GATE | 防壁 |
 | COUNTER(LONG) | 遠距離反撃 |
+
+SKILL DESCRIPTION
+| Skill Key | Japanese Description | Logic / 効果 |
+| :--- | :--- | :--- |
+| REGEN | 毎ターン、耐久値を回復する。 | ターン毎に耐久値+Value |
+| DEGEN | 毎ターン、自己侵食により耐久値が減少する。 | ターン毎に耐久値-Value |
+| EXPLOSIVE | 第4ターンに超高火力の自爆攻撃を行い、自身は撃破される。 | T4で威力+Valueの攻撃後、HPが0になる |
+| DORMANT | 起動待機中。第4ターン以降、攻撃力が大幅に上昇する。 | T4以降、攻撃威力 x Value |
+| OVERLOAD | 過負荷状態。第4ターン以降、リミッターを解除し火力が上昇する。 | T4以降、攻撃威力 x Value |
+| GATE | ターン終了時、一定値までシールドを強制再生成する。 | 終了時、シールド < ValueならValueに固定 |
+| COUNTER(LONG) | 遠距離攻撃に対し、装備中の遠距離兵装の数に応じた反撃を行う。 | LONG攻撃時、(装備LONG数 x Value)の反撃 |
+
+ABILITY
+| Ability Key | Japanese Description | Logic / 効果 |
+| :--- | :--- | :--- |
+| +X SHIELD | 戦闘開始時、シールド値を加算する。 | 開始時、Battle_Shield + X |
+| +X ALL MID | すべての中距離兵装の威力を加算する。 | 全MIDスロットの威力 + X |
+| +X damage per combat | 戦闘終了後、この装備の威力が永久的に上昇する。 | 戦闘毎にPower_Stat + X (永続) |
+| Simultaneous | 敵の撃破判定をターン終了時まで遅延させ、相打ちを可能にする。 | 敵HP0でも敵の攻撃を最後まで受ける |
+| DISABLE_HULL_REPAIR | 修理機能を停止する代わりに、他の出力を強化する。 | 戦闘後のHULL修理を0にする |
+| Simultaneous | 同時攻撃。敵を撃破してもそのターンの反撃を受ける。 | 相互撃破を許可する |
+
+BONUS 
+| Bonus Key | Japanese Description | Effect / 効果 |
+| :--- | :--- | :--- |
+| Expansion | 船体スロットを2つ拡張する。 | max_slots + 2 |
+| Reinforcement | スロットを1つ拡張し、最大耐久値を80上昇させる。 | max_slots + 1 / max_hull + 80 |
+| Logistics | 兵站支援。毎回の戦闘前に「🚀 ランス」を1つ無償支給する。 | 戦闘準備フェーズで🚀ランスを補充 |
