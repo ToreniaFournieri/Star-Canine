@@ -162,7 +162,7 @@ stage,type,difficulty,rank
 7,combat,8,ELITE
 8,combat,5,NORMAL
 9,dock,,
-10,combat,10,BOSS
+10,combat,9,BOSS
 ```
 
 -----
