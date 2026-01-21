@@ -258,10 +258,11 @@ Every turn follows this strict order of operations:
 
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair
+- **Automatic:** Full Hull Repair
 - **Bonus (Pick ONE):**
-    - `max_slots +2`
-    - `max_slots +1` AND `max_hull +80` (includes immediate heal)
-    - **Special**: if no `🚀 Lance` in inventory, add one every beginning of Pre-combat. 
+    - `max_slots +2` (Expansion)
+    - `max_slots +1` AND `max_hull +80` (Reinforcement)
+    - **Standard Issue Protocol**: If no `🚀 Lance` in inventory, add one at the beginning of Pre-combat. (Logistics)
 
 -----
 ## 5. Event
