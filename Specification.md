@@ -94,8 +94,8 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,✈️✈️ Blue Wolf,20,MID,2,false,none,0,none
 1,🛫🔺 Swarm Core,0,MODULE,3,false,LONG,0.5,+10 ALL MID
 1,🏗️🔺 Swarm Hanger,0,MODULE,3,false,MID,2,DISABLE_HULL_REPAIR
-1,⚡ Fang,10,CLOSE,0,false,none,0,none
-1,⚡ Claw,15,CLOSE,1,false,none,0,none
+1,⚡ Claw,10,CLOSE,0,false,none,0,none
+1,⚡ Fang,8,CLOSE,1,false,none,0,LIFE-STEAL
 1,⚡⚠️ Static Blade,22,CLOSE,1,false,CLOSE,0.9,none
 1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,none,0,+10 SHIELD
 1,⚡ Cudgel,25,CLOSE,2,false,none,0,none
@@ -132,19 +132,19 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill_value
 1,Skirmisher,30,0,NORMAL,0,0,10,none,0
 2,Drifter,31,5,NORMAL,20,0,10,GATE,5
-3,Self-Repairer,40,0,NORMAL,0,15,5,REGEN,8
+3,Self-Repairer,40,10,NORMAL,0,15,5,REGEN,8
 4,Zombie,25,80,NORMAL,5,20,0,DEGEN,5
-5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
+5,Relic Sentry,60,30,NORMAL,30,30,0,DORMANT,0
 5,Kamikaze Frigate,10,100,NORMAL,0,0,0,EXPLOSIVE,60
 6,Shield Gate,55,20,ELITE,15,15,20,GATE,20
-8,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
+8,Overload Enforcer,70,30,ELITE,20,20,25,OVERLOAD,2.0
 9,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
 ```
 
 ### 2.3 2.3 Initial Player State
 - `max_hull`: 200 (Number)
 - `max_slots`: 6 (Number)
-- `inventory`: `🚀 Lance`, `⚡ Fang`, `⚡ Fang`, `🛡️ Plating`
+- `inventory`: `🚀 Lance`,`🚀 Lance`, `⚡ Claw`, `⚡ Claw`, `🛡️ Plating`
 
 ### 2.4 Progression & Scaling
 - ACT System: ACT I (`stageNum`: 1-10), ACT II (`stageNum`: 11-20), ACT III (`stageNum`: 21-30).
@@ -205,7 +205,12 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
+3.  **Enemy Damage & LIFE-STEAL:** - Record Enemy `hull` before damage is applied.
+    - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
+    - **LIFE-STEAL Check:** If any equipped item in the current range has the `LIFE-STEAL` ability:
+        - Calculate `Hull_Damage_Dealt` = (Enemy `hull` before damage) - (Enemy `hull` after damage).
+        - If `Hull_Damage_Dealt` > 0: Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Damage_Dealt`).
+        - *Note: Damage absorbed by shields does not trigger LIFE-STEAL.*
 4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
     - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
