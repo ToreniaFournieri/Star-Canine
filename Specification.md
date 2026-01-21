@@ -131,7 +131,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 ```csv
 difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill_value
 1,Skirmisher,30,0,NORMAL,0,0,10,none,0
-2,Drifter,35,5,NORMAL,20,0,10,none,0
+2,Drifter,35,5,NORMAL,20,0,10,GATE,5
 3,Self-Repairer,40,0,NORMAL,0,15,5,REGEN,8
 4,Zombie,25,80,NORMAL,5,20,0,DEGEN,5
 5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
