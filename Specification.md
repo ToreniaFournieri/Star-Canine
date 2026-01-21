@@ -203,15 +203,18 @@ Before the first turn, calculate the ship's temporary battle stats:
 Every turn follows this strict order of operations:
 
 #### 4.3.1 Player Action
+#### 4.3.1 Player Action
 1.  **Selection:** Identify equipped items where `eq_type` matches the current range.
-2.  **Application:** Total Damage = Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
-4.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
-5.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately (Victorious before Counter can trigger).
-6.  **COUNTER(LONG) Check:**
-    - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
-    - Player takes `skill_value` damage immediately (Reduces `Battle_Shield` first, then `hull`).
-    - If Player `hull` <= 0, game ends in **Defeat**. 
+2.  **Application (Per Item):** For each selected item in the current range sequence:
+    a. Calculate Item Damage: (`power_stat` × applicable multipliers) + flat ability bonuses.
+    b. Apply damage to Enemy `shield`, then `hull`.
+    c. **COUNTER(LONG) Check:** - If current range is **LONG** AND Enemy has `COUNTER(LONG)` AND damage dealt > 0:
+       - Player immediately takes `skill_value` damage.
+       - If Player `hull` <= 0: Interrupt sequence and end in **Defeat**.
+    d. **Enemy Status Check:** If Enemy `hull` <= 0: Interrupt sequence and end in **Victory**.
+
+3.  **Simultaneous Check:** If `Simultaneous` ability is active, the "Enemy Status Check" is deferred until after the Enemy Action.
+
 
 
 
