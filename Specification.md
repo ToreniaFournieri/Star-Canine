@@ -204,12 +204,12 @@ Every turn follows this strict order of operations:
 
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
-2.  **Application:** - Total Damage = Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-    - **Count:** Determine the number of attacking items used in this turn.
+2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
+    - **Weapon Count:** Determine the number of attacking items used in this turn.
 3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
 4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
-    - **Total Counter Damage** = `skill_value` × (Number of attacking items).
+    - **Total Counter Damage** = `skill_value` × (Weapon Count).
     - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
     - If Player `hull` <= 0, game ends in **Defeat**.
 5.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
