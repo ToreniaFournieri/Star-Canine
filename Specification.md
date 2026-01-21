@@ -207,13 +207,13 @@ Every turn follows this strict order of operations:
 2.  **Application:** - Total Damage = Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
     - **Count:** Determine the number of attacking items used in this turn.
 3.  **Enemy Damage:** Apply total damage to the Enemy. (Reduces `shield` first, then `hull`).
-4.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
-5.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
-6.  **COUNTER(LONG) Check:**
+4.  **COUNTER(LONG) Check:**
     - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
     - **Total Counter Damage** = `skill_value` × (Number of attacking items).
     - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
     - If Player `hull` <= 0, game ends in **Defeat**.
+5.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
+6.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1. **Skill Trigger (Passive):**
