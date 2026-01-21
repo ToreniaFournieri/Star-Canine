@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.7.7
+# STAR CANINE SPECIFICATION v0.7.8
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
@@ -115,29 +115,33 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 ```
 
 ### 2.2 Enemy Data
+### 2.2 Enemy Data
 **Fields & Types:**
 - `difficulty`: `Number` (Tier for stage selection)
 - `name`: `String` (Display name)
 - `hull`: `Number` (HP)
-- `shield`: `Number` (Absorbs damage before hull)
+- `shield`: `Number` (Universal temporary HP; absorbs damage before hull)
 - `rank`: `String` (NORMAL, ELITE, BOSS)
-- `attack_LONG`: `Number` (Damage at range)
-- `attack_MID`: `Number` (Damage at range)
-- `attack_CLOSE`: `Number` (Damage at range)
+- `attack_LONG`: `Number` (Damage dealt at LONG range)
+- `attack_MID`: `Number` (Damage dealt at MID range)
+- `attack_CLOSE`: `Number` (Damage dealt at CLOSE range)
+- `skill`: `String` (Behavioral keyword: `REGEN`, `DEGEN`, `EXPLOSIVE`, `OVERLOAD`, `DORMANT`, or `none`)
+- `skill_value`: `Number` (Numeric intensity of the skill; `0` if skill is `none`)
      
 **[DATA]Enemy CSV**
 ```csv
-difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE
-1,Skirmisher,30,0,NORMAL,0,0,10
-2,Drifter,35,5,NORMAL,20,0,10
-3,Scout,40,0,NORMAL,0,15,0
-3,Lancer,45,10,NORMAL,10,10,10
-4,Interceptor,55,15,NORMAL,5,20,0
-5,Raider,55,30,ELITE,15,15,20
-6,Frigate,65,0,NORMAL,10,10,25
-7,Enforcer,70,20,ELITE,20,20,25
-8,Howler,80,25,ELITE,45,0,30
-10,Celestial Reaper,100,60,BOSS,40,20,35
+difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill_value
+1,Skirmisher,30,0,NORMAL,0,0,10,none,0
+2,Drifter,35,5,NORMAL,20,0,10,none,0
+3,Self-Repairer,40,0,NORMAL,0,15,0,REGEN,8
+3,Lancer,45,10,NORMAL,10,10,10,none,0
+4,Zom-Ship Interceptor,25,80,NORMAL,5,20,0,DEGEN,10
+5,Relic Sentry,60,20,NORMAL,30,30,0,DORMANT,0
+5,Bio-Raider,55,30,ELITE,15,15,20,REGEN,15
+6,Kamikaze Frigate,65,0,NORMAL,10,10,25,EXPLOSIVE,60
+7,Overload Enforcer,70,20,ELITE,20,20,25,OVERLOAD,2.0
+8,Ancient Dormant Howler,80,25,ELITE,45,0,30,DORMANT,0
+10,Celestial Reaper,100,60,BOSS,40,20,35,none,0
 ```
 
 ### 2.3 2.3 Initial Player State
@@ -209,8 +213,15 @@ Every turn follows this strict order of operations:
 5.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
-1.  **Attack:** Enemy deals damage based on their stat for the current range (e.g., `attack_MID`).
-2.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
+1. **Skill Trigger (Passive):**
+   - If `REGEN`: Enemy heals `skill_value` hull.
+   - If `DEGEN`: Enemy loses `skill_value` hull.
+   - If `DORMANT` or `OVERLOAD` AND turn > 3: Multiply current range attack by `skill_value`.
+   
+2. **Attack:** Enemy deals damage based on calculated range attack.
+   - If `EXPLOSIVE` AND current turn is the 2nd CLOSE turn: Add `skill_value` to damage, then set Enemy `hull` to 0.
+
+3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
 3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
 ### 4.4 Post-Combat Processing
