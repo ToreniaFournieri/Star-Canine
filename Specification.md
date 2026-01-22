@@ -198,6 +198,9 @@ Schema: `[slots, name, power, type, rarity, disposable, mult, ability]`
 
 ```javascript
 const EQ = [
+  // === SCRAP (Dock currency) ===
+  [1, "🗑️ スクラップ", 0, T.X, 0, 0, null, null],
+  
   // === LONG (Missiles) ===
   [1, "🚀 ランス", 40, T.L, 0, 1, null, null],
   [1, "🚀 メテオ", 45, T.L, 1, 1, null, null],
@@ -295,7 +298,12 @@ const INITIAL_PLAYER = {
   max_hull: 200,
   hull: 200,
   max_slots: 6,
-  inventory: ["🚀 ランス", "🚀 ランス", "⚡ クロウ", "⚡ クロウ", "🛡️ 装甲板"],
+  inventory: [
+    "🚀 ランス", "🚀 ランス", 
+    "⚡ クロウ", "⚡ クロウ", 
+    "🛡️ 装甲板",
+    "🗑️ スクラップ", "🗑️ スクラップ"
+  ],
   equipped: [],
   // Boss reward flags
   logistics: false,
