@@ -68,12 +68,13 @@ const parseCSV = (csv) => {
 - `disposable`: `Boolean` (true/false)
 - `mult_target`: `String` Which stat to multiply (LONG, MID, CLOSE, SHIELD, HULL, or none)
 - `mult_power`: `Number` (Float) The multiplier value (2, 0.9, 1.2, etc.)
-- `ability`: `String` (Parsed effect or none)
+- `ability`: `String` (Parsed effect or none) Parsed keyword or keyword + numeric value; effects are defined in Combat Rules.
 
 **Logic by eq_type:**
 - **LONG/MID/CLOSE:** Dealt damage = `power_stat`.
 - **SHIELD:** Battle start protection = `power_stat`
 - **HULL:** Battle end repair = `power_stat`
+- MODULE: Provides multipliers or abilities only; has no direct damage or repair effect.
 
 **[DATA] Equipment CSV**
 ```csv
@@ -141,7 +142,7 @@ difficulty,name,hull,shield,rank,attack_LONG,attack_MID,attack_CLOSE,skill,skill
 9,Celestial Reaper,100,60,BOSS,40,20,35,COUNTER(LONG),10
 ```
 
-### 2.3 2.3 Initial Player State
+### 2.3 Initial Player State
 - `max_hull`: 200 (Number)
 - `max_slots`: 6 (Number)
 - `inventory`: `🚀 Lance`,`🚀 Lance`, `⚡ Claw`, `⚡ Claw`, `🛡️ Plating`
@@ -183,8 +184,7 @@ Combat is deterministic, non-interactive, and resolved through a fixed sequence.
 ### 4.1 Turn Structure
 A battle consists of exactly 6 turns following this fixed range order:  
 **LONG → MID → CLOSE → CLOSE → MID → LONG**
-- If player choses Boss reward that affects its order, replace permanently. 
-
+- If the player chooses a Boss Reward that modifies turn order, the change is permanent.
 
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
@@ -192,7 +192,8 @@ Before the first turn, calculate the ship's temporary battle stats:
 2.  **Module Multipliers:** 
     - Collect all equipped items where `mult_target` is not `none`.
     - Group by `mult_target` category (LONG, MID, CLOSE, SHIELD, HULL).
-    - Multiply the **Base Sum** of each category by all applicable `mult_power` values. and `Doctrine` boss reward has multiplier for ALL range. 
+    - Multiply the **Base Sum** of each category by all applicable `mult_power` values.
+    - Doctrine applies a global ×1.2 multiplier to all damage ranges after equipment multipliers.
     - Multipliers stack multiplicatively (e.g., LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
 3.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
     - *Note: Multipliers do NOT scale flat ability bonuses.*
@@ -233,7 +234,7 @@ Every turn follows this strict order of operations:
    - If `EXPLOSIVE` AND current turn is the turn 4: Add `skill_value` to damage, then set Enemy `hull` to 0.
 
 3.  **Player Damage:** Apply damage to the Player. (Reduces `Battle_Shield` first, then `hull`).
-3.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
+4.  **Status Check:** If Player `hull` <= 0, game ends in defeat.
 
 #### 4.3.3 End of turn 
 1. **GATE Calculation:** This check occurs if enemy has `GATE` skill, once per turn.
@@ -270,8 +271,7 @@ Every turn follows this strict order of operations:
   - At ACT1, 3 boss rewards are offered.
   - The remaining 3 boss rewards are offered at ACT2.
 1. **Expansion:** `+2 slots`
-2. **Reinforcement:** `+1 slot`, +50 `max 
-_hull`
+2. **Reinforcement:** `+1 slot`, +50 `max_hull`
 3. **Boarding:** `+1 slot`, 5th and 6th turns are CLOSE range
 4. **Skirmish:** `+1 slot`, 4th turn is MID range
 5. **Logistics:** Add one 🚀 Lance at the beginning of Pre-combat
