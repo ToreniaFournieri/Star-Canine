@@ -270,9 +270,19 @@ Every turn follows this strict order of operations:
 -----
 ## 5. Event
 ### 5.1 Dock
-Dock is a repair station. Chose one:
-- **Repair:** Heal Hull by 30% of Max Hull
-(in the future update, it will have multiple option)
+- At a Dock, the player must choose exactly ONE option:
+1. Emergency Repair  
+   - Scrap items to restore 30% hull.  
+   - Scrap cost by Act:
+     - Act 1: 1 item
+     - Act 2: 2 items
+     - Act 3: 3 items  
+   - Unavailable if insufficient items.
+2. Emergency Missile Fabrication  
+   - Max hull −10 (permanent).  
+   - Gain one 🚀 Lance.
+3. Leave Dock  
+   - No effect.
 
 -----
 ## 6. Flow and Scene
