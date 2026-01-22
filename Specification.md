@@ -205,17 +205,14 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-3.  **SHIELD-BREAKER**
-- If at least one equipped item with `SHIELD-BREAKER` matches the current combat range, set the enemy's `shield` value to 0.
-4.  **Enemy Damage & LIFE-STEAL:** 
-- Record Enemy `hull` before damage is applied.
-  - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
-  - **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
-    - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
-    - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
-    - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
-5.  **COUNTER(LONG) Check:**
-- If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
+3.  **SHIELD-BREAKER:** If at least one equipped item with `SHIELD-BREAKER` matches the current combat range, set the enemy's `shield` value to 0.
+4.  **Enemy Damage & LIFE-STEAL:** Record Enemy `hull` before damage is applied.
+- Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
+- **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
+  - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
+  - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
+  - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
+5.  **COUNTER(LONG) Check:** If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
 - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
   - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
   - If Player `hull` <= 0, game ends in **Defeat**.
