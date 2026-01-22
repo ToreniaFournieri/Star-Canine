@@ -188,14 +188,14 @@ A battle consists of exactly 6 turns following this fixed range order:
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
 1.  **Stat Summation (Base):** Sum `power_stat` for each category (`LONG`, `MID`, `CLOSE`, `SHIELD`).
-3.  **Module Multipliers:** 
+2.  **Module Multipliers:** 
     - Collect all equipped items where `mult_target` is not `none`.
     - Group by `mult_target` category (LONG, MID, CLOSE, SHIELD, HULL).
     - Multiply the **Base Sum** of each category by all applicable `mult_power` values.
     - Multipliers stack multiplicatively (e.g., LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
-4.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
+3.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
     - *Note: Multipliers do NOT scale flat ability bonuses.*
-5.  **Battle Pools:**
+4.  **Battle Pools:**
     - `Battle_Shield` = Final calculated Shield total.
     - `Battle_Hull` = Current Player `hull`.
 
@@ -206,20 +206,21 @@ Every turn follows this strict order of operations:
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
 3.  **Ability: SHIELD-BREAKER**
-  - If at least one equipped item with `SHIELD-BREAKER' matches the current combat range, set the enemy's shield value to 0 before any attacks are resolved.
-3.  **Enemy Damage & LIFE-STEAL:** - Record Enemy `hull` before damage is applied.
-    - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
-    - **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
-        - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
-        - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
-        - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
-4.  **COUNTER(LONG) Check:**
-    - If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
-    - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
-    - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
-    - If Player `hull` <= 0, game ends in **Defeat**.
-5.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
-6.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
+- If at least one equipped item with `SHIELD-BREAKER' matches the current combat range, set the enemy's shield value to 0.
+4.  **Enemy Damage & LIFE-STEAL:** 
+- Record Enemy `hull` before damage is applied.
+  - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
+  - **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
+    - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
+    - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
+    - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
+5.  **COUNTER(LONG) Check:**
+- If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
+- **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
+  - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
+  - If Player `hull` <= 0, game ends in **Defeat**.
+6.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
+7.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1. **Skill Trigger (Passive):**
