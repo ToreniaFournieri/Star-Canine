@@ -192,7 +192,7 @@ Before the first turn, calculate the ship's temporary battle stats:
 2.  **Module Multipliers:** 
     - Collect all equipped items where `mult_target` is not `none`.
     - Group by `mult_target` category (LONG, MID, CLOSE, SHIELD, HULL).
-    - Multiply the **Base Sum** of each category by all applicable `mult_power` values.
+    - Multiply the **Base Sum** of each category by all applicable `mult_power` values. and `Doctrine` boss reward has multiplier for ALL range. 
     - Multipliers stack multiplicatively (e.g., LONG_base × 1.2 × 1.3 × 2 = LONG_base × 3.12).
 3.  **Ability Application:** Add flat bonuses from `ability` strings (e.g., `+10 SHIELD`, `+10 ALL MID`) to the multiplied totals.
     - *Note: Multipliers do NOT scale flat ability bonuses.*
@@ -206,7 +206,6 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
-  - Some equipments and `Doctrine` boss reward has multiplier.  
 3.  **SHIELD-BREAKER:** If at least one equipped item with `SHIELD-BREAKER` matches the current combat range, set the enemy's `shield` value to 0.
 4.  **Enemy Damage & LIFE-STEAL:** Record Enemy `hull` before damage is applied.
 - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
