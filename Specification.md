@@ -100,7 +100,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,⚡️🛡️ Iron Beam,5,CLOSE,2,false,none,0,+10 SHIELD
 1,⚡ Cudgel,25,CLOSE,2,false,none,0,none
 1,⚡️🔺 Boost laser,10,CLOSE,1,false,CLOSE,1.2,none
-1,⚡💥 Burn soul,40,CLOSE,2,true,none,0,none
+1,⚡🪓 Shield-Breaker,3,CLOSE,2,true,none,0,SHIELD-BREAKER
 1,💎🔺 Prismatic Focus,0,MODULE,3,false,CLOSE,2,Simultaneous
 1,🛡️ Plating,14,SHIELD,0,false,none,0,none
 1,🛡️ Veil,17,SHIELD,1,false,none,0,none
@@ -205,6 +205,8 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
+3.  **Ability: SHIELD-BREAKER**
+  - If at least one equipped item with `SHIELD-BREAKER' matches the current combat range, set the enemy's shield value to 0 before any attacks are resolved.
 3.  **Enemy Damage & LIFE-STEAL:** - Record Enemy `hull` before damage is applied.
     - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
     - **LIFE-STEAL:** If any equipped item in the current range has the `LIFE-STEAL` ability **AND** the Enemy's `shield` is currently 0:
