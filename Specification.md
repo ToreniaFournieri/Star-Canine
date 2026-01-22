@@ -229,6 +229,7 @@ Every turn follows this strict order of operations:
    - If `REGEN`: Enemy heals `skill_value` hull.
    - If `DEGEN`: Enemy loses `skill_value` hull.
    - If `DORMANT` or `OVERLOAD` AND turn > 3: Multiply current range attack by `skill_value`.
+   (Value of 0 = enemy stops attacking after Turn 4)
    
 2. **Attack:** Enemy deals damage based on calculated range attack.
    - If `EXPLOSIVE` AND current turn is the turn 4: Add `skill_value` to damage, then set Enemy `hull` to 0.
