@@ -81,7 +81,7 @@ slots,name,power_stat,eq_type,rarity,disposable,mult_target,mult_power,ability
 1,🚀 Lance,40,LONG,0,true,none,0,none
 1,🚀 Meteor,45,LONG,1,true,none,0,none
 2,🚀🛡️ Interceptor,50,LONG,1,true,none,0,+10 SHIELD
-2,🚀 Harpoon,66,LONG,1,true,none,0,none
+2,🚀❗️ Harpoon,66,LONG,1,true,none,0,+10 BACKFIRE
 2,🚀⚠️ Isolation,75,LONG,1,true,LONG,0.9,none
 2,🚀🔺 Javelin,39,LONG,1,true,LONG,1.2,none
 2,🚀🔺 Gambit,55,LONG,2,true,LONG,1.3,none
@@ -212,12 +212,15 @@ Every turn follows this strict order of operations:
   - Player heals `Hull_Recovered` = (Item `power_stat` × applicable multipliers).
   - Player `hull` = Math.min(`max_hull`, Player `hull` + `Hull_Recovered`).
   - *Note: This trigger requires the shield to be 0 at the moment of calculation.*
-5.  **COUNTER(LONG) Check:** If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
+5. **BACKFIRE:** If item in the current range has the `+X BACKFIRE`, deal fixed X damage to the player.
+- It is absorbed by the player's shield first, then hull.
+- If the player's hull reaches 0 due to BACKFIRE, the player is defeated.
+6.  **COUNTER(LONG) Check:** If current range is **LONG** AND Enemy has `COUNTER(LONG)`:
 - **Total Counter Damage** = `skill_value` × (Sum of Equiped `eq_type:LONG` items).
   - Player takes Total Counter Damage immediately (Reduces `Battle_Shield` first, then `hull`).
   - If Player `hull` <= 0, game ends in **Defeat**.
-6.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
-7.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
+7.  **Simultaneous Check:** If `Simultaneous` ability is active, skip the immediate `Enemy Status Check` and proceed to Enemy Action.
+8.  **Enemy Status Check:** If Enemy `hull` <= 0, player wins immediately.
 
 #### 4.3.2 Enemy Action (If Alive or Simultaneous condition)
 1. **Skill Trigger (Passive):**
