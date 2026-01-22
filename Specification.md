@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.8.4
+# STAR CANINE SPECIFICATION v0.8.5
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
@@ -303,6 +303,7 @@ This section defines the authoritative game progression flow and the scenes used
 - **Display**
   - **Player status**
     - `hull`, `shield`
+    - Expected multiplied damage of each range. 
   - **Enemy status**
     - `hull`, `shield`
     - Attack values: `attack_LONG`, `attack_MID`, `attack_CLOSE`
