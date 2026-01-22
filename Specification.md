@@ -206,6 +206,7 @@ Every turn follows this strict order of operations:
 #### 4.3.1 Player Action
 1.  **Selection:** Identify all equipped items where `eq_type` matches the current range.
 2.  **Application:** - **Total Damage:** Sum of (Item `power_stat` × applicable multipliers) + flat ability bonuses.
+  - Some equipments and `Doctrine` boss reward has multiplier.  
 3.  **SHIELD-BREAKER:** If at least one equipped item with `SHIELD-BREAKER` matches the current combat range, set the enemy's `shield` value to 0.
 4.  **Enemy Damage & LIFE-STEAL:** Record Enemy `hull` before damage is applied.
 - Apply **Total Player Damage** to the Enemy (Reduces `shield` first, then `hull`).
