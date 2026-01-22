@@ -267,6 +267,8 @@ Every turn follows this strict order of operations:
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair
 - **Boss Reward (Pick ONE):**
+  - At ACT1, 3 boss rewards are offered.
+  - The remaining 3 boss rewards are offered at ACT2.
 1. **Expansion:** `+2 slots`
 2. **Reinforcement:** `+1 slot`, +50 `max 
 _hull`
