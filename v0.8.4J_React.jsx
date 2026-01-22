@@ -417,6 +417,51 @@ const eqd = temp.inventory.filter(i => temp.equipped.includes(i.id));
 const uneq = temp.inventory.filter(i => !temp.equipped.includes(i.id));
 const used = eqd.reduce((s, i) => s + i.slots, 0);
 
+// Calculate expected damage preview
+const calcDamagePreview = () => {
+const eq = temp.inventory.filter(i => temp.equipped.includes(i.id));
+
+```
+// Base stats
+const bL = eq.filter(e => e.eq_type === 'LONG').reduce((s, e) => s + e.power_stat, 0);
+const bM = eq.filter(e => e.eq_type === 'MID').reduce((s, e) => s + e.power_stat, 0);
+const bC = eq.filter(e => e.eq_type === 'CLOSE').reduce((s, e) => s + e.power_stat, 0);
+const bS = eq.filter(e => e.eq_type === 'SHIELD').reduce((s, e) => s + e.power_stat, 0);
+
+// Multipliers
+const mult = { LONG: 1, MID: 1, CLOSE: 1, SHIELD: 1 };
+eq.forEach(e => {
+  if (e.mult_target && e.mult_target !== 'none') {
+    mult[e.mult_target] *= e.mult_power;
+  }
+});
+
+let finalL = bL * mult.LONG;
+let finalM = bM * mult.MID;
+let finalC = bC * mult.CLOSE;
+let finalS = bS * mult.SHIELD;
+
+// Abilities
+eq.forEach(e => {
+  const ab = parseAbility(e.ability);
+  if (ab) {
+    if (ab.type === 'SHIELD') finalS += ab.value;
+    if (ab.type === 'ALL MID') finalM += ab.value;
+  }
+});
+
+return {
+  long: Math.round(finalL),
+  mid: Math.round(finalM),
+  close: Math.round(finalC),
+  shield: Math.round(finalS)
+};
+```
+
+};
+
+const damagePreview = calcDamagePreview();
+
 if (!started) {
 return (
 <div className="max-w-6xl mx-auto">
@@ -426,6 +471,13 @@ return (
 <div className="font-bold">スターキャナイン</div>
 <div>耐久値: {Math.round(temp.hull)}/{temp.max_hull}</div>
 <div>スロット: {used}/{temp.max_slots}</div>
+<div className="mt-2 p-2 bg-green-900 bg-opacity-30 border border-green-700">
+<div className="font-bold mb-1">予想攻撃力:</div>
+<div className="text-xs">長距離: {damagePreview.long}</div>
+<div className="text-xs">中距離: {damagePreview.mid}</div>
+<div className="text-xs">近距離: {damagePreview.close}</div>
+<div className="text-xs">シールド: {damagePreview.shield}</div>
+</div>
 </div>
 <div>
 <div className="font-bold">{enemy.name} ({translateRank(enemy.rank)})</div>
