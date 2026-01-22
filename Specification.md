@@ -322,7 +322,7 @@ This section defines the authoritative game progression flow and the scenes used
 **Purpose:** Equipment preparation and deterministic combat resolution
 - **Display**
   - **Player status**
-    - `hull`, `shield`
+    - `hull`, `shield`, owing Boss reward (only keyword)
     - Expected multiplied damage of each range, `shield`
   - **Enemy status**
     - `hull`, `shield`
