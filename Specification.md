@@ -266,23 +266,14 @@ Every turn follows this strict order of operations:
 
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair
-- +*Boss Reward (Pick ONE):**
-1. **Expansion:**
-- +2 slots
-2. **Reinforcement:**
-- +1 slot
-- +50 max hull
-3. **Boarding:**
-- +1 slot
-- 5th and 6th turns are CLOSE range
-4. **Skirmish:**
-- +1 slot
-- 4th turn is MID range
-5. **Logistics:**
-- Add one 🚀 Lance at the beginning of Pre-combat
-6. **Doctrine:**
-- +60 max hull
-- ALL weapons damage ×1.2
+- **Boss Reward (Pick ONE):**
+1. **Expansion:** `+2 slots`
+2. **Reinforcement:** `+1 slot`, +50 `max 
+_hull`
+3. **Boarding:** `+1 slot`, 5th and 6th turns are CLOSE range
+4. **Skirmish:** `+1 slot`, 4th turn is MID range
+5. **Logistics:** Add one 🚀 Lance at the beginning of Pre-combat
+6. **Doctrine:** +60 `max_hull`, ALL weapons damage ×1.2
 
 -----
 ## 5. Event
