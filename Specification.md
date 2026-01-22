@@ -1,4 +1,4 @@
-# STAR CANINE SPECIFICATION v0.8.5
+# STAR CANINE SPECIFICATION v0.8.6
 
 ## 1. OVERVIEW
 Deterministic, text-only roguelike space ship game. Designed for LLM playability.
@@ -174,7 +174,6 @@ stage,type,difficulty,rank
 - **Persistence:** Slot assignments and item stats (like scaling damage) persist between stages.
 - **Management:** Items are swapped between Inventory and Slots during the **Pre-Combat** phase.
 - **Slot Validation**: Ensure Sum(`slots`) of all equipped items ≤ max_slots.
-
 - **Uniqueness:** Each item is a unique instance. Duplicate names (e.g., two `🚀 Lance`) must be tracked separately in the state.
 
 -----
@@ -184,6 +183,8 @@ Combat is deterministic, non-interactive, and resolved through a fixed sequence.
 ### 4.1 Turn Structure
 A battle consists of exactly 6 turns following this fixed range order:  
 **LONG → MID → CLOSE → CLOSE → MID → LONG**
+- If player choses Boss reward that affects its order, replace permanently. 
+
 
 ### 4.2 Combat Initialization (Setup Phase)
 Before the first turn, calculate the ship's temporary battle stats:
@@ -265,10 +266,23 @@ Every turn follows this strict order of operations:
 
 **Boss Bonus (ACT I & II only):**
 - **Automatic:** Full Hull Repair
-- **Bonus (Pick ONE):**
-    - `max_slots +2` (Expansion)
-    - `max_slots +1` AND `max_hull +80` (Reinforcement)
-    - **Standard Issue Protocol**: add one `🚀 Lance` into `inventory` at the beginning of Pre-combat. (Logistics)
+- +*Boss Reward (Pick ONE):**
+1. **Expansion:**
+- +2 slots
+2. **Reinforcement:**
+- +1 slot
+- +50 max hull
+3. **Boarding:**
+- +1 slot
+- 5th and 6th turns are CLOSE range
+4. **Skirmish:**
+- +1 slot
+- 4th turn is MID range
+5. **Logistics:**
+- Add one 🚀 Lance at the beginning of Pre-combat
+6. **Doctrine:**
+- +60 max hull
+- ALL weapons damage ×1.2
 
 -----
 ## 5. Event
