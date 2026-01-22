@@ -35,7 +35,7 @@ const parseCSV = (csv) => {
         obj[header] = false;
       } 
       else if (val === '0' || val === '') {
-        obj[header] = (header === 'name' || header === 'eq_type' || header === 'ability' || header === 'multiplier') ? val : 0;
+        obj[header] = (header === 'name' || header === 'eq_type' || header === 'ability' || header === 'mult_target') ? val : 0;
       } 
       else if (!isNaN(val)) {
         obj[header] = Number(val);
