@@ -1111,19 +1111,67 @@ const AI = {
     const hpPercent = player.hull / player.max_hull;
     const stagesUntilBoss = 10 - stageInAct;
     const missileCount = AI.countMissiles(player);
+    const inventorySize = player.inventory.length;
+    const inventoryThreshold = 2 * player.max_slots;
 
     reasoning.push('=== AI DOCK ANALYSIS ===');
     reasoning.push(`HP: ${player.hull}/${player.max_hull} (${Math.round(hpPercent * 100)}%)`);
     reasoning.push(`Stages until boss: ${stagesUntilBoss}`);
     reasoning.push(`Missiles in stock: ${missileCount}`);
+    reasoning.push(`Inventory: ${inventorySize}/${inventoryThreshold} items`);
     reasoning.push(`Repair cost: ${scrapCost} items for +${Math.floor(player.max_hull * 0.3)} HP`);
     reasoning.push(`Fabricate: -10 max HP for +1 missile`);
 
-    // Find scrap items
+    // Find scrap items (prioritize these for scrapping)
     const scrappable = player.inventory.filter(i =>
       i.name.includes('スクラップ') || (i.power === 0 && getTypeId(i.type) === 'MODULE')
     );
 
+    // ===== NEW STRATEGY: AGGRESSIVE REPAIR IF LOW HP =====
+    // TIER 1: Inventory bloat + low HP
+    if (inventorySize > inventoryThreshold && hpPercent < 0.66) {
+      reasoning.push(`Inventory bloated: ${inventorySize} > ${inventoryThreshold} items`);
+      reasoning.push('Low HP: Aggressive repair needed');
+
+      // Prefer scrapping low-priority items
+      let toScrap = [];
+
+      // First, use scrap items if available
+      if (scrappable.length > 0) {
+        toScrap = scrappable.slice(0, scrapCost);
+      }
+
+      // If not enough scrap, find other low-priority items
+      if (toScrap.length < scrapCost) {
+        const nonScrap = player.inventory.filter(i =>
+          !toScrap.some(s => s.id === i.id) &&
+          !i.name.includes('スクラップ')
+        );
+        const neededMore = scrapCost - toScrap.length;
+        // Pick weakest non-scrap items
+        nonScrap.sort((a, b) => a.power - b.power);
+        toScrap = [...toScrap, ...nonScrap.slice(0, neededMore)];
+      }
+
+      if (toScrap.length >= scrapCost) {
+        reasoning.push('');
+        reasoning.push('=== AI DECISION ===');
+        reasoning.push(`REPAIR: Inventory bloated + low HP, scrap items [${toScrap.slice(0, scrapCost).map(i => i.id).join(', ')}] for recovery`);
+        return { action: 'REPAIR', scrapIds: toScrap.slice(0, scrapCost).map(i => i.id), reasoning };
+      }
+    }
+
+    // TIER 2: Have scrap items + low HP
+    if (scrappable.length > 0 && hpPercent < 0.66) {
+      reasoning.push(`Have scrap items (${scrappable.length}) and low HP`);
+      const toScrap = scrappable.slice(0, scrapCost).map(i => i.id);
+      reasoning.push('');
+      reasoning.push('=== AI DECISION ===');
+      reasoning.push(`REPAIR: Low HP, scrap items [${toScrap.join(', ')}] for recovery`);
+      return { action: 'REPAIR', scrapIds: toScrap, reasoning };
+    }
+
+    // ===== ORIGINAL STRATEGIES =====
     // STRATEGY: Prioritize having 2 missiles for boss
     if (missileCount < 2 && hpPercent > 0.6) {
       reasoning.push('');
@@ -1132,25 +1180,18 @@ const AI = {
       return { action: 'FABRICATE', reasoning };
     }
 
-    if (hpPercent < 0.4 && scrappable.length >= scrapCost) {
-      // Need repair and have scrap
-      const toScrap = scrappable.slice(0, scrapCost).map(i => i.id);
-      reasoning.push('');
-      reasoning.push('=== AI DECISION ===');
-      reasoning.push(`REPAIR: Low HP, scrap items [${toScrap.join(', ')}] for recovery`);
-      return { action: 'REPAIR', scrapIds: toScrap, reasoning };
-    } else if (hpPercent > 0.75 && missileCount < 3) {
+    if (hpPercent > 0.75 && missileCount < 3) {
       // Healthy, fabricate for more missiles
       reasoning.push('');
       reasoning.push('=== AI DECISION ===');
       reasoning.push('FABRICATE: Healthy, stockpile missiles');
       return { action: 'FABRICATE', reasoning };
-    } else {
-      reasoning.push('');
-      reasoning.push('=== AI DECISION ===');
-      reasoning.push('LEAVE: Conserve resources');
-      return { action: 'LEAVE', reasoning };
     }
+
+    reasoning.push('');
+    reasoning.push('=== AI DECISION ===');
+    reasoning.push('LEAVE: Conserve resources');
+    return { action: 'LEAVE', reasoning };
   },
 };
 
