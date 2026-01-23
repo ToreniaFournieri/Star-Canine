@@ -1098,7 +1098,16 @@ const AI = {
       // Value abilities
       if (item.ability) {
         if (hasAbility(item, AB.LS)) { score += 40; notes.push('Life steal (+40)'); }
-        if (hasAbility(item, AB.GR)) { score += 30; notes.push('Growth (+30)'); }
+        // Growth items need time to scale - only valuable before stage 12
+        if (hasAbility(item, AB.GR)) {
+          if (stage <= 11) {
+            score += 30;
+            notes.push('Growth (+30)');
+          } else {
+            score -= 8;
+            notes.push('Growth - too late (-8)');
+          }
+        }
         if (hasAbility(item, AB.SH)) { score += 15; notes.push('Shield bonus (+15)'); }
         if (hasAbility(item, AB.SB)) { score += 25; notes.push('Shield break (+25)'); }
       }
