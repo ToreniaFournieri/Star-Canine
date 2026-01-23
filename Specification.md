@@ -416,11 +416,11 @@ Choose exactly ONE:
 
 ### 7.1 Victory Reward
 
-Choose 1 of 3 random items matching enemy rarity:
+Choose 1 of 3 random items from deck:
 
-- NORMAL → rarity 1
-- ELITE → rarity 2
-- BOSS → rarity 3
+- NORMAL → `normalItemsDeck`
+- ELITE → `eliteItemsDeck`
+- BOSS → 'bossItemsDeck`
 
 ### 7.2 Boss Reward
 
