@@ -182,6 +182,9 @@ const BR = {
   },
 };
 
+// All rewards in one pool, shuffled at game start
+const BOSS_REWARDS_LIST = Object.keys(BOSS_REWARDS);
+
 ```
 
 -----
