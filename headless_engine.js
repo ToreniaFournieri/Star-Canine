@@ -728,36 +728,71 @@ const AI = {
     }
     // ===== STRATEGY: DORMANT enemy - SHIELD UP FOR T1-T3, FREE AFTER =====
     else if (hasSkill(enemy, SK.DOR)) {
-      reasoning.push('>>> DORMANT STRATEGY: Heavy attacks T1-T3, then stops - SHIELD FIRST <<<');
-
       // Calculate T1-T3 damage (LONG, MID, CLOSE)
       const t1t3Damage = enemy.attacks[0] + enemy.attacks[1] + enemy.attacks[2];
       reasoning.push(`Enemy damage T1-T3: ${t1t3Damage} (then stops)`);
       reasoning.push(`Current HP: ${player.hull}`);
 
-      // Prioritize shields to survive the burst
-      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
-      byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
+      // Check if we can survive the burst with shields
+      const totalEnemyHP = enemy.hull + enemy.shield;
+      const closeDamage = byType.CLOSE.reduce((sum, i) => sum + i.power, 0);
+      const shieldValue = byType.SHIELD.reduce((sum, i) => sum + i.power, 0);
 
-      // Life steal weapons are great here (heal during/after burst)
-      byType.CLOSE.filter(i => hasAbility(i, AB.LS)).forEach(i =>
-        candidates.push({ item: i, priority: 95 })
-      );
+      // Can we survive T1-T3 with shields?
+      const canSurviveWithShields = (player.hull + shieldValue) >= t1t3Damage;
 
-      // Other offense - we have turns 4-6 for free damage
-      byType.CLOSE.filter(i => !hasAbility(i, AB.LS)).forEach(i =>
-        candidates.push({ item: i, priority: 70 })
-      );
-      byType.MID.forEach(i => candidates.push({ item: i, priority: 65 }));
+      if (canSurviveWithShields) {
+        // Safe: shield up and enjoy free turns 4-6
+        reasoning.push('>>> DORMANT STRATEGY: Heavy attacks T1-T3, then stops - SHIELD FIRST <<<');
+        reasoning.push('Can survive burst with shields - shield up for free turns T4-T6');
 
-      // Only use missiles if we have excess
-      if (missileCount > 2) {
-        missiles.slice(0, missileCount - 2).forEach(i =>
-          candidates.push({ item: i, priority: 60 })
+        // Prioritize shields to survive the burst
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
+        byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
+
+        // Life steal weapons are great here (heal during/after burst)
+        byType.CLOSE.filter(i => hasAbility(i, AB.LS)).forEach(i =>
+          candidates.push({ item: i, priority: 95 })
         );
-      }
 
-      reasoning.push('Shields to survive T1-T3, then free damage T4-T6');
+        // Other offense - we have turns 4-6 for free damage
+        byType.CLOSE.filter(i => !hasAbility(i, AB.LS)).forEach(i =>
+          candidates.push({ item: i, priority: 70 })
+        );
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 65 }));
+
+        // Only use missiles if we have excess
+        if (missileCount > 2) {
+          missiles.slice(0, missileCount - 2).forEach(i =>
+            candidates.push({ item: i, priority: 60 })
+          );
+        }
+      } else {
+        // Danger: can't survive the burst - BURST KILL instead
+        reasoning.push('>>> DORMANT BURST STRATEGY: Cannot survive T1-T3 damage - kill fast! <<<');
+        reasoning.push(`Cannot survive: ${player.hull} + ${shieldValue} < ${t1t3Damage} damage`);
+        reasoning.push('Switch to burst-kill strategy with all available missiles');
+
+        // Use missiles aggressively to kill before T3 ends
+        let missilesToSave = 0;
+        if (stagesUntilBoss <= 3) {
+          missilesToSave = 2;
+        } else if (stagesUntilBoss <= 5) {
+          missilesToSave = 1;
+        }
+
+        const missilesToUse = Math.max(0, missileCount - missilesToSave);
+        missiles.slice(0, missilesToUse).forEach(i =>
+          candidates.push({ item: i, priority: 100 })
+        );
+
+        // Close range for quick kill
+        byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 90 }));
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 80 }));
+
+        // Minimal shields just for safety
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 30 }));
+      }
     }
     // ===== STRATEGY: SHIELD-GATE (GATE enemy) - BURST OR DRAW =====
     else if (hasSkill(enemy, SK.GATE)) {
