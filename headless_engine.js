@@ -1132,8 +1132,8 @@ const AI = {
       // SHIELD PRIORITY when weapons are capped
       // Shields become critical for survivability
       if ((buildBias.closeCount >= 6 || buildBias.midCount >= 6) && typeId === 'SHIELD') {
-        score += 15;
-        notes.push('Shield - survivability critical (+15)');
+        score += 18;
+        notes.push('Shield - survivability critical (+18)');
       }
 
       // Build alignment bonus
