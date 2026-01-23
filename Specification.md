@@ -182,9 +182,6 @@ const BR = {
   },
 };
 
-// Distribution across acts
-const BOSS_REWARDS_ACT1 = ['expansion', 'reinforcement', 'boarding'];
-const BOSS_REWARDS_ACT2 = ['skirmish', 'logistics', 'doctrine'];
 ```
 
 -----
@@ -293,7 +290,7 @@ const ST = [
 1. Initialize randomness
   - **Deck-based randomness**: Items drawn from pre-shuffled decks (Tetris-style) for better distribution
   - **Pre-sized decks for items**: Each deck is created with 3x multiplicity at game start to ensure sufficient capacity throughout the entire game without running out
-  - **Boss reward distribution**: The boss reward has two deck, for ACT I and ACT II. Each of them contains unique boss rewards, no overlap.
+  - **Boss reward distribution**: The boss reward deck is ceated with one set at game atart. 
 
 2. Define
 
@@ -315,11 +312,11 @@ const INITIAL_PLAYER = {
   skirmish: false,
   doctrine: false,
   // Available rewards.
-  normalItemsDeck:[], 
-  eliteItemsDeck:[],
-  bossItemsDeck:[],
-  bossRewardsAct1: [],
-  bossRewardsAct2: [],
+  // MISSING: How to populate these decks
+  normalItemsDeck: [],  // Should be: shuffle(EQ.filter(rarity===1) × 3)
+  eliteItemsDeck: [],   // Should be: shuffle(EQ.filter(rarity===2) × 3)
+  bossItemsDeck: [],    // Should be: shuffle(EQ.filter(rarity===3) × 3)
+  bossRewards: [],  // Should be: shuffle(BR)
 };
 ```
 
