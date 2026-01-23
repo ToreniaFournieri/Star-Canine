@@ -1026,14 +1026,38 @@ const AI = {
     return { itemIds: selected, reasoning, simulation: sim };
   },
 
+  // Calculate simple inventory build dominance (0-10 scale)
+  getInventoryBuildBias: (inventory) => {
+    let closeCount = 0;
+    let midCount = 0;
+    const coreCloseNames = ['ファング', 'カジェル'];
+    const coreMidNames = ['ルーキー・ファイター', 'スカベンジャー'];
+
+    for (const item of inventory) {
+      const typeId = getTypeId(item.type);
+      if (coreCloseNames.some(n => item.name.includes(n)) || typeId === 'CLOSE') {
+        closeCount++;
+      }
+      if (coreMidNames.some(n => item.name.includes(n)) || typeId === 'MID') {
+        midCount++;
+      }
+    }
+
+    return { closeCount, midCount, closeBias: closeCount > midCount };
+  },
+
   // Choose reward item - STRATEGIC VERSION
   chooseReward: (player, options, enemy) => {
     const reasoning = [];
     const stage = player.stage || 1;
     const hasLongBuff = AI.hasLongBuff(player);
+    const buildBias = AI.getInventoryBuildBias(player.inventory);
 
     reasoning.push('=== AI REWARD ANALYSIS ===');
     reasoning.push(`Build focus: ${hasLongBuff ? 'LONG viable' : 'CLOSE/MID preferred'}`);
+    if (buildBias.closeCount > 0 || buildBias.midCount > 0) {
+      reasoning.push(`Inventory: ${buildBias.closeCount} CLOSE, ${buildBias.midCount} MID`);
+    }
 
     // Score each option
     const scored = options.map((item, idx) => {
@@ -1083,6 +1107,28 @@ const AI = {
       if (item.slots === 1) {
         score += 10;
         notes.push('1-slot efficient (+10)');
+      }
+
+      // Build alignment bonus
+      // Very conservative: only apply if build direction is clear
+      if (buildBias.closeCount >= 2 && buildBias.midCount === 0) {
+        // Strong CLOSE commitment
+        if (typeId === 'CLOSE') {
+          score += 8;
+          notes.push('CLOSE committed (+8)');
+        } else if (typeId === 'MID') {
+          score -= 5;
+          notes.push('Diverges from CLOSE (-5)');
+        }
+      } else if (buildBias.midCount >= 2 && buildBias.closeCount === 0) {
+        // Strong MID commitment
+        if (typeId === 'MID') {
+          score += 8;
+          notes.push('MID committed (+8)');
+        } else if (typeId === 'CLOSE') {
+          score -= 5;
+          notes.push('Diverges from MID (-5)');
+        }
       }
 
       // Multipliers are very valuable
