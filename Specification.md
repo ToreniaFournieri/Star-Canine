@@ -11,7 +11,7 @@ Deterministic, text-only roguelike spaceship game designed for LLM playability.
 - **Objective:** Survive 30 stages to rescue LAIKA
 - **Combat:** 1v1, 6-turn battles with no randomness
 - **Strategy:** Equipment loadout optimization
-- **Deck-based randomness** Items drawn from pre-shuffled decks (Tetris-style) for better distribution
+- **Deck-based randomness** Items and boss reward drawn from pre-shuffled decks (Tetris-style) for better distribution
 
 
 -----
@@ -290,6 +290,13 @@ const ST = [
 
 ### 4.1 Initial State
 
+1. Initialize randomness
+  - **Deck-based randomness**: Items drawn from pre-shuffled decks (Tetris-style) for better distribution
+  - **Pre-sized decks for items**: Each deck is created with 3x multiplicity at game start to ensure sufficient capacity throughout the entire game without running out
+  - **Boss reward distribution**: The boss reward has two deck, for ACT I and ACT II. Each of them contains unique boss rewards, no overlap.
+
+2. Define
+
 ```javascript
 const INITIAL_PLAYER = {
   max_hull: 200,
@@ -307,9 +314,12 @@ const INITIAL_PLAYER = {
   boarding: false,
   skirmish: false,
   doctrine: false,
-  // Available rewards
-  bossRewardsAct1: ['expansion', 'reinforcement', 'boarding'],
-  bossRewardsAct2: ['skirmish', 'logistics', 'doctrine'],
+  // Available rewards.
+  normalItemsDeck:[], 
+  eliteItemsDeck:[],
+  bossItemsDeck:[],
+  bossRewardsAct1: [],
+  bossRewardsAct2: [],
 };
 ```
 
