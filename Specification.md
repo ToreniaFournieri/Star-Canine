@@ -11,6 +11,8 @@ Deterministic, text-only roguelike spaceship game designed for LLM playability.
 - **Objective:** Survive 30 stages to rescue LAIKA
 - **Combat:** 1v1, 6-turn battles with no randomness
 - **Strategy:** Equipment loadout optimization
+- **Deck-based randomness** Items drawn from pre-shuffled decks (Tetris-style) for better distribution
+
 
 -----
 
