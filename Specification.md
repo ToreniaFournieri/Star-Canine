@@ -593,6 +593,7 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
+|**0.8.8**|Items and Enemy update, initialization of Items and boss rewards logic refined.|
 |**0.8.7**|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
 |0.8.4.1  |Initial stable release.                                                               |
