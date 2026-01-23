@@ -1118,6 +1118,24 @@ const AI = {
         notes.push('1-slot efficient (+10)');
       }
 
+      // WEAPON CAP STRATEGY: Don't need more than 6 strong weapons
+      // Past 6, pivot to shields for survivability
+      if (buildBias.closeCount >= 6 && typeId === 'CLOSE') {
+        score -= 12;
+        notes.push('CLOSE capped at 6 (-12)');
+      }
+      if (buildBias.midCount >= 6 && typeId === 'MID') {
+        score -= 12;
+        notes.push('MID capped at 6 (-12)');
+      }
+
+      // SHIELD PRIORITY when weapons are capped
+      // Shields become critical for survivability
+      if ((buildBias.closeCount >= 6 || buildBias.midCount >= 6) && typeId === 'SHIELD') {
+        score += 15;
+        notes.push('Shield - survivability critical (+15)');
+      }
+
       // Build alignment bonus
       // Very conservative: only apply if build direction is clear
       if (buildBias.closeCount >= 2 && buildBias.midCount === 0) {
