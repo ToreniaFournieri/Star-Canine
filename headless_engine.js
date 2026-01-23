@@ -664,7 +664,14 @@ const AI = {
       reasoning.push(`>>> OVERLOAD STRATEGY: Damage x${overloadMult} after T3 - prefer CLOSE/MID <<<`);
 
       const totalEnemyHP = enemy.hull + enemy.shield;
-      const missilesToSave = 2;
+
+      // Determine how many missiles to save based on distance to boss
+      let missilesToSave = 0;
+      if (stagesUntilBoss <= 3) {
+        missilesToSave = 2;
+      } else if (stagesUntilBoss <= 5) {
+        missilesToSave = 1;
+      }
 
       // Calculate damage without missiles
       const closeDamage = byType.CLOSE.reduce((sum, i) => sum + i.power, 0);
@@ -676,7 +683,10 @@ const AI = {
       const nonMissileDamage = midDamage * 2 + closeDamage * 2;
 
       reasoning.push(`CLOSE/MID damage: ${nonMissileDamage} vs ${totalEnemyHP} HP`);
-      reasoning.push(`Saving ${missilesToSave} missiles for boss`);
+      reasoning.push(`Distance to boss: ${stagesUntilBoss} stages`);
+      if (missilesToSave > 0) {
+        reasoning.push(`Saving ${missilesToSave} missiles for boss`);
+      }
 
       // Can we win without missiles?
       if (nonMissileDamage >= totalEnemyHP) {
@@ -750,9 +760,16 @@ const AI = {
       );
       byType.MID.forEach(i => candidates.push({ item: i, priority: 65 }));
 
-      // Only use missiles if we have excess
-      if (missileCount > 2) {
-        missiles.slice(0, missileCount - 2).forEach(i =>
+      // Only use missiles if we have excess after saving for boss
+      let missilesToSave = 0;
+      if (stagesUntilBoss <= 3) {
+        missilesToSave = 2;
+      } else if (stagesUntilBoss <= 5) {
+        missilesToSave = 1;
+      }
+
+      if (missileCount > missilesToSave) {
+        missiles.slice(0, missileCount - missilesToSave).forEach(i =>
           candidates.push({ item: i, priority: 60 })
         );
       }
@@ -764,10 +781,18 @@ const AI = {
       const gateValue = getSkillValue(enemy, SK.GATE);
       const totalEnemyHP = enemy.hull + enemy.shield;
       const missilesNeeded = 2;
-      const missilesToSaveForBoss = 2;
+
+      // Determine how many missiles to save based on distance to boss
+      let missilesToSaveForBoss = 0;
+      if (stagesUntilBoss <= 3) {
+        missilesToSaveForBoss = 2;
+      } else if (stagesUntilBoss <= 5) {
+        missilesToSaveForBoss = 1;
+      }
 
       reasoning.push('>>> SHIELD-GATE STRATEGY: Need burst damage or settle for draw <<<');
       reasoning.push(`Gate regenerates to ${gateValue} shield each turn`);
+      reasoning.push(`Distance to boss: ${stagesUntilBoss} stages`);
 
       // Calculate if 2 missiles can kill in T1
       const missileDamage = missiles.slice(0, 2).reduce((sum, m) => sum + m.power, 0);
@@ -877,11 +902,25 @@ const AI = {
     else if (stageInAct <= 9) {
       reasoning.push('>>> EARLY GAME STRATEGY: Focus on CLOSE/MID, conserve missiles for boss <<<');
 
-      // Determine missiles to use (save 2 for boss)
-      const missilesToSave = Math.min(2, missileCount);
+      // Determine missiles to use based on distance to boss
+      let missilesToSave = 0;
+      if (stagesUntilBoss <= 3) {
+        // Close to boss - save 2 missiles
+        missilesToSave = Math.min(2, missileCount);
+      } else if (stagesUntilBoss <= 5) {
+        // Mid-distance to boss - save 1 missile
+        missilesToSave = Math.min(1, missileCount);
+      }
+      // If stagesUntilBoss > 5, don't save any - use freely
+
       const missilesToUse = Math.max(0, missileCount - missilesToSave);
 
-      reasoning.push(`Missiles: ${missileCount} total, saving ${missilesToSave} for boss, using ${missilesToUse}`);
+      reasoning.push(`Missiles: ${missileCount} total, stages to boss: ${stagesUntilBoss}`)
+      if (missilesToSave > 0) {
+        reasoning.push(`Saving ${missilesToSave} for boss, using ${missilesToUse}`);
+      } else {
+        reasoning.push(`Using missiles freely - boss is far away`);
+      }
 
       // Early stages (1-2): Use 1 missile + offense
       if (stageInAct <= 2 && missilesToUse >= 1) {
