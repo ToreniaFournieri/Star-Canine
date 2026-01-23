@@ -207,11 +207,24 @@ hull: Math.max(0, hull - (dmg - toShield)),
 };
 };
 
-// Item management
-const createItem = (name) => {
+// Item management - uses sequential IDs for AI-friendly identification
+let globalItemIdCounter = 0;
+
+const createItem = (name, idCounter = null) => {
 const base = equipmentList.find(e => e.name === name);
 if (!base) return null;
-return { …base, id: Math.random().toString(36).slice(2, 11) };
+const id = idCounter !== null ? idCounter.next() : globalItemIdCounter++;
+return { ...base, id };
+};
+
+// ID counter factory for per-run sequential IDs
+const createIdCounter = (start = 0) => {
+let counter = start;
+return {
+  next: () => counter++,
+  current: () => counter,
+  reset: (val = 0) => { counter = val; },
+};
 };
 
 // Display helpers
@@ -262,37 +275,100 @@ return `【${sk.name}${valText}】${sk.desc}`;
 
 // Turn order with boss rewards
 const getTurnOrder = (player) => {
-const base = [‘LONG’, ‘MID’, ‘CLOSE’, ‘CLOSE’, ‘MID’, ‘LONG’];
-if (player.boarding) { base[4] = ‘CLOSE’; base[5] = ‘CLOSE’; }
-if (player.skirmish) { base[3] = ‘MID’; }
+const base = ['LONG', 'MID', 'CLOSE', 'CLOSE', 'MID', 'LONG'];
+if (player.boarding) { base[4] = 'CLOSE'; base[5] = 'CLOSE'; }
+if (player.skirmish) { base[3] = 'MID'; }
 return base;
 };
+
+// ============================================================================
+// SECTION 5.5: SEEDED PRNG SYSTEM
+// ============================================================================
+
+// Mulberry32 PRNG - Fast, high-quality 32-bit PRNG
+const createPRNG = (seed) => {
+let state = seed >>> 0;
+return {
+  next: () => {
+    state = (state + 0x6D2B79F5) | 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 0x100000000;
+  },
+  nextInt: function(min, max) {
+    return min + Math.floor(this.next() * (max - min + 1));
+  },
+  getState: () => state,
+  setState: (s) => { state = s >>> 0; },
+};
+};
+
+// Seeded Fisher-Yates shuffle
+const seededShuffle = (array, rng) => {
+const result = [...array];
+for (let i = result.length - 1; i > 0; i--) {
+  const j = Math.floor(rng.next() * (i + 1));
+  [result[i], result[j]] = [result[j], result[i]];
+}
+return result;
+};
+
+// Global RNG instance
+let gameRNG = null;
+
+const initializeRNG = (seed) => {
+gameRNG = createPRNG(seed);
+return gameRNG;
+};
+
+const getRNG = () => gameRNG;
+
+const generateSeed = () => Math.floor(Math.random() * 0xFFFFFFFF);
 
 // ============================================================================
 // SECTION 6: INITIAL STATE
 // ============================================================================
 
-const createInitialPlayer = () => ({
-max_hull: 200,
-hull: 200,
-max_slots: 6,
-inventory: [
-createItem(“🚀 ランス”),
-createItem(“🚀 ランス”),
-createItem(“⚡ クロウ”),
-createItem(“⚡ クロウ”),
-createItem(“🛡️ 装甲板”),
-createItem(“🗑️ スクラップ”),
-createItem(“🗑️ スクラップ”),
-],
-equipped: [],
-logistics: false,
-boarding: false,
-skirmish: false,
-doctrine: false,
-bossRewardsAct1: [‘expansion’, ‘reinforcement’, ‘boarding’],
-bossRewardsAct2: [‘skirmish’, ‘logistics’, ‘doctrine’],
-});
+const createInitialPlayer = (seed = null) => {
+// Initialize seed
+const actualSeed = seed !== null ? seed : generateSeed();
+initializeRNG(actualSeed);
+
+// Create ID counter for this run
+const idCounter = createIdCounter(0);
+
+return {
+  // Seed system
+  seed: actualSeed,
+  itemIdCounter: idCounter,
+
+  // Core stats
+  max_hull: 200,
+  hull: 200,
+  max_slots: 6,
+
+  // Inventory with sequential IDs
+  inventory: [
+    createItem("🚀 ランス", idCounter),
+    createItem("🚀 ランス", idCounter),
+    createItem("⚡ クロウ", idCounter),
+    createItem("⚡ クロウ", idCounter),
+    createItem("🛡️ 装甲板", idCounter),
+    createItem("🗑️ スクラップ", idCounter),
+    createItem("🗑️ スクラップ", idCounter),
+  ],
+  equipped: [],
+
+  // Boss reward flags
+  logistics: false,
+  boarding: false,
+  skirmish: false,
+  doctrine: false,
+  bossRewardsAct1: ['expansion', 'reinforcement', 'boarding'],
+  bossRewardsAct2: ['skirmish', 'logistics', 'doctrine'],
+};
+};
 
 // ============================================================================
 // SECTION 7: COMBAT ENGINE
@@ -373,7 +449,6 @@ for (let turn = 0; turn < 6; turn++) {
 const range = turns[turn];
 log.push(`--- T${turn + 1}: ${getRangeName(range)} ---`);
 
-```
 // === PLAYER PHASE ===
 const pDmg = stats.final[range];
 const rangeItems = equippedItems.filter(i => getTypeId(i.type) === range);
@@ -533,7 +608,6 @@ if (hasSkill(enemy, SK.GATE) && eHull > 0) {
 }
 
 log.push('');
-```
 
 }
 
@@ -548,9 +622,14 @@ return { log, pHull, pShield, eHull, hasNoRepair, hullRepair: stats.final.HULL }
 // ============================================================================
 
 export default function Game() {
-const [scene, setScene] = useState(‘start’);
+const [scene, setScene] = useState('start');
 const [stage, setStage] = useState(1);
-const [player, setPlayer] = useState(createInitialPlayer);
+const [player, setPlayer] = useState(null);
+
+const startGame = (seed = null) => {
+setPlayer(createInitialPlayer(seed));
+setScene('main');
+};
 
 const advance = (nextScene) => {
 setStage(s => s + 1);
@@ -559,12 +638,12 @@ setScene(nextScene);
 
 const restart = () => {
 setStage(1);
-setPlayer(createInitialPlayer());
-setScene(‘start’);
+setPlayer(null);
+setScene('start');
 };
 
 const scenes = {
-start:  <StartScene onStart={() => setScene(‘main’)} />,
+start:  <StartScene onStart={startGame} />,
 main:   <MainScene stage={stage} setScene={setScene} />,
 combat: <CombatScene player={player} setPlayer={setPlayer} stage={stage} setScene={setScene} advance={advance} />,
 reward: <RewardScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} />,
@@ -584,10 +663,31 @@ return (
 // ============================================================================
 
 function StartScene({ onStart }) {
+const [seedInput, setSeedInput] = useState('');
+
+const handleStart = () => {
+const seed = seedInput.trim() !== '' ? parseInt(seedInput, 10) : null;
+const validSeed = !isNaN(seed) && seed >= 0 ? seed : null;
+onStart(validSeed);
+};
+
 return (
 <div className="max-w-4xl mx-auto">
 <pre className="text-xs mb-6 whitespace-pre-wrap">{STORY.opening}</pre>
-<button onClick={onStart} className="bg-green-700 px-4 py-2 hover:bg-green-600">
+
+{/* Seed Input */}
+<div className="mb-4">
+  <label className="block text-sm mb-2">シード (空欄で自動生成):</label>
+  <input
+    type="text"
+    value={seedInput}
+    onChange={(e) => setSeedInput(e.target.value)}
+    placeholder="例: 12345"
+    className="bg-black border border-green-700 text-green-400 px-3 py-2 w-48 font-mono"
+  />
+</div>
+
+<button onClick={handleStart} className="bg-green-700 px-4 py-2 hover:bg-green-600">
 {UI.btn.start}
 </button>
 </div>
@@ -599,14 +699,12 @@ useEffect(() => {
 const stageInAct = getStageInAct(stage);
 const stageData = stageList.find(s => s.stage === stageInAct);
 
-```
 if (!stageData) {
   setScene('end');
   return;
 }
 
 setScene(stageData.type === 'C' ? 'combat' : 'dock');
-```
 
 }, [stage, setScene]);
 
@@ -626,11 +724,11 @@ const [result, setResult] = useState(null);
 const [tempPlayer, setTempPlayer] = useState(() => {
 if (player.logistics) {
 return {
-…player,
-inventory: […player.inventory, createItem(“🚀 ランス”)],
+...player,
+inventory: [...player.inventory, createItem("🚀 ランス", player.itemIdCounter)],
 };
 }
-return { …player };
+return { ...player };
 });
 
 // Get enemy data
@@ -642,7 +740,7 @@ const enemyBase = enemyList.find(e => e.difficulty === stageData?.difficulty && 
 const enemy = useMemo(() => {
 if (!enemyBase) return null;
 return {
-…enemyBase,
+...enemyBase,
 hull: Math.round(enemyBase.hull * scale),
 shield: Math.round(enemyBase.shield * scale),
 attacks: enemyBase.attacks.map(a => Math.round(a * scale)),
@@ -660,14 +758,14 @@ const toggleEquip = (item) => {
 const isEquipped = tempPlayer.equipped.includes(item.id);
 if (isEquipped) {
 setTempPlayer({
-…tempPlayer,
+...tempPlayer,
 equipped: tempPlayer.equipped.filter(id => id !== item.id),
 });
 } else {
 if (usedSlots + item.slots <= tempPlayer.max_slots) {
 setTempPlayer({
-…tempPlayer,
-equipped: […tempPlayer.equipped, item.id],
+...tempPlayer,
+equipped: [...tempPlayer.equipped, item.id],
 });
 }
 }
@@ -688,7 +786,6 @@ shield: Math.round(stats.final.SHIELD),
 const startCombat = () => {
 setPlayer(tempPlayer);
 
-```
 const combatResult = runCombat(
   { ...tempPlayer, stage },
   enemy,
@@ -743,7 +840,6 @@ if (stage === 30 && combatResult.eHull <= 0 && finalHull > 0) {
 setLog(combatResult.log);
 setResult(combatOutcome);
 setPhase('battle');
-```
 
 };
 
@@ -767,12 +863,12 @@ tempPlayer.doctrine && ‘教義’,
 ].filter(Boolean);
 
 // === PREP PHASE ===
-if (phase === ‘prep’) {
+if (phase === 'prep') {
 return (
 <div className="max-w-6xl mx-auto">
 <h2 className="text-xl mb-2">{UI.label.stage} {stage} | {UI.label.act} {act}</h2>
+<div className="text-xs text-green-600 mb-2">シード: {tempPlayer.seed}</div>
 
-```
     {/* Status Grid */}
     <div className="grid grid-cols-2 gap-4 text-sm mb-4">
       {/* Player Status */}
@@ -828,7 +924,6 @@ return (
     </button>
   </div>
 );
-```
 
 }
 
@@ -837,7 +932,6 @@ return (
 <div className="max-w-4xl mx-auto">
 <pre className="text-xs mb-4 whitespace-pre-wrap">{log.join(’\n’)}</pre>
 
-```
   {result && (
     <div className="mb-4 text-center text-xl">
       {UI.result[result]}
@@ -848,7 +942,6 @@ return (
     {UI.btn.continue}
   </button>
 </div>
-```
 
 );
 }
@@ -862,9 +955,11 @@ const rarityMap = { NORMAL: 1, ELITE: 2, BOSS: 3 };
 const targetRarity = rarityMap[enemyBase?.rank] || 1;
 const pool = equipmentList.filter(e => e.rarity === targetRarity);
 
-const [options] = useState(() =>
-[…pool].sort(() => Math.random() - 0.5).slice(0, 3)
-);
+// Use seeded shuffle for deterministic reward selection
+const [options] = useState(() => {
+const rng = getRNG();
+return seededShuffle(pool, rng).slice(0, 3);
+});
 const [selectedItem, setSelectedItem] = useState(null);
 const [selectedBonus, setSelectedBonus] = useState(null);
 
@@ -881,12 +976,11 @@ player.doctrine && ‘教義’,
 ].filter(Boolean);
 
 const claim = () => {
-const newPlayer = { …player };
+const newPlayer = { ...player };
 
-```
 // Add selected item
 if (selectedItem) {
-  newPlayer.inventory = [...player.inventory, createItem(selectedItem)];
+  newPlayer.inventory = [...player.inventory, createItem(selectedItem, player.itemIdCounter)];
 }
 
 // Apply boss reward
@@ -932,7 +1026,6 @@ if (isBoss) {
 
 setPlayer(newPlayer);
 advance('main');
-```
 
 };
 
@@ -940,9 +1033,9 @@ const canClaim = selectedItem && (!isBoss || selectedBonus);
 
 return (
 <div className="max-w-4xl mx-auto">
-<h2 className="text-xl mb-4">{UI.label.reward}</h2>
+<h2 className="text-xl mb-2">{UI.label.reward}</h2>
+<div className="text-xs text-green-600 mb-4">シード: {player.seed}</div>
 
-```
   {/* Item Selection */}
   <div className="mb-4">
     <div className="font-bold mb-2">1つ選択:</div>
@@ -998,7 +1091,6 @@ return (
     ))}
   </div>
 </div>
-```
 
 );
 }
@@ -1013,14 +1105,13 @@ const toggleScrap = (itemId) => {
 if (scrapItems.includes(itemId)) {
 setScrapItems(scrapItems.filter(id => id !== itemId));
 } else if (scrapItems.length < scrapCost) {
-setScrapItems([…scrapItems, itemId]);
+setScrapItems([...scrapItems, itemId]);
 }
 };
 
 const handleRepair = () => {
 if (scrapItems.length !== scrapCost) return;
 
-```
 const repair = Math.floor(player.max_hull * 0.3);
 const newInventory = player.inventory.filter(i => !scrapItems.includes(i.id));
 
@@ -1031,18 +1122,17 @@ setPlayer({
   equipped: player.equipped.filter(id => newInventory.some(i => i.id === id)),
 });
 advance('main');
-```
 
 };
 
 const handleFabricate = () => {
 setPlayer({
-…player,
+...player,
 max_hull: player.max_hull - 10,
 hull: Math.max(1, player.hull - 10),
-inventory: […player.inventory, createItem(“🚀 ランス”)],
+inventory: [...player.inventory, createItem("🚀 ランス", player.itemIdCounter)],
 });
-advance(‘main’);
+advance('main');
 };
 
 const handleLeave = () => advance(‘main’);
@@ -1057,9 +1147,9 @@ player.doctrine && ‘教義’,
 
 return (
 <div className="max-w-4xl mx-auto">
-<h2 className="text-xl mb-4">{UI.dock.title}</h2>
+<h2 className="text-xl mb-2">{UI.dock.title}</h2>
+<div className="text-xs text-green-600 mb-4">シード: {player.seed}</div>
 
-```
   {/* Player Status */}
   <div className="mb-4 text-sm">
     <div className="font-bold mb-2">スターキャナイン</div>
@@ -1119,7 +1209,6 @@ return (
     </div>
   </div>
 </div>
-```
 
 );
 }
@@ -1140,7 +1229,6 @@ return (
 {cleared ? UI.result.clear : STORY.defeat}
 </h2>
 
-```
   {cleared && (
     <pre className="text-xs mb-4 whitespace-pre-wrap text-center">{STORY.victory}</pre>
   )}
@@ -1148,6 +1236,12 @@ return (
   {!cleared && (
     <div className="mb-4 text-center">{UI.label.stage}: {stage}</div>
   )}
+
+  {/* Seed Display for Replay */}
+  <div className="mb-4 text-center text-green-600">
+    <span className="text-xs">シード: </span>
+    <span className="font-bold">{player.seed}</span>
+  </div>
 
   {/* Final Status */}
   <div className="mb-6 text-sm border border-green-700 p-4">
@@ -1170,7 +1264,6 @@ return (
     </button>
   </div>
 </div>
-```
 
 );
 }
@@ -1179,13 +1272,13 @@ return (
 // SECTION 10: SHARED UI COMPONENTS
 // ============================================================================
 
-function ItemRow({ item, equipped = false, onClick }) {
+function ItemRow({ item, equipped = false, onClick, showId = true }) {
 return (
 <div
 className={`text-xs mb-1 ${onClick ? 'cursor-pointer hover:bg-green-900' : ''}`}
 onClick={onClick}
 >
-{equipped && ’✓ ’}[{item.slots}] <ItemInfo item={item} />
+{equipped && '✓ '}{showId && <span className="text-green-600">#{item.id} </span>}[{item.slots}] <ItemInfo item={item} />
 </div>
 );
 }
