@@ -799,7 +799,15 @@ const AI = {
       const gateValue = getSkillValue(enemy, SK.GATE);
       const totalEnemyHP = enemy.hull + enemy.shield;
       const missilesNeeded = 2;
-      const missilesToSaveForBoss = 2;
+
+      // Distance-aware missile conservation
+      let missilesToSaveForBoss = 2;
+      if (stagesUntilBoss >= 5) {
+        missilesToSaveForBoss = 1;
+      }
+      if (stagesUntilBoss >= 7) {
+        missilesToSaveForBoss = 1;
+      }
 
       reasoning.push('>>> SHIELD-GATE STRATEGY: Need burst damage or settle for draw <<<');
       reasoning.push(`Gate regenerates to ${gateValue} shield each turn`);
@@ -912,11 +920,22 @@ const AI = {
     else if (stageInAct <= 9) {
       reasoning.push('>>> EARLY GAME STRATEGY: Focus on CLOSE/MID, conserve missiles for boss <<<');
 
-      // Determine missiles to use (save 2 for boss)
-      const missilesToSave = Math.min(2, missileCount);
+      // Distance-aware missile conservation
+      // Only save 2 if very close to boss or missile count is low
+      // Otherwise, use missiles more aggressively early on
+      let missilesToSave = 2;
+      if (stagesUntilBoss >= 5 && missileCount >= 4) {
+        // Plenty of time and plenty of missiles - use them!
+        missilesToSave = 1;
+      }
+      if (stagesUntilBoss >= 7 && missileCount >= 5) {
+        // Very early stage with lots of missiles - be aggressive
+        missilesToSave = 1;
+      }
+
       const missilesToUse = Math.max(0, missileCount - missilesToSave);
 
-      reasoning.push(`Missiles: ${missileCount} total, saving ${missilesToSave} for boss, using ${missilesToUse}`);
+      reasoning.push(`Missiles: ${missileCount} total (${stagesUntilBoss} stages to boss), saving ${missilesToSave}, using ${missilesToUse}`);
 
       // Early stages (1-2): Use 1 missile + offense
       if (stageInAct <= 2 && missilesToUse >= 1) {
