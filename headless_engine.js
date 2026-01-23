@@ -664,7 +664,15 @@ const AI = {
       reasoning.push(`>>> OVERLOAD STRATEGY: Damage x${overloadMult} after T3 - prefer CLOSE/MID <<<`);
 
       const totalEnemyHP = enemy.hull + enemy.shield;
-      const missilesToSave = 2;
+
+      // Distance-aware missile conservation for OVERLOAD
+      let missilesToSave = 2;
+      if (stagesUntilBoss >= 5) {
+        missilesToSave = 1;
+      }
+      if (stagesUntilBoss >= 7) {
+        missilesToSave = 1;
+      }
 
       // Calculate damage without missiles
       const closeDamage = byType.CLOSE.reduce((sum, i) => sum + i.power, 0);
@@ -676,7 +684,7 @@ const AI = {
       const nonMissileDamage = midDamage * 2 + closeDamage * 2;
 
       reasoning.push(`CLOSE/MID damage: ${nonMissileDamage} vs ${totalEnemyHP} HP`);
-      reasoning.push(`Saving ${missilesToSave} missiles for boss`);
+      reasoning.push(`Saving ${missilesToSave} missiles for boss (${stagesUntilBoss} stages away)`);
 
       // Can we win without missiles?
       if (nonMissileDamage >= totalEnemyHP) {
