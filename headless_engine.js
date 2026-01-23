@@ -486,30 +486,33 @@ const runCombat = (player, enemy, equippedItems) => {
 };
 
 // ============================================================================
-// SECTION 8: AI DECISION ENGINE
+// SECTION 8: AI DECISION ENGINE (STRATEGIC VERSION)
+// ============================================================================
+// Strategy Guide:
+// 1. Early game (Stage 1-2): 1 missile + offensive item. Build CLOSE/MID focus.
+// 2. Shield-gate: Use 2 missiles to kill in one turn, else shield up for draw.
+// 3. Zombie: Just shield and heal - it dies from DEGEN, safe stage.
+// 4. Don't rely on LONG until you get LONG-related boss reward.
+// 5. Save 2 missiles for boss stages (10, 20, 30). Full heal after boss!
 // ============================================================================
 
 const AI = {
   // Analyze enemy and recommend strategy
   analyzeEnemy: (enemy, turnOrder) => {
-    const dominated = [];
     const analysis = [];
-
-    // Check which ranges enemy attacks
-    const enemyRanges = [];
-    if (enemy.attacks[0] > 0) enemyRanges.push({ range: 'LONG', dmg: enemy.attacks[0] });
-    if (enemy.attacks[1] > 0) enemyRanges.push({ range: 'MID', dmg: enemy.attacks[1] });
-    if (enemy.attacks[2] > 0) enemyRanges.push({ range: 'CLOSE', dmg: enemy.attacks[2] });
 
     analysis.push(`Enemy HP: ${enemy.hull}, Shield: ${enemy.shield}, Total: ${enemy.hull + enemy.shield}`);
     analysis.push(`Enemy attacks: L:${enemy.attacks[0]} M:${enemy.attacks[1]} C:${enemy.attacks[2]}`);
 
     // Check skills
     if (hasSkill(enemy, SK.GATE)) {
-      analysis.push(`Has GATE(${getSkillValue(enemy, SK.GATE)}): Shield regenerates each turn`);
+      analysis.push(`Has GATE(${getSkillValue(enemy, SK.GATE)}): Shield regenerates each turn - BURST DAMAGE NEEDED`);
     }
     if (hasSkill(enemy, SK.REG)) {
       analysis.push(`Has REGEN(${getSkillValue(enemy, SK.REG)}): Heals each turn`);
+    }
+    if (hasSkill(enemy, SK.DEG)) {
+      analysis.push(`Has DEGEN(${getSkillValue(enemy, SK.DEG)}): Self-damage - SAFE STAGE, TURTLE UP`);
     }
     if (hasSkill(enemy, SK.EXP)) {
       analysis.push(`Has EXPLOSIVE(${getSkillValue(enemy, SK.EXP)}): Explodes T4, must kill before!`);
@@ -569,59 +572,375 @@ const AI = {
     };
   },
 
-  // Choose best equipment loadout
+  // Check if this is a boss stage (10, 20, 30)
+  isBossStage: (stage) => {
+    const stageInAct = getStageInAct(stage);
+    return stageInAct === 10;
+  },
+
+  // Check how many stages until next boss
+  stagesUntilBoss: (stage) => {
+    const stageInAct = getStageInAct(stage);
+    return 10 - stageInAct;
+  },
+
+  // Count missiles in inventory
+  countMissiles: (player) => {
+    return player.inventory.filter(i => getTypeId(i.type) === 'LONG' && i.disposable).length;
+  },
+
+  // Check if player has LONG-related boss reward
+  hasLongBuff: (player) => {
+    return player.logistics || player.doctrine;
+  },
+
+  // Choose best equipment loadout - STRATEGIC VERSION
   chooseEquipment: (player, enemy) => {
     const reasoning = [];
     const turnOrder = getTurnOrder(player);
+    const stage = player.stage || 1;
+    const stageInAct = getStageInAct(stage);
+    const isBoss = AI.isBossStage(stage);
+    const stagesUntilBoss = AI.stagesUntilBoss(stage);
+    const missileCount = AI.countMissiles(player);
+    const hasLongBuff = AI.hasLongBuff(player);
 
-    reasoning.push('=== AI ANALYZING ===');
+    reasoning.push('=== AI STRATEGIC ANALYSIS ===');
     reasoning.push(...AI.analyzeEnemy(enemy, turnOrder));
     reasoning.push('');
+    reasoning.push(`Stage: ${stage} (${stageInAct}/10 in act) | Boss in: ${stagesUntilBoss} stages`);
     reasoning.push(`Turn order: ${turnOrder.join('→')}`);
     reasoning.push(`Available slots: ${player.max_slots}`);
+    reasoning.push(`Missiles in stock: ${missileCount}`);
+    reasoning.push(`Has LONG buff (logistics/doctrine): ${hasLongBuff}`);
     reasoning.push('');
 
-    // Get usable items (not scrap)
+    // Get usable items by type
     const usableItems = player.inventory.filter(i =>
       getTypeId(i.type) !== 'MODULE' || i.power > 0 || i.mult || i.ability
     );
 
-    // Try different combinations (greedy approach)
-    let bestLoadout = [];
-    let bestScore = -Infinity;
-    let bestSim = null;
-
-    // Strategy 1: Maximize damage for kill turn
     const byType = {
       LONG: usableItems.filter(i => getTypeId(i.type) === 'LONG'),
       MID: usableItems.filter(i => getTypeId(i.type) === 'MID'),
       CLOSE: usableItems.filter(i => getTypeId(i.type) === 'CLOSE'),
       SHIELD: usableItems.filter(i => getTypeId(i.type) === 'SHIELD'),
       HULL: usableItems.filter(i => getTypeId(i.type) === 'HULL'),
+      MODULE: usableItems.filter(i => getTypeId(i.type) === 'MODULE'),
     };
 
-    // Simple greedy: prioritize weapons for early turns
+    const missiles = byType.LONG.filter(i => i.disposable);
+    const permanentLong = byType.LONG.filter(i => !i.disposable);
+
     const candidates = [];
+    let usedSlots = 0;
+    const selected = [];
 
-    // Add all missiles (LONG) - turn 1 and 6
-    byType.LONG.forEach(i => candidates.push({ item: i, priority: 10 }));
+    // ===== STRATEGY: ZOMBIE (DEGEN enemy) - TURTLE UP =====
+    if (hasSkill(enemy, SK.DEG)) {
+      reasoning.push('>>> ZOMBIE STRATEGY: Shield and heal, let it die from DEGEN <<<');
 
-    // Add CLOSE weapons - turn 3 and 4
-    byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 8 }));
+      // Prioritize shields and hull repair
+      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
+      byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
 
-    // Add shields
-    byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 5 }));
+      // Add life-steal weapons if available
+      byType.CLOSE.filter(i => hasAbility(i, AB.LS)).forEach(i =>
+        candidates.push({ item: i, priority: 85 })
+      );
 
-    // Add MID
-    byType.MID.forEach(i => candidates.push({ item: i, priority: 6 }));
+      // Some offense to chip away
+      byType.CLOSE.filter(i => !hasAbility(i, AB.LS)).forEach(i =>
+        candidates.push({ item: i, priority: 30 })
+      );
+      byType.MID.forEach(i => candidates.push({ item: i, priority: 20 }));
+
+      // NO missiles needed for zombie
+      reasoning.push('Conserving missiles for later stages');
+    }
+    // ===== STRATEGY: OVERLOAD enemy - TRY TO WIN WITHOUT MISSILES =====
+    else if (hasSkill(enemy, SK.OVR)) {
+      const overloadMult = getSkillValue(enemy, SK.OVR);
+      reasoning.push(`>>> OVERLOAD STRATEGY: Damage x${overloadMult} after T3 - prefer CLOSE/MID <<<`);
+
+      const totalEnemyHP = enemy.hull + enemy.shield;
+      const missilesToSave = 2;
+
+      // Calculate damage without missiles
+      const closeDamage = byType.CLOSE.reduce((sum, i) => sum + i.power, 0);
+      const midDamage = byType.MID.reduce((sum, i) => sum + i.power, 0);
+      const shieldValue = byType.SHIELD.reduce((sum, i) => sum + i.power, 0);
+
+      // Turn order: LONG, MID, CLOSE, CLOSE, MID, LONG
+      // Non-missile damage through 6 turns: MID + CLOSE + CLOSE + MID = 2*MID + 2*CLOSE
+      const nonMissileDamage = midDamage * 2 + closeDamage * 2;
+
+      reasoning.push(`CLOSE/MID damage: ${nonMissileDamage} vs ${totalEnemyHP} HP`);
+      reasoning.push(`Saving ${missilesToSave} missiles for boss`);
+
+      // Can we win without missiles?
+      if (nonMissileDamage >= totalEnemyHP) {
+        reasoning.push('CAN WIN WITHOUT MISSILES: Shield up and use CLOSE/MID');
+
+        byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 100 }));
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 95 }));
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 80 }));
+        byType.HULL.forEach(i => candidates.push({ item: i, priority: 70 }));
+        // Don't use missiles
+      } else {
+        // Need missiles but try to use minimum
+        const missilesDamage = missiles.reduce((sum, m) => sum + m.power, 0);
+        const totalWithMissiles = nonMissileDamage + missilesDamage * 2; // 2 LONG turns
+
+        reasoning.push(`With missiles: ${totalWithMissiles} vs ${totalEnemyHP} HP`);
+
+        if (missileCount > missilesToSave) {
+          // Use excess missiles only
+          const excessMissiles = missiles.slice(0, missileCount - missilesToSave);
+          reasoning.push(`Using ${excessMissiles.length} excess missiles, keeping ${missilesToSave}`);
+
+          excessMissiles.forEach(i => candidates.push({ item: i, priority: 95 }));
+          byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 100 }));
+          byType.MID.forEach(i => candidates.push({ item: i, priority: 90 }));
+          byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 70 }));
+        } else {
+          // Not enough missiles, fight defensively and hope for draw
+          reasoning.push('LOW ON MISSILES: Defensive stance, might need to draw');
+
+          byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
+          byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
+          byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 80 }));
+          byType.MID.forEach(i => candidates.push({ item: i, priority: 75 }));
+        }
+      }
+    }
+    // ===== STRATEGY: EXPLOSIVE enemy - KILL BY T4 OR DIE =====
+    else if (hasSkill(enemy, SK.EXP)) {
+      const explosiveDmg = getSkillValue(enemy, SK.EXP);
+      reasoning.push(`>>> EXPLOSIVE STRATEGY: Must kill before T4 or take ${explosiveDmg} damage! <<<`);
+
+      // All out attack
+      missiles.forEach(i => candidates.push({ item: i, priority: 100 }));
+      permanentLong.forEach(i => candidates.push({ item: i, priority: 95 }));
+      byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 90 }));
+      byType.MID.forEach(i => candidates.push({ item: i, priority: 85 }));
+      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 70 })); // Shield helps survive explosion
+    }
+    // ===== STRATEGY: DORMANT enemy - SHIELD UP FOR T1-T3, FREE AFTER =====
+    else if (hasSkill(enemy, SK.DOR)) {
+      reasoning.push('>>> DORMANT STRATEGY: Heavy attacks T1-T3, then stops - SHIELD FIRST <<<');
+
+      // Calculate T1-T3 damage (LONG, MID, CLOSE)
+      const t1t3Damage = enemy.attacks[0] + enemy.attacks[1] + enemy.attacks[2];
+      reasoning.push(`Enemy damage T1-T3: ${t1t3Damage} (then stops)`);
+      reasoning.push(`Current HP: ${player.hull}`);
+
+      // Prioritize shields to survive the burst
+      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
+      byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
+
+      // Life steal weapons are great here (heal during/after burst)
+      byType.CLOSE.filter(i => hasAbility(i, AB.LS)).forEach(i =>
+        candidates.push({ item: i, priority: 95 })
+      );
+
+      // Other offense - we have turns 4-6 for free damage
+      byType.CLOSE.filter(i => !hasAbility(i, AB.LS)).forEach(i =>
+        candidates.push({ item: i, priority: 70 })
+      );
+      byType.MID.forEach(i => candidates.push({ item: i, priority: 65 }));
+
+      // Only use missiles if we have excess
+      if (missileCount > 2) {
+        missiles.slice(0, missileCount - 2).forEach(i =>
+          candidates.push({ item: i, priority: 60 })
+        );
+      }
+
+      reasoning.push('Shields to survive T1-T3, then free damage T4-T6');
+    }
+    // ===== STRATEGY: SHIELD-GATE (GATE enemy) - BURST OR DRAW =====
+    else if (hasSkill(enemy, SK.GATE)) {
+      const gateValue = getSkillValue(enemy, SK.GATE);
+      const totalEnemyHP = enemy.hull + enemy.shield;
+      const missilesNeeded = 2;
+      const missilesToSaveForBoss = 2;
+
+      reasoning.push('>>> SHIELD-GATE STRATEGY: Need burst damage or settle for draw <<<');
+      reasoning.push(`Gate regenerates to ${gateValue} shield each turn`);
+
+      // Calculate if 2 missiles can kill in T1
+      const missileDamage = missiles.slice(0, 2).reduce((sum, m) => sum + m.power, 0);
+      const canBurstKill = missileDamage >= totalEnemyHP;
+
+      // Only use missiles if we have enough to spare for boss
+      const canAffordMissiles = missileCount >= (missilesNeeded + missilesToSaveForBoss);
+
+      if (canBurstKill && canAffordMissiles) {
+        reasoning.push(`CAN BURST: 2 missiles (${missileDamage} dmg) vs ${totalEnemyHP} HP`);
+        reasoning.push(`Missiles: ${missileCount} - using 2, saving ${missileCount - 2} for boss`);
+
+        // Use exactly 2 missiles
+        missiles.slice(0, 2).forEach(i => candidates.push({ item: i, priority: 100 }));
+
+        // Fill rest with offense
+        byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 50 }));
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 40 }));
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 30 }));
+      } else {
+        if (!canAffordMissiles) {
+          reasoning.push(`SAVING MISSILES: Only ${missileCount} left, need ${missilesToSaveForBoss} for boss`);
+        } else {
+          reasoning.push(`CANNOT BURST: Missiles (${missileDamage} dmg) < ${totalEnemyHP} HP`);
+        }
+        reasoning.push('DRAW STRATEGY: Shield up and survive for draw');
+
+        // Prioritize shields for draw
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 100 }));
+        byType.HULL.forEach(i => candidates.push({ item: i, priority: 90 }));
+
+        // Some offense
+        byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 40 }));
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 30 }));
+
+        // Don't waste missiles on draw
+      }
+    }
+    // ===== STRATEGY: BOSS STAGE - ALL OUT ATTACK (SMART) =====
+    else if (isBoss) {
+      reasoning.push('>>> BOSS STRATEGY: Full offense! HP doesn\'t matter, full heal after boss <<<');
+      reasoning.push('Even 1 HP remaining is fine - just need to WIN');
+
+      const totalEnemyHP = enemy.hull + enemy.shield;
+      const totalEnemyDmg = enemy.attacks.reduce((a, b) => a + b, 0);
+
+      // Calculate our burst damage potential
+      const missileDamage = missiles.reduce((sum, m) => sum + m.power, 0);
+      const closeDamage = byType.CLOSE.reduce((sum, i) => sum + i.power, 0);
+      const midDamage = byType.MID.reduce((sum, i) => sum + i.power, 0);
+      const shieldValue = byType.SHIELD.reduce((sum, i) => sum + i.power, 0);
+
+      // Account for counter-long damage
+      let counterDmg = 0;
+      if (hasSkill(enemy, SK.CL)) {
+        const counterVal = getSkillValue(enemy, SK.CL);
+        counterDmg = counterVal * missiles.length;
+        reasoning.push(`COUNTER_LONG: Will take ${counterDmg} counter damage from ${missiles.length} missiles`);
+      }
+
+      // Total damage through 6 turns: L + M + C + C + M + L
+      const totalOurDamage = missileDamage * 2 + midDamage * 2 + closeDamage * 2;
+      reasoning.push(`Our max damage: ${totalOurDamage} vs ${totalEnemyHP} HP`);
+
+      // Check if we can burst kill on T1
+      if (missileDamage >= totalEnemyHP) {
+        reasoning.push('CAN T1 KILL: All missiles!');
+        missiles.forEach(i => candidates.push({ item: i, priority: 100 }));
+        permanentLong.forEach(i => candidates.push({ item: i, priority: 95 }));
+        byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 80 }));
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 70 }));
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 30 }));
+      } else {
+        // Need sustained damage - balance offense and defense
+        reasoning.push('SUSTAINED FIGHT: Need shields to survive to deal damage');
+
+        // Calculate how many turns we need to survive
+        const turnsToKill = Math.ceil(totalEnemyHP / (totalOurDamage / 6));
+        const expectedDamageTaken = Math.min(turnsToKill, 6) * (totalEnemyDmg / 3) + counterDmg;
+
+        reasoning.push(`Estimated turns to kill: ${turnsToKill}, damage taken: ~${Math.round(expectedDamageTaken)}`);
+        reasoning.push(`Current HP: ${player.hull}, Shield value: ${shieldValue}`);
+
+        // Use ALL missiles - we need the damage
+        missiles.forEach(i => candidates.push({ item: i, priority: 100 }));
+        permanentLong.forEach(i => candidates.push({ item: i, priority: 95 }));
+
+        // Shield break is valuable vs boss shield (60 shield!)
+        byType.CLOSE.filter(i => hasAbility(i, AB.SB)).forEach(i =>
+          candidates.push({ item: i, priority: 98 })
+        );
+
+        // Strong shields are important for survival
+        byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 85 }));
+
+        // Offense
+        byType.CLOSE.filter(i => !hasAbility(i, AB.SB)).forEach(i =>
+          candidates.push({ item: i, priority: 75 })
+        );
+        byType.MID.forEach(i => candidates.push({ item: i, priority: 70 }));
+
+        // Hull repair for longer fights
+        byType.HULL.forEach(i => candidates.push({ item: i, priority: 60 }));
+      }
+    }
+    // ===== STRATEGY: EARLY GAME (Stage 1-9) - BUILD CLOSE/MID =====
+    else if (stageInAct <= 9) {
+      reasoning.push('>>> EARLY GAME STRATEGY: Focus on CLOSE/MID, conserve missiles for boss <<<');
+
+      // Determine missiles to use (save 2 for boss)
+      const missilesToSave = Math.min(2, missileCount);
+      const missilesToUse = Math.max(0, missileCount - missilesToSave);
+
+      reasoning.push(`Missiles: ${missileCount} total, saving ${missilesToSave} for boss, using ${missilesToUse}`);
+
+      // Early stages (1-2): Use 1 missile + offense
+      if (stageInAct <= 2 && missilesToUse >= 1) {
+        reasoning.push('Stage 1-2: Use 1 missile + offensive item');
+        missiles.slice(0, 1).forEach(i => candidates.push({ item: i, priority: 85 }));
+      } else if (!hasLongBuff) {
+        // Don't use LONG without buff
+        reasoning.push('No LONG buff yet - avoiding missiles');
+      } else {
+        // With LONG buff, can use some missiles
+        missiles.slice(0, missilesToUse).forEach(i => candidates.push({ item: i, priority: 70 }));
+      }
+
+      // Permanent LONG only with buff
+      if (hasLongBuff) {
+        permanentLong.forEach(i => candidates.push({ item: i, priority: 60 }));
+      }
+
+      // Prioritize CLOSE and MID
+      byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 80 }));
+      byType.MID.forEach(i => candidates.push({ item: i, priority: 75 }));
+
+      // Life steal is great for sustain
+      byType.CLOSE.filter(i => hasAbility(i, AB.LS)).forEach(i => {
+        const existing = candidates.find(c => c.item.id === i.id);
+        if (existing) existing.priority = 90;
+      });
+
+      // Shields for defense
+      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 50 }));
+      byType.HULL.forEach(i => candidates.push({ item: i, priority: 45 }));
+    }
+    // ===== DEFAULT STRATEGY =====
+    else {
+      reasoning.push('>>> DEFAULT STRATEGY <<<');
+
+      byType.CLOSE.forEach(i => candidates.push({ item: i, priority: 80 }));
+      byType.MID.forEach(i => candidates.push({ item: i, priority: 70 }));
+      missiles.forEach(i => candidates.push({ item: i, priority: 60 }));
+      byType.SHIELD.forEach(i => candidates.push({ item: i, priority: 50 }));
+    }
+
+    // Add modules (multipliers) - always useful
+    byType.MODULE.filter(i => i.mult || i.ability).forEach(i =>
+      candidates.push({ item: i, priority: 55 })
+    );
 
     // Sort by priority and fit into slots
     candidates.sort((a, b) => b.priority - a.priority);
 
-    let usedSlots = 0;
-    const selected = [];
+    // Remove duplicates (same item might be added multiple times)
+    const seen = new Set();
+    const uniqueCandidates = candidates.filter(c => {
+      if (seen.has(c.item.id)) return false;
+      seen.add(c.item.id);
+      return true;
+    });
 
-    for (const c of candidates) {
+    for (const c of uniqueCandidates) {
       if (usedSlots + c.item.slots <= player.max_slots) {
         selected.push(c.item.id);
         usedSlots += c.item.slots;
@@ -630,7 +949,8 @@ const AI = {
 
     const sim = AI.simulateCombat(player, enemy, selected);
 
-    reasoning.push('=== AI STRATEGY ===');
+    reasoning.push('');
+    reasoning.push('=== AI LOADOUT ===');
     reasoning.push(`Selected ${selected.length} items using ${usedSlots}/${player.max_slots} slots`);
     reasoning.push(`Expected damage: L:${sim.stats.long} M:${sim.stats.mid} C:${sim.stats.close}`);
     reasoning.push(`Expected shield: ${sim.stats.shield}`);
@@ -644,15 +964,20 @@ const AI = {
     return { itemIds: selected, reasoning, simulation: sim };
   },
 
-  // Choose reward item
+  // Choose reward item - STRATEGIC VERSION
   chooseReward: (player, options, enemy) => {
     const reasoning = [];
+    const stage = player.stage || 1;
+    const hasLongBuff = AI.hasLongBuff(player);
+
     reasoning.push('=== AI REWARD ANALYSIS ===');
+    reasoning.push(`Build focus: ${hasLongBuff ? 'LONG viable' : 'CLOSE/MID preferred'}`);
 
     // Score each option
     const scored = options.map((item, idx) => {
       let score = 0;
       const notes = [];
+      const typeId = getTypeId(item.type);
 
       // Base value from power
       score += item.power * 2;
@@ -662,20 +987,56 @@ const AI = {
       if (!item.disposable) {
         score += 20;
         notes.push('Permanent (+20)');
+      } else {
+        // Missiles are still useful
+        if (typeId === 'LONG') {
+          score += 15;
+          notes.push('Missile (+15)');
+        }
+      }
+
+      // STRATEGY: Prefer CLOSE/MID early game unless we have LONG buff
+      if (!hasLongBuff && stage <= 9) {
+        if (typeId === 'CLOSE') {
+          score += 25;
+          notes.push('CLOSE focus (+25)');
+        } else if (typeId === 'MID') {
+          score += 20;
+          notes.push('MID focus (+20)');
+        } else if (typeId === 'LONG' && !item.disposable) {
+          score -= 10;
+          notes.push('LONG without buff (-10)');
+        }
       }
 
       // Value abilities
       if (item.ability) {
-        if (hasAbility(item, AB.LS)) { score += 30; notes.push('Life steal (+30)'); }
-        if (hasAbility(item, AB.GR)) { score += 25; notes.push('Growth (+25)'); }
+        if (hasAbility(item, AB.LS)) { score += 40; notes.push('Life steal (+40)'); }
+        if (hasAbility(item, AB.GR)) { score += 30; notes.push('Growth (+30)'); }
         if (hasAbility(item, AB.SH)) { score += 15; notes.push('Shield bonus (+15)'); }
-        if (hasAbility(item, AB.SB)) { score += 20; notes.push('Shield break (+20)'); }
+        if (hasAbility(item, AB.SB)) { score += 25; notes.push('Shield break (+25)'); }
       }
 
       // Prefer efficient slot usage
       if (item.slots === 1) {
         score += 10;
         notes.push('1-slot efficient (+10)');
+      }
+
+      // Multipliers are very valuable
+      if (item.mult) {
+        const [multType, multVal] = item.mult;
+        const multTypeId = getTypeId(multType);
+        if (multVal > 1) {
+          score += 30;
+          notes.push(`${multTypeId} multiplier (+30)`);
+
+          // Extra value if it matches our build
+          if (!hasLongBuff && (multTypeId === 'CLOSE' || multTypeId === 'MID')) {
+            score += 15;
+            notes.push('Matches build (+15)');
+          }
+        }
       }
 
       reasoning.push(`Option ${idx}: ${item.name}`);
@@ -694,25 +1055,45 @@ const AI = {
     return { choice: best.item.name, reasoning };
   },
 
-  // Choose boss reward
+  // Choose boss reward - STRATEGIC VERSION
   chooseBossReward: (player, available) => {
     const reasoning = [];
+    const act = getAct(player.stage || 10);
+
     reasoning.push('=== AI BOSS REWARD ANALYSIS ===');
 
-    const scores = {
-      expansion: 80,      // +2 slots is very strong
-      reinforcement: 70,  // +1 slot +50 HP
-      boarding: 60,       // +1 slot + close combat turns
-      skirmish: 55,       // +1 slot + mid turn
-      logistics: 50,      // Free missile each fight
-      doctrine: 75,       // +60 HP + 1.2x damage
-    };
+    // Scores depend on current build
+    const scores = {};
 
-    available.forEach(id => {
-      reasoning.push(`${BR[id].name}: ${BR[id].desc} (score: ${scores[id]})`);
-    });
+    // Act 1 rewards
+    if (available.includes('expansion')) {
+      scores.expansion = 85;  // +2 slots is very strong
+      reasoning.push(`拡張 (expansion): +2 slots - VERY STRONG (score: 85)`);
+    }
+    if (available.includes('reinforcement')) {
+      scores.reinforcement = 70;  // +1 slot +50 HP
+      reasoning.push(`強化 (reinforcement): +1 slot +50 HP (score: 70)`);
+    }
+    if (available.includes('boarding')) {
+      scores.boarding = 75;  // +1 slot + CLOSE turns - fits our CLOSE/MID strategy!
+      reasoning.push(`白兵戦 (boarding): +1 slot + T5/T6 CLOSE - FITS CLOSE BUILD (score: 75)`);
+    }
 
-    const best = available.reduce((a, b) => scores[a] > scores[b] ? a : b);
+    // Act 2 rewards
+    if (available.includes('skirmish')) {
+      scores.skirmish = 65;  // +1 slot + mid turn
+      reasoning.push(`遭遇戦 (skirmish): +1 slot + T4 MID (score: 65)`);
+    }
+    if (available.includes('logistics')) {
+      scores.logistics = 80;  // Free missile each fight - enables LONG build!
+      reasoning.push(`兵站 (logistics): Free missile each fight - ENABLES LONG BUILD (score: 80)`);
+    }
+    if (available.includes('doctrine')) {
+      scores.doctrine = 82;  // +60 HP + 1.2x damage - very strong
+      reasoning.push(`教義 (doctrine): +60 HP + 1.2x ALL damage - VERY STRONG (score: 82)`);
+    }
+
+    const best = available.reduce((a, b) => (scores[a] || 0) > (scores[b] || 0) ? a : b);
 
     reasoning.push('');
     reasoning.push(`=== AI DECISION ===`);
@@ -721,15 +1102,20 @@ const AI = {
     return { choice: best, reasoning };
   },
 
-  // Choose dock action
+  // Choose dock action - STRATEGIC VERSION
   chooseDockAction: (player, stage) => {
     const reasoning = [];
     const act = getAct(stage);
+    const stageInAct = getStageInAct(stage);
     const scrapCost = act;
     const hpPercent = player.hull / player.max_hull;
+    const stagesUntilBoss = 10 - stageInAct;
+    const missileCount = AI.countMissiles(player);
 
     reasoning.push('=== AI DOCK ANALYSIS ===');
     reasoning.push(`HP: ${player.hull}/${player.max_hull} (${Math.round(hpPercent * 100)}%)`);
+    reasoning.push(`Stages until boss: ${stagesUntilBoss}`);
+    reasoning.push(`Missiles in stock: ${missileCount}`);
     reasoning.push(`Repair cost: ${scrapCost} items for +${Math.floor(player.max_hull * 0.3)} HP`);
     reasoning.push(`Fabricate: -10 max HP for +1 missile`);
 
@@ -738,18 +1124,26 @@ const AI = {
       i.name.includes('スクラップ') || (i.power === 0 && getTypeId(i.type) === 'MODULE')
     );
 
-    if (hpPercent < 0.5 && scrappable.length >= scrapCost) {
+    // STRATEGY: Prioritize having 2 missiles for boss
+    if (missileCount < 2 && hpPercent > 0.6) {
+      reasoning.push('');
+      reasoning.push('=== AI DECISION ===');
+      reasoning.push('FABRICATE: Need missiles for boss stage, HP is sufficient');
+      return { action: 'FABRICATE', reasoning };
+    }
+
+    if (hpPercent < 0.4 && scrappable.length >= scrapCost) {
       // Need repair and have scrap
       const toScrap = scrappable.slice(0, scrapCost).map(i => i.id);
       reasoning.push('');
       reasoning.push('=== AI DECISION ===');
-      reasoning.push(`REPAIR: Scrap items [${toScrap.join(', ')}] for HP recovery`);
+      reasoning.push(`REPAIR: Low HP, scrap items [${toScrap.join(', ')}] for recovery`);
       return { action: 'REPAIR', scrapIds: toScrap, reasoning };
-    } else if (hpPercent > 0.8) {
-      // Healthy, maybe fabricate
+    } else if (hpPercent > 0.75 && missileCount < 3) {
+      // Healthy, fabricate for more missiles
       reasoning.push('');
       reasoning.push('=== AI DECISION ===');
-      reasoning.push('FABRICATE: Trade HP for missile (healthy enough)');
+      reasoning.push('FABRICATE: Healthy, stockpile missiles');
       return { action: 'FABRICATE', reasoning };
     } else {
       reasoning.push('');
@@ -846,7 +1240,8 @@ const runGame = (seed) => {
     });
     log('');
 
-    // AI chooses equipment
+    // AI chooses equipment (pass stage info)
+    player.stage = stage;
     const equipDecision = AI.chooseEquipment(player, enemy);
     equipDecision.reasoning.forEach(r => log(r));
     log('');
