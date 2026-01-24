@@ -267,6 +267,8 @@ const EN = [
 
 ### 3.3 Stages
 
+- Each ACT has 10 stages. ACT I(stage 1-10), ACT II(stage 11-20), ACT III(stage 21-30) and they have same stage layout(`ST`). 
+
 Schema: `[stage, type, difficulty, rank]`
 
 - `type`: `'C'` (combat) or `'D'` (dock)
@@ -279,7 +281,6 @@ const ST = [
   [9, 'D', 0, null],
   [10, 'C', 9, R.B],
 ];
-// Pattern repeats for stages 11-20 (ACT II) and 21-30 (ACT III)
 ```
 
 -----
