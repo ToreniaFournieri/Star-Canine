@@ -8,7 +8,7 @@ Containing all game rules, data, and UI text.
 
 Deterministic, text-only roguelike spaceship game designed for LLM playability.
 
-- **Objective:** Survive 30 stages to rescue LAIKA
+- **Objective:** Survive to rescue LAIKA
 - **Combat:** 1v1, 6-turn battles with no randomness
 - **Strategy:** Equipment loadout optimization
 - **Deterministic design:** All random elements (item decks, reward rarities, boss rewards) are pre-shuffled at game start. No mid-game randomness.
@@ -269,7 +269,7 @@ const EN = [
 
 ### 3.3 Stages
 
-- Each ACT has 10 stages. ACT I(stage 1-10), ACT II(stage 11-20), ACT III(stage 21-30) and they have same stage layout(`ST`). 
+- Each ACT has 12 stages. ACT I(stage 1-12), ACT II(stage 13-24), ACT III(stage 25-36) and they have same stage layout(`ST`). 
 
 Schema: `[stage, type, difficulty, rank]`
 
@@ -300,12 +300,12 @@ const ST = [
   - Boss deck: 3 bags × 4 types = 12 cards
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
-- **Reward decision decks**: Determine item rarity reward per enemy rank,round up
-  - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 5 combats, then 15 cards
+- **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
+  - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 7 combats, then 21 cards
   - Normal rank:
-    - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (14,1,0)
-    - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (12,3,1)
-    - ACT III:  60% NORMAL, 30% ELITE, 10% BOSS   (9,6,2)
+    - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (19,2,0)
+    - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (16,4,1)
+    - ACT III:  60% NORMAL, 30% ELITE, 10% BOSS   (12,7,2)
   - Elite rank:
     - ACT I:   0% NORMAL, 100% ELITE, 0 BOSS  (0,6,0)
     - ACT II:  0% NORMAL, 90% ELITE, 10% BOSS   (0,5,1)
@@ -412,7 +412,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 
 |Result  |Condition                           |
 |--------|------------------------------------|
-|**クリア** |Stage 30 + enemy dead + player alive|
+|**クリア** |Stage 36 + enemy dead + player alive|
 |**勝利**  |Enemy dead + player alive           |
 |**敗北**  |Player dead (any cause)             |
 |**敗北**  |Boss alive after turn 6             |
