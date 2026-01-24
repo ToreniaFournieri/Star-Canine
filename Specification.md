@@ -291,11 +291,14 @@ const ST = [
 ### 4.1 Initial State
 
 1. Initialize randomness
-- **Deck-based randomness**: Items drawn from pre-shuffled decks (Tetris-style) for better distribution
-- **Pre-sized decks for items**: Each deck is created with 3x multiplicity at game start to ensure sufficient capacity throughout the entire game without running out
-  - Normal items (rarity 1) × 3
-  - Elite items (rarity 2) × 3
-  - Boss items (rarity 3) × 3
+- **Tetris-style item decks**: Each deck uses "bag randomizer"
+  - One "bag" = 1 copy of each item type in that rarity
+  - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
+  - Normal deck: 3 bags × 15 types = 45 cards
+  - Elite deck: 3 bags × 9 types = 27 cards
+  - Boss deck: 3 bags × 4 types = 12 cards
+  - Guarantees: within each bag-length of draws, every item type appears exactly once
+
 - **Reward decision decks**: Determine item rarity reward per enemy rank,round up
   - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 5 combats, then 15 cards
   - Normal rank:
