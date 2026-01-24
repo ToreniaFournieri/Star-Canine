@@ -835,6 +835,12 @@ for (let turn = 0; turn < 6; turn++) {
     }
   }
   
+  // Check if enemy is defeated - if so, enemy doesn't attack (unless simultaneous)
+  const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
+  if (simEnemyHull <= 0 && !hasSimultaneous) {
+    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
+  }
+  
   // Calculate enemy attack damage for this turn
   let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
   eDmg = Math.round(eDmg * getActScale(act));
@@ -860,6 +866,11 @@ for (let turn = 0; turn < 6; turn++) {
     simPlayerShield = Math.max(0, simPlayerShield - eDmg);
     simPlayerHull = Math.max(0, simPlayerHull - toHull);
     totalDamageTaken += eDmg;
+  }
+  
+  // Check if player dies after enemy attacks
+  if (simPlayerHull <= 0 && hasSimultaneous) {
+    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
   }
 }
 return null; // Enemy survives
@@ -1042,47 +1053,46 @@ const enemyRank = getEnemyRank(stageData?.rank);
 const isBoss = enemyRank === R.B;
 
 const [options, setOptions] = useState(() => {
-const rarityDecks = stageData?.rank === ‘N’ ? player.normalRarityDecks :
-stageData?.rank === ‘E’ ? player.eliteRarityDecks : null;
+const rewardItems = [];
 
 ```
-const rewardItems = [];
+const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
+                    stageData?.rank === 'E' ? player.eliteRarityDecks : null;
+
+// Create mutable copies of decks for this draw
+const normalDeck = [...player.normalItemsDeck];
+const eliteDeck = [...player.eliteItemsDeck];
+const bossDeck = [...player.bossItemsDeck];
+const normalRarityDeck = stageData?.rank === 'N' ? [...(rarityDecks?.[act] || [])] : [];
+const eliteRarityDeck = stageData?.rank === 'E' ? [...(rarityDecks?.[act] || [])] : [];
+
 for (let i = 0; i < 3; i++) {
+  // 1. Determine rarity for this item
   let rarity;
   if (isBoss) {
     rarity = 3;
-  } else if (rarityDecks && rarityDecks[act]?.length > 0) {
-    rarity = rarityDecks[act][0];
+  } else if (stageData?.rank === 'N' && normalRarityDeck.length > 0) {
+    rarity = normalRarityDeck.shift();  // Consume from rarity deck
+  } else if (stageData?.rank === 'E' && eliteRarityDeck.length > 0) {
+    rarity = eliteRarityDeck.shift();  // Consume from rarity deck
   } else {
-    rarity = stageData?.rank === 'E' ? 2 : 1;
+    rarity = stageData?.rank === 'E' ? 2 : 1;  // Fallback
   }
 
+  // 2. Draw from appropriate item deck
   let deck;
-  if (rarity === 3 && player.bossItemsDeck.length > 0) {
-    deck = player.bossItemsDeck;
-  } else if (rarity === 2 && player.eliteItemsDeck.length > 0) {
-    deck = player.eliteItemsDeck;
+  if (rarity === 3 && bossDeck.length > 0) {
+    deck = bossDeck;
+  } else if (rarity === 2 && eliteDeck.length > 0) {
+    deck = eliteDeck;
   } else {
-    deck = player.normalItemsDeck;
+    deck = normalDeck;
   }
 
   if (deck.length > 0) {
-    const itemName = deck[i % deck.length];
+    const itemName = deck.shift();  // Remove from deck permanently
     const item = equipmentList.find(e => e.name === itemName);
-    if (item && !rewardItems.find(r => r.name === item.name)) {
-      rewardItems.push(item);
-    }
-  }
-}
-
-while (rewardItems.length < 3) {
-  const fallbackPool = equipmentList.filter(e =>
-    e.rarity > 0 && !rewardItems.find(r => r.name === e.name)
-  );
-  if (fallbackPool.length > 0) {
-    rewardItems.push(fallbackPool[0]);
-  } else {
-    break;
+    if (item) rewardItems.push(item);
   }
 }
 
@@ -1109,25 +1119,59 @@ const newPlayer = { …player };
 ```
 if (selectedItem) {
   newPlayer.inventory = [...player.inventory, createItem(selectedItem, player.itemIdCounter)];
+}
 
-  const selectedItemData = options.find(o => o.name === selectedItem);
-  if (selectedItemData) {
-    const rarity = selectedItemData.rarity;
-    if (rarity === 3) {
-      newPlayer.bossItemsDeck = player.bossItemsDeck.filter(name => name !== selectedItem);
-    } else if (rarity === 2) {
-      newPlayer.eliteItemsDeck = player.eliteItemsDeck.filter(name => name !== selectedItem);
-    } else {
-      newPlayer.normalItemsDeck = player.normalItemsDeck.filter(name => name !== selectedItem);
-    }
+// Consume the 3 drawn items from decks
+// We need to reconstruct what was drawn and remove it
+const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
+                    stageData?.rank === 'E' ? player.eliteRarityDecks : null;
+
+const normalDeck = [...player.normalItemsDeck];
+const eliteDeck = [...player.eliteItemsDeck];
+const bossDeck = [...player.bossItemsDeck];
+const normalRarityDeck = stageData?.rank === 'N' ? [...(rarityDecks?.[act] || [])] : [];
+const eliteRarityDeck = stageData?.rank === 'E' ? [...(rarityDecks?.[act] || [])] : [];
+
+// Simulate the draw to know what was consumed
+for (let i = 0; i < 3; i++) {
+  let rarity;
+  if (isBoss) {
+    rarity = 3;
+  } else if (stageData?.rank === 'N' && normalRarityDeck.length > 0) {
+    rarity = normalRarityDeck.shift();
+  } else if (stageData?.rank === 'E' && eliteRarityDeck.length > 0) {
+    rarity = eliteRarityDeck.shift();
+  } else {
+    rarity = stageData?.rank === 'E' ? 2 : 1;
   }
 
-  if (!isBoss && stageData?.rank === 'N') {
+  let deck;
+  if (rarity === 3 && bossDeck.length > 0) {
+    deck = bossDeck;
+  } else if (rarity === 2 && eliteDeck.length > 0) {
+    deck = eliteDeck;
+  } else {
+    deck = normalDeck;
+  }
+
+  if (deck.length > 0) {
+    deck.shift();  // Remove the drawn item
+  }
+}
+
+// Update player decks
+newPlayer.normalItemsDeck = normalDeck;
+newPlayer.eliteItemsDeck = eliteDeck;
+newPlayer.bossItemsDeck = bossDeck;
+
+// Update rarity decks
+if (!isBoss) {
+  if (stageData?.rank === 'N') {
     newPlayer.normalRarityDecks = { ...player.normalRarityDecks };
-    newPlayer.normalRarityDecks[act] = player.normalRarityDecks[act]?.slice(3) || [];
-  } else if (!isBoss && stageData?.rank === 'E') {
+    newPlayer.normalRarityDecks[act] = normalRarityDeck;
+  } else if (stageData?.rank === 'E') {
     newPlayer.eliteRarityDecks = { ...player.eliteRarityDecks };
-    newPlayer.eliteRarityDecks[act] = player.eliteRarityDecks[act]?.slice(3) || [];
+    newPlayer.eliteRarityDecks[act] = eliteRarityDeck;
   }
 }
 
@@ -1193,10 +1237,18 @@ return (
       if (item.mult) parts.push(formatMult(item.mult));
       if (item.ability) parts.push(formatAbility(item.ability));
 
+      const rarityColors = {
+        0: 'text-green-400',
+        1: 'text-green-400',
+        2: 'text-yellow-400',
+        3: 'text-orange-400',
+      };
+      const textColor = rarityColors[item.rarity] || 'text-green-400';
+
       return (
         <div
           key={item.name}
-          className="text-xs cursor-pointer hover:bg-green-900 mb-1"
+          className={`text-xs cursor-pointer hover:bg-green-900 mb-1 ${textColor}`}
           onClick={() => setSelectedItem(item.name)}
         >
           {selectedItem === item.name ? '✓' : '○'} [{item.slots}]{parts.join(' ')}
@@ -1435,9 +1487,17 @@ if (item.disposable) parts.push(‘💥’);
 if (item.mult) parts.push(formatMult(item.mult));
 if (item.ability) parts.push(formatAbility(item.ability));
 
+const rarityColors = {
+0: ‘text-green-400’,
+1: ‘text-green-400’,
+2: ‘text-yellow-400’,
+3: ‘text-orange-400’,
+};
+const textColor = rarityColors[item.rarity] || ‘text-green-400’;
+
 return (
 <div
-className={`text-xs mb-1 ${onClick ? 'cursor-pointer hover:bg-green-900' : ''}`}
+className={`text-xs mb-1 ${textColor} ${onClick ? 'cursor-pointer hover:bg-green-900' : ''}`}
 onClick={onClick}
 >
 {equipped && ’✓ ‘}{showId && <span className="text-green-600">#{item.id} </span>}[{item.slots}] {parts.join(’ ’)}
