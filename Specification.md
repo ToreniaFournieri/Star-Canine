@@ -433,8 +433,7 @@ Choose exactly ONE:
 
 ### 7.1 Victory Reward
 
-Choose 1 of 3 random items from deck:
-  -following Reward decision decks, 
+Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initialization (§4.1). 
 
 ### 7.2 Boss Reward
 
