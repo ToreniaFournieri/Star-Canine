@@ -329,11 +329,11 @@ const INITIAL_PLAYER = {
   skirmish: false,
   doctrine: false,
   // Available rewards.
-  // MISSING: How to populate these decks
-  normalItemsDeck: [],  // Should be: shuffle(EQ.filter(rarity===1) × 3)
-  eliteItemsDeck: [],   // Should be: shuffle(EQ.filter(rarity===2) × 3)
-  bossItemsDeck: [],    // Should be: shuffle(EQ.filter(rarity===3) × 3)
-  bossRewards: [],  // Should be: shuffle(BR)
+normalItemsDeck: [],  // Init: shuffle(EQ where rarity=1, ×3)
+eliteItemsDeck: [],   // Init: shuffle(EQ where rarity=2, ×3)
+bossItemsDeck: [],    // Init: shuffle(EQ where rarity=3, ×3)
+bossRewards: [],      // Init: shuffle(all BR)
+rewardRarityDecks: {} // Init: per Section 4.1 distribution
 };
 ```
 
