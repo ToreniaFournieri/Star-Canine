@@ -92,7 +92,10 @@ defeat: ‘信号途絶’,
 };
 
 const EQ = [
+// === SCRAP (Dock currency) ===
 [1, “🗑️ スクラップ”, 0, T.X, 0, 0, null, null],
+
+// === LONG (Missiles) ===
 [1, “🚀 ランス”, 40, T.L, 1, 1, null, null],
 [2, “🚀🛡️ インターセプター”, 50, T.L, 1, 1, null, [AB.SH, 10]],
 [2, “🚀❗ ハープーン”, 71, T.L, 1, 1, null, [AB.BF, 10]],
@@ -103,26 +106,36 @@ const EQ = [
 [1, “🚀 🚀 🔺 ギャンビット”, 50, T.L, 2, 1, [T.L, 1.3], null],
 [3, “🚀 🚀 🚀MOP”, 100, T.L, 2, 1, null, null],
 [1, “🔫 クァンタム・ディスプレーサー”, 30, T.L, 3, 0, [T.C, 0.5], null],
+
+// === MID (Fighters) ===
 [1, “✈️ ドローン”, 12, T.M, 1, 0, null, null],
 [1, “✈️⚠️ スカベンジャー”, 20, T.M, 1, 0, [T.M, 0.9], null],
 [1, “✈️⤴️ ルーキー・ファイター”, 5, T.M, 1, 0, null, [AB.GR, 2]],
 [1, “✈️✈️ ブルーウルフ”, 20, T.M, 2, 0, null, null],
 [1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
+
+// === CLOSE (Beams) ===
 [1, “⚡ クロウ”, 15, T.C, 1, 0, null, null],
 [1, “⚡🩸 ファング”, 10, T.C, 1, 0, null, [AB.LS]],
 [1, “⚡🛡️ アイアン・ビーム”, 12, T.C, 1, 0, null, [AB.SH, 10]],
-[1, “⚡ 🔺カジェル”, 16, T.C, 2, 0, [T.C, 1.2], null],
-[1, “⚡🪓 シールド・ブレイカー”, 2, T.C, 2, 1, null, [AB.SB]],
-[1, “🛡️ 装甲板”, 25, T.S, 1, 0, null, null],
-[1, “🛡️💥 エフェメラ・シールド”, 45, T.S, 1, 1, null, null],
+[1, “⚡🔺カジェル”, 16, T.C, 2, 0, [T.C, 1.2], null],
+[1, “⚡🪓 シールド・ブレイカー”, 2, T.C, 2, 0, null, [AB.SB]],
+
+// === SHIELD ===
+[1, “🛡️ 装甲板”, 20, T.S, 1, 0, null, null],
+[1, “🛡️💥 エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
 [1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
-[1, “🛡️ ⤴️ バリアー”, 25, T.S, 3, 0, null, [AB.GR, 3]],
-[1, “🔧 💥ダメージコントロール”, 30, T.H, 1, 1, null, null],
+[1, “🛡️ ⤴️ バリアー”, 20, T.S, 3, 0, null, [AB.GR, 2]],
+
+// === HULL ===
+[1, “🔧 💥ダメージコントロール”, 40, T.H, 1, 1, null, null],
 [1, “🔧 自動修理装置”, 15, T.H, 1, 0, null, null],
+
+// === MODULE ===
 [1, “🟫🔺 ダブルシールド”, 0, T.X, 1, 0, [T.S, 2.0], null],
 [2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 2.0], null],
 [1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 2.0], [AB.NR]],
-[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 2.0], [AB.SIM]],
+[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 2.0], [AB.SIM]]
 ];
 
 const EN = [
@@ -749,9 +762,6 @@ for (let turn = 0; turn < 6; turn++) {
   
   let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
   
-  // Scale for ACT
-  eDmg = Math.round(eDmg * getActScale(act));
-  
   // Apply OVERLOAD/DORMANT (turn 4+)
   if (turn >= 3 && hasSkill(enemy, SK.OVR)) {
     const ovrVal = getSkillValue(enemy, SK.OVR);
@@ -843,7 +853,6 @@ for (let turn = 0; turn < 6; turn++) {
   
   // Calculate enemy attack damage for this turn
   let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
-  eDmg = Math.round(eDmg * getActScale(act));
   
   if (turn >= 3 && hasSkill(enemy, SK.OVR)) {
     const ovrVal = getSkillValue(enemy, SK.OVR);
