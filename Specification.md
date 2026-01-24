@@ -1,4 +1,4 @@
-# STAR CANINE v0.9.0 - SPECIFICATION
+# STAR CANINE v0.9.1 - SPECIFICATION
 
 Containing all game rules, data, and UI text.
 
@@ -230,8 +230,8 @@ const EQ = [
   // === SHIELD ===
   [1, "🛡️ 装甲板", 25, T.S, 1, 0, null, null],
   [1, "🛡️💥 エフェメラ・シールド", 45, T.S, 1, 1, null, null],
-  [1, "🛡️🛡️ イージス", 30, T.S, 2, 0, null, null],
-  [1, "🛡️ ⤴️ バリアー", 25, T.S, 3, 0, null, [AB.GR, 3]],
+  [1, "🛡️🛡️ イージス", 35, T.S, 2, 0, null, null],
+  [1, "🛡️ ⤴️ バリアー", 25, T.S, 3, 0, null, [AB.GR, 1]],
 
   // === HULL ===
   [1, "🔧 💥ダメージコントロール", 30, T.H, 1, 1, null, null],
