@@ -468,6 +468,7 @@ Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initializatio
     - Enemy attack pattern for each turn
     - ACT scaling multipliers
     - Enemy abilities (OVERLOAD, DORMANT, EXPLOSIVE)
+    - Boss reward effect: boarding, skirmish
 
 ### 8.2 Scene Labels
 
