@@ -1,4 +1,4 @@
-# STAR CANINE v0.8.8 - SPECIFICATION
+# STAR CANINE v0.9.0 - SPECIFICATION
 
 Containing all game rules, data, and UI text.
 
@@ -259,7 +259,7 @@ const EN = [
   [3, "自己修復機", 40, 10, R.N, [0, 10, 15], [[SK.REG, 8]]],
   [4, "ゾンビ", 25, 80, R.N, [0, 0, 20], [[SK.DEG, 5]]],
   [5, "遺物哨戒機", 60, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
-  [6, "特攻フリゲート", 10, 70, R.N, [0, 0, 0], [[SK.EXP, 180]]],
+  [6, "特攻フリゲート", 10, 65, R.N, [0, 0, 0], [[SK.EXP, 180]]],
   [7, "重装巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.EXP, 60]]],
   [8, "シールド・ゲート", 55, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
   [9, "オーバーロード・エンフォーサー", 70, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
@@ -620,8 +620,8 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.8.8**|Items and Enemy update. Changed the initialization way of Items and boss rewards.|
-|**0.8.7**|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
+|**0.9.0**|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
+|0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
 |0.8.4.1  |Initial stable release.                                                               |
 
