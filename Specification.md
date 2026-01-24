@@ -401,7 +401,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1. `REGEN`: If enemy hull > 0, heal hull.  
 1. `DEGEN`: Lose hull
 1. `OVERLOAD`/`DORMANT`: Modify attack (turn 4+)
-1. `EXPLOSIVE`: Add damage + self-destruct (turn 4)
+1. `EXPLOSIVE`: Add damage to Player hull, then set enemy hill to 0.  (turn 4)
 1. Apply damage to player
 1. Defeat check
 
