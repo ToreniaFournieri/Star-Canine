@@ -307,7 +307,7 @@ const ST = [
     - ACT III:  0% NORMAL, 67% ELITE, 33% BOSS   (0,4,2)
   - Boss rank: always BOSS
 
-  - **Boss reward distribution**: The boss reward deck is ceated with one set at game atart. 
+  - **Boss reward distribution**: The boss reward deck is created with one set at game start. 
 
 2. Define
 
