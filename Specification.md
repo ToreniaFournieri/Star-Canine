@@ -446,9 +446,10 @@ Choose exactly ONE:
 ## 7. REWARD SYSTEM
 
 ### 7.1 Victory Reward
-
-Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initialization (§4.1). 
-
+Draw 3 items from item deck. Choose 1 to add to inventory.
+  - Rarity pre-determined at initialization (§4.1)
+  - All 3 drawn items are removed from deck (including unpicked ones)
+  
 ### 7.2 Boss Reward
 
 - **Automatic:** Full hull repair
