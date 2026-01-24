@@ -296,7 +296,7 @@ const ST = [
   - Elite items (rarity 2) × 3
   - Boss items (rarity 3) × 3
 - **Reward decision decks**: Determine item rarity reward per enemy rank,round up
-  - Deck size = normal combats per ACT × 3 (reward choices) = ex. 5 combats, then 15 cards
+  - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 5 combats, then 15 cards
   - Normal rank:
     - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (14,1,0)
     - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (12,3,1)
@@ -606,7 +606,7 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.8.8**|Items and Enemy update. Chagrd the initialization way of Items and boss rewards.|
+|**0.8.8**|Items and Enemy update. Changed the initialization way of Items and boss rewards.|
 |**0.8.7**|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
 |0.8.4.1  |Initial stable release.                                                               |
