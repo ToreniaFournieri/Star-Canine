@@ -462,7 +462,7 @@ Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initializatio
 ### 8.1 Display
 
 - Pre combat scene:
-**a fatal turn prediction system**
+**a fatal turn prediction system** and **an enemy defeat turn prediction**
   - Display like this:Predicted sinking at Turn 3
     - Current hull and shield values
     - Enemy attack pattern for each turn
