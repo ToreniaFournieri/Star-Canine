@@ -488,7 +488,7 @@ if (!hasSimultaneous && eHull <= 0) {
   break;
 }
 
-if (hasSkill(enemy, SK.REG)) {
+if (hasSkill(enemy, SK.REG) && eHull > 0) {
   const regenVal = getSkillValue(enemy, SK.REG);
   eHull += regenVal;
   log.push(`  自己修復: +${regenVal}HP → ${eHull}HP`);
