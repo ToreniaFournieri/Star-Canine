@@ -520,7 +520,8 @@ log.push(`${UI.label.attack}: 長${Math.round(stats.final.LONG)} 中${Math.round
 log.push(’’);
 
 // Combat loop
-for (let turn = 0; turn < 6; turn++) {
+let battleOver = false;
+for (let turn = 0; turn < 6 && !battleOver; turn++) {
 const range = turns[turn];
 log.push(`--- T${turn + 1}: ${getRangeName(range)} ---`);
 
@@ -574,13 +575,14 @@ if (pDmg > 0) {
       log.push(`  反動: ${totalBackfire}ダメージ → ${beforeBackfire}HP → ${pHull}HP`);
       if (pHull <= 0) {
         log.push(`  自機撃破（反動）。`);
-        break;
+        battleOver = true;
       }
     }
   }
 } else {
   log.push(`  ${getRangeName(range)}武装なし`);
 }
+if (battleOver) continue;
 
 // COUNTER_LONG
 if (range === 'LONG' && hasSkill(enemy, SK.CL) && longCount > 0) {
@@ -593,14 +595,16 @@ if (range === 'LONG' && hasSkill(enemy, SK.CL) && longCount > 0) {
   log.push(`  迎撃: ${counterDmg}ダメージ (長距離武装${longCount}基) → ${beforeCounter}HP → ${pHull}HP`);
   if (pHull <= 0) {
     log.push(`  自機撃破を確認。`);
-    break;
+    battleOver = true;
   }
 }
+if (battleOver) continue;
 
 // Victory check (skip if simultaneous)
 if (!hasSimultaneous && eHull <= 0) {
   log.push(`  敵艦撃破を確認。`);
-  break;
+  battleOver = true;
+  continue;
 }
 
 // === ENEMY PHASE ===
@@ -619,9 +623,10 @@ if (hasSkill(enemy, SK.DEG)) {
   log.push(`  腐食: -${degenVal}HP → ${eHull}HP`);
   if (eHull <= 0) {
     log.push(`  敵艦撃破（腐食）。`);
-    break;
+    battleOver = true;
   }
 }
+if (battleOver) continue;
 
 // Enemy attack
 let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
@@ -666,11 +671,12 @@ if (turn === 3 && hasSkill(enemy, SK.EXP)) {
 if (hasSimultaneous) {
   if (eHull <= 0) log.push(`  敵艦撃破（同時）`);
   if (pHull <= 0) log.push(`  自機撃破（同時）`);
-  if (eHull <= 0 || pHull <= 0) break;
+  if (eHull <= 0 || pHull <= 0) battleOver = true;
 } else if (pHull <= 0) {
   log.push(`  自機撃破を確認。`);
-  break;
+  battleOver = true;
 }
+if (battleOver) continue;
 
 // GATE (turn end)
 if (hasSkill(enemy, SK.GATE) && eHull > 0) {
@@ -1179,7 +1185,7 @@ return (
         className="text-xs cursor-pointer hover:bg-green-900 mb-1"
         onClick={() => setSelectedItem(item.name)}
       >
-        {selectedItem === item.name ? '✓' : '○'} <ItemInfo item={item} />
+        {selectedItem === item.name ? '✓' : '○'} [{item.slots}] <ItemInfo item={item} />
       </div>
     ))}
   </div>
