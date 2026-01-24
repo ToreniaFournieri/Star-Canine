@@ -71,7 +71,7 @@ const SK = {
   EXP: {
     id: 'EXPLOSIVE',
     name: '自爆',
-    desc: "第4ターンに固定ダメージの自爆攻撃を行い、自壊する。",
+    desc: "第4ターンに固定ダメージを相手に与える自爆攻撃を行い、自壊する。",
   },
   OVR: {
     id: 'OVERLOAD',
