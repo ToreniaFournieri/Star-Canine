@@ -470,7 +470,11 @@ Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite a
 
 - Pre combat scene:
 **a fatal turn prediction system** and **an enemy defeat turn prediction**
-  - Display like this:Predicted sinking at Turn 3
+  - Display like this:
+    概算予測✓ T2で撃破
+    与ダメージ量: 40
+    被ダメージ量: 50
+
     - Current hull and shield values
     - Enemy attack pattern for each turn
     - ACT scaling multipliers
