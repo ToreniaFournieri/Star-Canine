@@ -303,7 +303,7 @@ const ST = [
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
   - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 7 combats, then 21 cards
   - Normal rank:
-    - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (19,2,0)
+    - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (20,1,0)
     - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (16,4,1)
     - ACT III:  60% NORMAL, 30% ELITE, 10% BOSS   (12,7,2)
   - Elite rank:
