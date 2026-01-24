@@ -342,11 +342,11 @@ const INITIAL_PLAYER = {
   skirmish: false,
   doctrine: false,
   // Available rewards.
-normalItemsDeck: [],  // Init: shuffle(EQ where rarity=1, ×3)
-eliteItemsDeck: [],   // Init: shuffle(EQ where rarity=2, ×3)
-bossItemsDeck: [],    // Init: shuffle(EQ where rarity=3, ×3)
-bossRewards: [],      // Init: shuffle(all BR)
-rewardRarityDecks: {} // Init: per Section 4.1 distribution
+normalItemsDeck: [],
+eliteItemsDeck: [],
+bossItemsDeck: [],
+bossRewards: [],
+rewardRarityDecks: {}
 };
 ```
 
@@ -558,7 +558,7 @@ const parseData = (schema, data) => data.map(row => {
 // Schemas
 const EQ_SCHEMA = ['slots', 'name', 'power', 'type', 'rarity', 'disposable', 'mult', 'ability'];
 const EN_SCHEMA = ['difficulty', 'name', 'hull', 'shield', 'rank', 'attacks', 'skills'];
-const ST_SCHEMA = ['stage', 'type', 'difficulty', 'rank'];
+const ST_SCHEMA = ['rank', 'difficulty'];
 ```
 
 ### 9.2 Helper Functions
