@@ -277,7 +277,7 @@ Schema: `[stage, type, difficulty, rank]`
 
 ```javascript
 const ST = [
-  [1, 'C', 1, R.N], [2, 'C', 2, R.N], [3, 'C', 3, null], [4, 'C', 8, R.E], [5, 'C', 4, R.N]
+  [1, 'C', 1, R.N], [2, 'C', 2, R.N], [3, 'C', 3, R.N], [4, 'C', 8, R.E], [5, 'C', 4, R.N]
   [6, 'D', 0, null],
   [7, 'C', 5, R.N], [8, 'C', 9, R.E], [9, 'C', 6, R.N], [10, 'C', 7, R.N],
   [11, 'D', 0, null],
