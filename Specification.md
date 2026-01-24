@@ -408,7 +408,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 **Turn End:**
 
 1. `GATE`: Regenerate shield to value
-1. `SIMULTANEOUS`: Check both ships
+1. If `SIMULTANEOUS`, Victory check. 
 
 ### 5.4 Post-Combat
 
