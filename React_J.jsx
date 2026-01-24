@@ -609,12 +609,6 @@ if (!hasSimultaneous && eHull <= 0) {
 
 // === ENEMY PHASE ===
 
-// REGEN
-if (hasSkill(enemy, SK.REG)) {
-  const regenVal = getSkillValue(enemy, SK.REG);
-  eHull += regenVal;
-  log.push(`  自己修復: +${regenVal}HP → ${eHull}HP`);
-}
 
 // DEGEN
 if (hasSkill(enemy, SK.DEG)) {
@@ -627,6 +621,14 @@ if (hasSkill(enemy, SK.DEG)) {
   }
 }
 if (battleOver) continue;
+
+// REGEN
+if (hasSkill(enemy, SK.REG)) {
+  const regenVal = getSkillValue(enemy, SK.REG);
+  eHull += regenVal;
+  log.push(`  自己修復: +${regenVal}HP → ${eHull}HP`);
+}
+
 
 // Enemy attack
 let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
