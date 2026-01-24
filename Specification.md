@@ -457,9 +457,16 @@ Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initializatio
 
 -----
 
-## 8. UI TEXT
+## 8. UI TEXT Display
 
-### 8.1 Scene Labels
+### 8.1 Display
+
+- Pre combat scene:
+**a fatal turn prediction system**
+  - Display like this:Predicted sinking at Turn 3
+
+
+### 8.2 Scene Labels
 
 ```javascript
 const UI = {
