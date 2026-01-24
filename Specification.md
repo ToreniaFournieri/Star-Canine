@@ -464,7 +464,10 @@ Choose 1 of 3 items drawn from item deck. Rarity pre-determined at initializatio
 - Pre combat scene:
 **a fatal turn prediction system**
   - Display like this:Predicted sinking at Turn 3
-
+    - Current hull and shield values
+    - Enemy attack pattern for each turn
+    - ACT scaling multipliers
+    - Enemy abilities (OVERLOAD, DORMANT, EXPLOSIVE)
 
 ### 8.2 Scene Labels
 
