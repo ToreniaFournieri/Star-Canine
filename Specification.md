@@ -411,7 +411,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 |**勝利**  |Enemy dead + player alive           |
 |**敗北**  |Player dead (any cause)             |
 |**敗北**  |Boss alive after turn 6             |
-|**引き分け**|Both alive after turn 6 (non-Boss)  |
+|**引き分け**|Player and Non-boss enemy alive after turn 6 |
 
 **Note:** Mutual destruction = 敗北 (player must survive to rescue LAIKA)
 
@@ -434,10 +434,7 @@ Choose exactly ONE:
 ### 7.1 Victory Reward
 
 Choose 1 of 3 random items from deck:
-
-- NORMAL → `normalItemsDeck`
-- ELITE → `eliteItemsDeck`
-- BOSS → 'bossItemsDeck`
+  -following Reward decision decks, 
 
 ### 7.2 Boss Reward
 
