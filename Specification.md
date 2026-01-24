@@ -447,10 +447,13 @@ Choose exactly ONE:
 
 ### 7.1 Victory Reward
 Draw 3 items, choose 1. All 3 removed from decks permanently.
-1. Draw 1 rarity from reward rarity deck (§4.1) → draw 1 item from that rarity's item deck
-2. Draw 2 items from Normal item deck
 
-Note: Unpicked items do not return to deck.
+For each of the 3 items:
+1. Draw 1 rarity from reward rarity deck (§4.1)
+2. Draw 1 item from that rarity's item deck
+
+Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite across all rewards).
+
 
   
 ### 7.2 Boss Reward
