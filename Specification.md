@@ -446,9 +446,12 @@ Choose exactly ONE:
 ## 7. REWARD SYSTEM
 
 ### 7.1 Victory Reward
-Draw 3 items from item deck. Choose 1 to add to inventory.
-  - Rarity pre-determined at initialization (§4.1)
-  - All 3 drawn items are removed from deck (including unpicked ones)
+Draw 3 items, choose 1. All 3 removed from decks permanently.
+1. Draw 1 rarity from reward rarity deck (§4.1) → draw 1 item from that rarity's item deck
+2. Draw 2 items from Normal item deck
+
+Note: Unpicked items do not return to deck.
+
   
 ### 7.2 Boss Reward
 
