@@ -346,9 +346,10 @@ rewardRarityDecks: {} // Init: per Section 4.1 distribution
 
 |ACT|Stages|Enemy Scale|
 |---|------|-----------|
-|I  |1-10  |×1.0       |
-|II |11-20 |×1.5       |
-|III|21-30 |×2.0       |
+|I  |1-12  |×1.0       |
+|II |13-24 |×1.5       |
+|III|25-36 |×2.0       |
+
 
 Scaling applies to enemy `hull`, `shield`, and all `attacks`.
 
