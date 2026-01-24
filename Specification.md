@@ -557,8 +557,8 @@ const ST_SCHEMA = ['stage', 'type', 'difficulty', 'rank'];
 
 ```javascript
 // Act calculation
-const getAct = (stage) => Math.floor((stage - 1) / 10) + 1;
-const getStageInAct = (stage) => ((stage - 1) % 10) + 1;
+const getAct = (stage) => Math.floor((stage - 1) / 12) + 1;
+const getStageInAct = (stage) => ((stage - 1) % 12) + 1;
 const getActScale = (act) => [1, 1.5, 2][act - 1];
 
 // Damage application
