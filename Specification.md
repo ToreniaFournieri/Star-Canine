@@ -194,6 +194,7 @@ Schema: `[slots, name, power, type, rarity, disposable, mult, ability]`
 
 - `mult`: `[target_type, multiplier]` or `null`
 - `ability`: `[AB.*, value?]` or `null`
+- `rarity`: 0 = not in reward decks (starting/special only), 1+ = reward pool
 
 ```javascript
 const EQ = [
