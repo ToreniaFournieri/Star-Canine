@@ -294,13 +294,16 @@ const ST = [
   - Elite items (rarity 2) × 3
   - Boss items (rarity 3) × 3
 - **Reward decision decks**: Determine item rarity reward per enemy rank,round up
-  - Deck size = normal combats per ACT × 3 (reward choices) = ex. 15 cards
+  - Deck size = normal combats per ACT × 3 (reward choices) = ex. 5 combats, then 15 cards
   - Normal rank:
     - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (14,1,0)
     - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (12,3,1)
     - ACT III:  60% NORMAL, 30% ELITE, 10% BOSS   (9,6,2)
   - Elite rank:
-
+    - ACT I:   0% NORMAL, 100% ELITE, 0 BOSS  (0,6,0)
+    - ACT II:  0% NORMAL, 90% ELITE, 10% BOSS   (0,5,1)
+    - ACT III:  0% NORMAL, 67% ELITE, 33% BOSS   (0,4,2)
+  - Boss rank: always BOSS
 
   - **Boss reward distribution**: The boss reward deck is ceated with one set at game atart. 
 
