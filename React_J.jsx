@@ -58,70 +58,82 @@ doctrine:      { name: ‘教義’,   desc: “耐久値最大値+60。すべ�
 
 // Schema: [slots, name, power, type, rarity, disposable, mult, ability]
 const EQ = [
-// SCRAP (Dock currency)
-[1, “🗑️ スクラップ”, 0, T.X, 0, 0, null, null],
-// LONG (Missiles)
-[1, “🚀 ランス”, 40, T.L, 0, 1, null, null],
-[1, “🚀 メテオ”, 45, T.L, 1, 1, null, null],
-[2, “🚀🛡️ インターセプター”, 50, T.L, 1, 1, null, [AB.SH, 10]],
-[2, “🚀❗ ハープーン”, 66, T.L, 1, 1, null, [AB.BF, 10]],
-[2, “🚀⚠️ アイソレーション”, 75, T.L, 1, 1, [T.L, 0.9], null],
-[2, “🚀🔺 ジャベリン”, 39, T.L, 1, 1, [T.L, 1.2], null],
-[2, “🚀🔺 ギャンビット”, 55, T.L, 2, 1, [T.L, 1.3], null],
-[1, “🔫 クァンタム・ディスプレーサー”, 40, T.L, 3, 0, [T.C, 0.5], null],
-// MID (Fighters)
-[1, “✈️ ドローン”, 12, T.M, 1, 0, null, null],
-[1, “✈️⚠️ スカベンジャー”, 20, T.M, 1, 0, [T.M, 0.9], null],
-[1, “✈️🔺 スクアドラル”, 8, T.M, 1, 0, [T.M, 1.2], null],
-[1, “✈️⤴️ ルーキー・ファイター”, 5, T.M, 1, 0, null, [AB.GR, 2]],
-[1, “✈️✈️ ブルーウルフ”, 20, T.M, 2, 0, null, null],
-// CLOSE (Beams)
-[1, “⚡ クロウ”, 10, T.C, 0, 0, null, null],
-[1, “⚡🩸 ファング”, 8, T.C, 1, 0, null, [AB.LS]],
-[1, “⚡⚠️ スタティック・ブレード”, 22, T.C, 1, 0, [T.C, 0.9], null],
-[1, “⚡🛡️ アイアン・ビーム”, 5, T.C, 2, 0, null, [AB.SH, 10]],
-[1, “⚡ カジェル”, 25, T.C, 2, 0, null, null],
-[1, “⚡🔺 ブースト・レーザー”, 10, T.C, 1, 0, [T.C, 1.2], null],
-[1, “⚡🪓 シールド・ブレイカー”, 3, T.C, 2, 1, null, [AB.SB]],
-// SHIELD
-[1, “🛡️ 装甲板”, 14, T.S, 0, 0, null, null],
-[1, “🛡️ ヴェール”, 17, T.S, 1, 0, null, null],
-[1, “🛡️⚠️ バルクヘッド”, 25, T.S, 1, 0, [T.S, 0.9], null],
-[1, “🛡️💥 エフェメラ・シールド”, 33, T.S, 1, 1, null, null],
-[1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
-[1, “🛡️🔺 バリアー”, 13, T.S, 2, 0, [T.S, 1.2], null],
-// HULL
-[1, “🔧 リペアラー”, 10, T.H, 1, 0, null, null],
-[1, “🔧🔧 ベテラン・リペアラー”, 15, T.H, 2, 0, null, null],
-// MODULE
-[2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 2.0], null],
-[1, “🛫🔺 スウォーム・コア”, 0, T.X, 3, 0, [T.L, 0.5], [AB.AM, 10]],
-[1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 2.0], [AB.NR]],
-[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 2.0], [AB.SIM]],
-[1, “🟫🔺 ダブルシールド”, 0, T.X, 3, 0, [T.S, 2.0], null],
-[1, “♨️🔺 娯楽施設”, 2, T.X, 2, 0, [T.H, 2.0], null],
+// === SCRAP (Dock currency) ===
+[1, "🗑️ スクラップ", 0, T.X, 0, 0, null, null],
+
+// === LONG (Missiles) ===
+[1, "🚀 ランス", 40, T.L, 1, 1, null, null],
+[2, "🚀🛡️ インターセプター", 50, T.L, 1, 1, null, [AB.SH, 10]],
+[2, "🚀❗ ハープーン", 71, T.L, 1, 1, null, [AB.BF, 10]],
+[2, "🚀⚠️ アイソレーション", 75, T.L, 1, 1, [T.L, 0.9], null],
+[2, "🚀 ジャベリン", 60, T.L, 1, 1, null, null],
+[1, "🚀 🚀 シューティングスター", 65, T.L, 2, 1, null, null],
+[2, "🚀⚠️ サイレント", 90, T.L, 2, 1, [T.M, 0.0], null],
+[1, "🚀 🚀 🔺 ギャンビット", 50, T.L, 2, 1, [T.L, 1.3], null],
+[3, "🚀 🚀 🚀MOP", 100, T.L, 2, 1, null, null],
+[1, "🔫 クァンタム・ディスプレーサー", 30, T.L, 3, 0, [T.C, 0.5], null],
+
+// === MID (Fighters) ===
+[1, "✈️ ドローン", 12, T.M, 1, 0, null, null],
+[1, "✈️⚠️ スカベンジャー", 20, T.M, 1, 0, [T.M, 0.9], null],
+[1, "✈️⤴️ ルーキー・ファイター", 5, T.M, 1, 0, null, [AB.GR, 2]],
+[1, "✈️✈️ ブルーウルフ", 20, T.M, 2, 0, null, null],
+[1, "✈️🔺 スクアドラル", 12, T.M, 2, 0, null, [AB.AM, 10]],
+
+// === CLOSE (Beams) ===
+[1, "⚡ クロウ", 15, T.C, 1, 0, null, null],
+[1, "⚡🩸 ファング", 10, T.C, 1, 0, null, [AB.LS]],
+[1, "⚡🛡️ アイアン・ビーム", 12, T.C, 1, 0, null, [AB.SH, 10]],
+[1, "⚡ 🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
+[1, "⚡🪓 シールド・ブレイカー", 2, T.C, 2, 1, null, [AB.SB]],
+
+// === SHIELD ===
+[1, "🛡️ 装甲板", 25, T.S, 1, 0, null, null],
+[1, "🛡️💥 エフェメラ・シールド", 45, T.S, 1, 1, null, null],
+[1, "🛡️🛡️ イージス", 30, T.S, 2, 0, null, null],
+[1, "🛡️ ⤴️ バリアー", 25, T.S, 3, 0, null, [AB.GR, 3]],
+
+// === HULL ===
+[1, "🔧 💥ダメージコントロール", 30, T.H, 1, 1, null, null],
+[1, "🔧 自動修理装置", 15, T.H, 1, 0, null, null],
+
+// === MODULE ===
+[1, "🟫🔺 ダブルシールド", 0, T.X, 1, 0, [T.S, 2.0], null],
+[2, "🔥🔺 弾頭最適化装置", 0, T.X, 3, 0, [T.L, 2.0], null],
+[1, "🏗️🔺 スウォーム・ハンガー", 0, T.X, 3, 0, [T.M, 2.0], [AB.NR]],
+[1, "💎🔺 プリズマティック・フォーカス", 0, T.X, 3, 0, [T.C, 2.0], [AB.SIM]],
 ];
 
 // Schema: [difficulty, name, hull, shield, rank, attacks[L,M,C], skills[[SK,val],…]]
 const EN = [
-[1, “スカミッシャー”, 30, 0, R.N, [0, 0, 10], []],
-[2, “ドリフター”, 31, 5, R.N, [20, 0, 10], [[SK.GATE, 5]]],
-[3, “自己修復機”, 40, 10, R.N, [0, 15, 5], [[SK.REG, 8]]],
-[4, “ゾンビ”, 25, 80, R.N, [5, 20, 0], [[SK.DEG, 5]]],
-[5, “遺物哨戒機”, 60, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
-[5, “特攻フリゲート”, 10, 100, R.N, [0, 0, 0], [[SK.EXP, 60]]],
-[6, “シールド・ゲート”, 55, 20, R.E, [15, 15, 20], [[SK.GATE, 20]]],
-[8, “オーバーロード・エンフォーサー”, 70, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
-[9, “セレスティアル・リーパー”, 100, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
+[1, "スカミッシャー", 40, 0, R.N, [0, 0, 10], []],
+[2, "ドリフター", 51, 5, R.N, [20, 0, 10], [[SK.GATE, 5]]],
+[3, "自己修復機", 40, 10, R.N, [0, 10, 15], [[SK.REG, 8]]],
+[4, "ゾンビ", 25, 80, R.N, [0, 0, 20], [[SK.DEG, 5]]],
+[5, "遺物哨戒機", 60, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
+[6, "特攻フリゲート", 10, 65, R.N, [0, 0, 0], [[SK.EXP, 180]]],
+[7, "重装巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.EXP, 60]]],
+[8, "シールド・ゲート", 55, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
+[9, "オーバーロード・エンフォーサー", 70, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
+[10, "セレスティアル・リーパー", 100, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
 ];
 
-// Schema: [stage, type, difficulty, rank]
+// Schema: [rank, difficulty]
+// rank: 'N' (Normal), 'E' (Elite), 'B' (Boss), 'D' (Dock)
+// 12 stages per ACT: ACT I(1-12), ACT II(13-24), ACT III(25-36)
 const ST = [
-[1, ‘C’, 1, R.N], [2, ‘C’, 2, R.N], [3, ‘C’, 6, R.E],
-[4, ‘D’, 0, null],
-[5, ‘C’, 3, R.N], [6, ‘C’, 4, R.N], [7, ‘C’, 8, R.E], [8, ‘C’, 5, R.N],
-[9, ‘D’, 0, null],
-[10, ‘C’, 9, R.B],
+['N', 1],
+['N', 2],
+['N', 3],
+['E', 8],
+['N', 4],
+['D', 0],
+['N', 5],
+['E', 9],
+['N', 6],
+['N', 7],
+['D', 0],
+['B', 10],
 ];
 
 // ============================================================================
@@ -179,9 +191,9 @@ defeat: ‘信号途絶’,
 // SECTION 5: DATA PARSERS & HELPERS
 // ============================================================================
 
-const EQ_SCHEMA = [‘slots’, ‘name’, ‘power’, ‘type’, ‘rarity’, ‘disposable’, ‘mult’, ‘ability’];
-const EN_SCHEMA = [‘difficulty’, ‘name’, ‘hull’, ‘shield’, ‘rank’, ‘attacks’, ‘skills’];
-const ST_SCHEMA = [‘stage’, ‘type’, ‘difficulty’, ‘rank’];
+const EQ_SCHEMA = ['slots', 'name', 'power', 'type', 'rarity', 'disposable', 'mult', 'ability'];
+const EN_SCHEMA = ['difficulty', 'name', 'hull', 'shield', 'rank', 'attacks', 'skills'];
+const ST_SCHEMA = ['rank', 'difficulty'];
 
 const parse = (schema, data) => data.map(row => {
 const obj = {};
@@ -194,8 +206,8 @@ const enemyList = parse(EN_SCHEMA, EN);
 const stageList = parse(ST_SCHEMA, ST);
 
 // Game progression helpers
-const getAct = (stage) => Math.floor((stage - 1) / 10) + 1;
-const getStageInAct = (stage) => ((stage - 1) % 10) + 1;
+const getAct = (stage) => Math.floor((stage - 1) / 12) + 1;
+const getStageInAct = (stage) => ((stage - 1) % 12) + 1;
 const getActScale = (act) => [1, 1.5, 2][act - 1] || 1;
 
 // Damage calculation
@@ -281,6 +293,14 @@ if (player.skirmish) { base[3] = 'MID'; }
 return base;
 };
 
+// Stage rank to enemy rank mapping
+const STAGE_RANK_MAP = { 'N': R.N, 'E': R.E, 'B': R.B };
+const getStageData = (stage) => {
+const stageInAct = getStageInAct(stage);
+return stageList[stageInAct - 1] || null;
+};
+const getEnemyRank = (stageRank) => STAGE_RANK_MAP[stageRank] || null;
+
 // ============================================================================
 // SECTION 5.5: SEEDED PRNG SYSTEM
 // ============================================================================
@@ -330,13 +350,58 @@ const generateSeed = () => Math.floor(Math.random() * 0xFFFFFFFF);
 // SECTION 6: INITIAL STATE
 // ============================================================================
 
+// Helper to create bag-randomized item decks
+const createItemDeck = (rarity, numBags, rng) => {
+const itemsOfRarity = equipmentList.filter(e => e.rarity === rarity);
+const deck = [];
+for (let bag = 0; bag < numBags; bag++) {
+  const shuffledBag = seededShuffle(itemsOfRarity.map(e => e.name), rng);
+  deck.push(...shuffledBag);
+}
+return deck;
+};
+
+// Helper to create reward rarity decks
+const createRarityDeck = (normalCount, eliteCount, bossCount, rng) => {
+const deck = [];
+for (let i = 0; i < normalCount; i++) deck.push(1); // rarity 1 = normal
+for (let i = 0; i < eliteCount; i++) deck.push(2);  // rarity 2 = elite
+for (let i = 0; i < bossCount; i++) deck.push(3);   // rarity 3 = boss
+return seededShuffle(deck, rng);
+};
+
 const createInitialPlayer = (seed = null) => {
 // Initialize seed
 const actualSeed = seed !== null ? seed : generateSeed();
 initializeRNG(actualSeed);
+const rng = getRNG();
 
 // Create ID counter for this run
 const idCounter = createIdCounter(0);
+
+// Create item decks (bag randomizer system)
+// 3 bags per rarity level
+const normalItemsDeck = createItemDeck(1, 3, rng);
+const eliteItemsDeck = createItemDeck(2, 3, rng);
+const bossItemsDeck = createItemDeck(3, 3, rng);
+
+// Create reward rarity decks for each rank per ACT
+// Normal rank: 7 combats × 3 choices = 21 cards per ACT
+const normalRarityDecks = {
+  1: createRarityDeck(20, 1, 0, rng),   // ACT I: 95% normal, 5% elite
+  2: createRarityDeck(16, 4, 1, rng),   // ACT II: 80% normal, 15% elite, 5% boss
+  3: createRarityDeck(12, 7, 2, rng),   // ACT III: 60% normal, 30% elite, 10% boss
+};
+// Elite rank: 2 combats × 3 choices = 6 cards per ACT
+const eliteRarityDecks = {
+  1: createRarityDeck(0, 6, 0, rng),    // ACT I: 100% elite
+  2: createRarityDeck(0, 5, 1, rng),    // ACT II: 90% elite, 10% boss
+  3: createRarityDeck(0, 4, 2, rng),    // ACT III: 67% elite, 33% boss
+};
+
+// Boss reward pool - shuffled at game start
+const allBossRewards = ['expansion', 'reinforcement', 'boarding', 'skirmish', 'logistics', 'doctrine'];
+const bossRewards = seededShuffle(allBossRewards, rng);
 
 return {
   // Seed system
@@ -365,8 +430,18 @@ return {
   boarding: false,
   skirmish: false,
   doctrine: false,
-  bossRewardsAct1: ['expansion', 'reinforcement', 'boarding'],
-  bossRewardsAct2: ['skirmish', 'logistics', 'doctrine'],
+
+  // Item decks (pre-shuffled)
+  normalItemsDeck,
+  eliteItemsDeck,
+  bossItemsDeck,
+
+  // Reward rarity decks (per rank, per act)
+  normalRarityDecks,
+  eliteRarityDecks,
+
+  // Boss rewards pool (shuffled)
+  bossRewards,
 };
 };
 
@@ -696,15 +771,15 @@ return (
 
 function MainScene({ stage, setScene }) {
 useEffect(() => {
-const stageInAct = getStageInAct(stage);
-const stageData = stageList.find(s => s.stage === stageInAct);
+const stageData = getStageData(stage);
 
 if (!stageData) {
   setScene('end');
   return;
 }
 
-setScene(stageData.type === 'C' ? 'combat' : 'dock');
+// 'D' = Dock, otherwise combat ('N', 'E', 'B')
+setScene(stageData.rank === 'D' ? 'dock' : 'combat');
 
 }, [stage, setScene]);
 
@@ -734,8 +809,9 @@ return { ...player };
 // Get enemy data
 const act = getAct(stage);
 const scale = getActScale(act);
-const stageData = stageList.find(s => s.stage === getStageInAct(stage));
-const enemyBase = enemyList.find(e => e.difficulty === stageData?.difficulty && e.rank === stageData?.rank);
+const stageData = getStageData(stage);
+const enemyRank = getEnemyRank(stageData?.rank);
+const enemyBase = enemyList.find(e => e.difficulty === stageData?.difficulty && e.rank === enemyRank);
 
 const enemy = useMemo(() => {
 if (!enemyBase) return null;
@@ -825,7 +901,7 @@ setPlayer({
 
 // Determine result
 let combatOutcome = 'defeat';
-if (stage === 30 && combatResult.eHull <= 0 && finalHull > 0) {
+if (stage === 36 && combatResult.eHull <= 0 && finalHull > 0) {
   combatOutcome = 'clear';
 } else if (combatResult.eHull <= 0 && finalHull > 0) {
   combatOutcome = 'victory';
@@ -948,24 +1024,64 @@ return (
 
 function RewardScene({ player, setPlayer, stage, advance }) {
 const act = getAct(stage);
-const stageData = stageList.find(s => s.stage === getStageInAct(stage));
-const enemyBase = enemyList.find(e => e.difficulty === stageData?.difficulty && e.rank === stageData?.rank);
+const stageData = getStageData(stage);
+const enemyRank = getEnemyRank(stageData?.rank);
+const isBoss = enemyRank === R.B;
 
-const rarityMap = { NORMAL: 1, ELITE: 2, BOSS: 3 };
-const targetRarity = rarityMap[enemyBase?.rank] || 1;
-const pool = equipmentList.filter(e => e.rarity === targetRarity);
+// Get 3 reward options from pre-shuffled decks
+const [options, setOptions] = useState(() => {
+const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
+                    stageData?.rank === 'E' ? player.eliteRarityDecks : null;
 
-// Use seeded shuffle for deterministic reward selection
-const [options] = useState(() => {
-const rng = getRNG();
-return seededShuffle(pool, rng).slice(0, 3);
+const rewardItems = [];
+for (let i = 0; i < 3; i++) {
+  let rarity;
+  if (isBoss) {
+    rarity = 3; // Boss always gives boss rarity items
+  } else if (rarityDecks && rarityDecks[act]?.length > 0) {
+    rarity = rarityDecks[act][0]; // Peek at first card
+  } else {
+    rarity = stageData?.rank === 'E' ? 2 : 1;
+  }
+
+  // Get item from appropriate deck
+  let deck;
+  if (rarity === 3 && player.bossItemsDeck.length > 0) {
+    deck = player.bossItemsDeck;
+  } else if (rarity === 2 && player.eliteItemsDeck.length > 0) {
+    deck = player.eliteItemsDeck;
+  } else {
+    deck = player.normalItemsDeck;
+  }
+
+  if (deck.length > 0) {
+    const itemName = deck[i % deck.length];
+    const item = equipmentList.find(e => e.name === itemName);
+    if (item && !rewardItems.find(r => r.name === item.name)) {
+      rewardItems.push(item);
+    }
+  }
+}
+
+// Fallback if not enough unique items
+while (rewardItems.length < 3) {
+  const fallbackPool = equipmentList.filter(e =>
+    e.rarity > 0 && !rewardItems.find(r => r.name === e.name)
+  );
+  if (fallbackPool.length > 0) {
+    rewardItems.push(fallbackPool[0]);
+  } else {
+    break;
+  }
+}
+
+return rewardItems;
 });
 const [selectedItem, setSelectedItem] = useState(null);
 const [selectedBonus, setSelectedBonus] = useState(null);
 
-const isBoss = enemyBase?.rank === R.B;
-const bossRewards = act === 1 ? player.bossRewardsAct1 :
-act === 2 ? player.bossRewardsAct2 : [];
+// Get available boss rewards (first 3 from shuffled pool for ACT I/II)
+const availableBossRewards = isBoss && act <= 2 ? player.bossRewards.slice(0, 3) : [];
 
 // Active boss rewards
 const activeBonuses = [
@@ -981,12 +1097,34 @@ const newPlayer = { ...player };
 // Add selected item
 if (selectedItem) {
   newPlayer.inventory = [...player.inventory, createItem(selectedItem, player.itemIdCounter)];
+
+  // Consume from appropriate deck
+  const selectedItemData = options.find(o => o.name === selectedItem);
+  if (selectedItemData) {
+    const rarity = selectedItemData.rarity;
+    if (rarity === 3) {
+      newPlayer.bossItemsDeck = player.bossItemsDeck.filter(name => name !== selectedItem);
+    } else if (rarity === 2) {
+      newPlayer.eliteItemsDeck = player.eliteItemsDeck.filter(name => name !== selectedItem);
+    } else {
+      newPlayer.normalItemsDeck = player.normalItemsDeck.filter(name => name !== selectedItem);
+    }
+  }
+
+  // Consume rarity cards (3 cards per reward choice)
+  if (!isBoss && stageData?.rank === 'N') {
+    newPlayer.normalRarityDecks = { ...player.normalRarityDecks };
+    newPlayer.normalRarityDecks[act] = player.normalRarityDecks[act]?.slice(3) || [];
+  } else if (!isBoss && stageData?.rank === 'E') {
+    newPlayer.eliteRarityDecks = { ...player.eliteRarityDecks };
+    newPlayer.eliteRarityDecks[act] = player.eliteRarityDecks[act]?.slice(3) || [];
+  }
 }
 
 // Apply boss reward
 if (isBoss) {
   newPlayer.hull = newPlayer.max_hull; // Full repair
-  
+
   if (selectedBonus) {
     switch (selectedBonus) {
       case 'expansion':
@@ -1014,13 +1152,9 @@ if (isBoss) {
         newPlayer.doctrine = true;
         break;
     }
-    
-    // Remove claimed reward
-    if (act === 1) {
-      newPlayer.bossRewardsAct1 = player.bossRewardsAct1.filter(r => r !== selectedBonus);
-    } else if (act === 2) {
-      newPlayer.bossRewardsAct2 = player.bossRewardsAct2.filter(r => r !== selectedBonus);
-    }
+
+    // Remove claimed reward from pool
+    newPlayer.bossRewards = player.bossRewards.filter(r => r !== selectedBonus);
   }
 }
 
@@ -1029,7 +1163,7 @@ advance('main');
 
 };
 
-const canClaim = selectedItem && (!isBoss || selectedBonus);
+const canClaim = selectedItem && (!isBoss || !availableBossRewards.length || selectedBonus);
 
 return (
 <div className="max-w-4xl mx-auto">
@@ -1051,10 +1185,10 @@ return (
   </div>
 
   {/* Boss Reward Selection */}
-  {isBoss && bossRewards.length > 0 && (
+  {isBoss && availableBossRewards.length > 0 && (
     <div className="mb-4">
       <div className="font-bold mb-2">{UI.label.bossReward}:</div>
-      {bossRewards.map(id => (
+      {availableBossRewards.map(id => (
         <div
           key={id}
           className="text-sm cursor-pointer hover:bg-green-900 mb-1"
@@ -1214,7 +1348,7 @@ return (
 }
 
 function EndScene({ player, stage, onRestart }) {
-const cleared = stage >= 30 && player.hull > 0;
+const cleared = stage >= 36 && player.hull > 0;
 
 const activeBonuses = [
 player.boarding && ‘白兵戦’,
