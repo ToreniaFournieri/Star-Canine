@@ -272,7 +272,7 @@ const EN = [
 - Each ACT has 12 stages. ACT I(stage 1-12), ACT II(stage 13-24), ACT III(stage 25-36) and they have same stage layout(`ST`). 
 
 Schema: `[stage, rank, difficulty]`
-- `rank`: `'N'` (Normal), `'E'` (Elite), `'B'` (Boss), `'D'` (Dock)
+- `rank`: `'N'` (Normal enemy), `'E'` (Elite enemy), `'B'` (Boss enemy), `'D'` (Dock)
 - `difficulty`: Enemy difficulty level (0 for Dock)
 
 ```javascript
