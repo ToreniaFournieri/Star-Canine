@@ -288,8 +288,20 @@ const ST = [
 ### 4.1 Initial State
 
 1. Initialize randomness
-  - **Deck-based randomness**: Items drawn from pre-shuffled decks (Tetris-style) for better distribution
-  - **Pre-sized decks for items**: Each deck is created with 3x multiplicity at game start to ensure sufficient capacity throughout the entire game without running out
+- **Deck-based randomness**: Items drawn from pre-shuffled decks (Tetris-style) for better distribution
+- **Pre-sized decks for items**: Each deck is created with 3x multiplicity at game start to ensure sufficient capacity throughout the entire game without running out
+  - Normal items (rarity 1) × 3
+  - Elite items (rarity 2) × 3
+  - Boss items (rarity 3) × 3
+- **Reward decision decks**: Determine item rarity reward per enemy rank,round up
+  - Deck size = normal combats per ACT × 3 (reward choices) = ex. 15 cards
+  - Normal rank:
+    - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (14,1,0)
+    - ACT II:  80% NORMAL, 15% ELITE, 5% BOSS   (12,3,1)
+    - ACT III:  60% NORMAL, 30% ELITE, 10% BOSS   (9,6,2)
+  - Elite rank:
+
+
   - **Boss reward distribution**: The boss reward deck is ceated with one set at game atart. 
 
 2. Define
