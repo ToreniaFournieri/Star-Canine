@@ -234,7 +234,7 @@ const EQ = [
   [1, "🛡️⚠️ シェル", 28, T.S, 1, 0, null, T.L, 0.8],
   [1, "🛡️💥 エフェメラ・シールド", 40, T.S, 1, 1, null, null],
   [1, "🛡️🛡️ イージス", 30, T.S, 2, 0, null, null],
-  [1, "🛡️ ⤴️ バリアー", 20, T.S, 3, 0, null, [AB.GR, 2]],
+  [1, "🛡️⤴️ バリアー", 20, T.S, 3, 0, null, [AB.GR, 2]],
 
   // === HULL ===
   [1, "🔧💥 ダメージコントロール", 40, T.H, 1, 1, null, null],
@@ -646,7 +646,8 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.9.0**|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
+|**0.9.1**|Prediction system, refines master data. specification bug fix. |
+|*0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
 |0.8.4.1  |Initial stable release.                                                               |
