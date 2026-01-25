@@ -312,8 +312,8 @@ const ST = [
   - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 7 combats, then 21 cards
   - Normal rank:
     - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (20,1,0)
-    - ACT II:  80% NORMAL, 10% ELITE, 5% BOSS   (18,2,1)
-    - ACT III:  60% NORMAL, 20% ELITE, 10% BOSS   (15,4,2)
+    - ACT II:  80% NORMAL, 10% ELITE, 0% BOSS   (19,2,0)
+    - ACT III:  60% NORMAL, 20% ELITE, 5% BOSS   (16,4,1)
   - Elite rank:
     - ACT I:   0% NORMAL, 100% ELITE, 0 BOSS  (0,6,0)
     - ACT II:  0% NORMAL, 90% ELITE, 10% BOSS   (0,5,1)
