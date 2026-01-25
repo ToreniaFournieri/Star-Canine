@@ -109,6 +109,7 @@ const EQ = [
 
 // === MID (Fighters) ===
 [1, “✈️ ドローン”, 12, T.M, 1, 0, null, null],
+[1, “✈️💥 キラードローン”, 25, T.M, 1, 1, null, null],
 [1, “✈️⚠️ スカベンジャー”, 20, T.M, 1, 0, [T.M, 0.9], null],
 [1, “✈️⤴️ ルーキー・ファイター”, 5, T.M, 1, 0, null, [AB.GR, 2]],
 [1, “✈️✈️ ブルーウルフ”, 20, T.M, 2, 0, null, null],
@@ -116,6 +117,7 @@ const EQ = [
 
 // === CLOSE (Beams) ===
 [1, “⚡ クロウ”, 15, T.C, 1, 0, null, null],
+[1, “⚡💥 ソウル”, 30, T.C, 1, 1, null, null],
 [1, “⚡🩸 ファング”, 10, T.C, 1, 0, null, [AB.LS]],
 [1, “⚡🛡️ アイアン・ビーム”, 12, T.C, 1, 0, null, [AB.SH, 10]],
 [1, “⚡🔺カジェル”, 16, T.C, 2, 0, [T.C, 1.2], null],
@@ -123,19 +125,20 @@ const EQ = [
 
 // === SHIELD ===
 [1, “🛡️ 装甲板”, 20, T.S, 1, 0, null, null],
+[1, “🛡️⚠️ シェル”, 28, T.S, 1, 0, [T.L, 0.8], null],
 [1, “🛡️💥 エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
 [1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
-[1, “🛡️ ⤴️ バリアー”, 20, T.S, 3, 0, null, [AB.GR, 2]],
+[1, “🛡️⤴️ バリアー”, 20, T.S, 3, 0, null, [AB.GR, 2]],
 
 // === HULL ===
-[1, “🔧 💥ダメージコントロール”, 40, T.H, 1, 1, null, null],
+[1, “🔧💥 ダメージコントロール”, 40, T.H, 1, 1, null, null],
 [1, “🔧 自動修理装置”, 15, T.H, 1, 0, null, null],
 
 // === MODULE ===
-[1, “🟫🔺 ダブルシールド”, 0, T.X, 1, 0, [T.S, 2.0], null],
-[2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 2.0], null],
-[1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 2.0], [AB.NR]],
-[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 2.0], [AB.SIM]]
+[1, “🟫🔺 傾斜防壁”, 0, T.X, 1, 0, [T.S, 1.5], null],
+[2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 1.5], null],
+[1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
+[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
 ];
 
 const EN = [
@@ -325,14 +328,14 @@ const eliteItemsDeck = createItemDeck(2, 3, rng);
 const bossItemsDeck = createItemDeck(3, 3, rng);
 
 const normalRarityDecks = {
-1: createRarityDeck(20, 1, 0, rng),
-2: createRarityDeck(16, 4, 1, rng),
-3: createRarityDeck(12, 7, 2, rng),
+1: createRarityDeck(20, 1, 0, rng),  // ACT I: 95% Normal, 5% Elite (20:1:0)
+2: createRarityDeck(19, 2, 0, rng),  // ACT II: 90% Normal, 10% Elite (19:2:0)
+3: createRarityDeck(16, 4, 1, rng),  // ACT III: 75% Normal, 20% Elite, 5% Boss (16:4:1)
 };
 const eliteRarityDecks = {
-1: createRarityDeck(0, 6, 0, rng),
-2: createRarityDeck(0, 5, 1, rng),
-3: createRarityDeck(0, 4, 2, rng),
+1: createRarityDeck(0, 6, 0, rng),   // ACT I: 100% Elite (0:6:0)
+2: createRarityDeck(0, 5, 1, rng),   // ACT II: 90% Elite, 10% Boss (0:5:1)
+3: createRarityDeck(0, 4, 2, rng),   // ACT III: 67% Elite, 33% Boss (0:4:2)
 };
 
 const allBossRewards = [‘expansion’, ‘reinforcement’, ‘boarding’, ‘skirmish’, ‘logistics’, ‘doctrine’];
@@ -543,6 +546,8 @@ if (turn === 3 && hasSkill(enemy, SK.EXP)) {
   log.push(`  自爆: ${expVal}ダメージ → ${beforeExplosion}HP → ${pHull}HP`);
   eHull = 0;
   log.push(`  敵艦自壊`);
+  log.push('');
+  break;
 } else if (eDmg > 0) {
   const beforeEnemyAtk = pHull;
   const eDmgResult = applyDamage(eDmg, pShield, pHull);
