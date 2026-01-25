@@ -647,7 +647,7 @@ const getTurnOrder = (player) => {
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
 |**0.9.1**|Prediction system, refines master data. specification bug fix. |
-|*0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
+|0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
 |0.8.4.1  |Initial stable release.                                                               |
