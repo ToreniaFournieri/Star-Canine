@@ -1,4 +1,4 @@
-# STAR CANINE v0.9.1 - SPECIFICATION
+# STAR CANINE v0.9.2 - SPECIFICATION
 
 Containing all game rules, data, and UI text.
 
@@ -511,15 +511,24 @@ Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite a
 - Pre combat scene:
 **a fatal turn prediction system** and **an enemy defeat turn prediction**
   - Display like this:
-    概算予測✓ T2で撃破
-    与ダメージ量: 40
-    被ダメージ量: 50
+
+```
+概算予測✓ T2で撃破
+与ダメージ量: 40
+被ダメージ量: 50
+```
+    or 
+```
+概算予測 ⚠️ T3で沈没
+与ダメージ量: 55
+被ダメージ量: 70
+```
 
     - Current hull and shield values
     - Enemy attack pattern for each turn
-    - ACT scaling multipliers
     - Enemy abilities (OVERLOAD, DORMANT, EXPLOSIVE)
     - Boss reward effect: boarding, skirmish
+
     - **Intentional imperfection** Do not perfectly emulate the damages. ignore LIFE-STEAL, SHIELD_BREAK or repairing effect.
 
 ### 8.2 Scene Labels
@@ -683,7 +692,7 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.9.1**|Prediction system, refines master data. specification bug fix. |
+|**0.9.2**|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
 |0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
