@@ -389,7 +389,7 @@ rewardRarityDecks: {}
 |---|------|-----------|
 |I  |1-12  |×1.0       |
 |II |13-24 |×1.5       |
-|III|25-36 |×2.0       |
+|III|25-36 |×2.5       |
 
 
 Scaling applies to enemy `hull`, `shield`, and all `attacks`.
