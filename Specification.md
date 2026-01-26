@@ -254,6 +254,7 @@ const EQ = [
   [1, "⚡🛡️ アイアン・ビーム", 12, T.C, 1, 0, null, [AB.SH, 10]],
   [1, "⚡🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
   [1, "⚡🪓 シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB]],
+  [1, "⚡⚡️⚡️ トールハンマー", 30, T.C, 3, 0, null, [T.M, 0.9]],
 
   // === SHIELD ===
   [1, "🛡️ 装甲板", 20, T.S, 1, 0, null, null],
@@ -338,7 +339,7 @@ const ST = [
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
   - Normal deck: 3 bags × 19 types = 57 cards
   - Elite deck: 3 bags × 12 types = 36 cards
-  - Boss deck: 3 bags × 7 types = 21 cards
+  - Boss deck: 3 bags × 8 types = 24 cards
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
