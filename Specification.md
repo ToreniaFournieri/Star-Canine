@@ -270,7 +270,7 @@ const EQ = [
   [1, "🟫🔺 傾斜防壁", 0, T.X, 1, 0, [T.S, 1.5], null],
   [1, "💉 緊急防壁", 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
   [2, "⚙️ 設備最適化", 0, T.X, 2, 0, null, [AB.COMPACT]],
-  [1, "🔥 バーサーカーコア", 0, T.X, 2, 0, null, [AB.BERSERKER]],
+  [1, "🔥 バーサーカーコア", 0, T.X, 3, 0, null, [AB.BERSERKER]],
   [2, "🔥🔺 弾頭最適化装置", 0, T.X, 3, 0, [T.L, 1.5], null],
   [1, "🏗️🔺 スウォーム・ハンガー", 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
   [1, "💎🔺 プリズマティック・フォーカス", 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
@@ -336,8 +336,8 @@ const ST = [
   - One "bag" = 1 copy of each item type in that rarity
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
   - Normal deck: 3 bags × 19 types = 57 cards
-  - Elite deck: 3 bags × 13 types = 39 cards
-  - Boss deck: 3 bags × 5 types = 15 cards
+  - Elite deck: 3 bags × 12 types = 36 cards
+  - Boss deck: 3 bags × 6 types = 18 cards
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
