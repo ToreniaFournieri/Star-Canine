@@ -159,7 +159,7 @@ const AB = {
     id: 'COMPACT',
     name: '圧縮設計',
     desc: "この装備以外の2スロット以上の装備を1スロットとして扱う。",
-    format: () => 'スロット圧縮'
+    format: () => 'スロット圧縮(自身除く)'
   },
   BERSERKER: {
     id: 'BERSERKER',
