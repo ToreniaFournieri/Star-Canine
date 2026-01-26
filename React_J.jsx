@@ -18,7 +18,7 @@ const SK = {
 GATE: { id: ‘GATE’,     name: ‘防壁’,   desc: “ターン終了時、シールドを指定値まで再生成する。” },
 REG:  { id: ‘REGEN’,    name: ‘自己修復’, desc: “毎ターン、耐久値を回復する。” },
 DEG:  { id: ‘DEGEN’,    name: ‘腐食’,   desc: “毎ターン、耐久値が減少する。” },
-EXP:  { id: ‘EXPLOSIVE’, name: ‘自爆’,  desc: “第4ターンに固定ダメージの自爆攻撃を行い、自壊する。” },
+EXP:  { id: ‘EXPLOSIVE’, name: ‘自爆’,  desc: “第4ターンに固定ダメージを相手に与える自爆攻撃を行い、自壊する。” },
 OVR:  { id: ‘OVERLOAD’, name: ‘過負荷’, desc: “第4ターン以降、攻撃ダメージが上昇する。” },
 DOR:  { id: ‘DORMANT’,  name: ‘休眠’,   desc: “第4ターン以降、攻撃を停止する。” },
 CL:   { id: ‘COUNTER_LONG’, name: ‘迎撃’, desc: “長距離攻撃を受けた際、長距離武装数×指定値で反撃する。” },
@@ -33,6 +33,10 @@ LS:  { id: ‘LIFE_STEAL’,  name: ‘生命吸収’,     format: () => ‘生
 GR:  { id: ‘GROWTH’,      name: ‘成長’,         format: (v) => `成長+${v}` },
 SB:  { id: ‘SHIELD_BREAK’, name: ‘シールド破壊’, format: () => ‘シールド破壊’ },
 BF:  { id: ‘BACKFIRE’,    name: ‘反動’,         format: (v) => `反動${v}` },
+OVERDRIVE: { id: ‘OVERDRIVE’, name: ‘緊急過負荷’, format: () => ‘緊急過負荷(HP-30,シールド+60)’ },
+CAPACITOR: { id: ‘CAPACITOR’, name: ‘キャパシタ蓄積’, format: () => ‘シールド変換50%’ },
+COMPACT: { id: ‘COMPACT’, name: ‘圧縮設計’, format: () => ‘スロット圧縮’ },
+BERSERKER: { id: ‘BERSERKER’, name: ‘バーサーカー’, format: () => ‘低耐久強化×1.3’ },
 };
 
 const BR = {
@@ -70,22 +74,20 @@ leave: { title: ‘ドックを出る’, desc: ‘何もせずに次のステ�
 };
 
 const STORY = {
-opening: `> 遭難信号を受信。
+opening: `> 暗号信号を受信
 
 > 送信元: LAIKA
 
 「私よ。
 K9が陥落した。
-ソーラー・ベアが惑星を奪った。
-私も捕らえられた。
-あなたがここにいなかったことは知っている。
+ソーラー・ベアが私達の星を奪っていったわ。
+私達の街にも奴らが来ている。
 
 どうか…死なないで。」
 
 > 信号途絶。
 
-> K9へ航路設定中。`,   victory: `K9軌道を制圧。
-> LAIKAを救出。
+> 惑星K9へ航路設定`,   victory: `LAIKAを救出
 
 「帰ってきてくれたのね。」`,
 defeat: ‘信号途絶’,
@@ -110,9 +112,10 @@ const EQ = [
 // === MID (Fighters) ===
 [1, “✈️ ドローン”, 12, T.M, 1, 0, null, null],
 [1, “✈️💥 キラードローン”, 25, T.M, 1, 1, null, null],
-[1, “✈️⚠️ スカベンジャー”, 20, T.M, 1, 0, [T.M, 0.9], null],
+[1, “✈️⚠️ スカベンジャー”, 18, T.M, 1, 0, [T.M, 0.9], null],
 [1, “✈️⤴️ ルーキー・ファイター”, 5, T.M, 1, 0, null, [AB.GR, 2]],
-[1, “✈️✈️ ブルーウルフ”, 20, T.M, 2, 0, null, null],
+[1, “✈️✈️ ウイング”, 22, T.M, 2, 0, null, null],
+[1, “✈️✈️✈️ ブルーウルフ”, 33, T.M, 3, 0, null, [T.L, 0.9]],
 [1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
 
 // === CLOSE (Beams) ===
@@ -128,6 +131,7 @@ const EQ = [
 [1, “🛡️⚠️ シェル”, 28, T.S, 1, 0, [T.L, 0.8], null],
 [1, “🛡️💥 エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
 [1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
+[1, “🛡️🔋 キャパシタ”, 20, T.S, 2, 0, null, [AB.CAPACITOR]],
 [1, “🛡️⤴️ バリアー”, 20, T.S, 3, 0, null, [AB.GR, 2]],
 
 // === HULL ===
@@ -136,6 +140,9 @@ const EQ = [
 
 // === MODULE ===
 [1, “🟫🔺 傾斜防壁”, 0, T.X, 1, 0, [T.S, 1.5], null],
+[1, “💉 緊急防壁”, 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
+[2, “⚙️ 設備最適化”, 0, T.X, 2, 0, null, [AB.COMPACT]],
+[1, “🔥 バーサーカーコア”, 0, T.X, 3, 0, null, [AB.BERSERKER]],
 [2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 1.5], null],
 [1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
 [1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
@@ -143,15 +150,15 @@ const EQ = [
 
 const EN = [
 [1, “スカミッシャー”, 40, 0, R.N, [0, 0, 10], []],
-[2, “ドリフター”, 51, 5, R.N, [20, 0, 10], [[SK.GATE, 5]]],
-[3, “自己修復機”, 40, 10, R.N, [0, 10, 15], [[SK.REG, 8]]],
-[4, “ゾンビ”, 25, 80, R.N, [0, 0, 20], [[SK.DEG, 5]]],
-[5, “遺物哨戒機”, 60, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
-[6, “特攻フリゲート”, 10, 65, R.N, [0, 0, 0], [[SK.EXP, 180]]],
-[7, “重装巡洋艦”, 80, 80, R.N, [5, 10, 10], [[SK.EXP, 60]]],
-[8, “シールド・ゲート”, 55, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
-[9, “オーバーロード・エンフォーサー”, 70, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
-[10, “セレスティアル・リーパー”, 100, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
+[2, “ドリフター”, 51, 5, R.N, [20, 0, 10], []],
+[3, “自己修復機”, 60, 10, R.N, [0, 10, 15], [[SK.REG, 8]]],
+[4, “ゾンビ”, 25, 90, R.N, [0, 0, 20], [[SK.DEG, 5]]],
+[5, “遺物哨戒機”, 80, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
+[6, “特攻フリゲート”, 20, 75, R.N, [0, 0, 0], [[SK.EXP, 180]]],
+[7, “重装巡洋艦”, 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
+[8, “シールド・ゲート”, 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
+[9, “オーバーロード・エンフォーサー”, 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
+[10, “セレスティアル・リーパー”, 200, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
 ];
 
 const ST = [
@@ -186,7 +193,7 @@ const stageList = parse(ST_SCHEMA, ST);
 
 const getAct = (stage) => Math.floor((stage - 1) / 12) + 1;
 const getStageInAct = (stage) => ((stage - 1) % 12) + 1;
-const getActScale = (act) => [1, 1.5, 2][act - 1] || 1;
+const getActScale = (act) => [1, 1.5, 2.5][act - 1] || 1;
 
 const applyDamage = (dmg, shield, hull) => {
 const toShield = Math.min(shield, dmg);
@@ -406,6 +413,7 @@ HULL: base.HULL * mult.HULL,
 
 equippedItems.forEach(item => {
 if (hasAbility(item, AB.SH)) final.SHIELD += getAbilityValue(item);
+if (hasAbility(item, AB.OVERDRIVE)) final.SHIELD += 60;
 if (hasAbility(item, AB.AM)) final.MID += getAbilityValue(item);
 });
 
@@ -419,17 +427,34 @@ const stats = calculateBattleStats(player, equippedItems);
 
 const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
 const hasNoRepair = equippedItems.some(i => hasAbility(i, AB.NR));
+const hasCapacitor = equippedItems.some(i => hasAbility(i, AB.CAPACITOR));
+const hasOverdrive = equippedItems.some(i => hasAbility(i, AB.OVERDRIVE));
+const hasBerserker = equippedItems.some(i => hasAbility(i, AB.BERSERKER));
 const longCount = equippedItems.filter(i => getTypeId(i.type) === ‘LONG’).length;
 
 let pShield = Math.round(stats.final.SHIELD);
 let pHull = Math.round(player.hull);
+
+// Apply OVERDRIVE
+if (hasOverdrive) {
+pHull = Math.max(1, pHull - 30);
+log.push(`緊急過負荷: 耐久値-30 → ${pHull}HP, シールド+60`);
+}
+
+// Apply BERSERKER multiplier if hull < 50%
+let berserkerMult = 1;
+if (hasBerserker && pHull < player.max_hull * 0.5) {
+berserkerMult = 1.3;
+log.push(`バーサーカー発動: 全ダメージ×1.3`);
+}
+
 let eShield = Math.round(enemy.shield);
 let eHull = Math.round(enemy.hull);
 
 log.push(`=== ACT ${getAct(player.stage)} | ${UI.label.stage} ${player.stage} | ${enemy.name} ===`);
 log.push(`自機: ${pHull}HP | シールド:${pShield}`);
 log.push(`敵艦: ${eHull}HP | シールド:${eShield}`);
-log.push(`${UI.label.attack}: 長${Math.round(stats.final.LONG)} 中${Math.round(stats.final.MID)} 近${Math.round(stats.final.CLOSE)}`);
+log.push(`${UI.label.attack}: 長${Math.round(stats.final.LONG * berserkerMult)} 中${Math.round(stats.final.MID * berserkerMult)} 近${Math.round(stats.final.CLOSE * berserkerMult)}`);
 log.push(’’);
 
 for (let turn = 0; turn < 6; turn++) {
@@ -437,7 +462,7 @@ const range = turns[turn];
 log.push(`--- T${turn + 1}: ${getRangeName(range)} ---`);
 
 ```
-const pDmg = stats.final[range];
+let pDmg = Math.round(stats.final[range] * berserkerMult);
 const rangeItems = equippedItems.filter(i => getTypeId(i.type) === range);
 
 if (pDmg > 0) {
@@ -455,7 +480,7 @@ if (pDmg > 0) {
   const dmgResult = applyDamage(pDmg, eShield, eHull);
   eShield = Math.round(dmgResult.shield);
   eHull = Math.round(dmgResult.hull);
-  log.push(`  自機攻撃: ${Math.round(pDmg)}ダメージ → ${beforeHull}HP → ${eHull}HP`);
+  log.push(`  自機攻撃: ${pDmg}ダメージ → ${beforeHull}HP → ${eHull}HP`);
 
   if (canLifeSteal) {
     let totalHeal = 0;
@@ -506,8 +531,9 @@ if (!hasSimultaneous && eHull <= 0) {
 
 if (hasSkill(enemy, SK.REG) && eHull > 0) {
   const regenVal = getSkillValue(enemy, SK.REG);
-  eHull += regenVal;
-  log.push(`  自己修復: +${regenVal}HP → ${eHull}HP`);
+  const beforeRegen = eHull;
+  eHull = Math.min(enemy.hull, eHull + regenVal);
+  log.push(`  自己修復: +${regenVal}HP → ${beforeRegen}HP → ${eHull}HP`);
 }
 
 if (hasSkill(enemy, SK.DEG)) {
@@ -586,7 +612,7 @@ log.push('');
 
 log.push(`=== 戦闘終了 ===`);
 
-return { log, pHull, pShield, eHull, hasNoRepair, hullRepair: stats.final.HULL };
+return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, battleShield: pShield, hullRepair: stats.final.HULL };
 };
 
 // Main Component
@@ -718,7 +744,16 @@ if (!enemy) return <div>エラー: 敵艦データが見つかりません</div>
 
 const equippedItems = tempPlayer.inventory.filter(i => tempPlayer.equipped.includes(i.id));
 const unequippedItems = tempPlayer.inventory.filter(i => !tempPlayer.equipped.includes(i.id));
-const usedSlots = equippedItems.reduce((sum, i) => sum + i.slots, 0);
+
+// Calculate used slots with COMPACT ability
+const hasCompact = equippedItems.some(i => hasAbility(i, AB.COMPACT));
+const usedSlots = equippedItems.reduce((sum, i) => {
+// If COMPACT is equipped, all items count as 1 slot
+if (hasCompact) {
+return sum + 1;
+}
+return sum + i.slots;
+}, 0);
 
 const toggleEquip = (item) => {
 const isEquipped = tempPlayer.equipped.includes(item.id);
@@ -728,43 +763,113 @@ setTempPlayer({
 equipped: tempPlayer.equipped.filter(id => id !== item.id),
 });
 } else {
-if (usedSlots + item.slots <= tempPlayer.max_slots) {
-setTempPlayer({
-…tempPlayer,
-equipped: […tempPlayer.equipped, item.id],
-});
+// Check if COMPACT is equipped (or if we’re equipping COMPACT itself)
+const willHaveCompact = hasAbility(item, AB.COMPACT) || equippedItems.some(i => hasAbility(i, AB.COMPACT));
+const itemSlots = willHaveCompact ? 1 : item.slots;
+
+```
+  if (usedSlots + itemSlots <= tempPlayer.max_slots) {
+    setTempPlayer({
+      ...tempPlayer,
+      equipped: [...tempPlayer.equipped, item.id],
+    });
+  }
 }
-}
+```
+
 };
 
 const preview = useMemo(() => {
 const stats = calculateBattleStats(tempPlayer, equippedItems);
+
+```
+// Apply BERSERKER if conditions met
+let berserkerMult = 1;
+const hasBerserker = equippedItems.some(i => hasAbility(i, AB.BERSERKER));
+if (hasBerserker && tempPlayer.hull < tempPlayer.max_hull * 0.5) {
+  berserkerMult = 1.3;
+}
+
 return {
-long: Math.round(stats.final.LONG),
-mid: Math.round(stats.final.MID),
-close: Math.round(stats.final.CLOSE),
-shield: Math.round(stats.final.SHIELD),
+  long: Math.round(stats.final.LONG * berserkerMult),
+  mid: Math.round(stats.final.MID * berserkerMult),
+  close: Math.round(stats.final.CLOSE * berserkerMult),
+  shield: Math.round(stats.final.SHIELD),
+  berserkerActive: berserkerMult > 1,
 };
+```
+
 }, [tempPlayer, equippedItems]);
 
-// Calculate if player will die and at which turn
-const fatalData = useMemo(() => {
+// Simplified prediction - intentionally imperfect per spec
+const prediction = useMemo(() => {
 const turns = getTurnOrder(tempPlayer);
 let simHull = Math.round(tempPlayer.hull);
 let simShield = Math.round(preview.shield);
+let simEnemyHull = Math.round(enemy.hull);
+let simEnemyShield = Math.round(enemy.shield);
+
+```
+// Apply OVERDRIVE to player hull
+const hasOverdrive = equippedItems.some(i => hasAbility(i, AB.OVERDRIVE));
+if (hasOverdrive) {
+  simHull = Math.max(1, simHull - 30);
+}
+
 let totalDamageDealt = 0;
 let totalDamageTaken = 0;
 
-```
 for (let turn = 0; turn < 6; turn++) {
   const range = turns[turn];
-  let pDmg = preview[range.toLowerCase()];
+  let pDmg = preview[range.toLowerCase()] || 0;
   
-  // Apply damage to enemy (for damage dealt tracking)
+  // Apply player damage to enemy
   if (pDmg > 0) {
+    const toShield = Math.min(simEnemyShield, pDmg);
+    simEnemyShield = Math.max(0, simEnemyShield - pDmg);
+    simEnemyHull = Math.max(0, simEnemyHull - (pDmg - toShield));
     totalDamageDealt += pDmg;
   }
   
+  // Check if enemy is defeated
+  if (simEnemyHull <= 0) {
+    return { 
+      type: 'victory', 
+      turn: turn + 1, 
+      damageDealt: totalDamageDealt, 
+      damageTaken: totalDamageTaken 
+    };
+  }
+  
+  // Enemy regen
+  if (hasSkill(enemy, SK.REG)) {
+    const regenVal = getSkillValue(enemy, SK.REG);
+    simEnemyHull = Math.min(enemy.hull, simEnemyHull + regenVal);
+  }
+  
+  // Enemy degen
+  if (hasSkill(enemy, SK.DEG)) {
+    const degenVal = getSkillValue(enemy, SK.DEG);
+    simEnemyHull -= degenVal;
+    if (simEnemyHull <= 0) {
+      return { 
+        type: 'victory', 
+        turn: turn + 1, 
+        damageDealt: totalDamageDealt, 
+        damageTaken: totalDamageTaken 
+      };
+    }
+  }
+  
+  // Enemy gate
+  if (hasSkill(enemy, SK.GATE)) {
+    const gateVal = getSkillValue(enemy, SK.GATE);
+    if (simEnemyShield < gateVal) {
+      simEnemyShield = gateVal;
+    }
+  }
+  
+  // Calculate enemy damage
   let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
   
   // Apply OVERLOAD/DORMANT (turn 4+)
@@ -777,97 +882,7 @@ for (let turn = 0; turn < 6; turn++) {
     eDmg = Math.round(eDmg * dorVal);
   }
   
-  // Apply EXPLOSIVE damage (turn 4)
-  if (turn === 3 && hasSkill(enemy, SK.EXP)) {
-    const expVal = getSkillValue(enemy, SK.EXP);
-    eDmg = expVal;
-  }
-  
-  // Apply damage
-  if (eDmg > 0) {
-    const toShield = Math.min(simShield, eDmg);
-    simShield = Math.max(0, simShield - eDmg);
-    simHull = Math.max(0, simHull - (eDmg - toShield));
-    totalDamageTaken += eDmg;
-  }
-  
-  if (simHull <= 0) {
-    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
-  }
-}
-return null; // Player survives
-```
-
-}, [tempPlayer, preview, enemy, act]);
-
-// Calculate which turn enemy will be defeated and damage taken
-const defeatData = useMemo(() => {
-const turns = getTurnOrder(tempPlayer);
-let simEnemyHull = Math.round(enemy.hull);
-let simEnemyShield = Math.round(enemy.shield);
-let simPlayerHull = Math.round(tempPlayer.hull);
-let simPlayerShield = Math.round(preview.shield);
-let totalDamageTaken = 0;
-let totalDamageDealt = 0;
-
-```
-for (let turn = 0; turn < 6; turn++) {
-  const range = turns[turn];
-  let pDmg = preview[range.toLowerCase()];
-  
-  // Apply damage to enemy
-  if (pDmg > 0) {
-    const toShield = Math.min(simEnemyShield, pDmg);
-    simEnemyShield = Math.max(0, simEnemyShield - pDmg);
-    simEnemyHull = Math.max(0, simEnemyHull - (pDmg - toShield));
-    totalDamageDealt += pDmg;
-  }
-  
-  if (simEnemyHull <= 0) {
-    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
-  }
-  
-  // Enemy regen (after player attack but before checking defeat)
-  if (hasSkill(enemy, SK.REG)) {
-    const regenVal = getSkillValue(enemy, SK.REG);
-    simEnemyHull += regenVal;
-  }
-  
-  // Enemy degen
-  if (hasSkill(enemy, SK.DEG)) {
-    const degenVal = getSkillValue(enemy, SK.DEG);
-    simEnemyHull -= degenVal;
-    if (simEnemyHull <= 0) {
-      return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
-    }
-  }
-  
-  // Enemy gate
-  if (hasSkill(enemy, SK.GATE)) {
-    const gateVal = getSkillValue(enemy, SK.GATE);
-    if (simEnemyShield < gateVal) {
-      simEnemyShield = gateVal;
-    }
-  }
-  
-  // Check if enemy is defeated - if so, enemy doesn't attack (unless simultaneous)
-  const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
-  if (simEnemyHull <= 0 && !hasSimultaneous) {
-    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
-  }
-  
-  // Calculate enemy attack damage for this turn
-  let eDmg = enemy.attacks[['LONG', 'MID', 'CLOSE'].indexOf(range)];
-  
-  if (turn >= 3 && hasSkill(enemy, SK.OVR)) {
-    const ovrVal = getSkillValue(enemy, SK.OVR);
-    eDmg = Math.round(eDmg * ovrVal);
-  }
-  if (turn >= 3 && hasSkill(enemy, SK.DOR)) {
-    const dorVal = getSkillValue(enemy, SK.DOR);
-    eDmg = Math.round(eDmg * dorVal);
-  }
-  
+  // EXPLOSIVE (turn 4)
   if (turn === 3 && hasSkill(enemy, SK.EXP)) {
     const expVal = getSkillValue(enemy, SK.EXP);
     eDmg = expVal;
@@ -875,22 +890,33 @@ for (let turn = 0; turn < 6; turn++) {
   
   // Apply damage to player
   if (eDmg > 0) {
-    const toShield = Math.min(simPlayerShield, eDmg);
-    const toHull = eDmg - toShield;
-    simPlayerShield = Math.max(0, simPlayerShield - eDmg);
-    simPlayerHull = Math.max(0, simPlayerHull - toHull);
+    const toShield = Math.min(simShield, eDmg);
+    simShield = Math.max(0, simShield - eDmg);
+    simHull = Math.max(0, simHull - (eDmg - toShield));
     totalDamageTaken += eDmg;
   }
   
-  // Check if player dies after enemy attacks
-  if (simPlayerHull <= 0 && hasSimultaneous) {
-    return { turn: turn + 1, damageDealt: totalDamageDealt, damageTaken: totalDamageTaken };
+  // Check if player is defeated
+  if (simHull <= 0) {
+    return { 
+      type: 'defeat', 
+      turn: turn + 1, 
+      damageDealt: totalDamageDealt, 
+      damageTaken: totalDamageTaken 
+    };
   }
 }
-return null; // Enemy survives
+
+// Survived all turns
+return { 
+  type: simEnemyHull > 0 ? 'draw' : 'victory', 
+  turn: 6, 
+  damageDealt: totalDamageDealt, 
+  damageTaken: totalDamageTaken 
+};
 ```
 
-}, [preview, enemy, tempPlayer, act]);
+}, [tempPlayer, preview, enemy, equippedItems]);
 
 const startCombat = () => {
 setPlayer(tempPlayer);
@@ -915,10 +941,27 @@ newInventory.forEach(item => {
 });
 
 let finalHull = combatResult.pHull;
-if (finalHull > 0 && !combatResult.hasNoRepair && combatResult.hullRepair > 0) {
-  const repairAmount = Math.round(combatResult.hullRepair);
-  finalHull = Math.min(tempPlayer.max_hull, finalHull + repairAmount);
-  combatResult.log.push(`戦闘後処理: 耐久値+${repairAmount}回復 → ${finalHull}HP`);
+if (finalHull > 0 && !combatResult.hasNoRepair) {
+  const baseRepair = Math.round(combatResult.hullRepair);
+  let totalRepair = baseRepair;
+  const repairParts = [];
+  
+  if (baseRepair > 0) {
+    repairParts.push(`耐久補助+${baseRepair}`);
+  }
+  
+  // Add CAPACITOR repair
+  if (combatResult.hasCapacitor && combatResult.battleShield > 0) {
+    const capacitorRepair = Math.floor(combatResult.battleShield * 0.5);
+    totalRepair += capacitorRepair;
+    combatResult.log.push(`キャパシタ蓄積: シールド${combatResult.battleShield} → +${capacitorRepair}HP回復`);
+    repairParts.push(`キャパシタ+${capacitorRepair}`);
+  }
+  
+  if (totalRepair > 0) {
+    finalHull = Math.min(tempPlayer.max_hull, finalHull + totalRepair);
+    combatResult.log.push(`戦闘後処理: ${repairParts.join(', ')} = +${totalRepair}HP回復 → ${finalHull}HP`);
+  }
 }
 
 const newEquipped = tempPlayer.equipped.filter(id => newInventory.some(i => i.id === id));
@@ -987,6 +1030,9 @@ return (
           <div className="text-xs">{UI.label.mid}: {preview.mid}</div>
           <div className="text-xs">{UI.label.close}: {preview.close}</div>
           <div className="text-xs">{UI.label.shield}: {preview.shield}</div>
+          {preview.berserkerActive && (
+            <div className="text-xs text-yellow-400 mt-1">バーサーカー発動中</div>
+          )}
         </div>
       </div>
       
@@ -1001,17 +1047,21 @@ return (
             ))}
           </div>
         )}
-        {defeatData ? (
-          <div className="text-xs mt-2 space-y-1">
-            <div className="text-green-400 font-bold">概算予測✓ T{defeatData.turn}で撃破</div>
-            <div className="text-green-300">与ダメージ量: {defeatData.damageDealt}</div>
-            <div className="text-green-300">被ダメージ量: {defeatData.damageTaken}</div>
-          </div>
-        ) : fatalData && (
-          <div className="text-xs mt-2 space-y-1">
-            <div className="text-red-400 font-bold">概算予測 ⚠️ T{fatalData.turn}で沈没</div>
-            <div className="text-red-300">与ダメージ量: {fatalData.damageDealt}</div>
-            <div className="text-red-300">被ダメージ量: {fatalData.damageTaken}</div>
+        
+        {/* Prediction Display - only show if victory or defeat */}
+        {(prediction.type === 'victory' || prediction.type === 'defeat') && (
+          <div className="mt-2 p-2 bg-opacity-30 border text-xs space-y-1"
+               style={{
+                 backgroundColor: prediction.type === 'victory' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+                 borderColor: prediction.type === 'victory' ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'
+               }}>
+            <div className={`font-bold ${prediction.type === 'victory' ? 'text-green-400' : 'text-red-400'}`}>
+              {prediction.type === 'victory' 
+                ? `簡易予測 ✓ T${prediction.turn}で撃破`
+                : `簡易予測 ⚠️ T${prediction.turn}で沈没`}
+            </div>
+            <div>与ダメージ量: {prediction.damageDealt}</div>
+            <div>被ダメージ量: {prediction.damageTaken}</div>
           </div>
         )}
       </div>
@@ -1020,14 +1070,14 @@ return (
     <div className="mb-4">
       <div className="font-bold mb-2">{UI.label.equipped} ({usedSlots}/{tempPlayer.max_slots})</div>
       {equippedItems.map(item => (
-        <ItemRow key={item.id} item={item} equipped onClick={() => toggleEquip(item)} />
+        <ItemRow key={item.id} item={item} equipped onClick={() => toggleEquip(item)} hasCompact={hasCompact} />
       ))}
     </div>
 
     <div className="mb-4">
       <div className="font-bold mb-2">{UI.label.inventory}</div>
       {unequippedItems.map(item => (
-        <ItemRow key={item.id} item={item} onClick={() => toggleEquip(item)} />
+        <ItemRow key={item.id} item={item} onClick={() => toggleEquip(item)} hasCompact={hasCompact} />
       ))}
     </div>
 
@@ -1136,7 +1186,6 @@ if (selectedItem) {
 }
 
 // Consume the 3 drawn items from decks
-// We need to reconstruct what was drawn and remove it
 const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
                     stageData?.rank === 'E' ? player.eliteRarityDecks : null;
 
@@ -1489,7 +1538,7 @@ return (
 );
 }
 
-function ItemRow({ item, equipped = false, onClick, showId = true }) {
+function ItemRow({ item, equipped = false, onClick, showId = true, hasCompact = false }) {
 const parts = [
 item.name,
 ‘|’,
@@ -1509,28 +1558,15 @@ const rarityColors = {
 };
 const textColor = rarityColors[item.rarity] || ‘text-green-400’;
 
+// Display effective slot count
+const displaySlots = hasCompact ? 1 : item.slots;
+
 return (
 <div
 className={`text-xs mb-1 ${textColor} ${onClick ? 'cursor-pointer hover:bg-green-900' : ''}`}
 onClick={onClick}
 >
-{equipped && ’✓ ‘}{showId && <span className="text-green-600">#{item.id} </span>}[{item.slots}] {parts.join(’ ’)}
+{equipped && ’✓ ‘}{showId && <span className="text-green-600">#{item.id} </span>}[{displaySlots}] {parts.join(’ ’)}
 </div>
 );
-}
-
-function ItemInfo({ item }) {
-const parts = [
-item.name,
-‘|’,
-getTypeName(item.type),
-`[${item.slots}]`,
-`${UI.label.power}:${item.power}`,
-];
-
-if (item.disposable) parts.push(‘💥’);
-if (item.mult) parts.push(formatMult(item.mult));
-if (item.ability) parts.push(formatAbility(item.ability));
-
-return <>{parts.join(’ ’)}</>;
 }
