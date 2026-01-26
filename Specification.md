@@ -565,15 +565,15 @@ const UI = {
   // Labels
   lbl_stage: 'ステージ',
   lbl_act: 'ACT',
-  lbl_hull: '耐久値',
+  lbl_hull: 'HP',
   lbl_shield: 'シールド',
-  lbl_slots: 'スロット',
+  lbl_slots: '装備枠',
   lbl_power: '威力',
   lbl_attack: '攻撃力',
   lbl_equipped: '装備中',
   lbl_inventory: '装備一覧',
   lbl_reward: '報酬',
-  lbl_boss_reward: 'ボス特典',
+  lbl_boss_reward: '獲得技能',
   lbl_preview: '予想攻撃力',
   
   // Results
