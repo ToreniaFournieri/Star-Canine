@@ -192,7 +192,7 @@ const BR = {
   },
   skirmish: {
     name: '遭遇戦',
-    desc: "装備スロット最大値+1。第4ターンを中距離に変更。",
+    desc: "装備スロット最大値+1。第3ターンを中距離に変更。",
     effect: (p) => { p.max_slots += 1; p.skirmish = true; },
   },
   logistics: {
@@ -406,7 +406,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 |---------|-|-|-|-----|-----|-----|
 |Default  |L|M|C|C    |M    |L    |
 |+Boarding|L|M|C|C    |**C**|**C**|
-|+Skirmish|L|M|C|**M**|M    |L    |
+|+Skirmish|L|M|**M**|C|M    |L    |
 
 ### 5.2 Combat Initialization
 1. Apply OVERDRIVE: If equipped, player hull -= 30
