@@ -386,11 +386,12 @@ rewardRarityDecks: {}
 
 ### 4.2 Act Scaling
 
-|ACT|Stages|Enemy Scale|
-|---|------|-----------|
-|I  |1-12  |×1.0       |
-|II |13-24 |×1.5       |
-|III|25-36 |×2.25       |
+| ACT | Stages | Hull/Shield Scale | Attack Scale |
+|-----|--------|-------------------|--------------|
+| I   | 1-12   | ×1.0              | ×1.0         |
+| II  | 13-24  | ×1.5              | ×1.3         |
+| III | 25-36  | ×2.25             | ×1.7         |
+
 
 
 Scaling applies to enemy `hull`, `shield`, and all `attacks`.
