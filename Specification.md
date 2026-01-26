@@ -481,8 +481,7 @@ Choose exactly ONE:
 |Option|Name    |Effect                                        |
 |------|--------|----------------------------------------------|
 |1     |緊急修理    |Scrap N items → +30% max_hull (N = ACT number)|
-|2     |アップグレード    |Scrap N items (N = ACT number) → details below
-|
+|2     |アップグレード    |Scrap N items (N = ACT number) → details below|
 |3     |緊急ミサイル製造|max_hull −10 → +1 🚀 ランス                       |
 |4     |出港      |No effect                                     |
 
