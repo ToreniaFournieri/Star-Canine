@@ -510,7 +510,7 @@ Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite a
 
 - Pre combat scene:
 **a fatal turn prediction system** and **an enemy defeat turn prediction**
-  - Display like this:
+- Display like this:
 
 ```
 概算予測✓ T2で撃破
@@ -524,13 +524,14 @@ Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite a
 与ダメージ量: 55
 被ダメージ量: 70
 ```
-
-    - Current hull and shield values
-    - Enemy attack pattern for each turn
-    - Enemy abilities (OVERLOAD, DORMANT, EXPLOSIVE)
-    - Boss reward effect: boarding, skirmish
-
-    - **Intentional imperfection** Do not perfectly emulate the damages. ignore LIFE-STEAL, SHIELD_BREAK or repairing effect.
+- describe 
+  - Current hull and shield values
+  - Enemy attack pattern for each turn
+  - Claculate until Vicrory or Defeating. the amount of damage is at the time of expected ending timing.
+  - Ablitiy: 'SIMULTANEOUS'.
+  - Enemy skills (OVERLOAD, DORMANT, EXPLOSIVE)
+  - Boss reward effect: boarding, skirmish
+  - **Intentional imperfection** Do not perfectly emulate the damages. ignore LIFE-STEAL, SHIELD_BREAK or repairing effect.
 
 ### 8.2 Scene Labels
 
