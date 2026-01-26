@@ -485,12 +485,12 @@ Choose exactly ONE:
 |3     |緊急ミサイル製造|max_hull −10 → +1 🚀 ランス                       |
 |4     |出港      |No effect                                     |
 
-- Upgrade
-Growth items (AB.GR): Growth value +1
-Regular items: Power × 1.2 (rounded up)
-	Can’t upgrade:
-	∙	Already upgraded items (has + suffix and upgraded flag)
-	∙	Zero-power items (modules, shields without power)
+- **Upgrade**
+  - Growth items (AB.GR): Growth value +1
+  - Regular items: Power × 1.2 (rounded up)
+	- Can’t upgrade:
+    - Already upgraded items (has + suffix and upgraded flag)
+    - Zero-power items (modules, shields without power)
 -----
 
 ## 7. REWARD SYSTEM
