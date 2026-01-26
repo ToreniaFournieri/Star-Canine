@@ -408,11 +408,16 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 |+Skirmish|L|M|C|**M**|M    |L    |
 
 ### 5.2 Combat Initialization
-
+1. Apply OVERDRIVE: If equipped, player hull -= 30
 1. **Sum Base Stats:** Total `power` per type (L/M/C/S/H)
 1. **Apply Multipliers:** Multiply each type by all applicable `mult` values
+1. Apply COMPACT: Equipment with 2+ slots count as 1 slot (stat calculation unaffected)
 1. **Apply Doctrine:** If active, all damage types ×1.2
-1. **Add Flat Bonuses:** AB.SH → shield, AB.AM → MID damage
+1. Apply BERSERKER: If player hull < (max_hull × 0.5), all damage types ×1.3
+1. Add Flat Bonuses:
+  - AB.SH → shield
+  - AB.OVERDRIVE → shield (+60)
+  - AB.AM → MID damage
 1. **Set Battle Pools:** `battle_shield`, `battle_hull`
 
 ### 5.3 Turn Resolution Order
@@ -445,8 +450,11 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 ### 5.4 Post-Combat
 
 1. Remove disposable items
-1. Apply `GROWTH` to equipped items
-1. Repair hull (unless `NO_REPAIR`) by HULL total × multipliers
+1. Apply `GROWTH` to equipped items. (increase power permanently)
+1.	Calculate hull repair:
+  - Base repair = HULL total × multipliers
+  -	CAPACITOR: Add (remaining battle_shield × 0.5) to repair amount
+  - If NO_REPAIR ability present, set repair amount to 0
 1. Clamp hull to max_hull
 
 ### 5.5 Outcomes
