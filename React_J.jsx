@@ -26,24 +26,25 @@ CL:   { id: ‘COUNTER_LONG’, name: ‘迎撃’, desc: “長距離攻撃を�
 
 const AB = {
 SH:  { id: ‘SHIELD’,      name: ‘シールド加算’, format: (v) => `+${v}シールド` },
-AM:  { id: ‘ALL_MID’,     name: ‘中距離強化’,   format: (v) => `中距離+${v}` },
+AM:  { id: ‘ALL_MID’,     name: ‘中距離強化’,   format: (v) => `全中距離武装+${v}` },
 SIM: { id: ‘SIMULTANEOUS’, name: ‘同時攻撃’,    format: () => ‘同時攻撃’ },
 NR:  { id: ‘NO_REPAIR’,   name: ‘修復無効’,     format: () => ‘修復無効’ },
-LS:  { id: ‘LIFE_STEAL’,  name: ‘生命吸収’,     format: () => ‘生命吸収’ },
+LS:  { id: ‘LIFE_STEAL’,  name: ‘生命吸収’,     format: () => ‘生命吸収(50%)’ },
 GR:  { id: ‘GROWTH’,      name: ‘成長’,         format: (v) => `成長+${v}` },
 SB:  { id: ‘SHIELD_BREAK’, name: ‘シールド破壊’, format: () => ‘シールド破壊’ },
 BF:  { id: ‘BACKFIRE’,    name: ‘反動’,         format: (v) => `反動${v}` },
-OVERDRIVE: { id: ‘OVERDRIVE’, name: ‘緊急過負荷’, format: () => ‘緊急過負荷(HP-30,シールド+60)’ },
-CAPACITOR: { id: ‘CAPACITOR’, name: ‘キャパシタ蓄積’, format: () => ‘シールド変換50%’ },
-COMPACT: { id: ‘COMPACT’, name: ‘圧縮設計’, format: () => ‘スロット圧縮’ },
-BERSERKER: { id: ‘BERSERKER’, name: ‘バーサーカー’, format: () => ‘低耐久強化×1.3’ },
+MV:  { id: ‘MAVERICK’,    name: ‘一匹狼’,     format: () => ‘MIDがこの1機のみの場合威力倍増’ },
+OVERDRIVE: { id: ‘OVERDRIVE’, name: ‘緊急過負荷’, format: () => ‘緊急過負荷(HP-30,シールド+80)’ },
+CAPACITOR: { id: ‘CAPACITOR’, name: ‘キャパシタ蓄積’, format: () => ‘シールド変換30%’ },
+COMPACT: { id: ‘COMPACT’, name: ‘圧縮設計’, format: () => ‘スロット圧縮(自身除く)’ },
+BERSERKER: { id: ‘BERSERKER’, name: ‘バーサーカー’, format: () => ‘HP半分以下で威力×1.3’ },
 };
 
 const BR = {
 expansion:     { name: ‘拡張’,   desc: “装備スロット最大値+2。” },
 reinforcement: { name: ‘強化’,   desc: “装備スロット最大値+1、耐久値最大値+50。” },
 boarding:      { name: ‘白兵戦’, desc: “装備スロット最大値+1。第5・第6ターンを近距離に固定。” },
-skirmish:      { name: ‘遭遇戦’, desc: “装備スロット最大値+1。第4ターンを中距離に変更。” },
+skirmish:      { name: ‘遭遇戦’, desc: “装備スロット最大値+1。第3ターンを中距離に変更。” },
 logistics:     { name: ‘兵站’,   desc: “戦闘開始前に🚀 ランスを1基追加する。” },
 doctrine:      { name: ‘教義’,   desc: “耐久値最大値+60。すべての武装ダメージ×1.2。” },
 };
@@ -99,22 +100,24 @@ const EQ = [
 
 // === LONG (Missiles) ===
 [1, “🚀 ランス”, 40, T.L, 1, 1, null, null],
-[2, “🚀🛡️ インターセプター”, 50, T.L, 1, 1, null, [AB.SH, 10]],
+[2, “🚀🛡️ インターセプター”, 60, T.L, 1, 1, null, [AB.SH, 10]],
 [2, “🚀❗ ハープーン”, 71, T.L, 1, 1, null, [AB.BF, 10]],
-[2, “🚀⚠️ アイソレーション”, 75, T.L, 1, 1, [T.L, 0.9], null],
-[2, “🚀 ジャベリン”, 60, T.L, 1, 1, null, null],
-[1, “🚀 🚀 シューティングスター”, 65, T.L, 2, 1, null, null],
-[2, “🚀⚠️ サイレント”, 90, T.L, 2, 1, [T.M, 0.0], null],
-[1, “🚀 🚀 🔺 ギャンビット”, 50, T.L, 2, 1, [T.L, 1.3], null],
-[3, “🚀 🚀 🚀MOP”, 100, T.L, 2, 1, null, null],
+[2, “🚀⚠️ アイソレーション”, 85, T.L, 1, 1, [T.L, 0.9], null],
+[2, “🚀 ジャベリン”, 70, T.L, 1, 1, null, null],
+[1, “🚀 🚀 シューティングスター”, 70, T.L, 2, 1, null, null],
+[2, “🚀⚠️ サイレント”, 98, T.L, 2, 1, [T.M, 0.0], null],
+[1, “🚀 🚀 🔺 ギャンビット”, 56, T.L, 2, 1, [T.L, 1.3], null],
+[3, “🚀 🚀 🚀MOP”, 135, T.L, 2, 1, null, null],
 [1, “🔫 クァンタム・ディスプレーサー”, 30, T.L, 3, 0, [T.C, 0.5], null],
 
 // === MID (Fighters) ===
-[1, “✈️ ドローン”, 12, T.M, 1, 0, null, null],
+[1, “✈️ ドローン”, 14, T.M, 1, 0, null, null],
 [1, “✈️💥 キラードローン”, 25, T.M, 1, 1, null, null],
-[1, “✈️⚠️ スカベンジャー”, 18, T.M, 1, 0, [T.M, 0.9], null],
-[1, “✈️⤴️ ルーキー・ファイター”, 5, T.M, 1, 0, null, [AB.GR, 2]],
+[1, “✈️⤴️ ルーキー・ファイター”, 10, T.M, 1, 0, null, [AB.GR, 1]],
+[1, “✈️🐺 マーバリック”, 12, T.M, 1, 0, null, [AB.MV]],
 [1, “✈️✈️ ウイング”, 22, T.M, 2, 0, null, null],
+[1, “✈️✈️✈️ ブルーウルフ”, 33, T.M, 3, 0, [T.L, 0.9]],
+[1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
 [1, “✈️✈️✈️ ブルーウルフ”, 33, T.M, 3, 0, null, [T.L, 0.9]],
 [1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
 
@@ -125,6 +128,7 @@ const EQ = [
 [1, “⚡🛡️ アイアン・ビーム”, 12, T.C, 1, 0, null, [AB.SH, 10]],
 [1, “⚡🔺カジェル”, 16, T.C, 2, 0, [T.C, 1.2], null],
 [1, “⚡🪓 シールド・ブレイカー”, 2, T.C, 2, 0, null, [AB.SB]],
+[1, “⚡⚡️⚡️ トールハンマー”, 30, T.C, 3, 0, [T.M, 0.9], null],
 
 // === SHIELD ===
 [1, “🛡️ 装甲板”, 20, T.S, 1, 0, null, null],
@@ -132,7 +136,7 @@ const EQ = [
 [1, “🛡️💥 エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
 [1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
 [1, “🛡️🔋 キャパシタ”, 20, T.S, 2, 0, null, [AB.CAPACITOR]],
-[1, “🛡️⤴️ バリアー”, 20, T.S, 3, 0, null, [AB.GR, 2]],
+[1, “🛡️⤴️ バリアー”, 23, T.S, 3, 0, null, [AB.GR, 1]],
 
 // === HULL ===
 [1, “🔧💥 ダメージコントロール”, 40, T.H, 1, 1, null, null],
@@ -158,7 +162,7 @@ const EN = [
 [7, “重装巡洋艦”, 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
 [8, “シールド・ゲート”, 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
 [9, “オーバーロード・エンフォーサー”, 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
-[10, “セレスティアル・リーパー”, 200, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
+[10, “セレスティアル・リーパー”, 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
 ];
 
 const ST = [
@@ -193,7 +197,8 @@ const stageList = parse(ST_SCHEMA, ST);
 
 const getAct = (stage) => Math.floor((stage - 1) / 12) + 1;
 const getStageInAct = (stage) => ((stage - 1) % 12) + 1;
-const getActScale = (act) => [1, 1.5, 2.5][act - 1] || 1;
+const getActScale = (act) => [1, 1.5, 2.25][act - 1] || 1;
+const getActAttackScale = (act) => [1, 1.3, 1.7][act - 1] || 1;
 
 const applyDamage = (dmg, shield, hull) => {
 const toShield = Math.min(shield, dmg);
@@ -260,7 +265,7 @@ return skill ? skill[1] : null;
 const getTurnOrder = (player) => {
 const base = [‘LONG’, ‘MID’, ‘CLOSE’, ‘CLOSE’, ‘MID’, ‘LONG’];
 if (player.boarding) { base[4] = ‘CLOSE’; base[5] = ‘CLOSE’; }
-if (player.skirmish) { base[3] = ‘MID’; }
+if (player.skirmish) { base[2] = ‘MID’; }
 return base;
 };
 
@@ -413,8 +418,25 @@ HULL: base.HULL * mult.HULL,
 
 equippedItems.forEach(item => {
 if (hasAbility(item, AB.SH)) final.SHIELD += getAbilityValue(item);
-if (hasAbility(item, AB.OVERDRIVE)) final.SHIELD += 60;
-if (hasAbility(item, AB.AM)) final.MID += getAbilityValue(item);
+if (hasAbility(item, AB.OVERDRIVE)) final.SHIELD += 80;
+if (hasAbility(item, AB.AM)) {
+// ALL_MID: Add value × number of MID weapons
+const midCount = equippedItems.filter(i => getTypeId(i.type) === ‘MID’).length;
+final.MID += getAbilityValue(item) * midCount;
+}
+
+```
+// MAVERICK: Double damage if this is the only item of its type
+if (hasAbility(item, AB.MV)) {
+  const itemTypeId = getTypeId(item.type);
+  const sameTypeCount = equippedItems.filter(i => getTypeId(i.type) === itemTypeId).length;
+  if (sameTypeCount === 1) {
+    // Only this item of this type - double it
+    final[itemTypeId] += item.power * mult[itemTypeId];
+  }
+}
+```
+
 });
 
 return { base, mult, final };
@@ -438,7 +460,7 @@ let pHull = Math.round(player.hull);
 // Apply OVERDRIVE
 if (hasOverdrive) {
 pHull = Math.max(1, pHull - 30);
-log.push(`緊急過負荷: 耐久値-30 → ${pHull}HP, シールド+60`);
+log.push(`緊急過負荷: 耐久値-30 → ${pHull}HP, シールド+80`);
 }
 
 // Apply BERSERKER multiplier if hull < 50%
@@ -486,7 +508,7 @@ if (pDmg > 0) {
     let totalHeal = 0;
     rangeItems.filter(i => hasAbility(i, AB.LS)).forEach(item => {
       const itemMult = stats.mult[range] || 1;
-      totalHeal += Math.round(item.power * itemMult);
+      totalHeal += Math.round(item.power * itemMult * 0.5); // 50% of weapon power
     });
     if (totalHeal > 0) {
       const beforeHeal = pHull;
@@ -594,8 +616,14 @@ if (hasSkill(enemy, SK.GATE) && eHull > 0) {
 // Check victory/defeat at turn end with Simultaneous
 if (hasSimultaneous) {
   if (eHull <= 0 || pHull <= 0) {
-    if (eHull <= 0) log.push(`  敵艦撃破（同時）`);
-    if (pHull <= 0) log.push(`  自機撃破（同時）`);
+    if (eHull <= 0 && pHull <= 0) {
+      log.push(`  自機撃破（同時）`);
+      log.push(`  敵艦撃破（同時）`);
+    } else if (eHull <= 0) {
+      log.push(`  敵艦撃破を確認。`);
+    } else if (pHull <= 0) {
+      log.push(`  自機撃破を確認。`);
+    }
     log.push('');
     break;
   }
@@ -726,6 +754,7 @@ return { …player };
 
 const act = getAct(stage);
 const scale = getActScale(act);
+const attackScale = getActAttackScale(act);
 const stageData = getStageData(stage);
 const enemyRank = getEnemyRank(stageData?.rank);
 const enemyBase = enemyList.find(e => e.difficulty === stageData?.difficulty && e.rank === enemyRank);
@@ -736,9 +765,9 @@ return {
 …enemyBase,
 hull: Math.round(enemyBase.hull * scale),
 shield: Math.round(enemyBase.shield * scale),
-attacks: enemyBase.attacks.map(a => Math.round(a * scale)),
+attacks: enemyBase.attacks.map(a => Math.round(a * attackScale)),
 };
-}, [enemyBase, scale]);
+}, [enemyBase, scale, attackScale]);
 
 if (!enemy) return <div>エラー: 敵艦データが見つかりません</div>;
 
@@ -748,8 +777,8 @@ const unequippedItems = tempPlayer.inventory.filter(i => !tempPlayer.equipped.in
 // Calculate used slots with COMPACT ability
 const hasCompact = equippedItems.some(i => hasAbility(i, AB.COMPACT));
 const usedSlots = equippedItems.reduce((sum, i) => {
-// If COMPACT is equipped, all items count as 1 slot
-if (hasCompact) {
+// COMPACT only affects OTHER items with 2+ slots
+if (hasCompact && !hasAbility(i, AB.COMPACT) && i.slots >= 2) {
 return sum + 1;
 }
 return sum + i.slots;
@@ -763,9 +792,10 @@ setTempPlayer({
 equipped: tempPlayer.equipped.filter(id => id !== item.id),
 });
 } else {
-// Check if COMPACT is equipped (or if we’re equipping COMPACT itself)
+// Check if COMPACT is equipped
 const willHaveCompact = hasAbility(item, AB.COMPACT) || equippedItems.some(i => hasAbility(i, AB.COMPACT));
-const itemSlots = willHaveCompact ? 1 : item.slots;
+// COMPACT only compresses OTHER items with 2+ slots
+const itemSlots = willHaveCompact && !hasAbility(item, AB.COMPACT) && item.slots >= 2 ? 1 : item.slots;
 
 ```
   if (usedSlots + itemSlots <= tempPlayer.max_slots) {
@@ -804,6 +834,7 @@ return {
 // Simplified prediction - intentionally imperfect per spec
 const prediction = useMemo(() => {
 const turns = getTurnOrder(tempPlayer);
+const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
 let simHull = Math.round(tempPlayer.hull);
 let simShield = Math.round(preview.shield);
 let simEnemyHull = Math.round(enemy.hull);
@@ -831,8 +862,8 @@ for (let turn = 0; turn < 6; turn++) {
     totalDamageDealt += pDmg;
   }
   
-  // Check if enemy is defeated
-  if (simEnemyHull <= 0) {
+  // Check if enemy is defeated (without SIMULTANEOUS)
+  if (!hasSimultaneous && simEnemyHull <= 0) {
     return { 
       type: 'victory', 
       turn: turn + 1, 
@@ -896,14 +927,43 @@ for (let turn = 0; turn < 6; turn++) {
     totalDamageTaken += eDmg;
   }
   
-  // Check if player is defeated
-  if (simHull <= 0) {
-    return { 
-      type: 'defeat', 
-      turn: turn + 1, 
-      damageDealt: totalDamageDealt, 
-      damageTaken: totalDamageTaken 
-    };
+  // With SIMULTANEOUS: check both deaths at turn end
+  if (hasSimultaneous) {
+    if (simEnemyHull <= 0 && simHull <= 0) {
+      // Both dead - defeat (player must survive)
+      return { 
+        type: 'defeat', 
+        turn: turn + 1, 
+        damageDealt: totalDamageDealt, 
+        damageTaken: totalDamageTaken 
+      };
+    } else if (simEnemyHull <= 0) {
+      // Only enemy dead - victory
+      return { 
+        type: 'victory', 
+        turn: turn + 1, 
+        damageDealt: totalDamageDealt, 
+        damageTaken: totalDamageTaken 
+      };
+    } else if (simHull <= 0) {
+      // Only player dead - defeat
+      return { 
+        type: 'defeat', 
+        turn: turn + 1, 
+        damageDealt: totalDamageDealt, 
+        damageTaken: totalDamageTaken 
+      };
+    }
+  } else {
+    // Without SIMULTANEOUS: check player death
+    if (simHull <= 0) {
+      return { 
+        type: 'defeat', 
+        turn: turn + 1, 
+        damageDealt: totalDamageDealt, 
+        damageTaken: totalDamageTaken 
+      };
+    }
   }
 }
 
@@ -952,7 +1012,7 @@ if (finalHull > 0 && !combatResult.hasNoRepair) {
   
   // Add CAPACITOR repair
   if (combatResult.hasCapacitor && combatResult.battleShield > 0) {
-    const capacitorRepair = Math.floor(combatResult.battleShield * 0.5);
+    const capacitorRepair = Math.floor(combatResult.battleShield * 0.3); // 30% conversion
     totalRepair += capacitorRepair;
     combatResult.log.push(`キャパシタ蓄積: シールド${combatResult.battleShield} → +${capacitorRepair}HP回復`);
     repairParts.push(`キャパシタ+${capacitorRepair}`);
@@ -1116,13 +1176,20 @@ const stageData = getStageData(stage);
 const enemyRank = getEnemyRank(stageData?.rank);
 const isBoss = enemyRank === R.B;
 
-const [options, setOptions] = useState(() => {
+// Consume boss rewards at scene entry
+const availableBossRewards = useMemo(() => {
+if (isBoss && act <= 2 && player.bossRewards.length > 0) {
+return player.bossRewards.slice(0, Math.min(3, player.bossRewards.length));
+}
+return [];
+}, [isBoss, act, player.bossRewards]);
+
+const [rewardState] = useState(() => {
 const rewardItems = [];
+const rarityDecks = stageData?.rank === ‘N’ ? player.normalRarityDecks :
+stageData?.rank === ‘E’ ? player.eliteRarityDecks : null;
 
 ```
-const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
-                    stageData?.rank === 'E' ? player.eliteRarityDecks : null;
-
 // Create mutable copies of decks for this draw
 const normalDeck = [...player.normalItemsDeck];
 const eliteDeck = [...player.eliteItemsDeck];
@@ -1160,15 +1227,24 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
-return rewardItems;
+return {
+  drawnItems: rewardItems,
+  newDecks: {
+    normalItemsDeck: normalDeck,
+    eliteItemsDeck: eliteDeck,
+    bossItemsDeck: bossDeck,
+  },
+  newRarityDecks: {
+    normalRarityDecks: stageData?.rank === 'N' ? { ...player.normalRarityDecks, [act]: normalRarityDeck } : player.normalRarityDecks,
+    eliteRarityDecks: stageData?.rank === 'E' ? { ...player.eliteRarityDecks, [act]: eliteRarityDeck } : player.eliteRarityDecks,
+  }
+};
 ```
 
 });
 
 const [selectedItem, setSelectedItem] = useState(null);
 const [selectedBonus, setSelectedBonus] = useState(null);
-
-const availableBossRewards = isBoss && act <= 2 ? player.bossRewards.slice(0, 3) : [];
 
 const activeBonuses = [
 player.boarding && ‘白兵戦’,
@@ -1185,61 +1261,18 @@ if (selectedItem) {
   newPlayer.inventory = [...player.inventory, createItem(selectedItem, player.itemIdCounter)];
 }
 
-// Consume the 3 drawn items from decks
-const rarityDecks = stageData?.rank === 'N' ? player.normalRarityDecks :
-                    stageData?.rank === 'E' ? player.eliteRarityDecks : null;
-
-const normalDeck = [...player.normalItemsDeck];
-const eliteDeck = [...player.eliteItemsDeck];
-const bossDeck = [...player.bossItemsDeck];
-const normalRarityDeck = stageData?.rank === 'N' ? [...(rarityDecks?.[act] || [])] : [];
-const eliteRarityDeck = stageData?.rank === 'E' ? [...(rarityDecks?.[act] || [])] : [];
-
-// Simulate the draw to know what was consumed
-for (let i = 0; i < 3; i++) {
-  let rarity;
-  if (isBoss) {
-    rarity = 3;
-  } else if (stageData?.rank === 'N' && normalRarityDeck.length > 0) {
-    rarity = normalRarityDeck.shift();
-  } else if (stageData?.rank === 'E' && eliteRarityDeck.length > 0) {
-    rarity = eliteRarityDeck.shift();
-  } else {
-    rarity = stageData?.rank === 'E' ? 2 : 1;
-  }
-
-  let deck;
-  if (rarity === 3 && bossDeck.length > 0) {
-    deck = bossDeck;
-  } else if (rarity === 2 && eliteDeck.length > 0) {
-    deck = eliteDeck;
-  } else {
-    deck = normalDeck;
-  }
-
-  if (deck.length > 0) {
-    deck.shift();  // Remove the drawn item
-  }
-}
-
-// Update player decks
-newPlayer.normalItemsDeck = normalDeck;
-newPlayer.eliteItemsDeck = eliteDeck;
-newPlayer.bossItemsDeck = bossDeck;
-
-// Update rarity decks
-if (!isBoss) {
-  if (stageData?.rank === 'N') {
-    newPlayer.normalRarityDecks = { ...player.normalRarityDecks };
-    newPlayer.normalRarityDecks[act] = normalRarityDeck;
-  } else if (stageData?.rank === 'E') {
-    newPlayer.eliteRarityDecks = { ...player.eliteRarityDecks };
-    newPlayer.eliteRarityDecks[act] = eliteRarityDeck;
-  }
-}
+// Apply the deck state that was already consumed when entering this scene
+newPlayer.normalItemsDeck = rewardState.newDecks.normalItemsDeck;
+newPlayer.eliteItemsDeck = rewardState.newDecks.eliteItemsDeck;
+newPlayer.bossItemsDeck = rewardState.newDecks.bossItemsDeck;
+newPlayer.normalRarityDecks = rewardState.newRarityDecks.normalRarityDecks;
+newPlayer.eliteRarityDecks = rewardState.newRarityDecks.eliteRarityDecks;
 
 if (isBoss) {
   newPlayer.hull = newPlayer.max_hull;
+
+  // Remove all 3 shown rewards from the pool (they were consumed by showing them)
+  newPlayer.bossRewards = player.bossRewards.slice(availableBossRewards.length);
 
   if (selectedBonus) {
     switch (selectedBonus) {
@@ -1268,8 +1301,6 @@ if (isBoss) {
         newPlayer.doctrine = true;
         break;
     }
-
-    newPlayer.bossRewards = player.bossRewards.filter(r => r !== selectedBonus);
   }
 }
 
@@ -1289,7 +1320,7 @@ return (
 ```
   <div className="mb-4">
     <div className="font-bold mb-2">1つ選択:</div>
-    {options.map(item => {
+    {rewardState.drawnItems.map(item => {
       const parts = [
         item.name,
         '|',
@@ -1370,26 +1401,88 @@ function DockScene({ player, setPlayer, stage, advance }) {
 const act = getAct(stage);
 const scrapCost = act;
 const canRepair = player.inventory.length >= scrapCost;
-const [scrapItems, setScrapItems] = useState([]);
+const [repairScrapItems, setRepairScrapItems] = useState([]);
+const [upgradeScrapItems, setUpgradeScrapItems] = useState([]);
+const [selectedUpgradeItem, setSelectedUpgradeItem] = useState(null);
 
-const toggleScrap = (itemId) => {
-if (scrapItems.includes(itemId)) {
-setScrapItems(scrapItems.filter(id => id !== itemId));
-} else if (scrapItems.length < scrapCost) {
-setScrapItems([…scrapItems, itemId]);
+// Filter items that can be upgraded
+const upgradeableItems = player.inventory.filter(item => {
+// Can’t upgrade if already upgraded
+if (item.upgraded) return false;
+// Can’t upgrade zero-power items
+if (item.power === 0) return false;
+// Can’t upgrade scrap
+if (item.name.includes(‘スクラップ’)) return false;
+return true;
+});
+
+const canUpgrade = upgradeScrapItems.length === scrapCost && selectedUpgradeItem;
+
+const toggleRepairScrap = (itemId) => {
+if (repairScrapItems.includes(itemId)) {
+setRepairScrapItems(repairScrapItems.filter(id => id !== itemId));
+} else if (repairScrapItems.length < scrapCost) {
+setRepairScrapItems([…repairScrapItems, itemId]);
+}
+};
+
+const toggleUpgradeScrap = (itemId) => {
+if (upgradeScrapItems.includes(itemId)) {
+setUpgradeScrapItems(upgradeScrapItems.filter(id => id !== itemId));
+} else if (upgradeScrapItems.length < scrapCost) {
+setUpgradeScrapItems([…upgradeScrapItems, itemId]);
 }
 };
 
 const handleRepair = () => {
-if (scrapItems.length !== scrapCost) return;
+if (repairScrapItems.length !== scrapCost) return;
 
 ```
 const repair = Math.floor(player.max_hull * 0.3);
-const newInventory = player.inventory.filter(i => !scrapItems.includes(i.id));
+const newInventory = player.inventory.filter(i => !repairScrapItems.includes(i.id));
 
 setPlayer({
   ...player,
   hull: Math.min(player.max_hull, player.hull + repair),
+  inventory: newInventory,
+  equipped: player.equipped.filter(id => newInventory.some(i => i.id === id)),
+});
+advance('main');
+```
+
+};
+
+const handleUpgrade = () => {
+if (!canUpgrade) return;
+
+```
+const newInventory = player.inventory.map(item => {
+  if (item.id === selectedUpgradeItem) {
+    const upgradedItem = { ...item };
+    
+    // Add + prefix to name if not already there
+    if (!upgradedItem.name.endsWith('+')) {
+      upgradedItem.name = upgradedItem.name + '+';
+    }
+    
+    // Upgrade logic
+    if (hasAbility(item, AB.GR)) {
+      // Growth items: increment growth value
+      const currentValue = getAbilityValue(item);
+      upgradedItem.ability = [AB.GR, currentValue + 1];
+    } else {
+      // Regular items: power × 1.2 (rounded up)
+      upgradedItem.power = Math.ceil(item.power * 1.2);
+    }
+    
+    upgradedItem.upgraded = true;
+    return upgradedItem;
+  }
+  return item;
+}).filter(i => !upgradeScrapItems.includes(i.id));
+
+setPlayer({
+  ...player,
   inventory: newInventory,
   equipped: player.equipped.filter(id => newInventory.some(i => i.id === id)),
 });
@@ -1442,16 +1535,16 @@ return (
           {player.inventory.map(item => (
             <div
               key={item.id}
-              className={`text-xs mb-1 cursor-pointer hover:bg-green-900 ${scrapItems.includes(item.id) ? 'bg-red-900' : ''}`}
-              onClick={() => toggleScrap(item.id)}
+              className={`text-xs mb-1 cursor-pointer hover:bg-green-900 ${repairScrapItems.includes(item.id) ? 'bg-red-900' : ''}`}
+              onClick={() => toggleRepairScrap(item.id)}
             >
-              {scrapItems.includes(item.id) ? '✗' : '○'} {item.name} | {getTypeName(item.type)} {UI.label.power}:{item.power}
+              {repairScrapItems.includes(item.id) ? '✗' : '○'} {item.name} | {getTypeName(item.type)} {UI.label.power}:{item.power}
             </div>
           ))}
           <button
             onClick={handleRepair}
-            disabled={scrapItems.length !== scrapCost}
-            className={`mt-2 px-4 py-2 ${scrapItems.length === scrapCost ? 'bg-green-700 hover:bg-green-600' : 'bg-gray-700 cursor-not-allowed'}`}
+            disabled={repairScrapItems.length !== scrapCost}
+            className={`mt-2 px-4 py-2 ${repairScrapItems.length === scrapCost ? 'bg-green-700 hover:bg-green-600' : 'bg-gray-700 cursor-not-allowed'}`}
           >
             {UI.btn.repair} (+{Math.floor(player.max_hull * 0.3)}HP)
           </button>
@@ -1462,7 +1555,51 @@ return (
     </div>
 
     <div className="border border-green-700 p-3">
-      <div className="font-bold mb-2">2. {UI.dock.fabricate.title}</div>
+      <div className="font-bold mb-2">2. 装備強化</div>
+      <div className="text-sm mb-2">アイテムを{scrapCost}個廃棄して、1つの装備を強化する</div>
+      {upgradeableItems.length > 0 ? (
+        <>
+          <div className="text-xs mb-2">廃棄するアイテムを{scrapCost}個選択:</div>
+          {player.inventory.map(item => (
+            <div
+              key={item.id}
+              className={`text-xs mb-1 cursor-pointer hover:bg-green-900 ${upgradeScrapItems.includes(item.id) ? 'bg-red-900' : ''}`}
+              onClick={() => toggleUpgradeScrap(item.id)}
+            >
+              {upgradeScrapItems.includes(item.id) ? '✗' : '○'} {item.name} | {getTypeName(item.type)} {UI.label.power}:{item.power}
+            </div>
+          ))}
+          <div className="text-xs mt-2 mb-2">強化する装備を選択:</div>
+          {upgradeableItems.map(item => {
+            const previewPower = hasAbility(item, AB.GR) 
+              ? `成長+${getAbilityValue(item)} → +${getAbilityValue(item) + 1}`
+              : `威力${item.power} → ${Math.ceil(item.power * 1.2)}`;
+            
+            return (
+              <div
+                key={item.id}
+                className={`text-xs mb-1 cursor-pointer hover:bg-green-900 ${selectedUpgradeItem === item.id ? 'bg-blue-900' : ''}`}
+                onClick={() => setSelectedUpgradeItem(item.id)}
+              >
+                {selectedUpgradeItem === item.id ? '▶' : '○'} {item.name} ({previewPower})
+              </div>
+            );
+          })}
+          <button
+            onClick={handleUpgrade}
+            disabled={!canUpgrade}
+            className={`mt-2 px-4 py-2 ${canUpgrade ? 'bg-blue-700 hover:bg-blue-600' : 'bg-gray-700 cursor-not-allowed'}`}
+          >
+            強化
+          </button>
+        </>
+      ) : (
+        <div className="text-sm text-gray-500">強化可能な装備なし</div>
+      )}
+    </div>
+
+    <div className="border border-green-700 p-3">
+      <div className="font-bold mb-2">3. {UI.dock.fabricate.title}</div>
       <div className="text-sm mb-2">{UI.dock.fabricate.desc}</div>
       <button onClick={handleFabricate} className="bg-yellow-700 px-4 py-2 hover:bg-yellow-600">
         {UI.btn.fabricate} (−10 最大HP)
@@ -1470,7 +1607,7 @@ return (
     </div>
 
     <div className="border border-green-700 p-3">
-      <div className="font-bold mb-2">3. {UI.dock.leave.title}</div>
+      <div className="font-bold mb-2">4. {UI.dock.leave.title}</div>
       <div className="text-sm mb-2">{UI.dock.leave.desc}</div>
       <button onClick={handleLeave} className="bg-green-700 px-4 py-2 hover:bg-green-600">
         {UI.btn.leave}
@@ -1558,8 +1695,8 @@ const rarityColors = {
 };
 const textColor = rarityColors[item.rarity] || ‘text-green-400’;
 
-// Display effective slot count
-const displaySlots = hasCompact ? 1 : item.slots;
+// Display effective slot count - COMPACT only affects OTHER items with 2+ slots
+const displaySlots = hasCompact && !hasAbility(item, AB.COMPACT) && item.slots >= 2 ? 1 : item.slots;
 
 return (
 <div
