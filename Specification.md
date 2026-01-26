@@ -436,7 +436,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 
 **Enemy Phase:**
 
-1. `REGEN`: If enemy hull > 0, heal hull.  
+1. `REGEN`: If enemy hull > 0, heal hull, not exceed to enemy's initial hull.  
 1. `DEGEN`: Lose hull
 1. `OVERLOAD`/`DORMANT`: Modify attack (turn 4+)
 1. `EXPLOSIVE`: Add damage to Player hull, then set enemy hull to 0.  (turn 4)
