@@ -592,7 +592,7 @@ const UI = {
 
 ```javascript
 const STORY = {
-  opening: `> 遭難信号を受信
+  opening: `> 暗号信号を受信
 
 > 送信元: LAIKA
 
