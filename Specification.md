@@ -158,7 +158,7 @@ const AB = {
   COMPACT: {
     id: 'COMPACT',
     name: '圧縮設計',
-    desc: "2スロット以上の装備を1スロットとして扱う。",
+    desc: "この装備以外の2スロット以上の装備を1スロットとして扱う。",
     format: () => 'スロット圧縮'
   },
   BERSERKER: {
@@ -270,7 +270,7 @@ const EQ = [
   // === MODULE ===
   [1, "🟫🔺 傾斜防壁", 0, T.X, 1, 0, [T.S, 1.5], null],
   [1, "💉 緊急防壁", 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
-  [1, "⚙️ 設備最適化", 0, T.X, 2, 0, null, [AB.COMPACT]],
+  [2, "⚙️ 設備最適化", 0, T.X, 2, 0, null, [AB.COMPACT]],
   [1, "🔥 バーサーカーコア", 0, T.X, 3, 0, null, [AB.BERSERKER]],
   [2, "🔥🔺 弾頭最適化装置", 0, T.X, 3, 0, [T.L, 1.5], null],
   [1, "🏗️🔺 スウォーム・ハンガー", 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
