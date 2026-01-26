@@ -338,7 +338,7 @@ const ST = [
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
   - Normal deck: 3 bags × 19 types = 57 cards
   - Elite deck: 3 bags × 12 types = 36 cards
-  - Boss deck: 3 bags × 6 types = 18 cards
+  - Boss deck: 3 bags × 7 types = 21 cards
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
