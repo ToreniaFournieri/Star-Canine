@@ -104,8 +104,8 @@ const AB = {
   AM: {
     id: 'ALL_MID',
     name: '中距離強化',
-    desc: "中距離武装の最終ダメージ+N。",
-    format: (v) => `中距離+${v}`,
+    desc: "全ての中距離武装の最終ダメージ+N。",
+    format: (v) => `全中距離武装+${v}`,
   },
   SIM: {
     id: 'SIMULTANEOUS',
