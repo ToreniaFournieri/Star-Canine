@@ -26,12 +26,12 @@ const R = { N: 'NORMAL', E: 'ELITE', B: 'BOSS' };
 
 // Equipment Type
 const T = {
-  L: { id: 'LONG',   name: '長距離武装' },
-  M: { id: 'MID',    name: '中距離武装' },
-  C: { id: 'CLOSE',  name: '近距離武装' },
-  S: { id: 'SHIELD', name: 'シールド' },
-  H: { id: 'HULL',   name: '耐久補助' },
-  X: { id: 'MODULE', name: 'モジュール' },
+  L: { id: 'LONG',   name: '長' },
+  M: { id: 'MID',    name: '中' },
+  C: { id: 'CLOSE',  name: '近' },
+  S: { id: 'SHIELD', name: '盾' },
+  H: { id: 'HULL',   name: '回' },
+  X: { id: 'MODULE', name: '機' },
 };
 
 // Range (for UI display)
