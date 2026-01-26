@@ -592,7 +592,7 @@ const UI = {
 
 ```javascript
 const STORY = {
-  opening: `> 遭難信号を受信。
+  opening: `> 遭難信号を受信
 
 > 送信元: LAIKA
 
@@ -605,10 +605,9 @@ K9が陥落した。
 
 > 信号途絶。
 
-> K9へ航路設定中。`,
+> 惑星K9へ航路設定`,
 
-  victory: `K9軌道を制圧。
-LAIKAを救出。
+  victory: `LAIKAを救出
 
 「帰ってきてくれたのね。」`,
 
