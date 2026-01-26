@@ -152,8 +152,8 @@ const AB = {
   CAPACITOR: {
     id: 'CAPACITOR',
     name: 'キャパシタ蓄積',
-    desc: "戦闘終了時、残存シールドの50%分、耐久値を回復する。",
-    format: () => 'シールド変換50%'
+    desc: "戦闘終了時、残存シールドの30%分、耐久値を回復する。",
+    format: () => 'シールド変換30%'
   },
   COMPACT: {
     id: 'COMPACT',
