@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo } from ‘react’;
 
 // Constants & Type Definitions
+const VERSION = ‘v0.9.1’;
 const R = { N: ‘NORMAL’, E: ‘ELITE’, B: ‘BOSS’ };
 const T = {
-L: { id: ‘LONG’,   name: ‘長距離武装’ },
-M: { id: ‘MID’,    name: ‘中距離武装’ },
-C: { id: ‘CLOSE’,  name: ‘近距離武装’ },
-S: { id: ‘SHIELD’, name: ‘シールド’ },
-H: { id: ‘HULL’,   name: ‘耐久補助’ },
-X: { id: ‘MODULE’, name: ‘モジュール’ },
+L: { id: ‘LONG’,   name: ‘長’ },
+M: { id: ‘MID’,    name: ‘中’ },
+C: { id: ‘CLOSE’,  name: ‘近’ },
+S: { id: ‘SHIELD’, name: ‘盾’ },
+H: { id: ‘HULL’,   name: ‘回’ },
+X: { id: ‘MODULE’, name: ‘機’ },
 };
 
 const RANGE = { LONG: ‘長距離’, MID: ‘中距離’, CLOSE: ‘近距離’ };
@@ -56,8 +57,8 @@ claim: ‘獲得’, restart: ‘再スタート’, repair: ‘修理’,
 fabricate: ‘製造’, leave: ‘出港’,
 },
 label: {
-stage: ‘ステージ’, act: ‘ACT’, hull: ‘耐久値’, shield: ‘シールド’,
-slots: ‘スロット’, power: ‘威力’, attack: ‘攻撃力’,
+stage: ‘ステージ’, act: ‘ACT’, hull: ‘HP’, shield: ‘シールド’,
+slots: ‘装備枠’, power: ‘威力’, attack: ‘攻撃力’,
 equipped: ‘装備中’, inventory: ‘装備一覧’,
 reward: ‘報酬’, bossReward: ‘ボス特典’, preview: ‘予想攻撃力’,
 long: ‘長距離’, mid: ‘中距離’, close: ‘近距離’,
@@ -75,20 +76,27 @@ leave: { title: ‘ドックを出る’, desc: ‘何もせずに次のステ�
 };
 
 const STORY = {
-opening: `> 暗号信号を受信
+opening: `>艦船ID：STAR CANINE
 
-> 送信元: LAIKA
+> 指揮権限：艦長
+
+> 救難信号を検知
+> 発信元：惑星K9
+> 送信者ID：ライカ
 
 「私よ。
-K9が陥落した。
-ソーラー・ベアが私達の星を奪っていったわ。
-私達の街にも奴らが来ている。
+K9は陥落した。
+ソーラーベアの艦隊が惑星を占拠した。
+私も連れて行かれた。
+あなたがここにいなかったことは分かってる。
+でも、きっと戻ってくるとも信じてる。
 
-どうか…死なないで。」
+お願い……死なないで…」
 
-> 信号途絶。
+> 信号途絶
+> K9軌道上よりソーラーベア帝国の識別信号を確認
 
-> 惑星K9へ航路設定`,   victory: `LAIKAを救出
+> 惑星K9へ進路を設定しました`,   victory: `LAIKAを救出
 
 「帰ってきてくれたのね。」`,
 defeat: ‘信号途絶’,
@@ -96,60 +104,60 @@ defeat: ‘信号途絶’,
 
 const EQ = [
 // === SCRAP (Dock currency) ===
-[1, “🗑️ スクラップ”, 0, T.X, 0, 0, null, null],
+[1, “🗑️スクラップ”, 0, T.X, 0, 0, null, null],
 
 // === LONG (Missiles) ===
-[1, “🚀 ランス”, 40, T.L, 1, 1, null, null],
-[2, “🚀🛡️ インターセプター”, 60, T.L, 1, 1, null, [AB.SH, 10]],
-[2, “🚀❗ ハープーン”, 71, T.L, 1, 1, null, [AB.BF, 10]],
-[2, “🚀⚠️ アイソレーション”, 85, T.L, 1, 1, [T.L, 0.9], null],
-[2, “🚀 ジャベリン”, 70, T.L, 1, 1, null, null],
-[1, “🚀 🚀 シューティングスター”, 70, T.L, 2, 1, null, null],
-[2, “🚀⚠️ サイレント”, 98, T.L, 2, 1, [T.M, 0.0], null],
-[1, “🚀 🚀 🔺 ギャンビット”, 56, T.L, 2, 1, [T.L, 1.3], null],
-[3, “🚀 🚀 🚀MOP”, 135, T.L, 2, 1, null, null],
-[1, “🔫 クァンタム・ディスプレーサー”, 30, T.L, 3, 0, [T.C, 0.5], null],
+[1, “🚀ランス”, 40, T.L, 1, 1, null, null],
+[2, “🚀🛡️インターセプター”, 60, T.L, 1, 1, null, [AB.SH, 10]],
+[2, “🚀❗ハープーン”, 71, T.L, 1, 1, null, [AB.BF, 10]],
+[2, “🚀⚠️アイソレーション”, 85, T.L, 1, 1, [T.L, 0.9], null],
+[2, “🚀ジャベリン”, 70, T.L, 1, 1, null, null],
+[1, “🚀シューティングスター”, 70, T.L, 2, 1, null, null],
+[2, “🚀⚠️サイレント”, 98, T.L, 2, 1, [T.M, 0.0], null],
+[1, “🚀🔺ギャンビット”, 56, T.L, 2, 1, [T.L, 1.3], null],
+[3, “🚀🚀MOP”, 135, T.L, 2, 1, null, null],
+[1, “🔫クァンタム・ディスプレーサー”, 30, T.L, 3, 0, [T.C, 0.5], null],
 
 // === MID (Fighters) ===
-[1, “✈️ ドローン”, 14, T.M, 1, 0, null, null],
-[1, “✈️💥 キラードローン”, 25, T.M, 1, 1, null, null],
-[1, “✈️⤴️ ルーキー・ファイター”, 10, T.M, 1, 0, null, [AB.GR, 1]],
-[1, “✈️🐺 マーバリック”, 12, T.M, 1, 0, null, [AB.MV]],
-[1, “✈️✈️ ウイング”, 22, T.M, 2, 0, null, null],
-[1, “✈️✈️✈️ ブルーウルフ”, 33, T.M, 3, 0, [T.L, 0.9]],
-[1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
-[1, “✈️✈️✈️ ブルーウルフ”, 33, T.M, 3, 0, null, [T.L, 0.9]],
-[1, “✈️🔺 スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
+[1, “✈️ドローン”, 14, T.M, 1, 0, null, null],
+[1, “✈️💥キラードローン”, 25, T.M, 1, 1, null, null],
+[1, “✈️⤴️ルーキー・ファイター”, 10, T.M, 1, 0, null, [AB.GR, 1]],
+[1, “✈️🐺マーバリック”, 12, T.M, 1, 0, null, [AB.MV]],
+[1, “✈️ウイング”, 22, T.M, 2, 0, null, null],
+[1, “✈️✈️ブルーウルフ”, 33, T.M, 3, 0, [T.L, 0.9]],
+[1, “✈️🔺スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
+[1, “✈️✈️ブルーウルフ”, 33, T.M, 3, 0, null, [T.L, 0.9]],
+[1, “✈️🔺スクアドラル”, 12, T.M, 2, 0, null, [AB.AM, 10]],
 
 // === CLOSE (Beams) ===
-[1, “⚡ クロウ”, 15, T.C, 1, 0, null, null],
-[1, “⚡💥 ソウル”, 30, T.C, 1, 1, null, null],
-[1, “⚡🩸 ファング”, 10, T.C, 1, 0, null, [AB.LS]],
-[1, “⚡🛡️ アイアン・ビーム”, 12, T.C, 1, 0, null, [AB.SH, 10]],
+[1, “⚡クロウ”, 15, T.C, 1, 0, null, null],
+[1, “⚡💥ソウル”, 30, T.C, 1, 1, null, null],
+[1, “⚡🩸ファング”, 10, T.C, 1, 0, null, [AB.LS]],
+[1, “⚡🛡️アイアン・ビーム”, 12, T.C, 1, 0, null, [AB.SH, 10]],
 [1, “⚡🔺カジェル”, 16, T.C, 2, 0, [T.C, 1.2], null],
-[1, “⚡🪓 シールド・ブレイカー”, 2, T.C, 2, 0, null, [AB.SB]],
-[1, “⚡⚡️⚡️ トールハンマー”, 30, T.C, 3, 0, [T.M, 0.9], null],
+[1, “⚡🪓シールド・ブレイカー”, 2, T.C, 2, 0, null, [AB.SB]],
+[1, “⚡⚡️トールハンマー”, 30, T.C, 3, 0, [T.M, 0.9], null],
 
 // === SHIELD ===
-[1, “🛡️ 装甲板”, 20, T.S, 1, 0, null, null],
-[1, “🛡️⚠️ シェル”, 28, T.S, 1, 0, [T.L, 0.8], null],
-[1, “🛡️💥 エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
-[1, “🛡️🛡️ イージス”, 30, T.S, 2, 0, null, null],
-[1, “🛡️🔋 キャパシタ”, 20, T.S, 2, 0, null, [AB.CAPACITOR]],
-[1, “🛡️⤴️ バリアー”, 23, T.S, 3, 0, null, [AB.GR, 1]],
+[1, “🛡️装甲板”, 20, T.S, 1, 0, null, null],
+[1, “🛡️⚠️シェル”, 28, T.S, 1, 0, [T.L, 0.8], null],
+[1, “🛡️💥エフェメラ・シールド”, 40, T.S, 1, 1, null, null],
+[1, “🛡️🛡️イージス”, 30, T.S, 2, 0, null, null],
+[1, “🛡️🔋キャパシタ”, 20, T.S, 2, 0, null, [AB.CAPACITOR]],
+[1, “🛡️⤴️バリアー”, 23, T.S, 3, 0, null, [AB.GR, 1]],
 
 // === HULL ===
-[1, “🔧💥 ダメージコントロール”, 40, T.H, 1, 1, null, null],
-[1, “🔧 自動修理装置”, 15, T.H, 1, 0, null, null],
+[1, “🔧💥ダメージコントロール”, 40, T.H, 1, 1, null, null],
+[1, “🔧自動修理装置”, 15, T.H, 1, 0, null, null],
 
 // === MODULE ===
-[1, “🟫🔺 傾斜防壁”, 0, T.X, 1, 0, [T.S, 1.5], null],
-[1, “💉 緊急防壁”, 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
-[2, “⚙️ 設備最適化”, 0, T.X, 2, 0, null, [AB.COMPACT]],
-[1, “🔥 バーサーカーコア”, 0, T.X, 3, 0, null, [AB.BERSERKER]],
-[2, “🔥🔺 弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 1.5], null],
-[1, “🏗️🔺 スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
-[1, “💎🔺 プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
+[1, “🟫🔺傾斜防壁”, 0, T.X, 1, 0, [T.S, 1.5], null],
+[1, “💉緊急防壁”, 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
+[2, “⚙️設備最適化”, 0, T.X, 2, 0, null, [AB.COMPACT]],
+[1, “🔥バーサーカーコア”, 0, T.X, 3, 0, null, [AB.BERSERKER]],
+[2, “🔥🔺弾頭最適化装置”, 0, T.X, 3, 0, [T.L, 1.5], null],
+[1, “🏗️🔺スウォーム・ハンガー”, 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
+[1, “💎🔺プリズマティック・フォーカス”, 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
 ];
 
 const EN = [
@@ -360,13 +368,13 @@ max_hull: 200,
 hull: 200,
 max_slots: 6,
 inventory: [
-createItem(“🚀 ランス”, idCounter),
-createItem(“🚀 ランス”, idCounter),
-createItem(“⚡ クロウ”, idCounter),
-createItem(“⚡ クロウ”, idCounter),
-createItem(“🛡️ 装甲板”, idCounter),
-createItem(“🗑️ スクラップ”, idCounter),
-createItem(“🗑️ スクラップ”, idCounter),
+createItem(“🚀ランス”, idCounter),
+createItem(“🚀ランス”, idCounter),
+createItem(“⚡クロウ”, idCounter),
+createItem(“⚡クロウ”, idCounter),
+createItem(“🛡️装甲板”, idCounter),
+createItem(“🗑️スクラップ”, idCounter),
+createItem(“🗑️スクラップ”, idCounter),
 ],
 equipped: [],
 logistics: false,
@@ -692,6 +700,7 @@ onStart(validSeed);
 
 return (
 <div className="max-w-4xl mx-auto">
+<h1 className="text-4xl font-bold mb-6 text-center">STAR CANINE</h1>
 <pre className="text-xs mb-6 whitespace-pre-wrap">{STORY.opening}</pre>
 
 ```
@@ -746,7 +755,7 @@ const [tempPlayer, setTempPlayer] = useState(() => {
 if (player.logistics) {
 return {
 …player,
-inventory: […player.inventory, createItem(“🚀 ランス”, player.itemIdCounter)],
+inventory: […player.inventory, createItem(“🚀ランス”, player.itemIdCounter)],
 };
 }
 return { …player };
@@ -1073,7 +1082,7 @@ if (phase === ‘prep’) {
 return (
 <div className="max-w-6xl mx-auto">
 <h2 className="text-xl mb-2">{UI.label.stage} {stage} | {UI.label.act} {act}</h2>
-<div className="text-xs text-green-600 mb-2">シード: {tempPlayer.seed}</div>
+<div className="text-xs text-green-600 mb-2">{VERSION} シード: {tempPlayer.seed}</div>
 
 ```
     <div className="grid grid-cols-2 gap-4 text-sm mb-4">
@@ -1315,7 +1324,7 @@ const canClaim = selectedItem && (!isBoss || !availableBossRewards.length || sel
 return (
 <div className="max-w-4xl mx-auto">
 <h2 className="text-xl mb-2">{UI.label.reward}</h2>
-<div className="text-xs text-green-600 mb-4">シード: {player.seed}</div>
+<div className="text-xs text-green-600 mb-4">{VERSION} シード: {player.seed}</div>
 
 ```
   <div className="mb-4">
@@ -1496,7 +1505,7 @@ setPlayer({
 …player,
 max_hull: player.max_hull - 10,
 hull: Math.max(1, player.hull - 10),
-inventory: […player.inventory, createItem(“🚀 ランス”, player.itemIdCounter)],
+inventory: […player.inventory, createItem(“🚀ランス”, player.itemIdCounter)],
 });
 advance(‘main’);
 };
@@ -1513,7 +1522,7 @@ player.doctrine && ‘教義’,
 return (
 <div className="max-w-4xl mx-auto">
 <h2 className="text-xl mb-2">{UI.dock.title}</h2>
-<div className="text-xs text-green-600 mb-4">シード: {player.seed}</div>
+<div className="text-xs text-green-600 mb-4">{VERSION} シード: {player.seed}</div>
 
 ```
   <div className="mb-4 text-sm">
@@ -1675,13 +1684,16 @@ return (
 );
 }
 
-function ItemRow({ item, equipped = false, onClick, showId = true, hasCompact = false }) {
+function ItemRow({ item, equipped = false, onClick, showId = false, hasCompact = false }) {
 const parts = [
 item.name,
-‘|’,
 getTypeName(item.type),
-`${UI.label.power}:${item.power}`,
 ];
+
+// Only show power if it’s not 0
+if (item.power > 0) {
+parts.push(`${UI.label.power}:${item.power}`);
+}
 
 if (item.disposable) parts.push(‘💥’);
 if (item.mult) parts.push(formatMult(item.mult));
@@ -1703,7 +1715,7 @@ return (
 className={`text-xs mb-1 ${textColor} ${onClick ? 'cursor-pointer hover:bg-green-900' : ''}`}
 onClick={onClick}
 >
-{equipped && ’✓ ‘}{showId && <span className="text-green-600">#{item.id} </span>}[{displaySlots}] {parts.join(’ ’)}
+{equipped && ’✓ ‘}[{displaySlots}] {parts.join(’ ’)}
 </div>
 );
 }
