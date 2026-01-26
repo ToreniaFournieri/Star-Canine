@@ -268,8 +268,8 @@ const EQ = [
 
   // === MODULE ===
   [1, "🟫🔺 傾斜防壁", 0, T.X, 1, 0, [T.S, 1.5], null],
-  [1, "💉 緊急過負荷", 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
-  [2, "⚙️ 圧縮設計", 0, T.X, 2, 0, null, [AB.COMPACT]],
+  [1, "💉 緊急防壁", 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
+  [2, "⚙️ 設備最適化", 0, T.X, 2, 0, null, [AB.COMPACT]],
   [1, "🔥 バーサーカーコア", 0, T.X, 2, 0, null, [AB.BERSERKER]],
   [2, "🔥🔺 弾頭最適化装置", 0, T.X, 3, 0, [T.L, 1.5], null],
   [1, "🏗️🔺 スウォーム・ハンガー", 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
