@@ -147,7 +147,7 @@ const AB = {
     id: 'OVERDRIVE',
     name: '緊急過負荷',
     desc: "戦闘開始時、耐久値-30、シールド+60。",
-    format: () => '緊急過負荷'
+    format: () => '緊急過負荷(HP-30,シールド+60)'
   },
   CAPACITOR: {
     id: 'CAPACITOR',
