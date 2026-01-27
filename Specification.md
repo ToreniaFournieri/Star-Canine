@@ -1,4 +1,4 @@
-# STAR CANINE v0.9.1 - SPECIFICATION
+# STAR CANINE v0.9.2 - SPECIFICATION
 
 Containing all game rules, data, and UI text.
 
@@ -303,6 +303,16 @@ const EN = [
   [8, "シールド・ゲート", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
   [9, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
   [10, "セレスティアル・リーパー", 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
+  
+  [50, "ソーラー・ベア前衛艦", 140, 30, R.B, [35, 10, 15], [[SK.OVR, 1.6]]],
+  [51, "ハル・リーヴァー", 160, 135, R.B, [15, 15, 20], [[SK.DEG, 20]]],
+  [52, "トール・キング", 150, 55, R.B, [10, 10, 10], [[SK.GATE, 8], [SK.DOR, 0]]],
+  [53, "ベルト・ウォーロード", 150, 35, R.B, [30, 20, 20], [[SK.OVR, 1.5]]],
+  [54, "エコーズ", 170, 45, R.B, [15, 25, 15], [[SK.REGEN, 5], [SK.DOR, 0]]],
+  [55, "皇子の元帥", 175, 55, R.B, [20, 20, 20], [[SK.OVR, 2.0], [SK.GATE, 6]]],
+  [56, "若き皇子", 160, 45, R.B, [35, 15, 25], [[SK.OVR, 2.2]]],
+  [57, "ブラック・アーキビスト", 170, 75, R.B, [20, 25, 15], [[SK.CL, 12], [SK.GATE, 10]]],
+  [58, "チェイン・アドミラル", 185, 85, R.B, [10, 20, 15], [[SK.GATE, 16], [SK.REGEN, 6]]],
 ];
 ```
 
@@ -714,7 +724,8 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.9.1**|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
+|**0.9.2**|Boss and stage layout update |
+|0.9.1|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
 |0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
