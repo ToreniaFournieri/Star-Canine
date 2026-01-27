@@ -286,7 +286,7 @@ const EQ = [
 
 ### 3.2 Enemies
 
-Schema: `[difficulty, name, hull, shield, rank, attacks, skills]`
+Schema: `[enemyId, name, hull, shield, rank, attacks, skills]`
 
 - `attacks`: `[LONG, MID, CLOSE]`
 - `skills`: `[[SK.*, value], ...]` (supports multiple)
@@ -322,8 +322,8 @@ const EN = [
 Schema:
 [Act, Branch, Subtitle, StageLayout[]]
 
-StageLayout: `[difficulty]`
-- difficulty: Enemy difficulty level (0 for Dock)
+StageLayout: `[enemyId]`
+- enemyId: Enemy difficulty level (0 for Dock)
 
 ```javascript
 const ST = [
