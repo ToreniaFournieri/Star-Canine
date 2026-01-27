@@ -318,27 +318,24 @@ const EN = [
 
 ### 3.3 Stages
 
-- Each ACT has 12 stages. ACT I(stage 1-12), ACT II(stage 13-24), ACT III(stage 25-36) and they have same stage layout(`ST`). 
+Schema:
+[Act, Branch, Concept, StageLayout[]]
 
-Schema: `[rank, difficulty]`
-- `rank`: `'N'` (Normal enemy), `'E'` (Elite enemy), `'B'` (Boss enemy), `'D'` (Dock)
+StageLayout: `[difficulty]`
 - `difficulty`: Enemy difficulty level (0 for Dock)
-- Stage number = array index + 1
 
 ```javascript
 const ST = [
-  ['N',1],
-  ['N',2],
-  ['N',3], 
-  ['E',8], 
-  ['N',4],
-  ['D',0],
-  ['N',5],
-  ['E',9], 
-  ['N',6], 
-  ['N',7],
-  ['D',0],
-  ['B',10],
+[1, "A", "DESOLATION — IMPERIUM", [1,2,3,8,4,0,5,9,6,7,0,50]],
+[1, "B", "DESOLATION — PURSUIT",  [1,2,3,8,4,0,5,9,6,7,0,51]],
+[1, "C", "DESOLATION — RUIN",      [1,2,3,8,4,0,5,9,6,7,0,52]],
+[2, "A", "BETRAYAL — ENCIRCLEMENT",[1,2,3,8,4,0,5,9,6,7,0,53]],
+[2, "B", "BETRAYAL — HUNT",        [1,2,3,8,4,0,5,9,6,7,0,54]],
+[2, "C", "BETRAYAL — FRACTURE",    [1,2,3,8,4,0,5,9,6,7,0,55]],
+[3, "A", "RECLAMATION — IMPERIUM", [1,2,3,8,4,0,5,9,6,7,0,56]],
+[3, "B", "RECLAMATION — LIBERATION",[1,2,3,8,4,0,5,9,6,7,0,57]],
+[3, "C", "RECLAMATION — RECKONING",[1,2,3,8,4,0,5,9,6,7,0,58]],
+[3, "D", "RECLAMATION — FINALITY", [1,2,3,8,4,0,5,9,6,7,0,59]],
 ];
 ```
 
