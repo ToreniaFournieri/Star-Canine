@@ -300,8 +300,8 @@ const EN = [
   [5, "遺物哨戒機", 80, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
   [6, "特攻フリゲート", 20, 75, R.N, [0, 0, 0], [[SK.EXP, 180]]],
   [7, "重装巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
-  [8, "シールド・ゲート", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
-  [9, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
+  [38, "シールド・ゲート", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
+  [39, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
   [10, "セレスティアル・リーパー", 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
   
   [50, "ソーラー・ベア前衛艦", 140, 30, R.B, [35, 10, 15], [[SK.OVR, 1.6]]],
@@ -317,25 +317,23 @@ const EN = [
 ```
 
 ### 3.3 Stages
-
 Schema:
 [Act, Branch, Concept, StageLayout[]]
 
 StageLayout: `[difficulty]`
-- `difficulty`: Enemy difficulty level (0 for Dock)
+- difficulty: Enemy difficulty level (0 for Dock)
 
 ```javascript
 const ST = [
-[1, "A", "DESOLATION — IMPERIUM", [1,2,3,8,4,0,5,9,6,7,0,50]],
-[1, "B", "DESOLATION — PURSUIT",  [1,2,3,8,4,0,5,9,6,7,0,51]],
-[1, "C", "DESOLATION — RUIN",      [1,2,3,8,4,0,5,9,6,7,0,52]],
-[2, "A", "BETRAYAL — ENCIRCLEMENT",[1,2,3,8,4,0,5,9,6,7,0,53]],
-[2, "B", "BETRAYAL — HUNT",        [1,2,3,8,4,0,5,9,6,7,0,54]],
-[2, "C", "BETRAYAL — FRACTURE",    [1,2,3,8,4,0,5,9,6,7,0,55]],
-[3, "A", "RECLAMATION — IMPERIUM", [1,2,3,8,4,0,5,9,6,7,0,56]],
-[3, "B", "RECLAMATION — LIBERATION",[1,2,3,8,4,0,5,9,6,7,0,57]],
-[3, "C", "RECLAMATION — RECKONING",[1,2,3,8,4,0,5,9,6,7,0,58]],
-[3, "D", "RECLAMATION — FINALITY", [1,2,3,8,4,0,5,9,6,7,0,59]],
+[1, "A", "IMPERIUM", [1,2,3,38,4,0,5,39,6,7,0,50]],
+[1, "B", "PURSUIT",  [1,2,3,38,4,0,5,39,6,7,0,51]],
+[1, "C", "RUIN",      [1,2,3,38,4,0,5,39,6,7,0,52]],
+[2, "A", "ENCIRCLEMENT",[1,2,3,38,4,0,5,39,6,7,0,53]],
+[2, "B", "HUNT",        [1,2,3,38,4,0,5,39,6,7,0,54]],
+[2, "C", "FRACTURE",    [1,2,3,38,4,0,5,39,6,7,0,55]],
+[3, "A", "IMPERIUM", [1,2,3,38,4,0,5,39,6,7,0,56]],
+[3, "B", "LIBERATION",[1,2,3,38,4,0,5,39,6,7,0,57]],
+[3, "C", "RECKONING",[1,2,3,38,4,0,5,39,6,7,0,58]],
 ];
 ```
 
@@ -346,6 +344,8 @@ const ST = [
 ### 4.1 Initial State
 
 1. Initialize randomness
+- **Initialize stage path**: chose the pass from the stage layout ST. 
+
 - **Tetris-style item decks**: Each deck uses "bag randomizer"
   - One "bag" = 1 copy of each item type in that rarity
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
