@@ -342,9 +342,10 @@ const ST = [
 - **Tetris-style item decks**: Each deck uses "bag randomizer"
   - One "bag" = 1 copy of each item type in that rarity
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
-  - Normal deck: 3 bags × 19 types = 57 cards
-  - Elite deck: 3 bags × 12 types = 36 cards
-  - Boss deck: 3 bags × 8 types = 24 cards
+  - Normal deck: 19 types = 19 cards
+  - Elite deck:  12 types = 12 cards
+  - Boss deck: 8 types = 8 cards
+  - if it empties, refill. 
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
