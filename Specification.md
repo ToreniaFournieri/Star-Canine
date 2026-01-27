@@ -344,7 +344,7 @@ const ST = [
 ### 4.1 Initial State
 
 1. Initialize randomness
-- **Initialize stage path**: chose the pass from the stage layout ST. 
+- **Initialize stage path**: For each ACT, choose one branch (A–C) from ST. Assign its StageLayout as the active route.
 
 - **Tetris-style item decks**: Each deck uses "bag randomizer"
   - One "bag" = 1 copy of each item type in that rarity
