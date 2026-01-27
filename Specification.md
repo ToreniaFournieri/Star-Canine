@@ -320,7 +320,7 @@ const EN = [
 
 ### 3.3 Stages
 Schema:
-[Act, Branch, Concept, StageLayout[]]
+[Act, Branch, Subtitle, StageLayout[]]
 
 StageLayout: `[difficulty]`
 - difficulty: Enemy difficulty level (0 for Dock)
