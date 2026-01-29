@@ -1461,10 +1461,16 @@ player.doctrine && '教義',
 ].filter(Boolean);
 
 const claim = () => {
-const newPlayer = { ...player };
 const idCounter = createIdCounter(player.itemIdCounterValue);
 
-// Add selected item to inventory
+// Create new player state with explicitly preserved equipment and new item in inventory only
+const newPlayer = {
+...player,
+inventory: player.inventory,  // Will be replaced if item selected
+equipped: [...player.equipped],  // Explicitly preserve equipped array as-is
+};
+
+// Add selected item to inventory only (NEVER to equipped)
 if (selectedItem) {
   newPlayer.inventory = [...player.inventory, createItem(selectedItem, idCounter)];
   newPlayer.itemIdCounterValue = idCounter.current();
