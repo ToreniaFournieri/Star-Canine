@@ -937,15 +937,31 @@ const [log, setLog] = useState([]);
 const [result, setResult] = useState(null);
 
 const [tempPlayer, setTempPlayer] = useState(() => {
+let basePlayer = { ...player };
+
+// Cleanup: Remove duplicate IDs from equipped array and ensure all equipped IDs exist in inventory
+if (basePlayer.equipped && basePlayer.inventory) {
+const inventoryIds = new Set(basePlayer.inventory.map(i => i.id));
+const uniqueEquipped = [];
+const seenIds = new Set();
+for (const id of basePlayer.equipped) {
+if (inventoryIds.has(id) && !seenIds.has(id)) {
+uniqueEquipped.push(id);
+seenIds.add(id);
+}
+}
+basePlayer.equipped = uniqueEquipped;
+}
+
 if (player.logistics) {
-const idCounter = createIdCounter(player.itemIdCounterValue);
+const idCounter = createIdCounter(basePlayer.itemIdCounterValue);
 return {
-...player,
-inventory: [...player.inventory, createItem("🚀ランス", idCounter)],
+...basePlayer,
+inventory: [...basePlayer.inventory, createItem("🚀ランス", idCounter)],
 itemIdCounterValue: idCounter.current(),
 };
 }
-return { ...player };
+return basePlayer;
 });
 
 const act = getAct(stage);
@@ -981,26 +997,39 @@ return sum + i.slots;
 }, 0);
 
 const toggleEquip = (item) => {
-const isEquipped = tempPlayer.equipped.includes(item.id);
+setTempPlayer(prevTempPlayer => {
+const isEquipped = prevTempPlayer.equipped.includes(item.id);
 if (isEquipped) {
-setTempPlayer({
-...tempPlayer,
-equipped: tempPlayer.equipped.filter(id => id !== item.id),
-});
+return {
+...prevTempPlayer,
+equipped: prevTempPlayer.equipped.filter(id => id !== item.id),
+};
 } else {
-// Check if COMPACT is equipped
-const willHaveCompact = hasAbility(item, AB.COMPACT) || equippedItems.some(i => hasAbility(i, AB.COMPACT));
-// COMPACT only compresses OTHER items with 2+ slots
-const itemSlots = willHaveCompact && !hasAbility(item, AB.COMPACT) && item.slots >= 2 ? 1 : item.slots;
-
-  if (usedSlots + itemSlots <= tempPlayer.max_slots) {
-    setTempPlayer({
-      ...tempPlayer,
-      equipped: [...tempPlayer.equipped, item.id],
-    });
-  }
+// Recalculate equipped items and slots with current state
+const equippedWithCurrent = prevTempPlayer.inventory.filter(i => prevTempPlayer.equipped.includes(i.id));
+const hasCompactWithCurrent = equippedWithCurrent.some(i => hasAbility(i, AB.COMPACT));
+const usedSlotsWithCurrent = equippedWithCurrent.reduce((sum, i) => {
+if (hasCompactWithCurrent && !hasAbility(i, AB.COMPACT) && i.slots >= 2) {
+return sum + 1;
 }
+return sum + i.slots;
+}, 0);
 
+// Calculate slots for the item being equipped
+const itemSlots = hasCompactWithCurrent && !hasAbility(item, AB.COMPACT) && item.slots >= 2 ? 1 : item.slots;
+
+if (usedSlotsWithCurrent + itemSlots <= prevTempPlayer.max_slots) {
+// Prevent duplicate IDs - don't add if already equipped
+if (!prevTempPlayer.equipped.includes(item.id)) {
+return {
+...prevTempPlayer,
+equipped: [...prevTempPlayer.equipped, item.id],
+};
+}
+}
+return prevTempPlayer;
+}
+});
 };
 
 const preview = useMemo(() => {
