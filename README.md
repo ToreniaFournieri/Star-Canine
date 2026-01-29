@@ -2,11 +2,11 @@
 Text-based rouge like expedition game. 
 
 
-## AI test at Claude code
+## Play
 
-```
-Bash node headless_engine.js 143 2>&1 | tail -1000
-```
+
+[PLAY NOW](https://toreniafournieri.github.io/Star-Canine/)
+
 
 ## Story
 
