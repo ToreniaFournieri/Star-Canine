@@ -448,7 +448,7 @@ const bossRewards = seededShuffle(allBossRewards, rng);
 
 return {
 seed: actualSeed,
-itemIdCounter: idCounter,
+itemIdCounterValue: idCounter.current(),
 max_hull: 200,
 hull: 200,
 max_slots: 6,
@@ -746,6 +746,17 @@ const loadGame = () => {
     if (saved) {
       const gameState = JSON.parse(saved);
       console.log('Game loaded:', gameState.scene, 'Stage:', gameState.stage);
+
+      // Handle backward compatibility: convert old itemIdCounter object to itemIdCounterValue
+      if (gameState.player && gameState.player.itemIdCounter && typeof gameState.player.itemIdCounter === 'object') {
+        // If itemIdCounterValue doesn't exist, estimate it from inventory length
+        if (!gameState.player.itemIdCounterValue) {
+          gameState.player.itemIdCounterValue = gameState.player.inventory?.length || 0;
+        }
+        delete gameState.player.itemIdCounter;
+        console.log('Migrated itemIdCounter to itemIdCounterValue');
+      }
+
       return gameState;
     }
   } catch (e) {
@@ -927,9 +938,11 @@ const [result, setResult] = useState(null);
 
 const [tempPlayer, setTempPlayer] = useState(() => {
 if (player.logistics) {
+const idCounter = createIdCounter(player.itemIdCounterValue);
 return {
 ...player,
-inventory: [...player.inventory, createItem("🚀ランス", player.itemIdCounter)],
+inventory: [...player.inventory, createItem("🚀ランス", idCounter)],
+itemIdCounterValue: idCounter.current(),
 };
 }
 return { ...player };
@@ -1420,10 +1433,12 @@ player.doctrine && '教義',
 
 const claim = () => {
 const newPlayer = { ...player };
+const idCounter = createIdCounter(player.itemIdCounterValue);
 
 // Add selected item to inventory
 if (selectedItem) {
-  newPlayer.inventory = [...player.inventory, createItem(selectedItem, player.itemIdCounter)];
+  newPlayer.inventory = [...player.inventory, createItem(selectedItem, idCounter)];
+  newPlayer.itemIdCounterValue = idCounter.current();
 }
 
 // No need to update decks - rewards were pre-allocated at game start
@@ -1644,11 +1659,13 @@ advance('main');
 };
 
 const handleFabricate = () => {
+const idCounter = createIdCounter(player.itemIdCounterValue);
 setPlayer({
 ...player,
 max_hull: player.max_hull - 10,
 hull: Math.max(1, player.hull - 10),
-inventory: [...player.inventory, createItem("🚀ランス", player.itemIdCounter)],
+inventory: [...player.inventory, createItem("🚀ランス", idCounter)],
+itemIdCounterValue: idCounter.current(),
 });
 advance('main');
 };
