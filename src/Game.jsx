@@ -762,12 +762,19 @@ const sanitizeInventoryIds = (player) => {
     id: index,
   }));
 
+  // Also clean equipped array: only valid IDs and no duplicates
+  const validEquipped = new Set();
+  for (const id of player.equipped) {
+    if (typeof id === 'number' && id >= 0 && id < player.inventory.length) {
+      validEquipped.add(id);
+    }
+  }
+
   const sanitizedPlayer = {
     ...player,
     inventory: sanitizedInventory,
     itemIdCounterValue: player.inventory.length,
-    // Also clean equipped array to only include valid IDs
-    equipped: player.equipped.filter(id => id < player.inventory.length),
+    equipped: Array.from(validEquipped),
   };
 
   console.log('Inventory sanitized. New itemIdCounterValue:', sanitizedPlayer.itemIdCounterValue);
