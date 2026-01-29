@@ -731,6 +731,49 @@ return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, battleShield: pS
 // Save/Load functions for PWA persistence
 const SAVE_KEY = 'star-canine-save';
 
+// Sanitize inventory to ensure all item IDs are unique
+const sanitizeInventoryIds = (player) => {
+  if (!player.inventory || !Array.isArray(player.inventory)) return player;
+
+  const seenIds = new Set();
+  let nextId = player.itemIdCounterValue || 0;
+
+  // Check for duplicate IDs and reassign if needed
+  let hasDuplicates = false;
+  for (const item of player.inventory) {
+    if (seenIds.has(item.id)) {
+      hasDuplicates = true;
+      break;
+    }
+    seenIds.add(item.id);
+    // Track the highest ID to ensure nextId is correct
+    if (typeof item.id === 'number' && item.id >= nextId) {
+      nextId = item.id + 1;
+    }
+  }
+
+  if (!hasDuplicates) return player; // No issues, return as-is
+
+  console.warn('Detected duplicate item IDs in inventory, sanitizing...');
+
+  // Reassign all IDs to be sequential and unique
+  const sanitizedInventory = player.inventory.map((item, index) => ({
+    ...item,
+    id: index,
+  }));
+
+  const sanitizedPlayer = {
+    ...player,
+    inventory: sanitizedInventory,
+    itemIdCounterValue: player.inventory.length,
+    // Also clean equipped array to only include valid IDs
+    equipped: player.equipped.filter(id => id < player.inventory.length),
+  };
+
+  console.log('Inventory sanitized. New itemIdCounterValue:', sanitizedPlayer.itemIdCounterValue);
+  return sanitizedPlayer;
+};
+
 const saveGame = (gameState) => {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify(gameState));
@@ -755,6 +798,11 @@ const loadGame = () => {
         }
         delete gameState.player.itemIdCounter;
         console.log('Migrated itemIdCounter to itemIdCounterValue');
+      }
+
+      // Sanitize inventory to remove any duplicate IDs
+      if (gameState.player) {
+        gameState.player = sanitizeInventoryIds(gameState.player);
       }
 
       return gameState;
@@ -937,7 +985,8 @@ const [log, setLog] = useState([]);
 const [result, setResult] = useState(null);
 
 const [tempPlayer, setTempPlayer] = useState(() => {
-let basePlayer = { ...player };
+// First, sanitize inventory IDs to ensure no duplicates exist
+let basePlayer = sanitizeInventoryIds({ ...player });
 
 // Cleanup: Remove duplicate IDs from equipped array and ensure all equipped IDs exist in inventory
 if (basePlayer.equipped && basePlayer.inventory) {
