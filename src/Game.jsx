@@ -728,15 +728,94 @@ log.push(`=== 戦闘終了 ===`);
 return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, battleShield: pShield, hullRepair: stats.final.HULL };
 };
 
+// Save/Load functions for PWA persistence
+const SAVE_KEY = 'star-canine-save';
+
+const saveGame = (gameState) => {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(gameState));
+    console.log('Game saved:', gameState.scene, 'Stage:', gameState.stage);
+  } catch (e) {
+    console.error('Failed to save game:', e);
+  }
+};
+
+const loadGame = () => {
+  try {
+    const saved = localStorage.getItem(SAVE_KEY);
+    if (saved) {
+      const gameState = JSON.parse(saved);
+      console.log('Game loaded:', gameState.scene, 'Stage:', gameState.stage);
+      return gameState;
+    }
+  } catch (e) {
+    console.error('Failed to load game:', e);
+  }
+  return null;
+};
+
+const clearSave = () => {
+  try {
+    localStorage.removeItem(SAVE_KEY);
+    console.log('Save cleared');
+  } catch (e) {
+    console.error('Failed to clear save:', e);
+  }
+};
+
+const hasSavedGame = () => {
+  try {
+    return localStorage.getItem(SAVE_KEY) !== null;
+  } catch (e) {
+    return false;
+  }
+};
+
 // Main Component
 export default function Game() {
 const [scene, setScene] = useState('start');
 const [stage, setStage] = useState(1);
 const [player, setPlayer] = useState(null);
+const [isLoaded, setIsLoaded] = useState(false);
+
+// Load saved game on mount
+useEffect(() => {
+  const saved = loadGame();
+  if (saved && saved.scene !== 'start' && saved.scene !== 'end') {
+    setScene(saved.scene);
+    setStage(saved.stage);
+    setPlayer(saved.player);
+    // Restore RNG state
+    if (saved.player?.seed !== undefined) {
+      initializeRNG(saved.player.seed);
+    }
+  }
+  setIsLoaded(true);
+}, []);
+
+// Save game whenever scene, stage, or player changes (after initial load)
+useEffect(() => {
+  if (isLoaded && scene !== 'start') {
+    saveGame({ scene, stage, player });
+  }
+}, [scene, stage, player, isLoaded]);
 
 const startGame = (seed = null) => {
-setPlayer(createInitialPlayer(seed));
+const newPlayer = createInitialPlayer(seed);
+setPlayer(newPlayer);
 setScene('main');
+};
+
+const continueGame = () => {
+  const saved = loadGame();
+  if (saved) {
+    setScene(saved.scene);
+    setStage(saved.stage);
+    setPlayer(saved.player);
+    if (saved.player?.seed !== undefined) {
+      initializeRNG(saved.player.seed);
+    }
+  }
 };
 
 const advance = (nextScene) => {
@@ -745,13 +824,23 @@ setScene(nextScene);
 };
 
 const restart = () => {
+clearSave();
 setStage(1);
 setPlayer(null);
 setScene('start');
 };
 
+// Show loading state briefly
+if (!isLoaded) {
+  return (
+    <div className="min-h-screen bg-black text-green-400 font-mono p-4 flex items-center justify-center">
+      <div>Loading...</div>
+    </div>
+  );
+}
+
 const scenes = {
-start:  <StartScene onStart={startGame} />,
+start:  <StartScene onStart={startGame} onContinue={continueGame} hasSave={hasSavedGame()} />,
 main:   <MainScene stage={stage} setScene={setScene} />,
 combat: <CombatScene player={player} setPlayer={setPlayer} stage={stage} setScene={setScene} advance={advance} />,
 reward: <RewardScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} />,
@@ -766,7 +855,7 @@ return (
 );
 }
 
-function StartScene({ onStart }) {
+function StartScene({ onStart, onContinue, hasSave }) {
 const [seedInput, setSeedInput] = useState('');
 
 const handleStart = () => {
@@ -780,6 +869,18 @@ return (
 <h1 className="text-4xl font-bold mb-6 text-center">STAR CANINE</h1>
 <pre className="text-xs mb-6 whitespace-pre-wrap">{STORY.opening}</pre>
 
+  {hasSave && (
+    <div className="mb-6 p-4 border border-yellow-600 bg-yellow-900 bg-opacity-20">
+      <div className="text-yellow-400 mb-2">セーブデータがあります</div>
+      <button
+        onClick={onContinue}
+        className="bg-yellow-700 px-4 py-2 hover:bg-yellow-600 mr-2"
+      >
+        続きから
+      </button>
+    </div>
+  )}
+
   <div className="mb-4">
     <label className="block text-sm mb-2">シード (空欄で自動生成):</label>
     <input
@@ -792,7 +893,7 @@ return (
   </div>
 
   <button onClick={handleStart} className="bg-green-700 px-4 py-2 hover:bg-green-600">
-    {UI.btn.start}
+    {hasSave ? '最初から' : UI.btn.start}
   </button>
 </div>
 
@@ -1671,6 +1772,11 @@ return (
 
 function EndScene({ player, stage, onRestart }) {
 const cleared = stage >= 36 && player.hull > 0;
+
+// Clear save data when game ends
+useEffect(() => {
+  clearSave();
+}, []);
 
 const activeBonuses = [
 player.boarding && '白兵戦',
