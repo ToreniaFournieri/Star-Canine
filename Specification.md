@@ -1,7 +1,6 @@
-# STAR CANINE v0.9.2 - SPECIFICATION
+# STAR CANINE v0.9.1 - SPECIFICATION
 
-Containing all game rules, data, and UI text. 
-
+Containing all game rules, data, and UI text.
 
 -----
 
@@ -287,7 +286,7 @@ const EQ = [
 
 ### 3.2 Enemies
 
-Schema: `[enemyId, name, hull, shield, rank, attacks, skills]`
+Schema: `[difficulty, name, hull, shield, rank, attacks, skills]`
 
 - `attacks`: `[LONG, MID, CLOSE]`
 - `skills`: `[[SK.*, value], ...]` (supports multiple)
@@ -300,79 +299,36 @@ const EN = [
   [4, "ゾンビ", 25, 90, R.N, [0, 0, 20], [[SK.DEG, 5]]],
   [5, "遺物哨戒機", 80, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
   [6, "特攻フリゲート", 20, 75, R.N, [0, 0, 0], [[SK.EXP, 180]]],
-  [7, "投棄巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
-  [8, "迎撃艇", 55, 15, R.N, [10, 5, 10], [[SK.CL, 6]]],
-  [9, "レイダー", 70, 10, R.N, [15, 10, 10], [[SK.OVR, 1.3]]],
-  
-
-  [20, "スカウト", 70, 5, R.N, [10, 10, 10], [[SK.DOR, 0]]],
-  [21, "ガンナー", 85, 10, R.N, [20, 10, 10], [[SK.CL, 8]]],
-  [22, "リペア機", 95, 10, R.N, [10, 15, 10], [[SK.REG, 10]]],
-  [23, "コラプター", 80, 15, R.N, [10, 10, 15], [[SK.DEG, 10]]],
-  [24, "センチネル", 110, 20, R.N, [20, 15, 10], [[SK.GATE, 10]]],
-  [25, "インターセプター", 90, 10, R.N, [20, 15, 15], [[SK.CL, 8], [SK.OVR, 1.3]]],
-  [26, "オーバーローダー", 100, 10, R.N, [20, 20, 15], [[SK.OVR, 1.5]]],
-  [27, "ボマー", 75, 15, R.N, [0, 0, 0], [[SK.EXP, 140]]],
-  [28, "ストライカー", 115, 15, R.N, [25, 15, 15], [[SK.OVR, 1.4], [SK.GATE, 8]]],
-
-  [40, "SBE 軌道作業艇", 110, 60, R.N, [15, 0, 10], [[SK.GATE, 40], [SK.DOR, 0]]],
-  [41, "SBE 補給船", 105, 15, R.N, [15, 0, 10], [[SK.DOR, 0], [SK.REGEN, 60]]],
-  [42, "SBE 監視艇", 95, 40, R.N, [25, 0, 20], [[SK.GATE, 20], [SK.CL, 20]]],
-  [43, "SBE 巡察艦", 100, 10, R.N, [40, 20, 30], [[SK.REGEN, 20], [SK.DOR, 0]]],
-  [44, "SBE 軽攻撃艇", 90, 20, R.N, [30, 25, 20], [[SK.OVR, 1.5], [SK.DEG, 10]]],
-  [45, "SBE 突撃艇", 105, 20, R.N, [25, 30, 25], [[SK.OVR, 1.6], [SK.GATE, 10]]],
-  [45, "SBE 護衛艦", 120, 25, R.N, [30, 25, 20], [[SK.GATE, 20], [SK.CL, 20]]],
-  [46, "SBE 中型戦闘艦", 160, 40, R.N, [30, 30, 25], [[SK.OVR, 1.3], [SK.REGEN, 20]]],
-  [47, "SBE 防衛艦", 180, 30, R.N, [25, 30, 25], [[SK.GATE, 20], [SK.REGEN, 5]]],
-  [48, "SBE 襲撃艦", 135, 15, R.N, [35, 25, 25], [[SK.OVR, 2.0], [SK.CL, 10]]],
-
-
-// Elite Enemies — Updated Names & IDs
-  [60, "シールド・バスティオン", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
-  [61, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
-  
-  [65, "バスティオン", 150, 35, R.E, [20, 20, 15], [[SK.GATE, 16], [SK.REGEN, 10]]],
-  [66, "パニッシャー", 135, 20, R.E, [30, 25, 20], [[SK.OVR, 1.7], [SK.CL, 12]]],
-  [67, "モルティス", 145, 25, R.E, [25, 25, 20], [[SK.DEG, 14], [SK.REGEN, 10]]],
-
-  [70, "SBE 要塞巡洋艦", 140, 55, R.E, [35, 35, 25], [[SK.GATE, 24], [SK.REGEN, 16]]],
-  // Execution Elite — Scaling Kill Threat
-  [71, "SBE 強襲戦艦", 195, 35, R.E, [40, 25, 30], [[SK.OVR, 2.2], [SK.CL, 16]]],
-  // Doomed Titan — Overbuilt, Self-Decaying Monster
-  [72, "SBE 殲滅艦", 240, 50, R.E,[30, 25, 30], [[SK.DEG, 50], [SK.GATE, 100]]],
-  
-  [80, "ソーラー・ベア前衛艦", 150, 30, R.B, [35, 15, 20], [[SK.OVR, 1.6]]],
-  [81, "ハル・リーヴァー", 250, 135, R.B, [25, 25, 30], [[SK.DEG, 30]]],
-  [82, "トール・キング", 150, 55, R.B, [30, 30, 30], [[SK.GATE, 8], [SK.DOR, 0]]],
-  [83, "ベルト・ウォーロード", 150, 35, R.B, [30, 20, 20], [[SK.OVR, 1.5]]],
-  [84, "エコーズ", 170, 45, R.B, [40, 35, 30], [[SK.REGEN, 5], [SK.DOR, 0]]],
-  [85, "皇子の元帥", 175, 55, R.B, [20, 20, 20], [[SK.OVR, 2.0], [SK.GATE, 6]]],
-  [86, "SBE 若き皇子", 300, 100, R.B, [35, 30, 25], [[SK.OVR, 2.2]]],
-  [87, "SBE ブラック・アーキビスト", 170, 75, R.B, [50, 25, 40], [[SK.CL, 12], [SK.GATE, 40]]],
-  [88, "SBE チェイン・アドミラル", 185, 85, R.B, [25, 20, 30], [[SK.GATE, 40], [SK.REGEN, 40]]],
-  
-    [90, "セレスティアル・リーパー", 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
+  [7, "重装巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
+  [8, "シールド・ゲート", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
+  [9, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
+  [10, "セレスティアル・リーパー", 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
 ];
 ```
 
 ### 3.3 Stages
-Schema:
-[Act, Branch, Subtitle, StageLayout[]]
 
-StageLayout: `[enemyId]`
-- enemyId: Enemy difficulty level (0 for Dock)
+- Each ACT has 12 stages. ACT I(stage 1-12), ACT II(stage 13-24), ACT III(stage 25-36) and they have same stage layout(`ST`). 
+
+Schema: `[rank, difficulty]`
+- `rank`: `'N'` (Normal enemy), `'E'` (Elite enemy), `'B'` (Boss enemy), `'D'` (Dock)
+- `difficulty`: Enemy difficulty level (0 for Dock)
+- Stage number = array index + 1
 
 ```javascript
 const ST = [
-[1, "A", "IMPERIUM", [1,2,3,50,4,0,5,51,6,7,0,80]],
-[1, "B", "PURSUIT",  [1,2,3,50,4,0,5,51,6,7,0,81]],
-[1, "C", "RUIN",      [1,2,3,50,4,0,5,51,6,7,0,82]],
-[2, "A", "ENCIRCLEMENT",[1,2,3,50,4,0,5,51,6,7,0,83]],
-[2, "B", "HUNT",        [1,2,3,50,4,0,5,51,6,7,0,84]],
-[2, "C", "FRACTURE",    [1,2,3,50,4,0,5,51,6,7,0,85]],
-[3, "A", "IMPERIUM", [1,2,3,50,4,0,5,51,6,7,0,86]],
-[3, "B", "LIBERATION",[1,2,3,50,4,0,5,51,6,7,0,87]],
-[3, "C", "RECKONING",[1,2,3,50,4,0,5,51,6,7,0,88]],
+  ['N',1],
+  ['N',2],
+  ['N',3], 
+  ['E',8], 
+  ['N',4],
+  ['D',0],
+  ['N',5],
+  ['E',9], 
+  ['N',6], 
+  ['N',7],
+  ['D',0],
+  ['B',10],
 ];
 ```
 
@@ -383,15 +339,17 @@ const ST = [
 ### 4.1 Initial State
 
 1. Initialize randomness
-- **Initialize stage path**: For each ACT, choose one branch (A–C) from ST. Assign its StageLayout as the active route.
-
 - **Tetris-style item decks**: Each deck uses "bag randomizer"
   - One "bag" = 1 copy of each item type in that rarity
   - Multiple bags pre-shuffled and concatenated at game start (number of types is example)
+  - Normal deck: 19 types = 19 cards
+  - Elite deck:  12 types = 12 cards
+  - Boss deck: 8 types = 8 cards
   - if it empties, refill. 
   - Guarantees: within each bag-length of draws, every item type appears exactly once
 
 - **Reward decision decks**: Determine item rarity reward per enemy rank, rounded. 
+  - Deck size = `rank` combats per ACT × 3 (reward choices) = ex. normal rank has 7 combats, then 21 cards. (Tetris style randomness)  
   - Normal rank:
     - ACT I:   95% NORMAL, 5% ELITE, 0 BOSS  (20,1,0)
     - ACT II:  90% NORMAL, 10% ELITE, 0% BOSS   (19,2,0)
@@ -756,8 +714,7 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.9.2**|Boss and stage layout update |
-|0.9.1|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
+|**0.9.1**|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
 |0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
 |0.8.6    |Added SHIELD_BREAK, BACKFIRE. New boss rewards. Dock rework.                          |
