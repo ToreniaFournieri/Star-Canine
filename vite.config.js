@@ -2,8 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Use base path only for production (GitHub Pages)
+const base = process.env.NODE_ENV === 'production' ? '/Star-Canine/' : '/';
+
 export default defineConfig({
-  base: '/Star-Canine/',
+  base,
   plugins: [
     react(),
     VitePWA({
