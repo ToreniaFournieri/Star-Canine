@@ -1,6 +1,7 @@
 # STAR CANINE v0.9.2 - SPECIFICATION
 
-Containing all game rules, data, and UI text.
+Containing all game rules, data, and UI text. 
+
 
 -----
 
