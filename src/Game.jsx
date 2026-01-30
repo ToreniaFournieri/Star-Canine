@@ -7,7 +7,7 @@ import { ST, ST_SCHEMA, STAGES_PER_ACT } from './data/stageData.js';
 import { PLAYER_INITIAL, STARTING_INVENTORY, ACT_SCALE, ACT_ATTACK_SCALE, BOSS_REWARD_KEYS } from './data/gameConfig.js';
 
 // Constants & Type Definitions
-const VERSION = 'v0.9.1';
+const VERSION = 'v0.9.1 (2)';
 
 const RANGE = { LONG: '長距離', MID: '中距離', CLOSE: '近距離' };
 const RANK  = { NORMAL: '通常', ELITE: 'エリート', BOSS: 'ボス' };
@@ -812,7 +812,8 @@ onStart(validSeed);
 
 return (
 <div className="max-w-4xl mx-auto">
-<h1 className="text-4xl font-bold mb-6 text-center">STAR CANINE</h1>
+<h1 className="text-4xl font-bold mb-2 text-center">STAR CANINE</h1>
+<div className="text-center text-sm text-gray-400 mb-6">{VERSION}</div>
 <pre className="text-xs mb-6 whitespace-pre-wrap">{STORY.opening}</pre>
 
   {hasSave && (
