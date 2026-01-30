@@ -415,10 +415,12 @@ const stats = calculateBattleStats(player, equippedItems);
 
 const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
 const hasNoRepair = equippedItems.some(i => hasAbility(i, AB.NR));
-const hasCapacitor = equippedItems.some(i => hasAbility(i, AB.CAPACITOR));
+const capacitorItem = equippedItems.find(i => hasAbility(i, AB.CAPACITOR));
+const hasCapacitor = capacitorItem !== undefined;
+const capacitorValue = capacitorItem ? getAbilityValue(capacitorItem) : null;
 const hasOverdrive = equippedItems.some(i => hasAbility(i, AB.OVERDRIVE));
 const hasBerserker = equippedItems.some(i => hasAbility(i, AB.BERSERKER));
-const longCount = equippedItems.filter(i => getTypeId(i.type) === ‘LONG’).length;
+const longCount = equippedItems.filter(i => getTypeId(i.type) === 'LONG').length;
 
 let pShield = Math.round(stats.final.SHIELD);
 let pHull = Math.round(player.hull);
@@ -606,7 +608,7 @@ log.push('');
 
 log.push(`=== 戦闘終了 ===`);
 
-return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, battleShield: pShield, hullRepair: stats.final.HULL };
+return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, capacitorValue, battleShield: pShield, hullRepair: stats.final.HULL };
 };
 
 // Main Component
@@ -979,7 +981,8 @@ if (finalHull > 0 && !combatResult.hasNoRepair) {
   
   // Add CAPACITOR repair
   if (combatResult.hasCapacitor && combatResult.battleShield > 0) {
-    const capacitorRepair = Math.floor(combatResult.battleShield * 0.3); // 30% conversion
+    const conversionRate = combatResult.capacitorValue || 0.5;
+    const capacitorRepair = Math.floor(combatResult.battleShield * conversionRate);
     totalRepair += capacitorRepair;
     combatResult.log.push(`キャパシタ蓄積: シールド${combatResult.battleShield} → +${capacitorRepair}HP回復`);
     repairParts.push(`キャパシタ+${capacitorRepair}`);
