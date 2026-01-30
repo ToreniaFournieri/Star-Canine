@@ -23,6 +23,8 @@ export const AB = {
   CAPACITOR: { id: 'CAPACITOR', name: 'キャパシタ蓄積', format: (v) => `シールド変換(${v ? Math.round(v * 100) : 50}%)` },
   COMPACT: { id: 'COMPACT', name: '圧縮設計', format: () => 'スロット圧縮(自身除く)' },
   BERSERKER: { id: 'BERSERKER', name: 'バーサーカー', format: () => 'HP半分以下で威力×1.3' },
+  GUTS: { id: 'GUTS', name: '根性', format: () => '戦闘中一度だけ致死ダメージをHP1で耐える' },
+  PHASE: { id: 'PHASE', name: '位相回避', format: (v) => '最初のHPダメージを ${v ? Math.round(v * 100) : 50}%無効化' },
 };
 
 // Equipment Schema
