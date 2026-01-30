@@ -226,63 +226,6 @@ Schema: `[slots, name, power, type, rarity, disposable, mult, ability]`
 - `ability`: `[AB.*, value?]` or `null`
 - `rarity`: 0 = not in reward decks (starting/special only), 1+ = reward pool
 
-```javascript
-const EQ = [
-  // === SCRAP (Dock currency) ===
-  [1, "🗑️ スクラップ", 0, T.X, 0, 0, null, null],
-  
-  // === LONG (Missiles) ===
-  [1, "🚀ランス", 40, T.L, 1, 1, null, null],
-  [2, "🚀🛡️インターセプター", 60, T.L, 1, 1, null, [AB.SH, 10]],
-  [2, "🚀❗ハープーン", 71, T.L, 1, 1, null, [AB.BF, 10]],
-  [2, "🚀⚠️アイソレーション", 85, T.L, 1, 1, [T.L, 0.9], null],
-  [2, "🚀ジャベリン", 70, T.L, 1, 1, null, null],
-  [1, "🚀シューティングスター", 70, T.L, 2, 1, null, null],
-  [2, "🚀⚠️サイレント", 98, T.L, 2, 1, [T.M, 0.0], null],
-  [1, "🚀🔺ギャンビット", 56, T.L, 2, 1, [T.L, 1.3], null],
-  [3, "🚀🚀MOP", 135, T.L, 2, 1, null, null],
-  [1, "🔫クァンタム・ディスプレーサー", 30, T.L, 3, 0, [T.C, 0.5], null],
-
-  // === MID (Fighters) ===
-  [1, "✈️ドローン", 14, T.M, 1, 0, null, null],
-  [1, "✈️💥キラードローン", 25, T.M, 1, 1, null, null],
-  [1, "✈️🐺マーバリック", 12, T.M, 1, 0, null, [AB.MV]],
-  [1, "✈️⤴️ルーキー・ファイター", 10, T.M, 1, 0, null, [AB.GR, 1]],
-  [1, "✈️ウイング", 22, T.M, 2, 0, null, null],
-  [1, "✈️✈️ブルーウルフ", 33, T.M, 3, 0, null, [T.L, 0.9]],
-  [1, "✈️🔺スクアドラル", 12, T.M, 2, 0, null, [AB.AM, 10]],
-
-  // === CLOSE (Beams) ===
-  [1, "⚡クロウ", 15, T.C, 1, 0, null, null],
-  [1, "⚡💥ソウル", 30, T.C, 1, 1, null, null],
-  [1, "⚡🩸ファング", 10, T.C, 1, 0, null, [AB.LS]],
-  [1, "⚡🛡️アイアン・ビーム", 12, T.C, 1, 0, null, [AB.SH, 10]],
-  [1, "⚡🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
-  [1, "⚡🪓シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB]],
-  [1, "⚡⚡️トールハンマー", 30, T.C, 3, 0, null, [T.M, 0.9]],
-
-  // === SHIELD ===
-  [1, "🛡️装甲板", 20, T.S, 1, 0, null, null],
-  [1, "🛡️⚠️シェル", 28, T.S, 1, 0, null, T.L, 0.8],
-  [1, "🛡️💥エフェメラ・シールド", 40, T.S, 1, 1, null, null],
-  [1, "🛡️🛡️イージス", 30, T.S, 2, 0, null, null],
-  [1, "🛡️🔋キャパシタ", 20, T.S, 2, 0, null, [AB.CAPACITOR]],
-  [1, "🛡️⤴️バリアー", 23, T.S, 3, 0, null, [AB.GR, 1]],
-
-  // === HULL ===
-  [1, "🔧💥ダメージコントロール", 40, T.H, 1, 1, null, null],
-  [1, "🔧自動修理装置", 15, T.H, 1, 0, null, null],
-
-  // === MODULE ===
-  [1, "🟫🔺傾斜防壁", 0, T.X, 1, 0, [T.S, 1.5], null],
-  [1, "💉緊急防壁", 0, T.X, 2, 0, null, [AB.OVERDRIVE]],
-  [2, "⚙️設備最適化", 0, T.X, 2, 0, null, [AB.COMPACT]],
-  [1, "🔥バーサーカーコア", 0, T.X, 3, 0, null, [AB.BERSERKER]],
-  [2, "🔥🔺弾頭最適化装置", 0, T.X, 3, 0, [T.L, 1.5], null],
-  [1, "🏗️🔺スウォーム・ハンガー", 0, T.X, 3, 0, [T.M, 1.5], [AB.NR]],
-  [1, "💎🔺プリズマティック・フォーカス", 0, T.X, 3, 0, [T.C, 1.5], [AB.SIM]]
-];
-```
 
 ### 3.2 Enemies
 
@@ -291,20 +234,6 @@ Schema: `[difficulty, name, hull, shield, rank, attacks, skills]`
 - `attacks`: `[LONG, MID, CLOSE]`
 - `skills`: `[[SK.*, value], ...]` (supports multiple)
 
-```javascript
-const EN = [
-  [1, "スカミッシャー", 40, 0, R.N, [0, 0, 10], []],
-  [2, "ドリフター", 51, 5, R.N, [20, 0, 10], []],
-  [3, "自己修復機", 60, 10, R.N, [0, 10, 15], [[SK.REG, 8]]],
-  [4, "ゾンビ", 25, 90, R.N, [0, 0, 20], [[SK.DEG, 5]]],
-  [5, "遺物哨戒機", 80, 30, R.N, [30, 30, 0], [[SK.DOR, 0]]],
-  [6, "特攻フリゲート", 20, 75, R.N, [0, 0, 0], [[SK.EXP, 180]]],
-  [7, "重装巡洋艦", 80, 80, R.N, [5, 10, 10], [[SK.GATE, 5]]],
-  [8, "シールド・ゲート", 100, 20, R.E, [10, 10, 5], [[SK.GATE, 20]]],
-  [9, "オーバーロード・エンフォーサー", 120, 30, R.E, [20, 20, 25], [[SK.OVR, 2.0]]],
-  [10, "セレスティアル・リーパー", 140, 60, R.B, [40, 20, 35], [[SK.CL, 10]]],
-];
-```
 
 ### 3.3 Stages
 
@@ -364,43 +293,12 @@ const ST = [
 
 2. Define
 
-```javascript
-const INITIAL_PLAYER = {
-  max_hull: 200,
-  hull: 200,
-  max_slots: 6,
-  inventory: [
-    "🚀 ランス", "🚀 ランス", 
-    "⚡ クロウ", "⚡ クロウ", 
-    "🛡️ 装甲板",
-    "🗑️ スクラップ", "🗑️ スクラップ"
-  ],
-  equipped: [],
-  // Boss reward flags
-  logistics: false,
-  boarding: false,
-  skirmish: false,
-  doctrine: false,
-  // Available rewards.
-normalItemsDeck: [],
-eliteItemsDeck: [],
-bossItemsDeck: [],
-bossRewards: [],
-rewardRarityDecks: {}
-};
-```
+- Defined at /src/data/gameConfig.js
 
 ### 4.2 Act Scaling
 
-| ACT | Stages | Hull/Shield Scale | Attack Scale |
-|-----|--------|-------------------|--------------|
-| I   | 1-12   | ×1.0              | ×1.0         |
-| II  | 13-24  | ×1.5              | ×1.3         |
-| III | 25-36  | ×2.25             | ×1.7         |
-
-
-
-Scaling applies to enemy `hull`, `shield`, and all `attacks`.
+- Scaling applies to enemy `hull`, `shield`, and all `attacks`.
+- Defined at /src/data/gameConfig.js
 
 -----
 
