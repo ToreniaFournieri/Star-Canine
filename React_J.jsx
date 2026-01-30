@@ -7,7 +7,7 @@ import { ST, ST_SCHEMA, STAGES_PER_ACT } from './src/data/stageData.js';
 import { PLAYER_INITIAL, STARTING_INVENTORY, ACT_SCALE, ACT_ATTACK_SCALE, BOSS_REWARD_KEYS } from './src/data/gameConfig.js';
 
 // Constants & Type Definitions
-const VERSION = 'v0.9.1';
+const VERSION = 'v0.9.1(2)';
 
 const RANGE = { LONG: ‘長距離’, MID: ‘中距離’, CLOSE: ‘近距離’ };
 const RANK  = { NORMAL: '通常', ELITE: 'エリート', BOSS: 'ボス' };
