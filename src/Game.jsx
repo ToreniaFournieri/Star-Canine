@@ -469,7 +469,8 @@ if (pDmg > 0) {
     let totalHeal = 0;
     rangeItems.filter(i => hasAbility(i, AB.LS)).forEach(item => {
       const itemMult = stats.mult[range] || 1;
-      totalHeal += Math.round(item.power * itemMult * 0.5); // 50% of weapon power
+      const healRatio = getAbilityValue(item) || 0.5; // Get from ability parameter, default to 50%
+      totalHeal += Math.round(item.power * itemMult * healRatio);
     });
     if (totalHeal > 0) {
       const beforeHeal = pHull;
