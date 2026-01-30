@@ -16,7 +16,7 @@ export const AB = {
   NR:  { id: 'NO_REPAIR',   name: '修復無効',     format: () => '修復無効' },
   LS:  { id: 'LIFE_STEAL',  name: '生命吸収',     format: (v) => `生命吸収(${v ? Math.round(v * 100) : 50}%)` },
   GR:  { id: 'GROWTH',      name: '成長',         format: (v) => `成長+${v}` },
-  SB:  { id: 'SHIELD_BREAK', name: 'シールド破壊', format: () => 'シールド破壊' },
+  SB:  { id: 'SHIELD_BREAK', name: 'シールド破壊', format: (v) => `シールド破壊(${v ? Math.round(v * 100) : 50}%)` },
   BF:  { id: 'BACKFIRE',    name: '反動',         format: (v) => `反動${v}` },
   MV:  { id: 'MAVERICK',    name: '一匹狼',     format: () => 'MIDがこの1機のみの場合威力倍増' },
   OVERDRIVE: { id: 'OVERDRIVE', name: '緊急過負荷', format: () => '緊急過負荷(HP-30,シールド+80)' },
@@ -61,7 +61,7 @@ export const EQ = [
   [1, "⚡🩸ファング", 10, T.C, 1, 0, null, [AB.LS, 1.0]],
   [1, "⚡🛡️アイアン・ビーム", 12, T.C, 1, 0, null, [AB.SH, 10]],
   [1, "⚡🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
-  [1, "⚡🪓シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB]],
+  [1, "⚡🪓シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB, 0.5]],
   [1, "⚡⚡️トールハンマー", 30, T.C, 3, 0, [T.M, 0.9], null],
 
   // === SHIELD ===
