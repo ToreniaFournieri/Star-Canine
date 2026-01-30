@@ -451,10 +451,14 @@ const rangeItems = equippedItems.filter(i => getTypeId(i.type) === range);
 if (pDmg > 0) {
   const beforeHull = eHull;
 
-  if (rangeItems.some(i => hasAbility(i, AB.SB))) {
+  const sbItem = rangeItems.find(i => hasAbility(i, AB.SB));
+  if (sbItem) {
     if (eShield > 0) {
-      log.push(`  シールド破壊: 敵シールド ${eShield} → 0`);
-      eShield = 0;
+      const sbPercent = getAbilityValue(sbItem) || 0.5; // Default 50%
+      const shieldDamage = Math.round(eShield * sbPercent);
+      const newShield = eShield - shieldDamage;
+      log.push(`  シールド破壊: 敵シールド ${eShield} → ${newShield}`);
+      eShield = newShield;
     }
   }
 
