@@ -3,6 +3,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 // Import master data
 import { T, AB, EQ, EQ_SCHEMA } from './data/equipmentData.js';
 import { R, SK, EN, EN_SCHEMA } from './data/enemyData.js';
+import { ST, ST_SCHEMA, STAGES_PER_ACT } from './data/stageData.js';
+import { PLAYER_INITIAL, STARTING_INVENTORY, ACT_SCALE, ACT_ATTACK_SCALE, BOSS_REWARD_KEYS } from './data/gameConfig.js';
 
 // Constants & Type Definitions
 const VERSION = 'v0.9.1';
@@ -71,23 +73,7 @@ K9は陥落した。
 defeat: '信号途絶',
 };
 
-const ST = [
-['N', 1],
-['N', 2],
-['N', 3],
-['E', 8],
-['N', 4],
-['D', 0],
-['N', 5],
-['E', 9],
-['N', 6],
-['N', 7],
-['D', 0],
-['B', 10],
-];
-
 // Helpers
-const ST_SCHEMA = ['rank', 'difficulty'];
 
 const parse = (schema, data) => data.map(row => {
 const obj = {};
@@ -99,10 +85,10 @@ const equipmentList = parse(EQ_SCHEMA, EQ);
 const enemyList = parse(EN_SCHEMA, EN);
 const stageList = parse(ST_SCHEMA, ST);
 
-const getAct = (stage) => Math.floor((stage - 1) / 12) + 1;
-const getStageInAct = (stage) => ((stage - 1) % 12) + 1;
-const getActScale = (act) => [1, 1.5, 2.25][act - 1] || 1;
-const getActAttackScale = (act) => [1, 1.3, 1.7][act - 1] || 1;
+const getAct = (stage) => Math.floor((stage - 1) / STAGES_PER_ACT) + 1;
+const getStageInAct = (stage) => ((stage - 1) % STAGES_PER_ACT) + 1;
+const getActScale = (act) => ACT_SCALE[act - 1] || 1;
+const getActAttackScale = (act) => ACT_ATTACK_SCALE[act - 1] || 1;
 
 const applyDamage = (dmg, shield, hull) => {
 const toShield = Math.min(shield, dmg);
@@ -341,24 +327,15 @@ console.error('Error allocating stage rewards:', error);
 }
 console.log('Stage rewards allocation complete:', Object.keys(stageRewards).length, 'stages');
 
-const allBossRewards = ['expansion', 'reinforcement', 'boarding', 'skirmish', 'logistics', 'doctrine'];
-const bossRewards = seededShuffle(allBossRewards, rng);
+const bossRewards = seededShuffle([...BOSS_REWARD_KEYS], rng);
 
 return {
 seed: actualSeed,
 itemIdCounterValue: idCounter.current(),
-max_hull: 200,
-hull: 200,
-max_slots: 6,
-inventory: [
-createItem("🚀ランス", idCounter),
-createItem("🚀ランス", idCounter),
-createItem("⚡クロウ", idCounter),
-createItem("⚡クロウ", idCounter),
-createItem("🛡️装甲板", idCounter),
-createItem("🗑️スクラップ", idCounter),
-createItem("🗑️スクラップ", idCounter),
-],
+max_hull: PLAYER_INITIAL.max_hull,
+hull: PLAYER_INITIAL.hull,
+max_slots: PLAYER_INITIAL.max_slots,
+inventory: STARTING_INVENTORY.map(name => createItem(name, idCounter)),
 equipped: [],
 logistics: false,
 boarding: false,
