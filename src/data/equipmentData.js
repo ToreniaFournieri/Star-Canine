@@ -14,7 +14,7 @@ export const AB = {
   AM:  { id: 'ALL_MID',     name: '中距離強化',   format: (v) => `全中距離武装+${v}` },
   SIM: { id: 'SIMULTANEOUS', name: '同時攻撃',    format: () => '同時攻撃' },
   NR:  { id: 'NO_REPAIR',   name: '修復無効',     format: () => '修復無効' },
-  LS:  { id: 'LIFE_STEAL',  name: '生命吸収',     format: () => '生命吸収(50%)' },
+  LS:  { id: 'LIFE_STEAL',  name: '生命吸収',     format: () => '生命吸収' },
   GR:  { id: 'GROWTH',      name: '成長',         format: (v) => `成長+${v}` },
   SB:  { id: 'SHIELD_BREAK', name: 'シールド破壊', format: () => 'シールド破壊' },
   BF:  { id: 'BACKFIRE',    name: '反動',         format: (v) => `反動${v}` },
@@ -58,7 +58,7 @@ export const EQ = [
   // === CLOSE (Beams) ===
   [1, "⚡クロウ", 15, T.C, 1, 0, null, null],
   [1, "⚡💥ソウル", 30, T.C, 1, 1, null, null],
-  [1, "⚡🩸ファング", 10, T.C, 1, 0, null, [AB.LS]],
+  [1, "⚡🩸ファング", 10, T.C, 1, 0, null, [AB.LS, 1.0]],
   [1, "⚡🛡️アイアン・ビーム", 12, T.C, 1, 0, null, [AB.SH, 10]],
   [1, "⚡🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
   [1, "⚡🪓シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB]],
