@@ -18,9 +18,9 @@ export const AB = {
   GR:  { id: 'GROWTH',      name: '成長',         format: (v) => `成長+${v}` },
   SB:  { id: 'SHIELD_BREAK', name: 'シールド破壊', format: (v) => `シールド破壊(${v ? Math.round(v * 100) : 50}%)` },
   BF:  { id: 'BACKFIRE',    name: '反動',         format: (v) => `反動${v}` },
-  MV:  { id: 'MAVERICK',    name: '一匹狼',     format: () => 'MIDがこの1機のみの場合威力倍増' },
+  MV:  { id: 'MAVERICK',    name: '一匹狼',     format: () => 'この1機のみの場合威力倍増' },
   OVERDRIVE: { id: 'OVERDRIVE', name: '緊急過負荷', format: () => '緊急過負荷(HP-30,シールド+80)' },
-  CAPACITOR: { id: 'CAPACITOR', name: 'キャパシタ蓄積', format: () => 'シールド変換30%' },
+  CAPACITOR: { id: 'CAPACITOR', name: 'キャパシタ蓄積', format: (v) => `シールド変換(${v ? Math.round(v * 100) : 50}%)` },
   COMPACT: { id: 'COMPACT', name: '圧縮設計', format: () => 'スロット圧縮(自身除く)' },
   BERSERKER: { id: 'BERSERKER', name: 'バーサーカー', format: () => 'HP半分以下で威力×1.3' },
 };
@@ -70,7 +70,7 @@ export const EQ = [
   [1, "🛡️⚠️シェル", 28, T.S, 1, 0, [T.L, 0.8], null],
   [1, "🛡️💥エフェメラ・シールド", 40, T.S, 1, 1, null, null],
   [1, "🛡️🛡️イージス", 35, T.S, 2, 0, null, null],
-  [1, "🛡️🔋キャパシタ", 20, T.S, 2, 0, null, [AB.CAPACITOR]],
+  [1, "🛡️🔋キャパシタ", 20, T.S, 2, 0, null, [AB.CAPACITOR, 0.2]],
   [1, "🛡️⤴️バリアー", 23, T.S, 3, 0, null, [AB.GR, 1]],
 
   // === HULL ===
