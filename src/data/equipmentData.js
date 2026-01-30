@@ -25,6 +25,7 @@ export const AB = {
   BERSERKER: { id: 'BERSERKER', name: 'バーサーカー', format: () => 'HP半分以下で威力×1.3' },
   GUTS: { id: 'GUTS', name: '根性', format: () => '戦闘中一度だけ致死ダメージをHP1で耐える' },
   PHASE: { id: 'PHASE', name: '位相回避', format: (v) => '最初のHPダメージを ${v ? Math.round(v * 100) : 50}%無効化' },
+  DOUBLE_TAP: { id: 'DOUBLE_TAP', name: '再攻撃', format: (v) => `威力${Math.round(v*100)}%の追加攻撃` },
 };
 
 // Equipment Schema
