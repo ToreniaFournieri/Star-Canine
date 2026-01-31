@@ -255,7 +255,6 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 
 ### 5.4 Post-Combat
 
-1. Remove disposable items
 1. Apply `GROWTH` to equipped items. (increase power permanently)
 1.	Calculate hull repair:
   - Base repair = HULL total × multipliers
@@ -264,6 +263,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
     - If player hull < max_hull × 0.3: repair_amount += v
   - If NO_REPAIR ability present, set repair amount to 0
 1. Clamp hull to max_hull
+1. Remove disposable items
 
 ### 5.5 Outcomes
 
