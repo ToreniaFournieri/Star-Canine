@@ -633,7 +633,7 @@ const getTurnOrder = (player) => {
 
 |Version  |Changes                                                                               |
 |---------|--------------------------------------------------------------------------------------|
-|**0.9.2**|New abilities:GUTS, PHASE.  |
+|**0.9.2**|New abilities:GUTS, PHASE, SHIELD_MULTIPLIER, LOW_HP_RECOVERY, DOUBLE_TAP, NO_SHIELD_POWER, CHIP_DAMAGE.  |
 |0.9.1|Prediction system, refines master data. specification bug fix. Addinh new items and abilities.  |
 |0.9.0|Items, Enemy and stage update. Changed the initialization way of Items and boss rewards.|
 |0.8.7|Unified single-file spec. Positional array data. Multi-skill support. 休眠 skill rename.|
