@@ -196,7 +196,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 |+Skirmish|L|M|**M**|C|M    |L    |
 
 ### 5.2 Combat Initialization
-1. Apply OVERDRIVE: If equipped, player hull -= 30
+1. Apply OVERDRIVE: If equipped, player hull -= v
 1. **Sum Base Stats:** Total `power` per type (L/M/C/S/H)
 1. **Apply Multipliers:** Multiply each type by all applicable `mult` values
 1. Apply COMPACT: Equipment with 2+ slots count as 1 slot (stat calculation unaffected)
@@ -204,7 +204,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1. Apply BERSERKER: If player hull < (max_hull × 0.5), all damage types ×1.3
 1. Add Flat Bonuses:
   - AB.SH → shield
-  - AB.OVERDRIVE → shield (+60)
+  - AB.OVERDRIVE → shield
   - AB.AM → MID damage
 1. **Set Battle Pools:** `battle_shield`, `battle_hull`
 
@@ -260,7 +260,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1. Apply `GROWTH` to equipped items. (increase power permanently)
 1.	Calculate hull repair:
   - Base repair = HULL total × multipliers
-  -	CAPACITOR: Add (remaining battle_shield × 0.5) to repair amount
+  -	CAPACITOR: Add (remaining battle_shield × v) to repair amount
   - **LOW_HP_RECOVERY**
     - If player hull < max_hull × 0.3: repair_amount += v
   - If NO_REPAIR ability present, set repair amount to 0
