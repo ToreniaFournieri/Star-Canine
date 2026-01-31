@@ -221,7 +221,7 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
     - Condition: first hull damage instance
     - Effect: reduce incoming hull damage
   - Damage proceeds to shield → hull
-2. `SHIELD_BREAK`: Reducr enemy shield by v  
+2. `SHIELD_BREAK`: Reduce enemy shiled by v (if v is 0.35, reduce 35% of its shield)  
 3. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
 4. Damage resolution 
 - Apply damage to enemy (shield → hull)
