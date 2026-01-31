@@ -18,7 +18,7 @@ export const STARTING_INVENTORY = [
 
 // ACT Scaling Tables
 // Index 0 = ACT 1, Index 1 = ACT 2, Index 2 = ACT 3
-export const ACT_SCALE = [1, 2, 3];        // Enemy stats scaling
+export const ACT_SCALE = [1, 1.5, 2.25];        // Enemy stats scaling
 export const ACT_ATTACK_SCALE = [1, 1.25, 1.5];  // Enemy attack scaling
 
 // Boss Reward Options
