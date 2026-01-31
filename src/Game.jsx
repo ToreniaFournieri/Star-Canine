@@ -1456,7 +1456,8 @@ return (
       {UI.btn.engage}
     </button>
 
-    {/* DEBUG: Show all stage rewards */}
+    {/* DEBUG: Show all stage rewards - Hidden for production */}
+    {false && (
     <div className="mt-8 p-4 bg-gray-900 border border-yellow-600 text-xs">
       <div className="text-yellow-400 font-bold mb-2">🔧 DEBUG: Pre-allocated Stage Rewards (All 36 Stages)</div>
       <div className="max-h-96 overflow-y-auto">
@@ -1473,18 +1474,18 @@ return (
                 );
               } else if (tempPlayer.stageRewards[i]) {
                 const enemyRank = getEnemyRank(stageData.rank);
-                const stageColor = enemyRank === R.B ? 'text-orange-400' : 
-                                  enemyRank === R.E ? 'text-yellow-400' : 
+                const stageColor = enemyRank === R.B ? 'text-orange-400' :
+                                  enemyRank === R.E ? 'text-yellow-400' :
                                   'text-green-400';
-                const labelColor = enemyRank === R.B ? 'text-orange-600' : 
-                                  enemyRank === R.E ? 'text-yellow-600' : 
+                const labelColor = enemyRank === R.B ? 'text-orange-600' :
+                                  enemyRank === R.E ? 'text-yellow-600' :
                                   'text-green-600';
-                
+
                 allStages.push(
                   <div key={i} className={`mb-1 ${stageColor}`}>
                     <span className={labelColor}>S{i}:</span> {tempPlayer.stageRewards[i].map(item => {
-                      const itemColor = item.rarity === 3 ? 'text-orange-400' : 
-                                       item.rarity === 2 ? 'text-yellow-400' : 
+                      const itemColor = item.rarity === 3 ? 'text-orange-400' :
+                                       item.rarity === 2 ? 'text-yellow-400' :
                                        'text-green-400';
                       return <span key={item.name} className={itemColor}>{item.name}, </span>;
                     })}
@@ -1505,6 +1506,7 @@ return (
         )}
       </div>
     </div>
+    )}
   </div>
 );
 
