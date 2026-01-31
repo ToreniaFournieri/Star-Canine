@@ -14,6 +14,7 @@ export const STARTING_INVENTORY = [
   "🛡️装甲板",
   "🗑️スクラップ",
   "🗑️スクラップ",
+  "🔥バーサーカーコア", "🛡️🔺S-AMP"
 ];
 
 // ACT Scaling Tables
