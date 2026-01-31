@@ -29,7 +29,7 @@ export const AB = {
   LOW_HP_RECOVERY: { id: 'LOW_HP_RECOVERY', name: '背水回復', format: (v) => `HP30%未満で回復+${v} ` },
   DOUBLE_TAP: { id: 'DOUBLE_TAP', name: '再攻撃', format: (v) => `威力+${v} の追加攻撃` },
   NO_SHIELD_POWER: { id: 'NO_SHIELD_POWER', name: '背水', format: (v) => `このターン自身のシールド0なら、威力×${v}` },
-  CHIP_DAMAGE: { id: 'CHIP_DAMAGE', name: '追加攻撃', format: (v) => `このターン敵シールドが残存したなら、追加ダメージ+${v}` },
+  CHIP_DAMAGE: { id: 'CHIP_DAMAGE', name: '追加攻撃', format: (v) => `攻撃後、敵シールドが残存した場合 威力+${v}` },
 };
 
 // Equipment Schema
@@ -59,6 +59,7 @@ export const EQ = [
   [1, "✈️🚀護衛機", 12, T.M, 1, 0, [T.L, 1.1], null],
   [1, "✈️⤴️ルーキー・ファイター", 10, T.M, 2, 0, null, [AB.GR, 1]],
   [1, "✈️ウイング", 16, T.M, 2, 0, null, [DOUBLE_TAP,8]],
+  [1, "✈️🏹ハウンド", 14, T.M, 2, 0, null, [CHIP_DAMAGE,16]],
   [1, "✈️🔺スクアドラル", 12, T.M, 2, 0, null, [AB.AM, 5]],
   [1, "✈️🔹ブルーウルフ", 33, T.M, 3, 0, [T.S, 1.1], [AB.SH, 5]],
   
