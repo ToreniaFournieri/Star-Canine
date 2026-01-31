@@ -425,6 +425,7 @@ const longCount = equippedItems.filter(i => getTypeId(i.type) === 'LONG').length
 // Combat state tracking
 let gutsUsed = false;
 let phaseUsed = false;
+let berserkerActive = false;
 
 let pShield = Math.round(stats.final.SHIELD);
 let pHull = Math.round(player.hull);
@@ -435,25 +436,41 @@ pHull = Math.max(1, pHull - 30);
 log.push(`緊急過負荷: 耐久値-30 → ${pHull}HP, シールド+80`);
 }
 
-// Apply BERSERKER multiplier if hull < 50%
-let berserkerMult = 1;
-if (hasBerserker && pHull < player.max_hull * 0.5) {
-berserkerMult = 1.3;
-log.push(`バーサーカー発動: 全ダメージ×1.3`);
-}
-
 let eShield = Math.round(enemy.shield);
 let eHull = Math.round(enemy.hull);
+
+// Check initial BERSERKER status for display
+let initialBerserkerMult = 1;
+if (hasBerserker && pHull < player.max_hull * 0.5) {
+  initialBerserkerMult = 1.3;
+  berserkerActive = true;
+}
 
 log.push(`=== ACT ${getAct(player.stage)} | ${UI.label.stage} ${player.stage} | ${enemy.name} ===`);
 log.push(`自機: ${pHull}HP | シールド:${pShield}`);
 log.push(`敵艦: ${eHull}HP | シールド:${eShield}`);
-log.push(`${UI.label.attack}: 長${Math.round(stats.final.LONG * berserkerMult)} 中${Math.round(stats.final.MID * berserkerMult)} 近${Math.round(stats.final.CLOSE * berserkerMult)}`);
+log.push(`${UI.label.attack}: 長${Math.round(stats.final.LONG * initialBerserkerMult)} 中${Math.round(stats.final.MID * initialBerserkerMult)} 近${Math.round(stats.final.CLOSE * initialBerserkerMult)}`);
 log.push('');
 
 for (let turn = 0; turn < 6; turn++) {
 const range = turns[turn];
 log.push(`--- T${turn + 1}: ${getRangeName(range)} ---`);
+
+// Check BERSERKER every turn based on current hull
+let berserkerMult = 1;
+const wasBerserkerActive = berserkerActive;
+berserkerActive = hasBerserker && pHull < player.max_hull * 0.5;
+
+if (berserkerActive) {
+  berserkerMult = 1.3;
+  if (!wasBerserkerActive) {
+    // Newly activated
+    log.push(`バーサーカー発動: 全ダメージ×1.3`);
+  }
+} else if (wasBerserkerActive && !berserkerActive) {
+  // Deactivated (player healed above threshold)
+  log.push(`バーサーカー解除`);
+}
 
 let pDmg = Math.round(stats.final[range] * berserkerMult);
 const rangeItems = equippedItems.filter(i => getTypeId(i.type) === range);
