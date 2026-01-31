@@ -1,6 +1,7 @@
 # Star-Canine
-Text-based rouge like expedition game. 
+Text-based rouge like expedition game.
 
+![STAR CANINE - Space wolf howling at a green planet](https://toreniafournieri.github.io/Star-Canine/icons/og-image.png)
 
 ## Play
 
