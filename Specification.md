@@ -223,7 +223,8 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
   - Damage proceeds to shield → hull
 2. `SHIELD_BREAK`: Set enemy shield to 0
 3. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
-4. Apply damage to enemy (shield → hull)
+4. Damage resolution 
+- Apply damage to enemy (shield → hull)
 - `DOUBLE_TAP`
   - Condition: enemy shield === 0
   - Effect: deal additional v damage directly to hull
