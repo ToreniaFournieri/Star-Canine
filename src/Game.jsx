@@ -690,12 +690,12 @@ if (hasSkill(enemy, SK.GATE) && eHull > 0) {
 if (turn === 3) {
   const smItems = equippedItems.filter(i => hasAbility(i, AB.SHIELD_MULTIPLIER));
   if (smItems.length > 0 && pShield > 0) {
-    let totalMult = 1;
+    let totalMult = 0;
     smItems.forEach(item => {
-      const smValue = getAbilityValue(item) || 0;
+      const smValue = getAbilityValue(item) || 1;
       totalMult += smValue;
     });
-    if (totalMult > 1) {
+    if (totalMult > 0) {
       const beforeSM = pShield;
       pShield = Math.round(pShield * totalMult);
       log.push(`  盾倍化: シールド×${totalMult} → ${beforeSM} → ${pShield}`);
