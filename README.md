@@ -1,6 +1,8 @@
 # Star-Canine
 ビルド構築特化・戦闘自動処理のローグライクテキストゲームです。
 
+![STAR CANINE - Space wolf howling at a green planet](https://toreniafournieri.github.io/Star-Canine/icons/og-image.png)
+
 ## 遊び方
 
 [PLAY NOW](https://toreniafournieri.github.io/Star-Canine/)
