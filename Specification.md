@@ -201,7 +201,6 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1. **Apply Multipliers:** Multiply each type by all applicable `mult` values
 1. Apply COMPACT: Equipment with 2+ slots count as 1 slot (stat calculation unaffected)
 1. **Apply Doctrine:** If active, all damage types ×1.2
-1. Apply BERSERKER: If player hull < (max_hull × 0.5), all damage types ×1.3
 1. Add Flat Bonuses:
   - AB.SH → shield
   - AB.OVERDRIVE → shield
@@ -221,6 +220,8 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
   - `PHASE` (defensive, but evaluated here)
     - Condition: first hull damage instance
     - Effect: reduce incoming hull damage
+  - `BERSERKER` If player hull < (max_hull × 0.5), all damage types ×1.3
+
 3. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
 4. Damage resolution 
 - Apply damage to enemy (shield → hull)
