@@ -7,7 +7,7 @@ import { ST, ST_SCHEMA, STAGES_PER_ACT } from './data/stageData.js';
 import { PLAYER_INITIAL, STARTING_INVENTORY, ACT_SCALE, ACT_ATTACK_SCALE, BOSS_REWARD_KEYS } from './data/gameConfig.js';
 
 // Constants & Type Definitions
-const VERSION = 'v0.9.1 (6)';
+const VERSION = 'v0.9.2';
 
 const RANGE = { LONG: '長距離', MID: '中距離', CLOSE: '近距離' };
 const RANK  = { NORMAL: '通常', ELITE: 'エリート', BOSS: 'ボス' };
@@ -411,10 +411,20 @@ const stats = calculateBattleStats(player, equippedItems);
 
 const hasSimultaneous = equippedItems.some(i => hasAbility(i, AB.SIM));
 const hasNoRepair = equippedItems.some(i => hasAbility(i, AB.NR));
-const hasCapacitor = equippedItems.some(i => hasAbility(i, AB.CAPACITOR));
+const capacitorItem = equippedItems.find(i => hasAbility(i, AB.CAPACITOR));
+const hasCapacitor = capacitorItem !== undefined;
+const capacitorValue = capacitorItem ? getAbilityValue(capacitorItem) : null;
 const hasOverdrive = equippedItems.some(i => hasAbility(i, AB.OVERDRIVE));
 const hasBerserker = equippedItems.some(i => hasAbility(i, AB.BERSERKER));
+const hasGuts = equippedItems.some(i => hasAbility(i, AB.GUTS));
+const phaseItem = equippedItems.find(i => hasAbility(i, AB.PHASE));
+const hasPhase = phaseItem !== undefined;
+const phaseValue = phaseItem ? getAbilityValue(phaseItem) : null;
 const longCount = equippedItems.filter(i => getTypeId(i.type) === 'LONG').length;
+
+// Combat state tracking
+let gutsUsed = false;
+let phaseUsed = false;
 
 let pShield = Math.round(stats.final.SHIELD);
 let pHull = Math.round(player.hull);
@@ -451,6 +461,7 @@ const rangeItems = equippedItems.filter(i => getTypeId(i.type) === range);
 if (pDmg > 0) {
   const beforeHull = eHull;
 
+  // SHIELD_BREAK: Reduce enemy shield by percentage
   const sbItem = rangeItems.find(i => hasAbility(i, AB.SB));
   if (sbItem) {
     if (eShield > 0) {
@@ -462,12 +473,54 @@ if (pDmg > 0) {
     }
   }
 
+  // NO_SHIELD_POWER: Bonus damage when player shield = 0
+  const nspItems = rangeItems.filter(i => hasAbility(i, AB.NO_SHIELD_POWER));
+  if (nspItems.length > 0 && pShield === 0) {
+    nspItems.forEach(item => {
+      const nspMult = getAbilityValue(item) || 1;
+      const itemMult = stats.mult[range] || 1;
+      const bonusDmg = Math.round(item.power * itemMult * berserkerMult * nspMult);
+      pDmg += bonusDmg;
+      log.push(`  無盾威力: +${bonusDmg}ダメージ (シールド0)`);
+    });
+  }
+
   const canLifeSteal = rangeItems.some(i => hasAbility(i, AB.LS)) && eShield === 0;
 
   const dmgResult = applyDamage(pDmg, eShield, eHull);
   eShield = Math.round(dmgResult.shield);
   eHull = Math.round(dmgResult.hull);
   log.push(`  自機攻撃: ${pDmg}ダメージ → ${beforeHull}HP → ${eHull}HP`);
+
+  // DOUBLE_TAP: Bonus hull damage when enemy shield = 0
+  const dtItems = rangeItems.filter(i => hasAbility(i, AB.DOUBLE_TAP));
+  if (dtItems.length > 0 && eShield === 0) {
+    let totalDoubleTap = 0;
+    dtItems.forEach(item => {
+      const dtValue = getAbilityValue(item) || 0;
+      totalDoubleTap += dtValue;
+    });
+    if (totalDoubleTap > 0) {
+      const beforeDT = eHull;
+      eHull = Math.max(0, eHull - totalDoubleTap);
+      log.push(`  二段攻撃: ${totalDoubleTap}ダメージ → ${beforeDT}HP → ${eHull}HP`);
+    }
+  }
+
+  // CHIP_DAMAGE: Bonus shield damage when enemy shield > 0
+  const cdItems = rangeItems.filter(i => hasAbility(i, AB.CHIP_DAMAGE));
+  if (cdItems.length > 0 && eShield > 0) {
+    let totalChipDmg = 0;
+    cdItems.forEach(item => {
+      const cdValue = getAbilityValue(item) || 0;
+      totalChipDmg += cdValue;
+    });
+    if (totalChipDmg > 0) {
+      const beforeCD = eShield;
+      eShield = Math.max(0, eShield - totalChipDmg);
+      log.push(`  削り攻撃: シールド ${totalChipDmg}ダメージ → ${beforeCD} → ${eShield}`);
+    }
+  }
 
   if (canLifeSteal) {
     let totalHeal = 0;
@@ -491,6 +544,14 @@ if (pDmg > 0) {
       const bfResult = applyDamage(totalBackfire, pShield, pHull);
       pShield = Math.round(bfResult.shield);
       pHull = Math.round(bfResult.hull);
+
+      // GUTS: Survive with 1 HP
+      if (pHull <= 0 && hasGuts && !gutsUsed) {
+        pHull = 1;
+        gutsUsed = true;
+        log.push(`  根性: 1HPで生存`);
+      }
+
       log.push(`  反動: ${totalBackfire}ダメージ → ${beforeBackfire}HP → ${pHull}HP`);
       if (pHull <= 0) {
         log.push(`  自機撃破（反動）。`);
@@ -508,6 +569,14 @@ if (range === 'LONG' && hasSkill(enemy, SK.CL) && longCount > 0) {
   const counterResult = applyDamage(counterDmg, pShield, pHull);
   pShield = Math.round(counterResult.shield);
   pHull = Math.round(counterResult.hull);
+
+  // GUTS: Survive with 1 HP
+  if (pHull <= 0 && hasGuts && !gutsUsed) {
+    pHull = 1;
+    gutsUsed = true;
+    log.push(`  根性: 1HPで生存`);
+  }
+
   log.push(`  迎撃: ${counterDmg}ダメージ (長距離武装${longCount}基) → ${beforeCounter}HP → ${pHull}HP`);
 }
 
@@ -554,20 +623,58 @@ if (turn >= 3) {
 if (turn === 3 && hasSkill(enemy, SK.EXP)) {
   const expVal = getSkillValue(enemy, SK.EXP);
   const beforeExplosion = pHull;
-  const expResult = applyDamage(expVal, pShield, pHull);
+  let finalExpDmg = expVal;
+
+  // PHASE: Reduce first hull damage instance
+  if (hasPhase && !phaseUsed && pShield < expVal) {
+    const hullDmg = expVal - pShield;
+    const reducedDmg = Math.round(hullDmg * (1 - (phaseValue || 0.5)));
+    finalExpDmg = pShield + reducedDmg;
+    phaseUsed = true;
+    log.push(`  位相防御: 耐久ダメージ ${hullDmg} → ${reducedDmg}`);
+  }
+
+  const expResult = applyDamage(finalExpDmg, pShield, pHull);
   pShield = Math.round(expResult.shield);
   pHull = Math.round(expResult.hull);
-  log.push(`  自爆: ${expVal}ダメージ → ${beforeExplosion}HP → ${pHull}HP`);
+
+  // GUTS: Survive with 1 HP
+  if (pHull <= 0 && hasGuts && !gutsUsed) {
+    pHull = 1;
+    gutsUsed = true;
+    log.push(`  根性: 1HPで生存`);
+  }
+
+  log.push(`  自爆: ${finalExpDmg}ダメージ → ${beforeExplosion}HP → ${pHull}HP`);
   eHull = 0;
   log.push(`  敵艦自壊`);
   log.push('');
   break;
 } else if (eDmg > 0) {
   const beforeEnemyAtk = pHull;
-  const eDmgResult = applyDamage(eDmg, pShield, pHull);
+  let finalDmg = eDmg;
+
+  // PHASE: Reduce first hull damage instance
+  if (hasPhase && !phaseUsed && pShield < eDmg) {
+    const hullDmg = eDmg - pShield;
+    const reducedDmg = Math.round(hullDmg * (1 - (phaseValue || 0.5)));
+    finalDmg = pShield + reducedDmg;
+    phaseUsed = true;
+    log.push(`  位相防御: 耐久ダメージ ${hullDmg} → ${reducedDmg}`);
+  }
+
+  const eDmgResult = applyDamage(finalDmg, pShield, pHull);
   pShield = Math.round(eDmgResult.shield);
   pHull = Math.round(eDmgResult.hull);
-  log.push(`  敵艦攻撃: ${eDmg}ダメージ → ${beforeEnemyAtk}HP → ${pHull}HP`);
+
+  // GUTS: Survive with 1 HP
+  if (pHull <= 0 && hasGuts && !gutsUsed) {
+    pHull = 1;
+    gutsUsed = true;
+    log.push(`  根性: 1HPで生存`);
+  }
+
+  log.push(`  敵艦攻撃: ${finalDmg}ダメージ → ${beforeEnemyAtk}HP → ${pHull}HP`);
 }
 
 if (hasSkill(enemy, SK.GATE) && eHull > 0) {
@@ -576,6 +683,23 @@ if (hasSkill(enemy, SK.GATE) && eHull > 0) {
     const beforeGate = eShield;
     eShield = gateVal;
     log.push(`  防壁作動: シールド ${beforeGate} → ${eShield}`);
+  }
+}
+
+// SHIELD_MULTIPLIER: Apply at turn 4 (turn index 3)
+if (turn === 3) {
+  const smItems = equippedItems.filter(i => hasAbility(i, AB.SHIELD_MULTIPLIER));
+  if (smItems.length > 0 && pShield > 0) {
+    let totalMult = 1;
+    smItems.forEach(item => {
+      const smValue = getAbilityValue(item) || 0;
+      totalMult += smValue;
+    });
+    if (totalMult > 1) {
+      const beforeSM = pShield;
+      pShield = Math.round(pShield * totalMult);
+      log.push(`  盾倍化: シールド×${totalMult} → ${beforeSM} → ${pShield}`);
+    }
   }
 }
 
@@ -605,7 +729,7 @@ log.push('');
 
 log.push(`=== 戦闘終了 ===`);
 
-return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, battleShield: pShield, hullRepair: stats.final.HULL };
+return { log, pHull, pShield, eHull, hasNoRepair, hasCapacitor, capacitorValue, battleShield: pShield, hullRepair: stats.final.HULL };
 };
 
 // Save/Load functions for PWA persistence
@@ -1160,19 +1284,35 @@ if (finalHull > 0 && !combatResult.hasNoRepair) {
   const baseRepair = Math.round(combatResult.hullRepair);
   let totalRepair = baseRepair;
   const repairParts = [];
-  
+
   if (baseRepair > 0) {
     repairParts.push(`耐久補助+${baseRepair}`);
   }
-  
+
   // Add CAPACITOR repair
   if (combatResult.hasCapacitor && combatResult.battleShield > 0) {
-    const capacitorRepair = Math.floor(combatResult.battleShield * 0.3); // 30% conversion
+    const conversionRate = combatResult.capacitorValue || 0.3; // Use ability value, default 30%
+    const capacitorRepair = Math.floor(combatResult.battleShield * conversionRate);
     totalRepair += capacitorRepair;
     combatResult.log.push(`キャパシタ蓄積: シールド${combatResult.battleShield} → +${capacitorRepair}HP回復`);
     repairParts.push(`キャパシタ+${capacitorRepair}`);
   }
-  
+
+  // LOW_HP_RECOVERY: Bonus repair when hull < 30% max_hull
+  const lowHpItems = equippedItems.filter(i => hasAbility(i, AB.LOW_HP_RECOVERY));
+  if (lowHpItems.length > 0 && finalHull < tempPlayer.max_hull * 0.3) {
+    let lowHpBonus = 0;
+    lowHpItems.forEach(item => {
+      const lhrValue = getAbilityValue(item) || 0;
+      lowHpBonus += lhrValue;
+    });
+    if (lowHpBonus > 0) {
+      totalRepair += lowHpBonus;
+      combatResult.log.push(`緊急修復: HP30%未満 → +${lowHpBonus}HP回復`);
+      repairParts.push(`緊急修復+${lowHpBonus}`);
+    }
+  }
+
   if (totalRepair > 0) {
     finalHull = Math.min(tempPlayer.max_hull, finalHull + totalRepair);
     combatResult.log.push(`戦闘後処理: ${repairParts.join(', ')} = +${totalRepair}HP回復 → ${finalHull}HP`);
