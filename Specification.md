@@ -211,30 +211,29 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 ### 5.3 Turn Resolution Order
 
 **Player Phase:**
-
 1. Calculate damage for current range
-  - Apply in this order:
-  	- Base damage (after multipliers, doctrine, berserker, etc.)
-    - **NO_SHIELD_POWER**
-      - Condition: battle_shield === 0
-      - Effect: damage × v
-    - **PHASE** (defensive, but evaluated here)
-      - Condition: first hull damage instance
-      - Effect: reduce incoming hull damage
-    -	Damage proceeds to shield → hull
-1. `SHIELD_BREAK`: Set enemy shield to 0
-1. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
-1. Apply damage to enemy (shield → hull)
-- DOUBLE_TAP
+- Apply in this order:
+  - Base damage (after multipliers, doctrine, berserker, etc.)
+  - `NO_SHIELD_POWER`
+    - Condition: battle_shield === 0
+    - Effect: damage × v
+  - `PHASE` (defensive, but evaluated here)
+    - Condition: first hull damage instance
+    - Effect: reduce incoming hull damage
+  - Damage proceeds to shield → hull
+2. `SHIELD_BREAK`: Set enemy shield to 0
+3. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
+4. Apply damage to enemy (shield → hull)
+- `DOUBLE_TAP`
   - Condition: enemy shield === 0
   - Effect: deal additional v damage directly to hull
-- CHIP_DAMAGE
+- `CHIP_DAMAGE`
   - Condition: enemy shield > 0
   - Effect: deal additional v damage to shield
-1. `LIFE_STEAL`: Heal if eligible
-1. `BACKFIRE`: Self-damage
-1. `COUNTER_LONG`: Enemy counter-attack (LONG range only)
-1. Victory check (skip if `SIMULTANEOUS`)
+5. `LIFE_STEAL`: Heal if eligible
+6. `BACKFIRE`: Self-damage
+7. `COUNTER_LONG`: Enemy counter-attack (LONG range only)
+8. Victory check (skip if `SIMULTANEOUS`)
 
 **Enemy Phase:**
 
