@@ -912,9 +912,9 @@ if (!isLoaded) {
 const scenes = {
 start:  <StartScene onStart={startGame} onContinue={continueGame} hasSave={hasSavedGame()} />,
 main:   <MainScene stage={stage} setScene={setScene} />,
-combat: <CombatScene player={player} setPlayer={setPlayer} stage={stage} setScene={setScene} advance={advance} />,
-reward: <RewardScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} />,
-dock:   <DockScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} />,
+combat: <CombatScene player={player} setPlayer={setPlayer} stage={stage} setScene={setScene} advance={advance} onRestart={restart} />,
+reward: <RewardScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} onRestart={restart} />,
+dock:   <DockScene player={player} setPlayer={setPlayer} stage={stage} advance={advance} onRestart={restart} />,
 end:    <EndScene player={player} stage={stage} onRestart={restart} />,
 };
 
@@ -991,7 +991,7 @@ return (
 );
 }
 
-function CombatScene({ player, setPlayer, stage, setScene, advance }) {
+function CombatScene({ player, setPlayer, stage, setScene, advance, onRestart }) {
 const [phase, setPhase] = useState('prep');
 const [log, setLog] = useState([]);
 const [result, setResult] = useState(null);
@@ -1366,6 +1366,7 @@ tempPlayer.doctrine && '教義',
 if (phase === 'prep') {
 return (
 <div className="max-w-6xl mx-auto">
+<Menu onReset={onRestart} />
 <h2 className="text-xl mb-2">{UI.label.stage} {stage} | {UI.label.act} {act}</h2>
 <div className="text-xs text-green-600 mb-2">{VERSION} シード: {tempPlayer.seed}</div>
 
@@ -1494,6 +1495,7 @@ return (
 
 return (
 <div className="max-w-4xl mx-auto">
+<Menu onReset={onRestart} />
 <pre className="text-xs mb-4 whitespace-pre-wrap h-96 overflow-y-auto bg-black border border-green-700 p-2">{log.join('\n')}</pre>
 
   {result && (
@@ -1510,7 +1512,7 @@ return (
 );
 }
 
-function RewardScene({ player, setPlayer, stage, advance }) {
+function RewardScene({ player, setPlayer, stage, advance, onRestart }) {
 const act = getAct(stage);
 const stageData = getStageData(stage);
 const enemyRank = getEnemyRank(stageData?.rank);
@@ -1600,6 +1602,7 @@ const canClaim = selectedItem && (!isBoss || !availableBossRewards.length || sel
 
 return (
 <div className="max-w-4xl mx-auto">
+<Menu onReset={onRestart} />
 <h2 className="text-xl mb-2">{UI.label.reward}</h2>
 <div className="text-xs text-green-600 mb-4">{VERSION} シード: {player.seed}</div>
 
@@ -1680,7 +1683,7 @@ return (
 );
 }
 
-function DockScene({ player, setPlayer, stage, advance }) {
+function DockScene({ player, setPlayer, stage, advance, onRestart }) {
 const act = getAct(stage);
 const scrapCost = act;
 const canRepair = player.inventory.length >= scrapCost;
@@ -1793,6 +1796,7 @@ player.doctrine && '教義',
 
 return (
 <div className="max-w-4xl mx-auto">
+<Menu onReset={onRestart} />
 <h2 className="text-xl mb-2">{UI.dock.title}</h2>
 <div className="text-xs text-green-600 mb-4">{VERSION} シード: {player.seed}</div>
 
@@ -1916,6 +1920,7 @@ player.doctrine && '教義',
 
 return (
 <div className="max-w-4xl mx-auto">
+<Menu onReset={onRestart} />
 <h2 className="text-2xl mb-4 text-center">
 {cleared ? UI.result.clear : STORY.defeat}
 </h2>
@@ -1954,6 +1959,53 @@ return (
   </div>
 </div>
 
+);
+}
+
+function Menu({ onReset }) {
+const [showConfirm, setShowConfirm] = useState(false);
+
+const handleReset = () => {
+  if (showConfirm) {
+    onReset();
+  } else {
+    setShowConfirm(true);
+  }
+};
+
+const handleCancel = () => {
+  setShowConfirm(false);
+};
+
+return (
+  <div className="mb-4 pb-2 border-b border-green-700 flex justify-between items-center">
+    <div className="text-xs text-gray-500">MENU</div>
+    <div className="flex gap-2">
+      {showConfirm ? (
+        <>
+          <button
+            onClick={handleReset}
+            className="bg-red-700 px-3 py-1 text-xs hover:bg-red-600"
+          >
+            確認：リセット
+          </button>
+          <button
+            onClick={handleCancel}
+            className="bg-gray-700 px-3 py-1 text-xs hover:bg-gray-600"
+          >
+            キャンセル
+          </button>
+        </>
+      ) : (
+        <button
+          onClick={handleReset}
+          className="bg-red-900 px-3 py-1 text-xs hover:bg-red-800"
+        >
+          リセット
+        </button>
+      )}
+    </div>
+  </div>
 );
 }
 
