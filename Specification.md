@@ -51,45 +51,7 @@ const RANK = {
 
 ### 2.2 Enemy Skills
 
-```javascript
-const SK = {
-  GATE: {
-    id: 'GATE',
-    name: '防壁',
-    desc: "ターン終了時、シールドを指定値まで再生成する。",
-  },
-  REG: {
-    id: 'REGEN',
-    name: '自己修復',
-    desc: "毎ターン、耐久値を回復する。",
-  },
-  DEG: {
-    id: 'DEGEN',
-    name: '腐食',
-    desc: "毎ターン、耐久値が減少する。",
-  },
-  EXP: {
-    id: 'EXPLOSIVE',
-    name: '自爆',
-    desc: "第4ターンに固定ダメージを相手に与える自爆攻撃を行い、自壊する。",
-  },
-  OVR: {
-    id: 'OVERLOAD',
-    name: '過負荷',
-    desc: "第4ターン以降、攻撃ダメージが上昇する。",
-  },
-  DOR: {
-    id: 'DORMANT',
-    name: '休眠',
-    desc: "第4ターン以降、攻撃を停止する。",
-  },
-  CL: {
-    id: 'COUNTER_LONG',
-    name: '迎撃',
-    desc: "長距離攻撃を受けた際、長距離武装数×指定値で反撃する。",
-  },
-};
-```
+- Defines here: src/data/enemyData.js
 
 ### 2.3 Equipment Abilities
 
