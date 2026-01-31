@@ -211,17 +211,16 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 ### 5.3 Turn Resolution Order
 
 **Player Phase:**
-1. Calculate damage for current range
+1. `SHIELD_BREAK`: Reduce enemy shiled by v (if v is 0.35, reduce 35% of its shield) 
+2. Calculate damage for current range
 - Apply in this order:
   - Base damage (after multipliers, doctrine, berserker, etc.)
   - `NO_SHIELD_POWER`
     - Condition: battle_shield === 0
-    - Effect: damage × v
+    - Effect: its item's damage × v
   - `PHASE` (defensive, but evaluated here)
     - Condition: first hull damage instance
     - Effect: reduce incoming hull damage
-  - Damage proceeds to shield → hull
-2. `SHIELD_BREAK`: Reduce enemy shiled by v (if v is 0.35, reduce 35% of its shield)  
 3. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
 4. Damage resolution 
 - Apply damage to enemy (shield → hull)
