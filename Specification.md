@@ -347,7 +347,9 @@ Note: This ensures exact distribution (e.g., ACT I Normal: 20 Normal + 1 Elite a
   - Ablitiy: 'SIMULTANEOUS'.
   - Enemy skills (OVERLOAD, DORMANT, EXPLOSIVE)
   - Boss reward effect: boarding, skirmish
-  - **Intentional imperfection** Do not perfectly emulate the damages. ignore LIFE-STEAL, SHIELD_BREAK or repairing effect.
+  - **Intentional imperfection** Do not perfectly emulate the damages.
+    - Ignore LIFE-STEAL, SHIELD_BREAK or repairing effect.
+    - Ignore defensive one-time effects (GUTS, PHASE).
 
 ### 8.2 Scene Labels
 
