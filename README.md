@@ -10,7 +10,6 @@ Text-based rouge like expedition game.
 ## Item list (J)
 
 ⭐ RARITY 1（NORMAL報酬）
-```
 [1] 🚀ランス 長 威力:40
 [2] 🚀🛡️インターセプター 長 威力:60 +25シールド
 [2] 🚀🚀❗ハープーン 長 威力:90 反動10
@@ -35,7 +34,6 @@ Text-based rouge like expedition game.
 [1] 🔧自動修理装置 回 威力:15
 
 [1] 🟫🔺傾斜防壁 機 盾×1.67
-```
 
 ⭐⭐ RARITY 2（ELITE報酬）
 ```
