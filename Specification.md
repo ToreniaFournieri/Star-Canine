@@ -213,15 +213,15 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 **Player Phase:**
 
 1. Calculate damage for current range
-- Apply in this order:
-	- Base damage (after multipliers, doctrine, berserker, etc.)
-  - **NO_SHIELD_POWER**
-    - Condition: battle_shield === 0
-    - Effect: damage × v
-  - **PHASE** (defensive, but evaluated here)
-    - Condition: first hull damage instance
-    - Effect: reduce incoming hull damage
-  -	Damage proceeds to shield → hull
+  - Apply in this order:
+  	- Base damage (after multipliers, doctrine, berserker, etc.)
+    - **NO_SHIELD_POWER**
+      - Condition: battle_shield === 0
+      - Effect: damage × v
+    - **PHASE** (defensive, but evaluated here)
+      - Condition: first hull damage instance
+      - Effect: reduce incoming hull damage
+    -	Damage proceeds to shield → hull
 1. `SHIELD_BREAK`: Set enemy shield to 0
 1. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
 1. Apply damage to enemy (shield → hull)
