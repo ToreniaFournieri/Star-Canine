@@ -332,9 +332,24 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 **Player Phase:**
 
 1. Calculate damage for current range
+- Apply in this order:
+	- Base damage (after multipliers, doctrine, berserker, etc.)
+  - **NO_SHIELD_POWER**
+    - Condition: battle_shield === 0
+    - Effect: damage × v
+  - **PHASE** (defensive, but evaluated here)
+    - Condition: first hull damage instance
+    - Effect: reduce incoming hull damage
+  -	Damage proceeds to shield → hull
 1. `SHIELD_BREAK`: Set enemy shield to 0
 1. Check `LIFE_STEAL` eligibility (enemy shield = 0?)
 1. Apply damage to enemy (shield → hull)
+- DOUBLE_TAP
+  - Condition: enemy shield === 0
+  - Effect: deal additional v damage directly to hull
+- CHIP_DAMAGE
+  - Condition: enemy shield > 0
+  - Effect: deal additional v damage to shield
 1. `LIFE_STEAL`: Heal if eligible
 1. `BACKFIRE`: Self-damage
 1. `COUNTER_LONG`: Enemy counter-attack (LONG range only)
@@ -347,11 +362,15 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1. `OVERLOAD`/`DORMANT`: Modify attack (turn 4+)
 1. `EXPLOSIVE`: Add damage to Player hull, then set enemy hull to 0.  (turn 4)
 1. Apply damage to player
+- If player hull would drop to 0 or below:
+  - If GUTS unused → set hull = 1, mark GUTS consumed
 1. Defeat check
 
 **Turn End:**
 
 1. `GATE`: Regenerate shield to value
+1. `SHIELD_MULTIPLIER` (if turn === 4)
+- Uses remaining battle_shield
 1. If `SIMULTANEOUS`, Victory check. 
 
 ### 5.4 Post-Combat
@@ -361,6 +380,8 @@ Default: `LONG → MID → CLOSE → CLOSE → MID → LONG`
 1.	Calculate hull repair:
   - Base repair = HULL total × multipliers
   -	CAPACITOR: Add (remaining battle_shield × 0.5) to repair amount
+  - **LOW_HP_RECOVERY**
+    - If player hull < max_hull × 0.3: repair_amount += v
   - If NO_REPAIR ability present, set repair amount to 0
 1. Clamp hull to max_hull
 
