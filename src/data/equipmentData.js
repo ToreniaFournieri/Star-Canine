@@ -24,7 +24,7 @@ export const AB = {
   COMPACT: { id: 'COMPACT', name: '圧縮設計', format: () => 'スロット圧縮(自身除く)' },
   BERSERKER: { id: 'BERSERKER', name: 'バーサーカー', format: () => 'HP半分以下で威力×1.3' },
   GUTS: { id: 'GUTS', name: '根性', format: () => '戦闘中一度だけ致死ダメージをHP1で耐える' },
-  PHASE: { id: 'PHASE', name: '位相回避', format: (v) => '最初のHPダメージを ${v ? Math.round(v * 100) : 50}%無効化' },
+  PHASE: { id: 'PHASE', name: '位相回避', format: (v) => `最初のHPダメージを ${v ? Math.round(v * 100) : 50}%無効化` },
   SHIELD_MULTIPLIER: { id: 'SHIELD_MULTIPLIER', name: 'シールド増幅', format: (v) => `4T終了時シールド×${v} ` },
   LOW_HP_RECOVERY: { id: 'LOW_HP_RECOVERY', name: '背水回復', format: (v) => `HP30%未満で回復+${v} ` },
   DOUBLE_TAP: { id: 'DOUBLE_TAP', name: '再攻撃', format: (v) => `攻撃後に敵シールド0なら、威力+${v} の追加攻撃` },
@@ -58,8 +58,8 @@ export const EQ = [
   [1, "✈️🐺マーバリック", 12, T.M, 1, 0, null, [AB.MV]],
   [1, "✈️🚀護衛機", 12, T.M, 1, 0, [T.L, 1.1], null],
   [1, "✈️⤴️ルーキー・ファイター", 10, T.M, 2, 0, null, [AB.GR, 1]],
-  [1, "✈️ウイング", 20, T.M, 2, 0, null, [DOUBLE_TAP,15]],
-  [1, "✈️🏹ハウンド", 14, T.M, 2, 0, null, [CHIP_DAMAGE,16]],
+  [1, "✈️ウイング", 20, T.M, 2, 0, null, [AB.DOUBLE_TAP,15]],
+  [1, "✈️🏹ハウンド", 14, T.M, 2, 0, null, [AB.CHIP_DAMAGE,16]],
   [1, "✈️🔺スクアドラル", 12, T.M, 2, 0, null, [AB.AM, 5]],
   [1, "✈️🔹ブルーウルフ", 33, T.M, 3, 0, [T.S, 1.1], [AB.SH, 5]],
   
@@ -72,7 +72,7 @@ export const EQ = [
   [1, "⚡🔺カジェル", 16, T.C, 2, 0, [T.C, 1.2], null],
   [1, "⚡🪓シールド・ブレイカー", 2, T.C, 2, 0, null, [AB.SB, 0.35]],
   [1, "⚡🟫トールハンマー", 30, T.C, 3, 0, [T.H, 1.2], null],
-  [1, "⚡✂️バルムンク", 25, T.C, 3, 0, null, [NO_SHIELD_POWER, 1.5]],
+  [1, "⚡✂️バルムンク", 25, T.C, 3, 0, null, [AB.NO_SHIELD_POWER, 1.5]],
 
   // === SHIELD ===
   [1, "🛡️装甲板", 24, T.S, 1, 0, null, null],
@@ -86,7 +86,7 @@ export const EQ = [
 
   // === HULL ===
   [1, "🔧自動修理装置", 15, T.H, 1, 0, null, null],
-  [1, "🔧💥ダメージコントロール", 10, T.H, 2, 1, null, [AB.LR, 40]],
+  [1, "🔧💥ダメージコントロール", 10, T.H, 2, 1, null, [AB.LOW_HP_RECOVERY, 40]],
 
   // === MODULE ===
   [1, "🟫🔺傾斜防壁", 0, T.X, 1, 0, [T.S, 1.67], null],
