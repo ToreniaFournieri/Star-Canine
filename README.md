@@ -9,7 +9,7 @@
 
 ## 装備リスト (v0.9.2)
 
-⭐ RARITY 1（NORMAL報酬）
+⭐ RARITY 1（NORMAL）
 - [1] 🚀ランス 長 威力:40
 - [2] 🚀🛡️インターセプター 長 威力:60 +25シールド
 - [2] 🚀🚀❗ハープーン 長 威力:90 反動10
@@ -35,7 +35,7 @@
 
 - [1] 🟫🔺傾斜防壁 機 盾×1.67
 
-⭐⭐ RARITY 2（ELITE報酬）
+⭐⭐ RARITY 2（ELITE）
 - [1] 🚀シューティングスター 長 威力:70
 - [2] 🚀🚀❗サイレント 長 威力:120 反動20
 - [3] 🚀🚀🚀❗️MOP 長 威力:185 反動30
@@ -58,7 +58,7 @@
 - [2] ⚙️設備最適化 機 スロット圧縮(自身除く)
 - [1] 💠位相回避装置 機 最初のHPダメージを 50%無効化
 
-⭐⭐⭐ RARITY 3（BOSS報酬）
+⭐⭐⭐ RARITY 3（BOSS）
 - [1] 🔫クァンタム・ディスプレーサー 長 威力:30 中×1.1
 
 - [1] ✈️🔹ブルーウルフ 中 威力:33 盾×1.1 +5シールド
@@ -169,28 +169,13 @@ HP: 120
 　長距離武装数 ×25 の反撃
 ```
 
-## Story
+## ボス報酬
 
-```
-Ship ID confirmed: STAR CANINE  
-Command authority: CAPTAIN  
-
-Incoming distress signal detected.  
-Origin: Planet K9  
-Sender ID: LAIKA  
-
-"It's me.  
-K9 has fallen.  
-Solar Bear battleships took the planet.  
-They took me too.  
-I know you weren't here.  
-I know you'll come back.  
-Please… don't die."
-
-Signal lost.
-
-Solar Bear Empire detected in K9 orbit.  
-Occupation status: ACTIVE.
-
-Setting course for K9.
-```
+| ID | 名称 | 効果 |
+|----|------|------|
+| expansion | 拡張 | 装備スロット最大値 +2 |
+| reinforcement | 強化 | 装備スロット最大値 +1<br>耐久値最大値 +50（現在HPも +50） |
+| boarding | 白兵戦 | 装備スロット最大値 +1<br>第5・第6ターンを**近距離**に固定 |
+| skirmish | 遭遇戦 | 装備スロット最大値 +1<br>第3ターンを**中距離**に変更 |
+| logistics | 兵站 | 戦闘開始前に **🚀 ランス** を1基追加 |
+| doctrine | 教義 | 耐久値最大値 +60（現在HPも +60）<br>すべての武装ダメージ ×1.2 |
